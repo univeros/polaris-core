@@ -51,7 +51,7 @@ final readonly class MfaLoginService
     /**
      * The user's confirmed factors — the only ones that can satisfy the gate.
      *
-     * @return list<\Univeros\Polaris\Entity\MfaFactor>
+     * @return list<\Polaris\Model\MfaFactor>
      */
     public function confirmedFactors(string $userId): array
     {
@@ -62,7 +62,7 @@ final readonly class MfaLoginService
      * Build the MFA-required login outcome: a short-lived `login_mfa` ticket plus the masked views
      * of the factors the client may use to complete the second step.
      *
-     * @param list<\Univeros\Polaris\Entity\MfaFactor> $confirmedFactors
+     * @param list<\Polaris\Model\MfaFactor> $confirmedFactors
      */
     public function beginChallenge(string $userId, array $confirmedFactors): MfaChallengeResult
     {

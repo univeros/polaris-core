@@ -6,7 +6,7 @@ namespace Univeros\Polaris\Tests\Support;
 
 use Polaris\Contract\RepositoryInterface;
 use Override;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 
 use function array_filter;
 use function array_key_exists;

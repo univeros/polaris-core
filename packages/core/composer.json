@@ -28,6 +28,9 @@
         "univeros/persistence": "^2.0",
         "univeros/security": "^2.0"
     },
+    "require-dev": {
+        "polaris/testing": "^0.1"
+    },
     "autoload": {
         "psr-4": {
             "Polaris\\": "src/",

@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Entity\MfaFactor;
+use Polaris\Model\MfaFactor;
 use Polaris\Identity\MfaFactorView;
 use Polaris\Mfa\MfaManagementService;
 

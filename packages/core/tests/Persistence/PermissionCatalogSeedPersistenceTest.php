@@ -55,7 +55,7 @@ final class PermissionCatalogSeedPersistenceTest extends DatabaseTestCase
         $rolesBefore = $database->select()->from('auth_roles')->count();
         $grantsBefore = $database->select()->from('auth_role_permissions')->count();
 
-        (new PermissionCatalogSeeder(new PermissionCatalog()))->seed($database, new DateTimeImmutable('2026-06-09 12:00:00'));
+        (new PermissionCatalogSeeder(new PermissionCatalog()))->seed($this->adapter, new DateTimeImmutable('2026-06-09 12:00:00'));
 
         self::assertSame($permissionsBefore, $database->select()->from('auth_permissions')->count());
         self::assertSame($rolesBefore, $database->select()->from('auth_roles')->count());

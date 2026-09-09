@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Altair\Persistence\Cycle\CycleRepository;
+use Polaris\Repository\PasswordResetRepository;
+use Polaris\Repository\EmailVerificationRepository;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Entity\EmailVerification;
-use Univeros\Polaris\Entity\PasswordReset;
+use Polaris\Model\EmailVerification;
+use Polaris\Model\PasswordReset;
 
 use function str_repeat;
 
@@ -37,7 +38,7 @@ final class TransientTokenEntitiesPersistenceTest extends DatabaseTestCase
 
     public function testEmailVerificationRoundTrips(): void
     {
-        $repository = new CycleRepository(EmailVerification::class, $this->orm, $this->unitOfWork);
+        $repository = new EmailVerificationRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-07 10:00:00');
         $hash = str_repeat('a', 64);
 
@@ -49,7 +50,8 @@ final class TransientTokenEntitiesPersistenceTest extends DatabaseTestCase
         $verification->expiresAt = $now->modify('+24 hours');
         $verification->ip = '203.0.113.7';
         $verification->createdAt = $now;
-        $repository->save($verification);
+        $this->unitOfWork->persist($verification);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -68,7 +70,7 @@ final class TransientTokenEntitiesPersistenceTest extends DatabaseTestCase
 
     public function testPasswordResetRoundTripsAndRecordsConsumption(): void
     {
-        $repository = new CycleRepository(PasswordReset::class, $this->orm, $this->unitOfWork);
+        $repository = new PasswordResetRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-07 10:00:00');
         $hash = str_repeat('b', 64);
 
@@ -80,7 +82,8 @@ final class TransientTokenEntitiesPersistenceTest extends DatabaseTestCase
         $reset->expiresAt = $now->modify('+1 hour');
         $reset->consumedAt = $now->modify('+5 minutes');
         $reset->createdAt = $now;
-        $repository->save($reset);
+        $this->unitOfWork->persist($reset);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 

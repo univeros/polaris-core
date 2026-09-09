@@ -8,7 +8,7 @@ use Cycle\Migrations\Migration;
 
 /**
  * Creates the `auth_refresh_tokens` table behind
- * {@see \Univeros\Polaris\Entity\RefreshToken}.
+ * {@see \Polaris\Model\RefreshToken}.
  *
  * Driver-agnostic: only Cycle's abstract column types are used, so the same
  * migration applies cleanly on every supported database engine.

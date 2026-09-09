@@ -6,7 +6,7 @@ namespace Polaris\Mfa;
 
 use Polaris\Contract\RepositoryInterface;
 use SensitiveParameter;
-use Univeros\Polaris\Entity\MfaFactor;
+use Polaris\Model\MfaFactor;
 use Polaris\Exception\InvalidOtpException;
 use Polaris\Exception\MfaFactorNotFoundException;
 use Polaris\Token\ClientContext;

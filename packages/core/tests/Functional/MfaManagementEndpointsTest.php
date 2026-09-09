@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Functional;
 
 use OTPHP\TOTP;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Event\MfaFactorRemoved;
 use Polaris\Event\UserRegistered;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\UserRepository;
 use Polaris\Token\ClientContext;
 use Polaris\Token\SessionPrincipal;
 use Polaris\Token\TokenService;
@@ -173,7 +173,8 @@ final class MfaManagementEndpointsTest extends FunctionalTestCase
         $user = $users->find($userId);
         self::assertInstanceOf(User::class, $user);
         $user->mfaEnforced = true;
-        $users->save($user);
+        $this->unitOfWork->persist($user);
+        $this->unitOfWork->flush();
         $this->unitOfWork->clear();
     }
 

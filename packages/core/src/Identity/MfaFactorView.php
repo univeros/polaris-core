@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Polaris\Identity;
 
-use Univeros\Polaris\Entity\MfaFactor;
+use Polaris\Model\MfaFactor;
 use Polaris\Mfa\Destination;
 
 /**

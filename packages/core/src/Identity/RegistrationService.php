@@ -11,7 +11,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use SensitiveParameter;
 use Symfony\Component\Uid\Uuid;
 use Polaris\Contract\PasswordHasherInterface;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Event\UserRegistered;
 use Polaris\Exception\InvalidPasswordException;
 use Polaris\Token\ClientContext;

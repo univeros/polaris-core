@@ -6,7 +6,7 @@ namespace Polaris\Authorization;
 
 use Polaris\Contract\RepositoryInterface;
 use Polaris\Config\AuthConfig;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Token\SessionPrincipal;
 use Polaris\Token\SessionPrincipalResolverInterface;
 

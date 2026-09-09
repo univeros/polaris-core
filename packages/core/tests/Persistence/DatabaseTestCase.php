@@ -6,19 +6,17 @@ namespace Univeros\Polaris\Tests\Persistence;
 
 use Altair\Persistence\Configuration\DatabaseConnectionFactory;
 use Altair\Persistence\Configuration\DatabaseSettings;
-use Altair\Persistence\Cycle\CycleUnitOfWork;
 use Altair\Persistence\Migrations\MigrationConfigFactory;
 use Altair\Persistence\Migrations\MigratorFactory;
-use Altair\Persistence\Schema\AttributeSchemaProvider;
 use Cycle\Database\DatabaseInterface;
 use Cycle\Database\DatabaseProviderInterface;
 use Cycle\Migrations\Migrator;
-use Cycle\ORM\Factory;
-use Cycle\ORM\ORM;
-use Cycle\ORM\ORMInterface;
-use Cycle\ORM\Schema;
 use PHPUnit\Framework\TestCase;
+use Polaris\Contract\DatabaseAdapter;
+use Polaris\Repository\IdentityMap;
+use Polaris\Repository\UnitOfWork;
 use Throwable;
+use Univeros\Polaris\Bootstrap\CycleDatabaseAdapter;
 
 use function dirname;
 use function getenv;
@@ -51,8 +49,9 @@ abstract class DatabaseTestCase extends TestCase
     ];
 
     protected ?DatabaseProviderInterface $database = null;
-    protected ORMInterface $orm;
-    protected CycleUnitOfWork $unitOfWork;
+    protected DatabaseAdapter $adapter;
+    protected IdentityMap $identities;
+    protected UnitOfWork $unitOfWork;
     protected Migrator $migrator;
 
     protected function setUp(): void
@@ -80,9 +79,9 @@ abstract class DatabaseTestCase extends TestCase
             // Apply every pending migration.
         }
 
-        $schema = (new AttributeSchemaProvider($this->database, [self::path('src/Entity')]))->schema();
-        $this->orm = new ORM(new Factory($this->database), new Schema($schema));
-        $this->unitOfWork = new CycleUnitOfWork($this->orm);
+        $this->adapter = new CycleDatabaseAdapter($this->database->database('default'));
+        $this->identities = new IdentityMap();
+        $this->unitOfWork = new UnitOfWork($this->adapter, $this->identities);
     }
 
     protected function tearDown(): void

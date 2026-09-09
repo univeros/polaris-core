@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Database\Migrations;
 use Cycle\Migrations\Migration;
 
 /**
- * Creates the `auth_role_permissions` join table behind {@see \Univeros\Polaris\Entity\RolePermission}.
+ * Creates the `auth_role_permissions` join table behind {@see \Polaris\Model\RolePermission}.
  *
  * Composite primary key `(role_id, permission_id)` makes each grant unique; both columns are
  * `ON DELETE CASCADE` foreign keys, so deleting a role or a permission removes its grants and never

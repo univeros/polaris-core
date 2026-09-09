@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Bootstrap;
 use Altair\Container\Container;
 use Polaris\Contract\TokenGeneratorInterface;
 use Polaris\Contract\UnitOfWorkInterface;
-use Cycle\ORM\ORMInterface;
+use Polaris\Contract\DatabaseAdapter;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Polaris\Authorization\PermissionResolver;
@@ -22,14 +22,14 @@ use Univeros\Polaris\Http\Auth\RevokeSessionDomain;
 use Univeros\Polaris\Http\Auth\SessionsDomain;
 use Univeros\Polaris\Http\Auth\SwitchOrgDomain;
 use Polaris\Identity\SessionService;
-use Univeros\Polaris\Persistence\MembershipRepository;
-use Univeros\Polaris\Persistence\MembershipRoleRepository;
-use Univeros\Polaris\Persistence\OrganizationRepository;
-use Univeros\Polaris\Persistence\PermissionRepository;
-use Univeros\Polaris\Persistence\RefreshTokenRepository;
-use Univeros\Polaris\Persistence\RolePermissionRepository;
-use Univeros\Polaris\Persistence\RoleRepository;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\MembershipRepository;
+use Polaris\Repository\MembershipRoleRepository;
+use Polaris\Repository\OrganizationRepository;
+use Polaris\Repository\PermissionRepository;
+use Polaris\Repository\RefreshTokenRepository;
+use Polaris\Repository\RolePermissionRepository;
+use Polaris\Repository\RoleRepository;
+use Polaris\Repository\UserRepository;
 use Polaris\Security\Pepper;
 use Polaris\Token\AccessTokenDenylist;
 use Polaris\Token\SessionPrincipalResolverInterface;
@@ -108,7 +108,7 @@ final class SessionBindings
         $container->singleton(
             TokenService::class,
             static fn(
-                ORMInterface $orm,
+                DatabaseAdapter $database,
                 RefreshTokenRepository $refreshTokens,
                 UnitOfWorkInterface $unitOfWork,
                 Pepper $pepper,
@@ -126,7 +126,7 @@ final class SessionBindings
                 $config,
                 $clock,
                 $events,
-                $orm,
+                $database,
             ),
         );
     }

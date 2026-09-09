@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Database\Migrations;
 use Cycle\Migrations\Migration;
 
 /**
- * Creates the `auth_mfa_factors` table behind {@see \Univeros\Polaris\Entity\MfaFactor}.
+ * Creates the `auth_mfa_factors` table behind {@see \Polaris\Model\MfaFactor}.
  *
  * Driver-agnostic: only Cycle's abstract column types are used, so the same migration applies
  * cleanly on every supported database engine.

@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
 use Polaris\Config\AuthConfig;
-use Univeros\Polaris\Entity\RefreshToken;
+use Polaris\Model\RefreshToken;
 use Polaris\Event\OrganizationSwitched;
 use Polaris\Event\RefreshReuseDetected;
 use Polaris\Event\TokenRefreshed;

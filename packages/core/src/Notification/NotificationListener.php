@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Notification;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\RepositoryInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
 use Polaris\Contract\OtpMailerInterface;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Event\MemberInvited;
 use Polaris\Event\MfaEnrolled;
 use Polaris\Event\MfaFactorRemoved;

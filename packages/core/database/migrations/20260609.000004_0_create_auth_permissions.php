@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Database\Migrations;
 use Cycle\Migrations\Migration;
 
 /**
- * Creates the `auth_permissions` table behind {@see \Univeros\Polaris\Entity\Permission}.
+ * Creates the `auth_permissions` table behind {@see \Polaris\Model\Permission}.
  *
  * `unique(key)` enforces a single catalog entry per capability key. Driver-agnostic: only Cycle's
  * abstract column types are used, so the same migration applies cleanly on every supported engine.

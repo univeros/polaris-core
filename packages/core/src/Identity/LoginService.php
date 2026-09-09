@@ -13,7 +13,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use SensitiveParameter;
 use Polaris\Config\AuthConfig;
 use Polaris\Contract\PasswordHasherInterface;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Event\UserLocked;
 use Polaris\Event\UserLoggedIn;
 use Polaris\Event\UserLoginFailed;

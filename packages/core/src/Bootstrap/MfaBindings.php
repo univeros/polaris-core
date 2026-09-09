@@ -12,7 +12,7 @@ use Polaris\Token\TokenConfiguration;
 use Polaris\Contract\UnitOfWorkInterface;
 use Polaris\Contract\EncrypterInterface;
 use Polaris\Security\SodiumEncrypter;
-use Cycle\ORM\ORMInterface;
+use Polaris\Contract\DatabaseAdapter;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -59,10 +59,10 @@ use Polaris\Mfa\OtpFactorService;
 use Polaris\Mfa\OtphpTotpProvider;
 use Polaris\Mfa\OtpService;
 use Polaris\Mfa\RecoveryCodeService;
-use Univeros\Polaris\Persistence\MfaFactorRepository;
-use Univeros\Polaris\Persistence\OtpChallengeRepository;
-use Univeros\Polaris\Persistence\RecoveryCodeRepository;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\MfaFactorRepository;
+use Polaris\Repository\OtpChallengeRepository;
+use Polaris\Repository\RecoveryCodeRepository;
+use Polaris\Repository\UserRepository;
 use Polaris\Security\Pepper;
 use Polaris\Token\JwtSignerFactory;
 use Polaris\Token\MfaLoginTokenService;
@@ -135,7 +135,7 @@ final class MfaBindings
         $container->singleton(
             OtpService::class,
             static fn(
-                ORMInterface $orm,
+                DatabaseAdapter $database,
                 OtpChallengeRepository $challenges,
                 SmsSenderInterface $sms,
                 OtpMailerInterface $mailer,
@@ -155,7 +155,7 @@ final class MfaBindings
                 $clock,
                 $events,
                 $cache,
-                $orm,
+                $database,
             ),
         );
     }
@@ -192,13 +192,13 @@ final class MfaBindings
         $container->singleton(
             RecoveryCodeService::class,
             static fn(
-                ORMInterface $orm,
+                DatabaseAdapter $database,
                 RecoveryCodeRepository $codes,
                 UnitOfWorkInterface $unitOfWork,
                 Pepper $pepper,
                 ClockInterface $clock,
                 EventDispatcherInterface $events,
-            ): RecoveryCodeService => new RecoveryCodeService($codes, $unitOfWork, $pepper, $clock, $events, $orm),
+            ): RecoveryCodeService => new RecoveryCodeService($codes, $unitOfWork, $pepper, $clock, $events, $database),
         );
         $container->singleton(
             MfaConfirmation::class,

@@ -1820,7 +1820,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/core",
-                "reference": "75f40483cebf3ed331142506e00c9537833691aa"
+                "reference": "772b041749d737b98ba17155f8f3772c64268e6c"
             },
             "require": {
                 "endroid/qr-code": "^6.0",
@@ -1836,6 +1836,9 @@
                 "univeros/observability": "^2.0",
                 "univeros/persistence": "^2.0",
                 "univeros/security": "^2.0"
+            },
+            "require-dev": {
+                "polaris/testing": "^0.1"
             },
             "type": "library",
             "extra": {

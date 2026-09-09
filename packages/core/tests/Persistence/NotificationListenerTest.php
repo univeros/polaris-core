@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use Psr\Log\NullLogger;
 use Symfony\Component\Uid\Uuid;
 use Polaris\Contract\OtpMailerInterface;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Event\MemberInvited;
 use Polaris\Event\MfaEnrolled;
 use Polaris\Event\MfaFactorRemoved;
@@ -19,7 +19,7 @@ use Polaris\Event\PasswordResetRequested;
 use Polaris\Event\UserLocked;
 use Polaris\Event\UserRegistered;
 use Univeros\Polaris\Notification\NotificationListener;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\UserRepository;
 use Univeros\Polaris\Tests\Support\RecordingOtpMailer;
 
 use function str_repeat;
@@ -94,7 +94,7 @@ final class NotificationListenerTest extends DatabaseTestCase
             }
         };
 
-        $listener = new NotificationListener($broken, new UserRepository($this->orm, $this->unitOfWork), new NullLogger());
+        $listener = new NotificationListener($broken, new UserRepository($this->adapter, $this->identities), new NullLogger());
         $listener(new UserRegistered('user-1', 'new@example.com', 'token'));
 
         $this->expectNotToPerformAssertions();
@@ -111,7 +111,7 @@ final class NotificationListenerTest extends DatabaseTestCase
 
     private function listener(RecordingOtpMailer $mailer): NotificationListener
     {
-        return new NotificationListener($mailer, new UserRepository($this->orm, $this->unitOfWork), new NullLogger());
+        return new NotificationListener($mailer, new UserRepository($this->adapter, $this->identities), new NullLogger());
     }
 
     private function seedUser(string $email): string

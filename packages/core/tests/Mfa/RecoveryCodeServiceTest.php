@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Mfa;
 
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Entity\RecoveryCode;
+use Polaris\Model\RecoveryCode;
 use Polaris\Event\MfaRecoveryRegenerated;
 use Polaris\Mfa\RecoveryCodeService;
 use Polaris\Security\Pepper;

@@ -6,7 +6,7 @@ namespace Polaris\Mfa;
 
 use Polaris\Contract\RepositoryInterface;
 use Polaris\Config\AuthConfig;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 
 /**
  * Decides whether MFA is **enforced** for a user (spec §8): the global `auth.mfa.enforce` switch, or

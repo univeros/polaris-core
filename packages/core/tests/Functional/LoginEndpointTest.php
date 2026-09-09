@@ -7,11 +7,11 @@ namespace Univeros\Polaris\Tests\Functional;
 use Polaris\Contract\TokenValidatorInterface;
 use DateTimeImmutable;
 use Laminas\Diactoros\ServerRequestFactory;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Event\UserLocked;
 use Polaris\Event\UserLoggedIn;
 use Polaris\Event\UserRegistered;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\UserRepository;
 
 /**
  * End-to-end tests for `POST /auth/login`, driven through the real Action pipeline and
@@ -252,7 +252,7 @@ final class LoginEndpointTest extends FunctionalTestCase
 
     private function user(string $email): User
     {
-        $user = (new UserRepository($this->orm, $this->unitOfWork))->findOneBy(['email' => $email]);
+        $user = (new UserRepository($this->adapter, $this->identities))->findOneBy(['email' => $email]);
         self::assertInstanceOf(User::class, $user);
 
         return $user;

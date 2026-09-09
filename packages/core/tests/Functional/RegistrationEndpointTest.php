@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Functional;
 
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Event\UserEmailVerified;
 use Polaris\Event\UserRegistered;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\UserRepository;
 
 /**
  * End-to-end tests for the registration + email-verification endpoints, driven through
@@ -133,6 +133,6 @@ final class RegistrationEndpointTest extends FunctionalTestCase
 
     private function users(): UserRepository
     {
-        return new UserRepository($this->orm, $this->unitOfWork);
+        return new UserRepository($this->adapter, $this->identities);
     }
 }

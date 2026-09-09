@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Tests\Support;
 use Polaris\Contract\RepositoryInterface;
 use Polaris\Contract\UnitOfWorkInterface;
 use Override;
-use Univeros\Polaris\Entity\RefreshToken;
+use Polaris\Model\RefreshToken;
 
 use function array_filter;
 use function array_key_exists;

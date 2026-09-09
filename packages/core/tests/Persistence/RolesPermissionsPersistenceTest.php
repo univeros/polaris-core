@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Altair\Persistence\Cycle\CycleRepository;
+use Polaris\Repository\RoleRepository;
+use Polaris\Repository\RolePermissionRepository;
+use Polaris\Repository\PermissionRepository;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Entity\Membership;
-use Univeros\Polaris\Entity\MembershipRole;
-use Univeros\Polaris\Entity\Permission;
-use Univeros\Polaris\Entity\Role;
-use Univeros\Polaris\Entity\RolePermission;
+use Polaris\Model\Membership;
+use Polaris\Model\MembershipRole;
+use Polaris\Model\Permission;
+use Polaris\Model\Role;
+use Polaris\Model\RolePermission;
 
 /**
  * Verifies the #28 RBAC entities and migrations against a real database driver: the migrations
@@ -54,7 +56,7 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
 
     public function testRoleRoundTrips(): void
     {
-        $repository = new CycleRepository(Role::class, $this->orm, $this->unitOfWork);
+        $repository = new RoleRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-09 10:00:00');
 
         $role = new Role();
@@ -66,7 +68,8 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
         $role->isSystem = true;
         $role->createdAt = $now;
         $role->updatedAt = $now;
-        $repository->save($role);
+        $this->unitOfWork->persist($role);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -82,7 +85,7 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
 
     public function testSystemRoleAllowsNullOrganization(): void
     {
-        $repository = new CycleRepository(Role::class, $this->orm, $this->unitOfWork);
+        $repository = new RoleRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-09 10:00:00');
 
         $role = new Role();
@@ -93,7 +96,8 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
         $role->isSystem = true;
         $role->createdAt = $now;
         $role->updatedAt = $now;
-        $repository->save($role);
+        $this->unitOfWork->persist($role);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -106,13 +110,14 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
 
     public function testPermissionRoundTrips(): void
     {
-        $repository = new CycleRepository(Permission::class, $this->orm, $this->unitOfWork);
+        $repository = new PermissionRepository($this->adapter, $this->identities);
 
         $permission = new Permission();
         $permission->id = Uuid::v7()->toRfc4122();
         $permission->key = 'test.permission';
         $permission->description = 'A custom, non-catalog permission';
-        $repository->save($permission);
+        $this->unitOfWork->persist($permission);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -127,11 +132,12 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
     {
         [$roleId, $permissionId] = $this->seedRoleAndPermission();
 
-        $grants = new CycleRepository(RolePermission::class, $this->orm, $this->unitOfWork);
+        $grants = new RolePermissionRepository($this->adapter, $this->identities);
         $grant = new RolePermission();
         $grant->roleId = $roleId;
         $grant->permissionId = $permissionId;
-        $grants->save($grant);
+        $this->unitOfWork->persist($grant);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -231,13 +237,15 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
         $role->slug = 'admin';
         $role->createdAt = $now;
         $role->updatedAt = $now;
-        (new CycleRepository(Role::class, $this->orm, $this->unitOfWork))->save($role);
+        $this->unitOfWork->persist($role);
+        $this->unitOfWork->flush();
 
         $permission = new Permission();
         $permission->id = Uuid::v7()->toRfc4122();
         $permission->key = 'test.grant';
         $permission->description = 'A custom, non-catalog permission';
-        (new CycleRepository(Permission::class, $this->orm, $this->unitOfWork))->save($permission);
+        $this->unitOfWork->persist($permission);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -255,7 +263,8 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
         $membership->status = Membership::STATUS_ACTIVE;
         $membership->createdAt = $now;
         $membership->updatedAt = $now;
-        (new CycleRepository(Membership::class, $this->orm, $this->unitOfWork))->save($membership);
+        $this->unitOfWork->persist($membership);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -267,7 +276,8 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
         $grant = new RolePermission();
         $grant->roleId = $roleId;
         $grant->permissionId = $permissionId;
-        (new CycleRepository(RolePermission::class, $this->orm, $this->unitOfWork))->save($grant);
+        $this->unitOfWork->persist($grant);
+        $this->unitOfWork->flush();
         $this->unitOfWork->clear();
     }
 
@@ -276,7 +286,8 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
         $grant = new MembershipRole();
         $grant->membershipId = $membershipId;
         $grant->roleId = $roleId;
-        (new CycleRepository(MembershipRole::class, $this->orm, $this->unitOfWork))->save($grant);
+        $this->unitOfWork->persist($grant);
+        $this->unitOfWork->flush();
         $this->unitOfWork->clear();
     }
 }

@@ -6,9 +6,9 @@ namespace Univeros\Polaris\Http\Auth;
 
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\RepositoryInterface;
 use Override;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 
 /**
  * `GET /auth/me` — the authenticated user's identity. Organizations and roles are returned

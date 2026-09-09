@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Database\Migrations;
 use Cycle\Migrations\Migration;
 
 /**
- * Creates the `auth_audit_log` table behind {@see \Univeros\Polaris\Entity\AuditLogEntry}.
+ * Creates the `auth_audit_log` table behind {@see \Polaris\Model\AuditLogEntry}.
  *
  * Append-only security trail: one row per PSR-14 domain event with actor/org/network context and
  * a JSON metadata blob that never contains secrets. Indexed by actor, org, and event name for the

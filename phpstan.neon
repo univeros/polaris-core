@@ -3,3 +3,4 @@ parameters:
     paths:
         - packages/core/src
         - packages/core/tests
+        - packages/testing/src

@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Tests\Persistence;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Maintenance\PruneExpiredService;
+use Polaris\Maintenance\PruneExpiredService;
 
 use function bin2hex;
 use function is_array;
@@ -84,7 +84,7 @@ final class PruneExpiredServiceTest extends DatabaseTestCase
             }
         };
 
-        return new PruneExpiredService($this->orm, $clock);
+        return new PruneExpiredService($this->adapter, $clock);
     }
 
     private function seedOtpChallenge(?string $consumedAt, string $expiresAt): string

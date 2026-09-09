@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace Polaris\Token;
 
 use Polaris\Contract\TokenGeneratorInterface;
+use Polaris\Contract\DatabaseAdapter;
 use Polaris\Contract\RepositoryInterface;
-use Cycle\ORM\ORMInterface;
 use Polaris\Contract\UnitOfWorkInterface;
+use Polaris\Schema\Schema;
 use DateInterval;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Uid\Uuid;
 use Polaris\Config\AuthConfig;
-use Univeros\Polaris\Entity\RefreshToken;
+use Polaris\Model\RefreshToken;
 use Polaris\Event\OrganizationSwitched;
 use Polaris\Event\RefreshReuseDetected;
 use Polaris\Event\TokenRefreshed;
@@ -58,7 +59,7 @@ final class TokenService
         private readonly AuthConfig $config,
         private readonly ClockInterface $clock,
         private readonly EventDispatcherInterface $events,
-        private readonly ?ORMInterface $orm = null,
+        private readonly ?DatabaseAdapter $database = null,
     ) {
     }
 
@@ -265,22 +266,21 @@ final class TokenService
      */
     private function claimForRotation(RefreshToken $current, DateTimeImmutable $now): bool
     {
-        if ($this->orm === null) {
+        if ($this->database === null) {
             // In-memory test wiring has no database to CAS against; the entity-level
             // revoked check above already ran. Production wiring always passes the ORM.
             return true;
         }
 
-        $source = $this->orm->getSource(RefreshToken::class);
-        $affected = $source->getDatabase()->update(
-            $source->getTable(),
+        $affected = $this->database->update(
+            Schema::for(RefreshToken::class)->table,
+            ['id' => $current->id, 'revoked_at' => null],
             [
                 'revoked_at' => $now,
                 'revoked_reason' => RefreshToken::REASON_ROTATED,
                 'last_used_at' => $now,
             ],
-            ['id' => $current->id, 'revoked_at' => null],
-        )->run();
+        );
 
         return $affected === 1;
     }

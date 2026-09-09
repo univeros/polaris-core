@@ -19,7 +19,7 @@ use Polaris\Contract\OtpMailerInterface;
 use Polaris\Contract\QrCodeRendererInterface;
 use Polaris\Contract\SmsSenderInterface;
 use Polaris\Contract\TotpProviderInterface;
-use Univeros\Polaris\Entity\MfaFactor;
+use Polaris\Model\MfaFactor;
 use Univeros\Polaris\Http\Middleware\StepUpMiddleware;
 use Polaris\Mfa\MfaChallengeVerifier;
 use Polaris\Mfa\MfaConfirmation;

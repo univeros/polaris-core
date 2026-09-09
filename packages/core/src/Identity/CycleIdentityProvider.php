@@ -7,7 +7,7 @@ namespace Polaris\Identity;
 use Polaris\Contract\IdentityProviderInterface;
 use Polaris\Contract\RepositoryInterface;
 use Override;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 
 /**
  * Adapts the {@see User} repository to the framework's {@see IdentityProviderInterface}

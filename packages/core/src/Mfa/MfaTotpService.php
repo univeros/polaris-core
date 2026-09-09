@@ -13,8 +13,8 @@ use SensitiveParameter;
 use Symfony\Component\Uid\Uuid;
 use Polaris\Contract\QrCodeRendererInterface;
 use Polaris\Contract\TotpProviderInterface;
-use Univeros\Polaris\Entity\MfaFactor;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\MfaFactor;
+use Polaris\Model\User;
 use Polaris\Exception\InvalidOtpException;
 use Polaris\Exception\MfaFactorNotFoundException;
 

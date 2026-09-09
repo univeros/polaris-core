@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Database\Migrations;
 use Cycle\Migrations\Migration;
 
 /**
- * Creates the `auth_users` table behind {@see \Univeros\Polaris\Entity\User}.
+ * Creates the `auth_users` table behind {@see \Polaris\Model\User}.
  *
  * Uses Cycle's abstract column types only, so `bin/altair db:migrate` renders the
  * correct DDL on PostgreSQL, MySQL, SQL Server, and any other supported driver —

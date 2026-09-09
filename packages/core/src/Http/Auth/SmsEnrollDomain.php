@@ -7,12 +7,12 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Entity\MfaFactor;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\MfaFactor;
+use Polaris\Model\User;
 use Polaris\Exception\OtpCooldownException;
 use Polaris\Mfa\E164;
 use Polaris\Mfa\OtpFactorService;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\UserRepository;
 
 use function trim;
 

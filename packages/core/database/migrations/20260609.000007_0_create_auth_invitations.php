@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Database\Migrations;
 use Cycle\Migrations\Migration;
 
 /**
- * Creates the `auth_invitations` table behind {@see \Univeros\Polaris\Entity\Invitation}.
+ * Creates the `auth_invitations` table behind {@see \Polaris\Model\Invitation}.
  *
  * `unique(token_hash)` enforces a single live invitation per emailed token (stored only as its
  * HMAC hash); `role_ids` is a portable JSON column holding the roles to grant on acceptance.

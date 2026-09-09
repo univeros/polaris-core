@@ -4,6 +4,7 @@
 
     <file>packages/core/src</file>
     <file>packages/core/tests</file>
+    <file>packages/testing/src</file>
 
     <arg name="colors"/>
     <arg name="warning-severity" value="0"/>

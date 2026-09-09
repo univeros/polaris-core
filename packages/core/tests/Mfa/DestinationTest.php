@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Mfa;
 
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Entity\OtpChallenge;
+use Polaris\Model\OtpChallenge;
 use Polaris\Mfa\Destination;
 
 final class DestinationTest extends TestCase

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Univeros\Polaris\Bootstrap\UnitOfWorkBridge;
-use Univeros\Polaris\Persistence\RecoveryCodeRepository;
+use Polaris\Repository\RecoveryCodeRepository;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Entity\RecoveryCode;
+use Polaris\Model\RecoveryCode;
 use Polaris\Event\MfaRecoveryRegenerated;
 use Polaris\Mfa\RecoveryCodeService;
 use Polaris\Security\Pepper;
@@ -89,12 +88,12 @@ final class RecoveryCodeServicePersistenceTest extends DatabaseTestCase
         // The ORM is passed so verify() exercises the conditional-UPDATE spend (issue #97)
         // against the real driver, exactly as the production wiring does.
         return new RecoveryCodeService(
-            new RecoveryCodeRepository($this->orm, $this->unitOfWork),
-            new UnitOfWorkBridge($this->unitOfWork),
+            new RecoveryCodeRepository($this->adapter, $this->identities),
+            $this->unitOfWork,
             new Pepper('app-key-for-tests-0123456789abcdef'),
             FrozenClock::at('2026-06-08 12:00:00'),
             $events ?? new RecordingEventDispatcher(),
-            $this->orm,
+            $this->adapter,
         );
     }
 }
