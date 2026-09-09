@@ -9,9 +9,9 @@ use Altair\Http\Contracts\PayloadInterface;
 use Override;
 use Univeros\Polaris\Entity\MfaFactor;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Exception\OtpCooldownException;
-use Univeros\Polaris\Mfa\E164;
-use Univeros\Polaris\Mfa\OtpFactorService;
+use Polaris\Exception\OtpCooldownException;
+use Polaris\Mfa\E164;
+use Polaris\Mfa\OtpFactorService;
 use Univeros\Polaris\Persistence\UserRepository;
 
 use function trim;

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\RepositoryInterface;
 use SensitiveParameter;
 use Univeros\Polaris\Entity\MfaFactor;
-use Univeros\Polaris\Exception\InvalidOtpException;
-use Univeros\Polaris\Exception\MfaFactorNotFoundException;
-use Univeros\Polaris\Token\ClientContext;
+use Polaris\Exception\InvalidOtpException;
+use Polaris\Exception\MfaFactorNotFoundException;
+use Polaris\Token\ClientContext;
 
 use function in_array;
 
@@ -19,8 +19,8 @@ use function in_array;
  * service that owns the factor type.
  *
  * It is purpose-parameterised so the same dispatch backs both the login gate
- * ({@see \Univeros\Polaris\Identity\MfaLoginService}, `login_mfa`) and step-up
- * ({@see \Univeros\Polaris\Identity\StepUpService}, `step_up`) without either re-implementing the
+ * ({@see \Polaris\Identity\MfaLoginService}, `login_mfa`) and step-up
+ * ({@see \Polaris\Identity\StepUpService}, `step_up`) without either re-implementing the
  * factor routing or replay rules. It performs no token minting and emits no events — the caller
  * wraps it with the policy for what a successful verification grants.
  */

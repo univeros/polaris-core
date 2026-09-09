@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Event;
+namespace Polaris\Event;
 
 /**
  * Emitted after an organization is created and its creator granted the `owner` role

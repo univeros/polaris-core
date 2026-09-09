@@ -10,7 +10,7 @@ use Altair\Http\Contracts\IdentityValidatorInterface;
 use Altair\Http\Contracts\TokenExtractorInterface;
 use Altair\Http\Contracts\TokenFactoryInterface;
 use Altair\Http\Middleware\RateLimit\IpKeyResolver;
-use Altair\Http\Middleware\RateLimit\RateLimit;
+use Altair\Http\Middleware\RateLimit\RateLimit as AltairRateLimit;
 use Altair\Http\Middleware\RateLimit\RateLimitMiddleware;
 use Altair\Http\Middleware\TokenAuthenticationMiddleware;
 use Altair\Http\Rule\RequestPathRule;
@@ -21,11 +21,12 @@ use Psr\Clock\ClockInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
-use Univeros\Polaris\Authorization\Gate;
-use Univeros\Polaris\Authorization\PermissionResolver;
-use Univeros\Polaris\Config\AuthConfig;
-use Univeros\Polaris\Config\RateLimitConfig;
-use Univeros\Polaris\Contracts\OtpMailerInterface;
+use Polaris\Authorization\Gate;
+use Polaris\Authorization\PermissionResolver;
+use Polaris\Config\AuthConfig;
+use Polaris\Config\RateLimit;
+use Polaris\Config\RateLimitConfig;
+use Polaris\Contract\OtpMailerInterface;
 use Univeros\Polaris\Http\Middleware\AuthenticatedRateLimitMiddleware;
 use Univeros\Polaris\Http\Middleware\AuthorizationMiddleware;
 use Univeros\Polaris\Http\Middleware\AuthRateLimitMiddleware;
@@ -41,8 +42,8 @@ use Univeros\Polaris\Notification\NotificationListener;
 use Univeros\Polaris\Observability\AuditLogListener;
 use Univeros\Polaris\Observability\MetricsListener;
 use Univeros\Polaris\Persistence\UserRepository;
-use Univeros\Polaris\Support\InMemoryCache;
-use Univeros\Polaris\Token\AccessTokenDenylist;
+use Polaris\Support\InMemoryCache;
+use Polaris\Token\AccessTokenDenylist;
 
 use function array_map;
 use function preg_quote;
@@ -141,7 +142,7 @@ final class HttpBindings
 
         // The append-only audit trail (#38) and user-facing notifications (#39). Polaris ships
         // the listeners; the host subscribes them to its PSR-14 dispatcher for the
-        // Univeros\Polaris\Event\* classes (docs/auth/events.md).
+        // Polaris\Event\* classes (docs/auth/events.md).
         $container->singleton(AuditLogListener::class);
 
         // Transient-row pruning (#40); the host wires it to its scheduler (bin/altair job or cron).
@@ -200,7 +201,7 @@ final class HttpBindings
                 CacheInterface $cache,
                 ResponseFactoryInterface $responseFactory,
             ): AuthenticatedRateLimitMiddleware => new AuthenticatedRateLimitMiddleware(
-                new RateLimitMiddleware($cache, $limits->authenticated, $responseFactory, new TokenSubjectKeyResolver()),
+                new RateLimitMiddleware($cache, self::altairPolicy($limits->authenticated), $responseFactory, new TokenSubjectKeyResolver()),
             ),
         );
 
@@ -253,7 +254,7 @@ final class HttpBindings
     ): RateLimitGroup {
         return new RateLimitGroup(
             new RequestPathRule(['path' => [preg_quote($path, '@')]]),
-            new RateLimitMiddleware($cache, $policy, $responseFactory, new IpKeyResolver()),
+            new RateLimitMiddleware($cache, self::altairPolicy($policy), $responseFactory, new IpKeyResolver()),
         );
     }
 
@@ -268,5 +269,10 @@ final class HttpBindings
     private static function publicPathPatterns(): array
     {
         return array_map(static fn(string $path): string => preg_quote($path, '@'), self::PUBLIC_PATHS);
+    }
+
+    private static function altairPolicy(RateLimit $policy): AltairRateLimit
+    {
+        return new AltairRateLimit($policy->limit, $policy->windowSeconds, $policy->keyPrefix);
     }
 }

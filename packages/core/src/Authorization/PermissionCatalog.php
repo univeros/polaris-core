@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Authorization;
+namespace Polaris\Authorization;
 
-use Univeros\Polaris\Contracts\PermissionContributorInterface;
+use Polaris\Contract\PermissionContributorInterface;
 
 use function array_diff;
 use function array_keys;

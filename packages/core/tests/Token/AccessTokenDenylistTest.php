@@ -9,7 +9,7 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
 use Psr\SimpleCache\CacheInterface;
-use Univeros\Polaris\Token\AccessTokenDenylist;
+use Polaris\Token\AccessTokenDenylist;
 
 /**
  * Verifies the #41 {@see AccessTokenDenylist}: a revocation watermarks the user for one access

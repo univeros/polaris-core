@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Functional;
 
-use Univeros\Polaris\Event\OrganizationCreated;
-use Univeros\Polaris\Event\UserRegistered;
-use Univeros\Polaris\Token\ClientContext;
-use Univeros\Polaris\Token\SessionPrincipal;
-use Univeros\Polaris\Token\TokenService;
+use Polaris\Event\OrganizationCreated;
+use Polaris\Event\UserRegistered;
+use Polaris\Token\ClientContext;
+use Polaris\Token\SessionPrincipal;
+use Polaris\Token\TokenService;
 
 use function array_key_last;
 use function is_array;

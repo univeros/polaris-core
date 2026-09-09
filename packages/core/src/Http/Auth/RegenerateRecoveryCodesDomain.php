@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Mfa\RecoveryCodeService;
+use Polaris\Mfa\RecoveryCodeService;
 
 /**
  * `POST /auth/mfa/recovery-codes/regenerate` — retire the user's prior recovery codes and return a

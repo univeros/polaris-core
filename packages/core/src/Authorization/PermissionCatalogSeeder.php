@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Authorization;
+namespace Polaris\Authorization;
 
 use Cycle\Database\DatabaseInterface;
 use DateTimeImmutable;

@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Identity;
 
 use Altair\Http\Validator\RepositoryIdentityValidator;
+use Univeros\Polaris\Bootstrap\AltairIdentityProviderBridge;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Identity\CycleIdentityProvider;
-use Univeros\Polaris\Security\Argon2idPasswordHasher;
+use Polaris\Identity\CycleIdentityProvider;
+use Polaris\Security\Argon2idPasswordHasher;
 use Univeros\Polaris\Tests\Support\InMemoryUserRepository;
 
 /**
@@ -57,7 +58,7 @@ final class CredentialValidatorWiringTest extends TestCase
     {
         $provider = new CycleIdentityProvider(new InMemoryUserRepository($user));
 
-        return new RepositoryIdentityValidator($provider, [
+        return new RepositoryIdentityValidator(new AltairIdentityProviderBridge($provider), [
             'username' => CycleIdentityProvider::IDENTIFIER_FIELD,
             'hash' => CycleIdentityProvider::PASSWORD_HASH_FIELD,
         ]);

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Config;
 
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Config\Secrets;
-use Univeros\Polaris\Exception\InvalidConfigException;
+use Polaris\Config\Secrets;
+use Polaris\Exception\InvalidConfigException;
 
 use function hash;
 

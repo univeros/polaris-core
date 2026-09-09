@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use Cycle\Database\Injection\Fragment;
 use Cycle\ORM\ORMInterface;
 use DateInterval;
@@ -15,17 +15,17 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\SimpleCache\CacheInterface;
 use SensitiveParameter;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Config\OtpConfig;
-use Univeros\Polaris\Contracts\OtpMailerInterface;
-use Univeros\Polaris\Contracts\SmsSenderInterface;
+use Polaris\Config\OtpConfig;
+use Polaris\Contract\OtpMailerInterface;
+use Polaris\Contract\SmsSenderInterface;
 use Univeros\Polaris\Entity\MfaFactor;
 use Univeros\Polaris\Entity\OtpChallenge;
-use Univeros\Polaris\Event\OtpChallengeSent;
-use Univeros\Polaris\Event\OtpVerifyFailed;
-use Univeros\Polaris\Exception\InvalidOtpException;
-use Univeros\Polaris\Exception\OtpCooldownException;
-use Univeros\Polaris\Security\Pepper;
-use Univeros\Polaris\Token\ClientContext;
+use Polaris\Event\OtpChallengeSent;
+use Polaris\Event\OtpVerifyFailed;
+use Polaris\Exception\InvalidOtpException;
+use Polaris\Exception\OtpCooldownException;
+use Polaris\Security\Pepper;
+use Polaris\Token\ClientContext;
 
 use function hash;
 use function in_array;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Support;
 
 use Override;
-use Univeros\Polaris\Contracts\OtpMailerInterface;
+use Polaris\Contract\OtpMailerInterface;
 
 /**
  * An {@see OtpMailerInterface} that records what it was asked to send, so a test can assert the

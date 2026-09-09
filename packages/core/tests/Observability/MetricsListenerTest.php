@@ -8,10 +8,10 @@ use Altair\Observability\Metrics\Meter;
 use Altair\Observability\Recorder\InMemoryRecorder;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
-use Univeros\Polaris\Event\RefreshReuseDetected;
-use Univeros\Polaris\Event\UserLoggedIn;
-use Univeros\Polaris\Event\UserLoginFailed;
-use Univeros\Polaris\Event\UserRegistered;
+use Polaris\Event\RefreshReuseDetected;
+use Polaris\Event\UserLoggedIn;
+use Polaris\Event\UserLoginFailed;
+use Polaris\Event\UserRegistered;
 use Univeros\Polaris\Observability\MetricsListener;
 
 /**

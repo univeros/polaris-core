@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Event;
+namespace Polaris\Event;
 
 /**
  * Emitted when a user's password is changed, by reset or by an authenticated change

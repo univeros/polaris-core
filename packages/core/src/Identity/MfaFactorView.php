@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Identity;
+namespace Polaris\Identity;
 
 use Univeros\Polaris\Entity\MfaFactor;
-use Univeros\Polaris\Mfa\Destination;
+use Polaris\Mfa\Destination;
 
 /**
  * A confirmed factor as the client sees it during the login MFA challenge: enough to choose and

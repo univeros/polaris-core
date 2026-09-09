@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Config;
+namespace Polaris\Config;
 
-use Altair\Http\Middleware\RateLimit\RateLimit;
+use Polaris\Config\RateLimit;
 
 use function is_array;
 

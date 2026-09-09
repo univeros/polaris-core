@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Bootstrap;
 
 use Altair\Container\Container;
-use Altair\Http\Contracts\IdentityProviderInterface;
+use Altair\Http\Contracts\IdentityProviderInterface as AltairIdentityProvider;
+use Altair\Persistence\Contracts\UnitOfWorkInterface as AltairUnitOfWork;
+use Polaris\Contract\IdentityProviderInterface;
 use Altair\Http\Contracts\IdentityValidatorInterface;
 use Altair\Http\Validator\RepositoryIdentityValidator;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Univeros\Polaris\Config\AuthConfig;
-use Univeros\Polaris\Contracts\BreachedPasswordCheckInterface;
-use Univeros\Polaris\Contracts\PasswordHasherInterface;
+use Polaris\Config\AuthConfig;
+use Polaris\Contract\BreachedPasswordCheckInterface;
+use Polaris\Contract\PasswordHasherInterface;
 use Univeros\Polaris\Http\Auth\ChangePasswordDomain;
 use Univeros\Polaris\Http\Auth\ForgotPasswordDomain;
 use Univeros\Polaris\Http\Auth\LoginDomain;
@@ -22,21 +24,21 @@ use Univeros\Polaris\Http\Auth\RegisterDomain;
 use Univeros\Polaris\Http\Auth\ResendVerificationDomain;
 use Univeros\Polaris\Http\Auth\ResetPasswordDomain;
 use Univeros\Polaris\Http\Auth\VerifyEmailDomain;
-use Univeros\Polaris\Identity\CycleIdentityProvider;
-use Univeros\Polaris\Identity\EmailVerificationService;
-use Univeros\Polaris\Identity\LoginService;
-use Univeros\Polaris\Identity\MfaLoginService;
-use Univeros\Polaris\Identity\PasswordPolicy;
-use Univeros\Polaris\Identity\PasswordResetService;
-use Univeros\Polaris\Identity\RegistrationService;
-use Univeros\Polaris\Identity\SessionService;
+use Polaris\Identity\CycleIdentityProvider;
+use Polaris\Identity\EmailVerificationService;
+use Polaris\Identity\LoginService;
+use Polaris\Identity\MfaLoginService;
+use Polaris\Identity\PasswordPolicy;
+use Polaris\Identity\PasswordResetService;
+use Polaris\Identity\RegistrationService;
+use Polaris\Identity\SessionService;
 use Univeros\Polaris\Persistence\EmailVerificationRepository;
 use Univeros\Polaris\Persistence\PasswordResetRepository;
 use Univeros\Polaris\Persistence\UserRepository;
-use Univeros\Polaris\Security\Argon2idPasswordHasher;
-use Univeros\Polaris\Security\NullBreachedPasswordCheck;
-use Univeros\Polaris\Security\Pepper;
-use Univeros\Polaris\Token\TokenService;
+use Polaris\Security\Argon2idPasswordHasher;
+use Polaris\Security\NullBreachedPasswordCheck;
+use Polaris\Security\Pepper;
+use Polaris\Token\TokenService;
 
 /**
  * Wires the identity machinery: the framework's auth contracts over the user store,
@@ -68,10 +70,19 @@ final class IdentityBindings
             IdentityProviderInterface::class,
             static fn(UserRepository $users): CycleIdentityProvider => new CycleIdentityProvider($users),
         );
+        $container->singleton(
+            AltairIdentityProvider::class,
+            static fn(IdentityProviderInterface $provider): AltairIdentityProviderBridge
+                => new AltairIdentityProviderBridge($provider),
+        );
+        $container->singleton(
+            UnitOfWorkInterface::class,
+            static fn(AltairUnitOfWork $unitOfWork): UnitOfWorkBridge => new UnitOfWorkBridge($unitOfWork),
+        );
 
         $container->singleton(
             IdentityValidatorInterface::class,
-            static fn(IdentityProviderInterface $provider): RepositoryIdentityValidator
+            static fn(AltairIdentityProvider $provider): RepositoryIdentityValidator
                 => new RepositoryIdentityValidator($provider, [
                     'username' => CycleIdentityProvider::IDENTIFIER_FIELD,
                     'hash' => CycleIdentityProvider::PASSWORD_HASH_FIELD,

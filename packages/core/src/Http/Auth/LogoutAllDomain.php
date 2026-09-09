@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Identity\SessionService;
+use Polaris\Identity\SessionService;
 
 /**
  * `POST /auth/logout-all` — revoke every session for the authenticated user (e.g. after a

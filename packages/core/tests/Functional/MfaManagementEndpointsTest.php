@@ -6,12 +6,12 @@ namespace Univeros\Polaris\Tests\Functional;
 
 use OTPHP\TOTP;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Event\MfaFactorRemoved;
-use Univeros\Polaris\Event\UserRegistered;
+use Polaris\Event\MfaFactorRemoved;
+use Polaris\Event\UserRegistered;
 use Univeros\Polaris\Persistence\UserRepository;
-use Univeros\Polaris\Token\ClientContext;
-use Univeros\Polaris\Token\SessionPrincipal;
-use Univeros\Polaris\Token\TokenService;
+use Polaris\Token\ClientContext;
+use Polaris\Token\SessionPrincipal;
+use Polaris\Token\TokenService;
 
 use function array_column;
 use function array_slice;

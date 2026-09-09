@@ -12,8 +12,8 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Univeros\Polaris\Config\AuthConfig;
-use Univeros\Polaris\Token\AccessTokenDenylist;
+use Polaris\Config\AuthConfig;
+use Polaris\Token\AccessTokenDenylist;
 
 use function json_encode;
 

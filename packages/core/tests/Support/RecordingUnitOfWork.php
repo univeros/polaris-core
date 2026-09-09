@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Support;
 
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use Override;
 
 /**
@@ -39,7 +39,6 @@ final class RecordingUnitOfWork implements UnitOfWorkInterface
         ++$this->flushes;
     }
 
-    #[Override]
     public function clear(): void
     {
     }

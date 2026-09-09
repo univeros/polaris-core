@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Identity;
+namespace Polaris\Identity;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use DateInterval;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use SensitiveParameter;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Contracts\PasswordHasherInterface;
+use Polaris\Contract\PasswordHasherInterface;
 use Univeros\Polaris\Entity\PasswordReset;
 use Univeros\Polaris\Entity\RefreshToken;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Event\PasswordChanged;
-use Univeros\Polaris\Event\PasswordResetRequested;
-use Univeros\Polaris\Exception\AccountDisabledException;
-use Univeros\Polaris\Exception\InvalidCredentialsException;
-use Univeros\Polaris\Exception\InvalidPasswordException;
-use Univeros\Polaris\Exception\InvalidResetTokenException;
-use Univeros\Polaris\Security\Pepper;
-use Univeros\Polaris\Token\ClientContext;
+use Polaris\Event\PasswordChanged;
+use Polaris\Event\PasswordResetRequested;
+use Polaris\Exception\AccountDisabledException;
+use Polaris\Exception\InvalidCredentialsException;
+use Polaris\Exception\InvalidPasswordException;
+use Polaris\Exception\InvalidResetTokenException;
+use Polaris\Security\Pepper;
+use Polaris\Token\ClientContext;
 
 use function base64_encode;
 use function random_bytes;
@@ -36,7 +36,7 @@ use function strtr;
  * Changing a password — by reset or change — always invalidates other sessions, a core
  * account-takeover containment measure: a reset revokes *all* sessions, a change revokes
  * all but the caller's current one. Reset tokens are 256-bit CSPRNG secrets stored only as
- * a keyed HMAC ({@see \Univeros\Polaris\Security\Pepper}); the plaintext travels once on
+ * a keyed HMAC ({@see \Polaris\Security\Pepper}); the plaintext travels once on
  * {@see PasswordResetRequested} for the mailer.
  *
  * See `docs/auth/flows.md` §8. The OTP (email+code) reset style and breach check arrive in

@@ -7,8 +7,8 @@ namespace Univeros\Polaris\Http\Orgs;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Authorization\InvitationService;
-use Univeros\Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\InvitationService;
+use Polaris\Authorization\PermissionCatalog;
 
 /**
  * `GET /orgs/{id}/invites` — list the organization's pending invitations.

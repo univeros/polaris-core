@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Token;
+namespace Polaris\Token;
 
-use Univeros\Polaris\Exception\InvalidConfigException;
+use Polaris\Exception\InvalidConfigException;
 
 use function base64_encode;
 use function openssl_pkey_get_details;

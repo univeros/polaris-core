@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Event;
+namespace Polaris\Event;
 
 /**
  * Emitted when a user clears a step-up re-authentication (`mfa.step_up_completed`) and a refreshed

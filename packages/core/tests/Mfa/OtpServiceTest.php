@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Mfa;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\RepositoryInterface;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Config\OtpConfig;
+use Polaris\Config\OtpConfig;
 use Univeros\Polaris\Entity\MfaFactor;
 use Univeros\Polaris\Entity\OtpChallenge;
-use Univeros\Polaris\Event\OtpChallengeSent;
-use Univeros\Polaris\Event\OtpVerifyFailed;
-use Univeros\Polaris\Exception\InvalidOtpException;
-use Univeros\Polaris\Exception\OtpCooldownException;
-use Univeros\Polaris\Mfa\ChallengePurpose;
-use Univeros\Polaris\Mfa\OtpService;
-use Univeros\Polaris\Security\Pepper;
-use Univeros\Polaris\Support\InMemoryCache;
+use Polaris\Event\OtpChallengeSent;
+use Polaris\Event\OtpVerifyFailed;
+use Polaris\Exception\InvalidOtpException;
+use Polaris\Exception\OtpCooldownException;
+use Polaris\Mfa\ChallengePurpose;
+use Polaris\Mfa\OtpService;
+use Polaris\Security\Pepper;
+use Polaris\Support\InMemoryCache;
 use Univeros\Polaris\Tests\Support\FrozenClock;
 use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
 use Univeros\Polaris\Tests\Support\RecordingOtpMailer;
 use Univeros\Polaris\Tests\Support\RecordingSmsSender;
 use Univeros\Polaris\Tests\Support\RecordingUnitOfWork;
-use Univeros\Polaris\Token\ClientContext;
+use Polaris\Token\ClientContext;
 
 use function preg_match;
 

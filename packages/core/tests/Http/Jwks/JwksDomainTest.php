@@ -6,8 +6,8 @@ namespace Univeros\Polaris\Tests\Http\Jwks;
 
 use Altair\Http\Collection\InputCollection;
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Config\AuthConfig;
-use Univeros\Polaris\Config\Secrets;
+use Polaris\Config\AuthConfig;
+use Polaris\Config\Secrets;
 use Univeros\Polaris\Http\Jwks\JwksDomain;
 use Univeros\Polaris\Tests\Support\TestKeys;
 

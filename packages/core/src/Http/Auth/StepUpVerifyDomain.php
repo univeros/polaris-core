@@ -7,10 +7,10 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Exception\InvalidGrantException;
-use Univeros\Polaris\Exception\InvalidOtpException;
-use Univeros\Polaris\Exception\MfaFactorNotFoundException;
-use Univeros\Polaris\Identity\StepUpService;
+use Polaris\Exception\InvalidGrantException;
+use Polaris\Exception\InvalidOtpException;
+use Polaris\Exception\MfaFactorNotFoundException;
+use Polaris\Identity\StepUpService;
 
 use function is_string;
 use function trim;

@@ -8,11 +8,11 @@ use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use InvalidArgumentException;
 use Override;
-use Univeros\Polaris\Authorization\MembershipService;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Exception\AuthorizationException;
-use Univeros\Polaris\Exception\LastOwnerException;
-use Univeros\Polaris\Exception\MemberNotFoundException;
+use Polaris\Authorization\MembershipService;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Exception\AuthorizationException;
+use Polaris\Exception\LastOwnerException;
+use Polaris\Exception\MemberNotFoundException;
 
 use function is_string;
 

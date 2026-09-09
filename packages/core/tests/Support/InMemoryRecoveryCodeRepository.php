@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Support;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\RepositoryInterface;
 use LogicException;
 use Override;
 use Univeros\Polaris\Entity\RecoveryCode;
@@ -78,13 +78,11 @@ final readonly class InMemoryRecoveryCodeRepository implements RepositoryInterfa
         return $this->findBy([]);
     }
 
-    #[Override]
     public function save(object $entity): void
     {
         throw new LogicException('InMemoryRecoveryCodeRepository is read-only; persist via the unit of work.');
     }
 
-    #[Override]
     public function delete(object $entity): void
     {
         throw new LogicException('InMemoryRecoveryCodeRepository does not delete.');

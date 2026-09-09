@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Authorization;
+namespace Polaris\Authorization;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use DateInterval;
 use InvalidArgumentException;
 use Psr\Clock\ClockInterface;
@@ -17,14 +17,14 @@ use Univeros\Polaris\Entity\Organization;
 use Univeros\Polaris\Entity\MembershipRole;
 use Univeros\Polaris\Entity\Role;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Event\MemberInvited;
-use Univeros\Polaris\Event\MemberJoined;
-use Univeros\Polaris\Exception\AlreadyMemberException;
-use Univeros\Polaris\Exception\AuthorizationException;
-use Univeros\Polaris\Exception\InvalidInvitationTokenException;
-use Univeros\Polaris\Exception\InvitationNotFoundException;
-use Univeros\Polaris\Identity\EmailNormalizer;
-use Univeros\Polaris\Security\Pepper;
+use Polaris\Event\MemberInvited;
+use Polaris\Event\MemberJoined;
+use Polaris\Exception\AlreadyMemberException;
+use Polaris\Exception\AuthorizationException;
+use Polaris\Exception\InvalidInvitationTokenException;
+use Polaris\Exception\InvitationNotFoundException;
+use Polaris\Identity\EmailNormalizer;
+use Polaris\Security\Pepper;
 
 use function base64_encode;
 use function is_array;

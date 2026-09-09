@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Contracts;
+namespace Polaris\Contract;
 
 use SensitiveParameter;
 
 /**
  * Generates and verifies RFC 6238 TOTP secrets/codes for authenticator-app factors.
  *
- * A port over the underlying library ({@see \Univeros\Polaris\Mfa\OtphpTotpProvider} wraps
- * `spomky-labs/otphp`) so the digits/period/algorithm/skew come from {@see \Univeros\Polaris\Config\TotpConfig}
+ * A port over the underlying library ({@see \Polaris\Mfa\OtphpTotpProvider} wraps
+ * `spomky-labs/otphp`) so the digits/period/algorithm/skew come from {@see \Polaris\Config\TotpConfig}
  * and the implementation is swappable. The shared secret is base32; Polaris stores it encrypted.
  */
 interface TotpProviderInterface

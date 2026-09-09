@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Authorization;
+namespace Polaris\Authorization;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use InvalidArgumentException;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -14,13 +14,13 @@ use Univeros\Polaris\Entity\MembershipRole;
 use Univeros\Polaris\Entity\RefreshToken;
 use Univeros\Polaris\Entity\Role;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Event\MemberRemoved;
-use Univeros\Polaris\Event\MemberRolesChanged;
-use Univeros\Polaris\Event\MemberStatusChanged;
-use Univeros\Polaris\Exception\AuthorizationException;
-use Univeros\Polaris\Exception\LastOwnerException;
-use Univeros\Polaris\Exception\MemberNotFoundException;
-use Univeros\Polaris\Identity\SessionService;
+use Polaris\Event\MemberRemoved;
+use Polaris\Event\MemberRolesChanged;
+use Polaris\Event\MemberStatusChanged;
+use Polaris\Exception\AuthorizationException;
+use Polaris\Exception\LastOwnerException;
+use Polaris\Exception\MemberNotFoundException;
+use Polaris\Identity\SessionService;
 
 use function array_keys;
 use function in_array;

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Support;
+namespace Polaris\Support;
 
 use DateInterval;
 use DateTimeImmutable;
 use Override;
 use Psr\SimpleCache\CacheInterface;
-use Univeros\Polaris\Exception\CacheInvalidArgumentException;
+use Polaris\Exception\CacheInvalidArgumentException;
 
 use function preg_match;
 use function time;

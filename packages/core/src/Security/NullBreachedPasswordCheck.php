@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Security;
+namespace Polaris\Security;
 
 use Override;
 use SensitiveParameter;
-use Univeros\Polaris\Contracts\BreachedPasswordCheckInterface;
+use Polaris\Contract\BreachedPasswordCheckInterface;
 
 /**
  * The default no-op breach check: nothing is ever considered breached. Bound when the host has

@@ -12,7 +12,7 @@ use DateTimeImmutable;
  * A single-use email-verification token (table `auth_email_verifications`).
  *
  * The emailed token is never stored — only its keyed HMAC-SHA256 hash
- * ({@see \Univeros\Polaris\Security\Pepper}). A row is consumed exactly once
+ * ({@see \Polaris\Security\Pepper}). A row is consumed exactly once
  * (`consumedAt`) and expires after the configured window (default 24h). Columns use
  * Cycle's abstract types, so the schema is portable across every supported driver.
  *

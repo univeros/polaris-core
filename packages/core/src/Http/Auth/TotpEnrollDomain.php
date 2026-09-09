@@ -8,7 +8,7 @@ use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Mfa\MfaTotpService;
+use Polaris\Mfa\MfaTotpService;
 use Univeros\Polaris\Persistence\UserRepository;
 
 /**

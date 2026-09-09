@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Persistence;
 
+use Polaris\Contract\RepositoryInterface;
 use Altair\Persistence\Contracts\UnitOfWorkInterface;
 use Altair\Persistence\Cycle\CycleRepository;
 use Cycle\ORM\ORMInterface;
@@ -15,8 +16,9 @@ use Univeros\Polaris\Entity\User;
  * by `univeros/persistence`, so the module needs no extra wiring to obtain one.
  *
  * @extends CycleRepository<User>
+ * @implements RepositoryInterface<User>
  */
-final class UserRepository extends CycleRepository
+final class UserRepository extends CycleRepository implements RepositoryInterface
 {
     public function __construct(ORMInterface $orm, UnitOfWorkInterface $unitOfWork)
     {

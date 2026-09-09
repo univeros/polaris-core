@@ -1820,11 +1820,14 @@
             "dist": {
                 "type": "path",
                 "url": "packages/core",
-                "reference": "55784b818580f920904f4008d0319bda49bab4ba"
+                "reference": "75f40483cebf3ed331142506e00c9537833691aa"
             },
             "require": {
                 "endroid/qr-code": "^6.0",
+                "ext-sodium": "*",
+                "lcobucci/jwt": "^5.6",
                 "php": ">=8.3",
+                "psr/clock": "^1.0",
                 "psr/http-client": "^1.0",
                 "spomky-labs/otphp": "^11.3",
                 "symfony/uid": "^7.0",
@@ -1842,6 +1845,7 @@
             },
             "autoload": {
                 "psr-4": {
+                    "Polaris\\": "src/",
                     "Univeros\\Polaris\\": "src/"
                 }
             },

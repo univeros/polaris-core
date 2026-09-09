@@ -7,8 +7,8 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Exception\InvalidPasswordException;
-use Univeros\Polaris\Identity\RegistrationService;
+use Polaris\Exception\InvalidPasswordException;
+use Polaris\Identity\RegistrationService;
 
 use function is_string;
 use function mb_strlen;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Authorization;
+namespace Polaris\Authorization;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\RepositoryInterface;
 use Univeros\Polaris\Entity\Permission;
 use Univeros\Polaris\Entity\RolePermission;
-use Univeros\Polaris\Exception\AuthorizationException;
+use Polaris\Exception\AuthorizationException;
 
 use function array_fill_keys;
 use function in_array;

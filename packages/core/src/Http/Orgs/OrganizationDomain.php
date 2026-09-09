@@ -9,8 +9,8 @@ use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\DomainInterface;
 use Altair\Http\Contracts\PayloadInterface;
 use Altair\Http\Contracts\TokenInterface;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Authorization\ResolvedAuthority;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\ResolvedAuthority;
 
 use function in_array;
 use function is_array;

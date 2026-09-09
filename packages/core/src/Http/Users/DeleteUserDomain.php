@@ -7,9 +7,9 @@ namespace Univeros\Polaris\Http\Users;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Exception\AuthorizationException;
-use Univeros\Polaris\Exception\UserNotFoundException;
-use Univeros\Polaris\Identity\UserAdminService;
+use Polaris\Exception\AuthorizationException;
+use Polaris\Exception\UserNotFoundException;
+use Polaris\Identity\UserAdminService;
 
 /**
  * `DELETE /users/{id}` — delete (anonymize) an account: yourself, or any user when holding

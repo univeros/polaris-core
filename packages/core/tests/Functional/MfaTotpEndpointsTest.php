@@ -6,8 +6,8 @@ namespace Univeros\Polaris\Tests\Functional;
 
 use OTPHP\TOTP;
 use Psr\Http\Message\ResponseInterface;
-use Univeros\Polaris\Event\MfaEnrolled;
-use Univeros\Polaris\Event\UserRegistered;
+use Polaris\Event\MfaEnrolled;
+use Polaris\Event\UserRegistered;
 
 /**
  * End-to-end tests for TOTP enrollment + confirmation, driven through the real pipeline (the routes

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Token;
 
 use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Token\AccessTokenClaims;
+use Polaris\Token\AccessTokenClaims;
 
 /**
- * A token minted by {@see \Univeros\Polaris\Token\PolarisTokenGenerator} carries the
+ * A token minted by {@see \Polaris\Token\PolarisTokenGenerator} carries the
  * full Polaris claim set and a `kid` header, and round-trips through
- * {@see \Univeros\Polaris\Token\PolarisTokenParser} verified against the public key.
+ * {@see \Polaris\Token\PolarisTokenParser} verified against the public key.
  */
 final class PolarisTokenRoundTripTest extends TokenTestCase
 {

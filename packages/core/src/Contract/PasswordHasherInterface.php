@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Contracts;
+namespace Polaris\Contract;
 
 use SensitiveParameter;
 

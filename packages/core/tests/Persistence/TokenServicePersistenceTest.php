@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Univeros\Polaris\Config\AuthConfig;
+use Univeros\Polaris\Bootstrap\UnitOfWorkBridge;
+use Polaris\Config\AuthConfig;
 use Univeros\Polaris\Entity\RefreshToken;
-use Univeros\Polaris\Event\RefreshReuseDetected;
-use Univeros\Polaris\Exception\RefreshTokenReuseException;
+use Polaris\Event\RefreshReuseDetected;
+use Polaris\Exception\RefreshTokenReuseException;
 use Univeros\Polaris\Persistence\RefreshTokenRepository;
-use Univeros\Polaris\Security\Pepper;
+use Polaris\Security\Pepper;
 use Univeros\Polaris\Tests\Support\FrozenClock;
 use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
 use Univeros\Polaris\Tests\Support\RecordingTokenGenerator;
 use Univeros\Polaris\Tests\Support\StubSessionPrincipalResolver;
-use Univeros\Polaris\Token\ClientContext;
-use Univeros\Polaris\Token\SessionPrincipal;
-use Univeros\Polaris\Token\TokenService;
+use Polaris\Token\ClientContext;
+use Polaris\Token\SessionPrincipal;
+use Polaris\Token\TokenService;
 
 /**
  * Exercises {@see TokenService} rotation and reuse detection against a real database
@@ -37,7 +38,7 @@ final class TokenServicePersistenceTest extends DatabaseTestCase
     {
         return new TokenService(
             new RefreshTokenRepository($this->orm, $this->unitOfWork),
-            $this->unitOfWork,
+            new UnitOfWorkBridge($this->unitOfWork),
             new Pepper('persistence-test-app-key-01234567'),
             new RecordingTokenGenerator(),
             new StubSessionPrincipalResolver(),

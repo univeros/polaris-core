@@ -15,7 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * {@see CredentialsExtractorInterface}; if one returned `username`/`password` from the body the
  * middleware would mint a token directly from raw credentials — bypassing the lockout,
  * verified-email, timing-equalization, and (later) MFA gates enforced by
- * {@see \Univeros\Polaris\Identity\LoginService}. Polaris therefore disables that path: only a
+ * {@see \Polaris\Identity\LoginService}. Polaris therefore disables that path: only a
  * pre-issued bearer token authenticates a protected route, and `POST /auth/login` stays the
  * sole credential entry point.
  */

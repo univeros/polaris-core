@@ -7,17 +7,17 @@ namespace Univeros\Polaris\Notification;
 use Altair\Persistence\Contracts\RepositoryInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
-use Univeros\Polaris\Contracts\OtpMailerInterface;
+use Polaris\Contract\OtpMailerInterface;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Event\MemberInvited;
-use Univeros\Polaris\Event\MfaEnrolled;
-use Univeros\Polaris\Event\MfaFactorRemoved;
-use Univeros\Polaris\Event\MfaRecoveryRegenerated;
-use Univeros\Polaris\Event\MfaRecoveryUsed;
-use Univeros\Polaris\Event\PasswordChanged;
-use Univeros\Polaris\Event\PasswordResetRequested;
-use Univeros\Polaris\Event\UserLocked;
-use Univeros\Polaris\Event\UserRegistered;
+use Polaris\Event\MemberInvited;
+use Polaris\Event\MfaEnrolled;
+use Polaris\Event\MfaFactorRemoved;
+use Polaris\Event\MfaRecoveryRegenerated;
+use Polaris\Event\MfaRecoveryUsed;
+use Polaris\Event\PasswordChanged;
+use Polaris\Event\PasswordResetRequested;
+use Polaris\Event\UserLocked;
+use Polaris\Event\UserRegistered;
 
 use function str_ends_with;
 
@@ -30,7 +30,7 @@ use function str_ends_with;
  * plaintext token as the mail payload — that is the one place those tokens are allowed to travel.
  * Events that only carry a user id (locked, password changed, MFA changes) look the recipient up;
  * unknown users and anonymized tombstones are skipped. SMS delivery stays inside the OTP flow
- * ({@see \Univeros\Polaris\Mfa\OtpService}), which sends codes through the SMS port directly.
+ * ({@see \Polaris\Mfa\OtpService}), which sends codes through the SMS port directly.
  *
  * **Fail-open:** like the audit trail, a notification failure must never break the operation that
  * triggered it — it is logged (PSR-3) and swallowed.

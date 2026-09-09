@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Token;
+namespace Polaris\Token;
 
-use Altair\Http\Contracts\TokenGeneratorInterface;
-use Altair\Http\Contracts\TokenParserInterface;
-use Altair\Http\Exception\InvalidTokenException;
+use Polaris\Contract\TokenGeneratorInterface;
+use Polaris\Contract\TokenParserInterface;
+use Polaris\Exception\InvalidTokenException;
 use Symfony\Component\Uid\Uuid;
 
 /**

@@ -7,10 +7,10 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Exception\InvalidMfaFactorStateException;
-use Univeros\Polaris\Exception\MfaFactorNotFoundException;
-use Univeros\Polaris\Identity\MfaFactorView;
-use Univeros\Polaris\Mfa\MfaManagementService;
+use Polaris\Exception\InvalidMfaFactorStateException;
+use Polaris\Exception\MfaFactorNotFoundException;
+use Polaris\Identity\MfaFactorView;
+use Polaris\Mfa\MfaManagementService;
 
 use function trim;
 

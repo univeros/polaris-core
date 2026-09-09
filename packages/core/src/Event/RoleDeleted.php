@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Event;
+namespace Polaris\Event;
 
 /**
  * Emitted when a role is deleted from an organization (`role.deleted`). The cascade has already

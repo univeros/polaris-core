@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Event;
+namespace Polaris\Event;
 
 /**
  * Emitted when a recovery code is spent to authenticate (`mfa.recovery_used`) — a high-value

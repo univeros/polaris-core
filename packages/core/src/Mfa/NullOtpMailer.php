@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
 use Override;
-use Univeros\Polaris\Contracts\OtpMailerInterface;
+use Polaris\Contract\OtpMailerInterface;
 
 /**
  * A no-op email driver for environments that disable the email OTP channel entirely (it neither

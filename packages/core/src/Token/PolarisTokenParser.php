@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Token;
+namespace Polaris\Token;
 
-use Altair\Http\Contracts\TokenConfigurationInterface;
-use Altair\Http\Contracts\TokenInterface;
-use Altair\Http\Contracts\TokenParserInterface;
-use Altair\Http\Exception\InvalidTokenException;
-use Altair\Http\Jwt\LcobucciTokenParser;
+use Polaris\Contract\TokenConfigurationInterface;
+use Polaris\Contract\TokenInterface;
+use Polaris\Contract\TokenParserInterface;
+use Polaris\Exception\InvalidTokenException;
+use Polaris\Token\LcobucciTokenParser;
 use Override;
 use Psr\Clock\ClockInterface;
 

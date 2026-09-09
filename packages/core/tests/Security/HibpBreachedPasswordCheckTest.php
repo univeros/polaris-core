@@ -12,7 +12,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\NullLogger;
 use RuntimeException;
-use Univeros\Polaris\Security\HibpBreachedPasswordCheck;
+use Polaris\Security\HibpBreachedPasswordCheck;
 
 use function sha1;
 use function strtoupper;

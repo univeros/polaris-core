@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Identity;
+namespace Polaris\Identity;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use SensitiveParameter;
-use Univeros\Polaris\Mfa\ChallengePurpose;
-use Univeros\Polaris\Event\MfaStepUpCompleted;
-use Univeros\Polaris\Event\MfaVerifyFailed;
-use Univeros\Polaris\Exception\InvalidOtpException;
-use Univeros\Polaris\Exception\MfaFactorNotFoundException;
-use Univeros\Polaris\Mfa\MfaChallengeVerifier;
-use Univeros\Polaris\Mfa\OtpChallengeResult;
-use Univeros\Polaris\Token\ClientContext;
-use Univeros\Polaris\Token\TokenService;
+use Polaris\Mfa\ChallengePurpose;
+use Polaris\Event\MfaStepUpCompleted;
+use Polaris\Event\MfaVerifyFailed;
+use Polaris\Exception\InvalidOtpException;
+use Polaris\Exception\MfaFactorNotFoundException;
+use Polaris\Mfa\MfaChallengeVerifier;
+use Polaris\Mfa\OtpChallengeResult;
+use Polaris\Token\ClientContext;
+use Polaris\Token\TokenService;
 
 /**
  * Step-up re-authentication (issue #25): re-verify a factor while already logged in to refresh the

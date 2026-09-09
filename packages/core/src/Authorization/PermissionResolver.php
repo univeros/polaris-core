@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Authorization;
+namespace Polaris\Authorization;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\RepositoryInterface;
 use Univeros\Polaris\Entity\Membership;
 use Univeros\Polaris\Entity\MembershipRole;
 use Univeros\Polaris\Entity\Organization;

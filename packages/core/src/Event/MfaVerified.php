@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Event;
+namespace Polaris\Event;
 
 /**
  * Emitted when an MFA challenge is satisfied at the login gate (`mfa.verified`) and the real token

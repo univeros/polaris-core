@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Security;
 
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Security\Argon2idPasswordHasher;
+use Polaris\Security\Argon2idPasswordHasher;
 
 use function password_hash;
 

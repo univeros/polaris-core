@@ -12,7 +12,7 @@ use Altair\Http\Contracts\PayloadInterface;
 use Altair\Http\Contracts\TokenInterface;
 use Univeros\Polaris\Http\Middleware\ClientContextMiddleware;
 use Univeros\Polaris\Http\Middleware\MfaTicket;
-use Univeros\Polaris\Token\ClientContext;
+use Polaris\Token\ClientContext;
 
 use function filter_var;
 use function strlen;

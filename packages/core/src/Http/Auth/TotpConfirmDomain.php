@@ -7,9 +7,9 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Exception\InvalidOtpException;
-use Univeros\Polaris\Exception\MfaFactorNotFoundException;
-use Univeros\Polaris\Mfa\MfaTotpService;
+use Polaris\Exception\InvalidOtpException;
+use Polaris\Exception\MfaFactorNotFoundException;
+use Polaris\Mfa\MfaTotpService;
 
 use function trim;
 

@@ -6,8 +6,8 @@ namespace Univeros\Polaris\Tests\Functional;
 
 use Altair\Container\Container;
 use Altair\Persistence\Contracts\UnitOfWorkInterface;
-use Univeros\Polaris\Contracts\OtpMailerInterface;
-use Univeros\Polaris\Contracts\SmsSenderInterface;
+use Polaris\Contract\OtpMailerInterface;
+use Polaris\Contract\SmsSenderInterface;
 use Univeros\Polaris\Tests\Support\RecordingOtpMailer;
 use Univeros\Polaris\Tests\Support\RecordingSmsSender;
 use Cycle\ORM\ORMInterface;

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Support;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use Override;
 use Univeros\Polaris\Entity\RefreshToken;
 
@@ -17,7 +17,7 @@ use function get_object_vars;
 /**
  * In-memory {@see RefreshToken} store that doubles as both the repository and the unit
  * of work, sharing one identity map keyed by id. Because entities are stored by
- * reference, the in-place mutations {@see \Univeros\Polaris\Token\TokenService} makes
+ * reference, the in-place mutations {@see \Polaris\Token\TokenService} makes
  * (revoking, rotating) are visible to later lookups — matching real ORM behaviour
  * without a database.
  *
@@ -72,13 +72,11 @@ final class InMemoryRefreshTokenRepository implements RepositoryInterface, UnitO
         return array_values($this->tokens);
     }
 
-    #[Override]
     public function save(object $entity): void
     {
         $this->persist($entity);
     }
 
-    #[Override]
     public function delete(object $entity): void
     {
         $this->remove($entity);
@@ -102,7 +100,6 @@ final class InMemoryRefreshTokenRepository implements RepositoryInterface, UnitO
         // No-op: persist() commits immediately to the in-memory map.
     }
 
-    #[Override]
     public function clear(): void
     {
         // No-op: entities are held by reference; nothing to detach.

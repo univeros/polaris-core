@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Mfa;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\RepositoryInterface;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Univeros\Polaris\Entity\MfaFactor;
-use Univeros\Polaris\Event\MfaEnrolled;
-use Univeros\Polaris\Mfa\MfaConfirmation;
-use Univeros\Polaris\Mfa\RecoveryCodeService;
-use Univeros\Polaris\Security\Pepper;
+use Polaris\Event\MfaEnrolled;
+use Polaris\Mfa\MfaConfirmation;
+use Polaris\Mfa\RecoveryCodeService;
+use Polaris\Security\Pepper;
 use Univeros\Polaris\Tests\Support\FrozenClock;
 use Univeros\Polaris\Tests\Support\InMemoryRecoveryCodeRepository;
 use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;

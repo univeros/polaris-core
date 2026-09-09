@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
+use Univeros\Polaris\Bootstrap\UnitOfWorkBridge;
 use Altair\Persistence\Cycle\CycleRepository;
 use Symfony\Component\Uid\Uuid;
 use Univeros\Polaris\Entity\RecoveryCode;
-use Univeros\Polaris\Event\MfaRecoveryRegenerated;
-use Univeros\Polaris\Mfa\RecoveryCodeService;
-use Univeros\Polaris\Security\Pepper;
+use Polaris\Event\MfaRecoveryRegenerated;
+use Polaris\Mfa\RecoveryCodeService;
+use Polaris\Security\Pepper;
 use Univeros\Polaris\Tests\Support\FrozenClock;
 use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
 
@@ -89,7 +90,7 @@ final class RecoveryCodeServicePersistenceTest extends DatabaseTestCase
         // against the real driver, exactly as the production wiring does.
         return new RecoveryCodeService(
             new CycleRepository(RecoveryCode::class, $this->orm, $this->unitOfWork),
-            $this->unitOfWork,
+            new UnitOfWorkBridge($this->unitOfWork),
             new Pepper('app-key-for-tests-0123456789abcdef'),
             FrozenClock::at('2026-06-08 12:00:00'),
             $events ?? new RecordingEventDispatcher(),

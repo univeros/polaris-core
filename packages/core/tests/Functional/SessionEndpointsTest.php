@@ -6,9 +6,9 @@ namespace Univeros\Polaris\Tests\Functional;
 
 use Altair\Http\Contracts\TokenParserInterface;
 use Psr\Http\Message\ResponseInterface;
-use Univeros\Polaris\Event\RefreshReuseDetected;
-use Univeros\Polaris\Event\SessionsRevoked;
-use Univeros\Polaris\Event\UserRegistered;
+use Polaris\Event\RefreshReuseDetected;
+use Polaris\Event\SessionsRevoked;
+use Polaris\Event\UserRegistered;
 
 use function array_filter;
 use function array_values;

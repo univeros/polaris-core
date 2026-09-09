@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Http\Orgs;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Authorization\OrganizationService;
+use Polaris\Authorization\OrganizationService;
 
 /**
  * `GET /orgs` — the organizations the authenticated caller is an active member of.

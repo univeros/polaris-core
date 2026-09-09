@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Token;
 
 use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Token\AccessTokenClaims;
-use Univeros\Polaris\Token\PolarisTokenValidator;
+use Polaris\Token\AccessTokenClaims;
+use Polaris\Token\PolarisTokenValidator;
 
 final class PolarisTokenValidatorTest extends TokenTestCase
 {

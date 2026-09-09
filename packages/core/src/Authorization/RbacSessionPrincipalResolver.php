@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Authorization;
+namespace Polaris\Authorization;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Univeros\Polaris\Config\AuthConfig;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Config\AuthConfig;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Token\SessionPrincipal;
-use Univeros\Polaris\Token\SessionPrincipalResolverInterface;
+use Polaris\Token\SessionPrincipal;
+use Polaris\Token\SessionPrincipalResolverInterface;
 
 /**
  * Resolves the session principal with multi-tenant authority for the active org — the RBAC
- * replacement for the Phase-1 {@see \Univeros\Polaris\Token\DefaultSessionPrincipalResolver}.
+ * replacement for the Phase-1 {@see \Polaris\Token\DefaultSessionPrincipalResolver}.
  *
  * It carries forward the email-verified flag from the user and asks {@see PermissionResolver} for
  * the role slugs (and, when `access_token.embed_scope` is on, the flattened permission keys) the

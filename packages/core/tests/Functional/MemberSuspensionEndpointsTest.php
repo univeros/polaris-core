@@ -6,7 +6,7 @@ namespace Univeros\Polaris\Tests\Functional;
 
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Event\UserRegistered;
+use Polaris\Event\UserRegistered;
 
 use function array_key_last;
 use function is_array;

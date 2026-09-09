@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Authorization;
 
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Authorization\RoleTemplate;
-use Univeros\Polaris\Contracts\PermissionContributorInterface;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\RoleTemplate;
+use Polaris\Contract\PermissionContributorInterface;
 
 use function array_column;
 use function array_keys;

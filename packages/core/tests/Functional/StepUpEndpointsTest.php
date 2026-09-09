@@ -6,11 +6,11 @@ namespace Univeros\Polaris\Tests\Functional;
 
 use OTPHP\TOTP;
 use Psr\Http\Message\ResponseInterface;
-use Univeros\Polaris\Event\MfaStepUpCompleted;
-use Univeros\Polaris\Event\UserRegistered;
-use Univeros\Polaris\Token\ClientContext;
-use Univeros\Polaris\Token\SessionPrincipal;
-use Univeros\Polaris\Token\TokenService;
+use Polaris\Event\MfaStepUpCompleted;
+use Polaris\Event\UserRegistered;
+use Polaris\Token\ClientContext;
+use Polaris\Token\SessionPrincipal;
+use Polaris\Token\TokenService;
 
 use function base64_decode;
 use function explode;

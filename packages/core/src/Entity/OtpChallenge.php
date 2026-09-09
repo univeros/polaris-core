@@ -41,7 +41,7 @@ class OtpChallenge
     #[Column(type: 'string(36)', name: 'factor_id', nullable: true)]
     public ?string $factorId = null;
 
-    /** A {@see \Univeros\Polaris\Mfa\ChallengePurpose} backing value. */
+    /** A {@see \Polaris\Mfa\ChallengePurpose} backing value. */
     #[Column(type: 'string(20)', name: 'purpose')]
     public string $purpose = '';
 

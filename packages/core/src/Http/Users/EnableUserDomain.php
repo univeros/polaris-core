@@ -8,9 +8,9 @@ use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use LogicException;
 use Override;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Exception\UserNotFoundException;
-use Univeros\Polaris\Identity\UserAdminService;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Exception\UserNotFoundException;
+use Polaris\Identity\UserAdminService;
 
 /**
  * `POST /users/{id}/enable` — re-enable a disabled (or locked) account, clearing lockout counters.

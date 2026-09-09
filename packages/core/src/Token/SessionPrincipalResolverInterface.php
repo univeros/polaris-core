@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Token;
+namespace Polaris\Token;
 
 /**
  * Resolves the {@see SessionPrincipal} for a user (and active org) when a session's

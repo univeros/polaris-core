@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Security;
+namespace Polaris\Security;
 
 use SensitiveParameter;
-use Univeros\Polaris\Contracts\PasswordHasherInterface;
+use Polaris\Contract\PasswordHasherInterface;
 
 use function password_hash;
 use function password_needs_rehash;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Security;
+namespace Polaris\Security;
 
 use SensitiveParameter;
-use Univeros\Polaris\Exception\InvalidConfigException;
+use Polaris\Exception\InvalidConfigException;
 
 use function ctype_xdigit;
 use function hash_equals;

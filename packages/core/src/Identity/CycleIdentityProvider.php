@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Identity;
+namespace Polaris\Identity;
 
-use Altair\Http\Contracts\IdentityProviderInterface;
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\IdentityProviderInterface;
+use Polaris\Contract\RepositoryInterface;
 use Override;
 use Univeros\Polaris\Entity\User;
 

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
 use Override;
 use Psr\Log\LoggerInterface;
-use Univeros\Polaris\Contracts\SmsSenderInterface;
+use Polaris\Contract\SmsSenderInterface;
 
 /**
  * Dev/test SMS driver: instead of sending, it writes the message to the PSR-3 logger so a

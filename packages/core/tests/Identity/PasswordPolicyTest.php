@@ -6,8 +6,8 @@ namespace Univeros\Polaris\Tests\Identity;
 
 use PHPUnit\Framework\TestCase;
 use SensitiveParameter;
-use Univeros\Polaris\Contracts\BreachedPasswordCheckInterface;
-use Univeros\Polaris\Identity\PasswordPolicy;
+use Polaris\Contract\BreachedPasswordCheckInterface;
+use Polaris\Identity\PasswordPolicy;
 
 use function str_repeat;
 

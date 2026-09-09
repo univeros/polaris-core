@@ -5,23 +5,23 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Bootstrap;
 
 use Altair\Container\Container;
-use Altair\Http\Contracts\TokenGeneratorInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\TokenGeneratorInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use Cycle\ORM\ORMInterface;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Univeros\Polaris\Authorization\PermissionResolver;
-use Univeros\Polaris\Authorization\RbacSessionPrincipalResolver;
-use Univeros\Polaris\Config\AuthConfig;
-use Univeros\Polaris\Config\Secrets;
-use Univeros\Polaris\Event\NullEventDispatcher;
+use Polaris\Authorization\PermissionResolver;
+use Polaris\Authorization\RbacSessionPrincipalResolver;
+use Polaris\Config\AuthConfig;
+use Polaris\Config\Secrets;
+use Polaris\Event\NullEventDispatcher;
 use Univeros\Polaris\Http\Auth\LogoutAllDomain;
 use Univeros\Polaris\Http\Auth\LogoutDomain;
 use Univeros\Polaris\Http\Auth\RefreshTokenDomain;
 use Univeros\Polaris\Http\Auth\RevokeSessionDomain;
 use Univeros\Polaris\Http\Auth\SessionsDomain;
 use Univeros\Polaris\Http\Auth\SwitchOrgDomain;
-use Univeros\Polaris\Identity\SessionService;
+use Polaris\Identity\SessionService;
 use Univeros\Polaris\Persistence\MembershipRepository;
 use Univeros\Polaris\Persistence\MembershipRoleRepository;
 use Univeros\Polaris\Persistence\OrganizationRepository;
@@ -30,10 +30,10 @@ use Univeros\Polaris\Persistence\RefreshTokenRepository;
 use Univeros\Polaris\Persistence\RolePermissionRepository;
 use Univeros\Polaris\Persistence\RoleRepository;
 use Univeros\Polaris\Persistence\UserRepository;
-use Univeros\Polaris\Security\Pepper;
-use Univeros\Polaris\Token\AccessTokenDenylist;
-use Univeros\Polaris\Token\SessionPrincipalResolverInterface;
-use Univeros\Polaris\Token\TokenService;
+use Polaris\Security\Pepper;
+use Polaris\Token\AccessTokenDenylist;
+use Polaris\Token\SessionPrincipalResolverInterface;
+use Polaris\Token\TokenService;
 
 /**
  * Wires the session machinery: refresh-token issuance and rotation via {@see TokenService},

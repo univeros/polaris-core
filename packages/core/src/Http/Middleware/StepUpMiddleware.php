@@ -13,8 +13,8 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Univeros\Polaris\Config\AuthConfig;
-use Univeros\Polaris\Mfa\MfaChallengeVerifier;
+use Polaris\Config\AuthConfig;
+use Polaris\Mfa\MfaChallengeVerifier;
 
 use function is_int;
 use function json_encode;

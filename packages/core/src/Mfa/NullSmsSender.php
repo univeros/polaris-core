@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
 use Override;
-use Univeros\Polaris\Contracts\SmsSenderInterface;
+use Polaris\Contract\SmsSenderInterface;
 
 /**
  * A no-op SMS driver for environments that disable the SMS channel entirely (it neither sends
