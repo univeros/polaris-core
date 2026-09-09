@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
 /**
  * The purposes an OTP challenge may be scoped to (`auth_otp_challenges.purpose`).

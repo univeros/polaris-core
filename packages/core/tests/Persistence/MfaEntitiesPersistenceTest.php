@@ -10,7 +10,7 @@ use Symfony\Component\Uid\Uuid;
 use Univeros\Polaris\Entity\MfaFactor;
 use Univeros\Polaris\Entity\OtpChallenge;
 use Univeros\Polaris\Entity\RecoveryCode;
-use Univeros\Polaris\Mfa\ChallengePurpose;
+use Polaris\Mfa\ChallengePurpose;
 
 use function str_repeat;
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Mfa;
 
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Mfa\EndroidQrRenderer;
+use Polaris\Mfa\EndroidQrRenderer;
 
 use function str_contains;
 

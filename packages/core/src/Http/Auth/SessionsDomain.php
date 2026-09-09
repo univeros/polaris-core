@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Identity\SessionService;
+use Polaris\Identity\SessionService;
 
 /**
  * `GET /auth/sessions` — list the authenticated user's active sessions (devices), with the

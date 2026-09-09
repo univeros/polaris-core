@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Persistence;
 
+use Polaris\Contract\RepositoryInterface;
 use Altair\Persistence\Contracts\UnitOfWorkInterface;
 use Altair\Persistence\Cycle\CycleRepository;
 use Cycle\ORM\ORMInterface;
@@ -14,8 +15,9 @@ use Univeros\Polaris\Entity\EmailVerification;
  * `tokenHash` drive email-verification confirmation.
  *
  * @extends CycleRepository<EmailVerification>
+ * @implements RepositoryInterface<EmailVerification>
  */
-final class EmailVerificationRepository extends CycleRepository
+final class EmailVerificationRepository extends CycleRepository implements RepositoryInterface
 {
     public function __construct(ORMInterface $orm, UnitOfWorkInterface $unitOfWork)
     {

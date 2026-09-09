@@ -15,7 +15,7 @@ use function preg_replace;
 
 /**
  * Attaches the client's sanitized `User-Agent` as a request attribute, so the domains can carry
- * it into {@see \Univeros\Polaris\Token\ClientContext} for session rows and audit events
+ * it into {@see \Polaris\Token\ClientContext} for session rows and audit events
  * (issue #90).
  *
  * The header is attacker-controlled input headed for the database and for log/SIEM consumers,

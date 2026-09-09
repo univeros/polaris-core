@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
-use Altair\Security\Contracts\EncrypterInterface;
-use Altair\Security\Exception\DecryptException;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
+use Polaris\Contract\EncrypterInterface;
+use Polaris\Exception\DecryptException;
 use Psr\Clock\ClockInterface;
 use SensitiveParameter;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Contracts\QrCodeRendererInterface;
-use Univeros\Polaris\Contracts\TotpProviderInterface;
+use Polaris\Contract\QrCodeRendererInterface;
+use Polaris\Contract\TotpProviderInterface;
 use Univeros\Polaris\Entity\MfaFactor;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Exception\InvalidOtpException;
-use Univeros\Polaris\Exception\MfaFactorNotFoundException;
+use Polaris\Exception\InvalidOtpException;
+use Polaris\Exception\MfaFactorNotFoundException;
 
 /**
  * TOTP (authenticator-app) enrollment and confirmation.

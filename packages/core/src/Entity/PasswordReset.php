@@ -12,7 +12,7 @@ use DateTimeImmutable;
  * A single-use password-reset token (table `auth_password_resets`).
  *
  * The emailed token is never stored — only its keyed HMAC-SHA256 hash
- * ({@see \Univeros\Polaris\Security\Pepper}). A row is consumed exactly once
+ * ({@see \Polaris\Security\Pepper}). A row is consumed exactly once
  * (`consumedAt`) and expires after the configured window (default 1h, shorter than
  * verification by design). Columns use Cycle's abstract types, so the schema is
  * portable across every supported driver.

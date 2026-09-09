@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use Psr\Clock\ClockInterface;
 use SensitiveParameter;
 use Symfony\Component\Uid\Uuid;
 use Univeros\Polaris\Entity\MfaFactor;
 use Univeros\Polaris\Entity\OtpChallenge;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Exception\InvalidOtpException;
-use Univeros\Polaris\Exception\MfaFactorNotFoundException;
-use Univeros\Polaris\Token\ClientContext;
+use Polaris\Exception\InvalidOtpException;
+use Polaris\Exception\MfaFactorNotFoundException;
+use Polaris\Token\ClientContext;
 
 use function in_array;
 

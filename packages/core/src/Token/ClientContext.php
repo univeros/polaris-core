@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Token;
+namespace Polaris\Token;
 
 /**
  * The device/network context of a token request — recorded on the refresh-token row

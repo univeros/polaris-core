@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
 /**
  * The result of issuing an OTP challenge: the challenge id, the channel it was sent over, and the

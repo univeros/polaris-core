@@ -8,7 +8,7 @@ use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Altair\Persistence\Contracts\RepositoryInterface;
 use Override;
-use Univeros\Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\PermissionCatalog;
 use Univeros\Polaris\Entity\Organization;
 
 /**

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Authorization;
+namespace Polaris\Authorization;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use Psr\Clock\ClockInterface;
@@ -18,11 +18,11 @@ use Univeros\Polaris\Entity\Permission;
 use Univeros\Polaris\Entity\Role;
 use Univeros\Polaris\Entity\RolePermission;
 use Univeros\Polaris\Entity\RefreshToken;
-use Univeros\Polaris\Event\OrganizationCreated;
-use Univeros\Polaris\Event\OrganizationDeleted;
-use Univeros\Polaris\Event\OrganizationUpdated;
-use Univeros\Polaris\Identity\SessionService;
-use Univeros\Polaris\Exception\OrganizationSlugConflictException;
+use Polaris\Event\OrganizationCreated;
+use Polaris\Event\OrganizationDeleted;
+use Polaris\Event\OrganizationUpdated;
+use Polaris\Identity\SessionService;
+use Polaris\Exception\OrganizationSlugConflictException;
 
 use function mb_strlen;
 use function preg_replace;

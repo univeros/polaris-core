@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Identity;
+namespace Polaris\Identity;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\RepositoryInterface;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Univeros\Polaris\Entity\RefreshToken;
-use Univeros\Polaris\Event\SessionsRevoked;
-use Univeros\Polaris\Token\AccessTokenDenylist;
-use Univeros\Polaris\Token\ClientContext;
-use Univeros\Polaris\Token\TokenService;
+use Polaris\Event\SessionsRevoked;
+use Polaris\Token\AccessTokenDenylist;
+use Polaris\Token\ClientContext;
+use Polaris\Token\TokenService;
 
 use function array_keys;
 use function count;

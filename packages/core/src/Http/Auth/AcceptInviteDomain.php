@@ -7,9 +7,9 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Authorization\InvitationService;
-use Univeros\Polaris\Exception\AuthorizationException;
-use Univeros\Polaris\Exception\InvalidInvitationTokenException;
+use Polaris\Authorization\InvitationService;
+use Polaris\Exception\AuthorizationException;
+use Polaris\Exception\InvalidInvitationTokenException;
 
 use function is_string;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Event;
+namespace Polaris\Event;
 
 /**
  * Emitted when an MFA verification attempt at the login gate fails (`mfa.verify_failed`) — a wrong

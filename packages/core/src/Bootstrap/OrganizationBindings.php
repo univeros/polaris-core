@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Bootstrap;
 
 use Altair\Container\Container;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Univeros\Polaris\Authorization\EscalationGuard;
-use Univeros\Polaris\Authorization\InvitationService;
-use Univeros\Polaris\Authorization\MembershipService;
-use Univeros\Polaris\Authorization\OrganizationService;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Authorization\PermissionResolver;
-use Univeros\Polaris\Authorization\RoleService;
+use Polaris\Authorization\EscalationGuard;
+use Polaris\Authorization\InvitationService;
+use Polaris\Authorization\MembershipService;
+use Polaris\Authorization\OrganizationService;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\PermissionResolver;
+use Polaris\Authorization\RoleService;
 use Univeros\Polaris\Http\Auth\AcceptInviteDomain;
 use Univeros\Polaris\Http\Orgs\ChangeMemberRolesDomain;
 use Univeros\Polaris\Http\Orgs\ChangeMemberStatusDomain;
@@ -38,8 +38,8 @@ use Univeros\Polaris\Http\Users\DisableUserDomain;
 use Univeros\Polaris\Http\Users\EnableUserDomain;
 use Univeros\Polaris\Http\Users\ReadUserDomain;
 use Univeros\Polaris\Http\Users\UpdateUserDomain;
-use Univeros\Polaris\Identity\SessionService;
-use Univeros\Polaris\Identity\UserAdminService;
+use Polaris\Identity\SessionService;
+use Polaris\Identity\UserAdminService;
 use Univeros\Polaris\Persistence\EmailVerificationRepository;
 use Univeros\Polaris\Persistence\InvitationRepository;
 use Univeros\Polaris\Persistence\MembershipRepository;
@@ -52,7 +52,7 @@ use Univeros\Polaris\Persistence\PermissionRepository;
 use Univeros\Polaris\Persistence\RolePermissionRepository;
 use Univeros\Polaris\Persistence\RoleRepository;
 use Univeros\Polaris\Persistence\UserRepository;
-use Univeros\Polaris\Security\Pepper;
+use Polaris\Security\Pepper;
 
 /**
  * Wires organization management: the org/membership/invitation/role services, user

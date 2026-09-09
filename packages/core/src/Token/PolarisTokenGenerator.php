@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Token;
+namespace Polaris\Token;
 
-use Altair\Http\Contracts\TokenConfigurationInterface;
-use Altair\Http\Contracts\TokenGeneratorInterface;
-use Altair\Http\Exception\InvalidTokenException;
+use Polaris\Contract\TokenConfigurationInterface;
+use Polaris\Contract\TokenGeneratorInterface;
+use Polaris\Exception\InvalidTokenException;
 use DateInterval;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Configuration;

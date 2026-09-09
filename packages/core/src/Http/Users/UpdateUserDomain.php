@@ -8,9 +8,9 @@ use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use InvalidArgumentException;
 use Override;
-use Univeros\Polaris\Exception\AuthorizationException;
-use Univeros\Polaris\Exception\UserNotFoundException;
-use Univeros\Polaris\Identity\UserAdminService;
+use Polaris\Exception\AuthorizationException;
+use Polaris\Exception\UserNotFoundException;
+use Polaris\Identity\UserAdminService;
 
 use function is_string;
 

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Token;
+namespace Polaris\Token;
 
 use Lcobucci\JWT\Signer;
 use Lcobucci\JWT\Signer\Eddsa;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
-use Univeros\Polaris\Exception\InvalidConfigException;
+use Polaris\Exception\InvalidConfigException;
 
 /**
- * Maps the configured access-token algorithm ({@see \Univeros\Polaris\Config\AccessTokenConfig})
+ * Maps the configured access-token algorithm ({@see \Polaris\Config\AccessTokenConfig})
  * to a concrete lcobucci/jwt asymmetric {@see Signer}.
  *
  * Only asymmetric algorithms are offered: the private key signs and the public key

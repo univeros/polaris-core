@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Univeros\Polaris\Http\Middleware\AuthenticatedRateLimitMiddleware;
 use Univeros\Polaris\Http\Middleware\TokenSubjectKeyResolver;
-use Univeros\Polaris\Support\InMemoryCache;
+use Polaris\Support\InMemoryCache;
 use Univeros\Polaris\Tests\Support\CountingRequestHandler;
 
 /**

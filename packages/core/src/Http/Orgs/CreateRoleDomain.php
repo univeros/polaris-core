@@ -8,10 +8,10 @@ use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use InvalidArgumentException;
 use Override;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Authorization\RoleService;
-use Univeros\Polaris\Exception\AuthorizationException;
-use Univeros\Polaris\Exception\RoleSlugConflictException;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\RoleService;
+use Polaris\Exception\AuthorizationException;
+use Polaris\Exception\RoleSlugConflictException;
 
 use function is_array;
 use function is_string;

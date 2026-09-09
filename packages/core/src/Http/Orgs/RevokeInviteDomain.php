@@ -7,9 +7,9 @@ namespace Univeros\Polaris\Http\Orgs;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Authorization\InvitationService;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Exception\InvitationNotFoundException;
+use Polaris\Authorization\InvitationService;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Exception\InvitationNotFoundException;
 
 /**
  * `DELETE /orgs/{id}/invites/{inviteId}` — revoke a pending invitation; its token becomes useless.

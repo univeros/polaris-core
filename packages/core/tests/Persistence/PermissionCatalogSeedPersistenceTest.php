@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Persistence;
 
 use DateTimeImmutable;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Authorization\PermissionCatalogSeeder;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\PermissionCatalogSeeder;
 
 use function array_column;
 use function count;

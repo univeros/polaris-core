@@ -30,7 +30,7 @@ use function str_starts_with;
 final class MetricsListener
 {
     private const string COUNTER = 'polaris.auth.events';
-    private const string EVENT_NAMESPACE = 'Univeros\\Polaris\\Event\\';
+    private const string EVENT_NAMESPACE = 'Polaris\\Event\\';
 
     public function __construct(
         private readonly Meter $meter,

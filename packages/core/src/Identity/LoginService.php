@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Identity;
+namespace Polaris\Identity;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use DateInterval;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use SensitiveParameter;
-use Univeros\Polaris\Config\AuthConfig;
-use Univeros\Polaris\Contracts\PasswordHasherInterface;
+use Polaris\Config\AuthConfig;
+use Polaris\Contract\PasswordHasherInterface;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Event\UserLocked;
-use Univeros\Polaris\Event\UserLoggedIn;
-use Univeros\Polaris\Event\UserLoginFailed;
-use Univeros\Polaris\Exception\AccountDisabledException;
-use Univeros\Polaris\Exception\EmailNotVerifiedException;
-use Univeros\Polaris\Exception\InvalidCredentialsException;
-use Univeros\Polaris\Token\ClientContext;
-use Univeros\Polaris\Token\IssuedTokens;
-use Univeros\Polaris\Token\SessionPrincipal;
-use Univeros\Polaris\Token\TokenService;
+use Polaris\Event\UserLocked;
+use Polaris\Event\UserLoggedIn;
+use Polaris\Event\UserLoginFailed;
+use Polaris\Exception\AccountDisabledException;
+use Polaris\Exception\EmailNotVerifiedException;
+use Polaris\Exception\InvalidCredentialsException;
+use Polaris\Token\ClientContext;
+use Polaris\Token\IssuedTokens;
+use Polaris\Token\SessionPrincipal;
+use Polaris\Token\TokenService;
 
 /**
  * Password login (no-MFA path): verifies credentials in constant time, enforces account

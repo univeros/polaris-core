@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Support;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\RepositoryInterface;
 use Override;
 use Univeros\Polaris\Entity\User;
 
@@ -74,7 +74,6 @@ final class InMemoryUserRepository implements RepositoryInterface
         return $this->users;
     }
 
-    #[Override]
     public function save(object $entity): void
     {
         $this->users = array_values(array_filter(
@@ -84,7 +83,6 @@ final class InMemoryUserRepository implements RepositoryInterface
         $this->users[] = $entity;
     }
 
-    #[Override]
     public function delete(object $entity): void
     {
         $this->users = array_values(array_filter(

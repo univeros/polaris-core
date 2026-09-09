@@ -6,7 +6,7 @@ namespace Univeros\Polaris\Tests\Token;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Token\AccessTokenClaims;
+use Polaris\Token\AccessTokenClaims;
 
 use function array_key_exists;
 

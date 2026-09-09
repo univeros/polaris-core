@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
 /**
  * The result of starting an SMS/email factor enrollment: the new (unconfirmed) factor id, the

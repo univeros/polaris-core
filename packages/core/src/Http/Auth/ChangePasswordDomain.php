@@ -7,10 +7,10 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Exception\AccountDisabledException;
-use Univeros\Polaris\Exception\InvalidCredentialsException;
-use Univeros\Polaris\Exception\InvalidPasswordException;
-use Univeros\Polaris\Identity\PasswordResetService;
+use Polaris\Exception\AccountDisabledException;
+use Polaris\Exception\InvalidCredentialsException;
+use Polaris\Exception\InvalidPasswordException;
+use Polaris\Identity\PasswordResetService;
 
 /**
  * `POST /auth/password/change` — change the password while authenticated. Keeps the

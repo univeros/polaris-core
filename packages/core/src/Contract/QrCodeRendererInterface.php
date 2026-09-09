@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Contracts;
+namespace Polaris\Contract;
 
 /**
  * Renders arbitrary data (typically an `otpauth://` provisioning URI) as a QR code.
  *
- * A port over the underlying library ({@see \Univeros\Polaris\Mfa\EndroidQrRenderer} wraps
+ * A port over the underlying library ({@see \Polaris\Mfa\EndroidQrRenderer} wraps
  * `endroid/qr-code`). SVG is the default output: it is vector (crisp at any size) and needs no
  * `gd`/`imagick` extension, so TOTP enrollment works on a stock PHP install.
  */

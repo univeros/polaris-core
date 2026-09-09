@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Support;
 
 use Override;
-use Univeros\Polaris\Token\SessionPrincipal;
-use Univeros\Polaris\Token\SessionPrincipalResolverInterface;
+use Polaris\Token\SessionPrincipal;
+use Polaris\Token\SessionPrincipalResolverInterface;
 
 /**
  * Resolves every user to a fixed {@see SessionPrincipal} (carrying the requested user

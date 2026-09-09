@@ -7,8 +7,8 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Exception\InvalidVerificationTokenException;
-use Univeros\Polaris\Identity\EmailVerificationService;
+use Polaris\Exception\InvalidVerificationTokenException;
+use Polaris\Identity\EmailVerificationService;
 
 use function trim;
 

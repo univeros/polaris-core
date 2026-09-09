@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Config;
 
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Config\AuthConfig;
-use Univeros\Polaris\Exception\InvalidConfigException;
+use Polaris\Config\AuthConfig;
+use Polaris\Exception\InvalidConfigException;
 
 final class AuthConfigTest extends TestCase
 {

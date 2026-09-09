@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Altair\Persistence\Cycle\CycleRepository;
+use Univeros\Polaris\Bootstrap\UnitOfWorkBridge;
+use Univeros\Polaris\Persistence\OtpChallengeRepository;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Config\OtpConfig;
+use Polaris\Config\OtpConfig;
 use Univeros\Polaris\Entity\OtpChallenge;
-use Univeros\Polaris\Exception\InvalidOtpException;
-use Univeros\Polaris\Mfa\ChallengePurpose;
-use Univeros\Polaris\Mfa\OtpService;
-use Univeros\Polaris\Security\Pepper;
-use Univeros\Polaris\Support\InMemoryCache;
+use Polaris\Exception\InvalidOtpException;
+use Polaris\Mfa\ChallengePurpose;
+use Polaris\Mfa\OtpService;
+use Polaris\Security\Pepper;
+use Polaris\Support\InMemoryCache;
 use Univeros\Polaris\Tests\Support\FrozenClock;
 use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
 use Univeros\Polaris\Tests\Support\RecordingOtpMailer;
@@ -105,12 +106,12 @@ final class OtpServicePersistenceTest extends DatabaseTestCase
     private function service(): OtpService
     {
         return new OtpService(
-            new CycleRepository(OtpChallenge::class, $this->orm, $this->unitOfWork),
+            new OtpChallengeRepository($this->orm, $this->unitOfWork),
             new RecordingSmsSender(),
             new RecordingOtpMailer(),
             new Pepper(self::APP_KEY),
             OtpConfig::fromArray([]),
-            $this->unitOfWork,
+            new UnitOfWorkBridge($this->unitOfWork),
             FrozenClock::at(self::INSTANT),
             new RecordingEventDispatcher(),
             new InMemoryCache(),

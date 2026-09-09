@@ -6,8 +6,8 @@ namespace Univeros\Polaris\Database\Migrations;
 
 use Cycle\Migrations\Migration;
 use DateTimeImmutable;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Authorization\PermissionCatalogSeeder;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\PermissionCatalogSeeder;
 
 use function array_keys;
 

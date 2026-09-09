@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Token;
 
-use Altair\Http\Contracts\IdentityProviderInterface;
-use Altair\Http\Exception\AuthorizationTokenException;
-use Altair\Http\Support\TokenConfiguration;
+use Polaris\Contract\IdentityProviderInterface;
+use Polaris\Exception\AuthorizationTokenException;
+use Polaris\Token\TokenConfiguration;
 use Psr\Clock\ClockInterface;
 use Univeros\Polaris\Tests\Support\FrozenClock;
 use Univeros\Polaris\Tests\Support\StubIdentityProvider;
-use Univeros\Polaris\Token\AccessTokenClaims;
-use Univeros\Polaris\Token\PolarisTokenFactory;
+use Polaris\Token\AccessTokenClaims;
+use Polaris\Token\PolarisTokenFactory;
 
 final class PolarisTokenFactoryTest extends TokenTestCase
 {

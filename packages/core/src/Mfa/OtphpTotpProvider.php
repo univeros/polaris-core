@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
 use OTPHP\TOTP;
 use Override;
 use Psr\Clock\ClockInterface;
 use SensitiveParameter;
-use Univeros\Polaris\Config\TotpConfig;
-use Univeros\Polaris\Contracts\TotpProviderInterface;
+use Polaris\Config\TotpConfig;
+use Polaris\Contract\TotpProviderInterface;
 
 use function hash_equals;
 use function strtolower;

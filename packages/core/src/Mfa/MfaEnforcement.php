@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Univeros\Polaris\Config\AuthConfig;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Config\AuthConfig;
 use Univeros\Polaris\Entity\User;
 
 /**

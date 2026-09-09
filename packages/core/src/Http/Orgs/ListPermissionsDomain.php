@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Http\Orgs;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Authorization\RoleService;
+use Polaris\Authorization\RoleService;
 
 /**
  * `GET /permissions` — the full permission catalog (Polaris core ∪ host-contributed), for building

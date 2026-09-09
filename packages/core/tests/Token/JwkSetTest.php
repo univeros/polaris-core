@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Token;
 
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Exception\InvalidConfigException;
+use Polaris\Exception\InvalidConfigException;
 use Univeros\Polaris\Tests\Support\TestKeys;
-use Univeros\Polaris\Token\JwkSet;
+use Polaris\Token\JwkSet;
 
 use function openssl_pkey_get_details;
 use function openssl_pkey_new;

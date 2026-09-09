@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Event;
+namespace Polaris\Event;
 
 /**
  * Emitted on a failed OTP verification (`mfa.otp_verify_failed`) so the host can audit and alert on

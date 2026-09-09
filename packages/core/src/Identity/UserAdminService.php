@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Identity;
+namespace Polaris\Identity;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use InvalidArgumentException;
 use LogicException;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Authorization\PermissionResolver;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\PermissionResolver;
 use Univeros\Polaris\Entity\EmailVerification;
 use Univeros\Polaris\Entity\MfaFactor;
 use Univeros\Polaris\Entity\OtpChallenge;
 use Univeros\Polaris\Entity\PasswordReset;
 use Univeros\Polaris\Entity\RefreshToken;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Event\UserDeleted;
-use Univeros\Polaris\Event\UserDisabled;
-use Univeros\Polaris\Event\UserEnabled;
-use Univeros\Polaris\Exception\AuthorizationException;
-use Univeros\Polaris\Exception\UserNotFoundException;
-use Univeros\Polaris\Security\Pepper;
+use Polaris\Event\UserDeleted;
+use Polaris\Event\UserDisabled;
+use Polaris\Event\UserEnabled;
+use Polaris\Exception\AuthorizationException;
+use Polaris\Exception\UserNotFoundException;
+use Polaris\Security\Pepper;
 
 use function in_array;
 use function mb_strlen;

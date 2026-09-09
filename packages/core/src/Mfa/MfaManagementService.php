@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Univeros\Polaris\Entity\MfaFactor;
-use Univeros\Polaris\Event\MfaFactorRemoved;
-use Univeros\Polaris\Exception\InvalidMfaFactorStateException;
-use Univeros\Polaris\Exception\LastFactorProtectedException;
-use Univeros\Polaris\Exception\MfaFactorNotFoundException;
+use Polaris\Event\MfaFactorRemoved;
+use Polaris\Exception\InvalidMfaFactorStateException;
+use Polaris\Exception\LastFactorProtectedException;
+use Polaris\Exception\MfaFactorNotFoundException;
 
 use function mb_strlen;
 

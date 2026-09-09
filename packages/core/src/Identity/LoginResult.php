@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Identity;
+namespace Polaris\Identity;
 
-use Univeros\Polaris\Token\IssuedTokens;
+use Polaris\Token\IssuedTokens;
 
 /**
  * The outcome of a successful login: the issued token pair plus the minimal user fields

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Altair\Http\Contracts\TokenInterface;
+use Polaris\Contract\TokenInterface;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Authorization\Gate;
-use Univeros\Polaris\Authorization\PermissionResolver;
+use Polaris\Authorization\Gate;
+use Polaris\Authorization\PermissionResolver;
 use Univeros\Polaris\Entity\Membership;
 use Univeros\Polaris\Entity\MembershipRole;
 use Univeros\Polaris\Entity\Role;
 use Univeros\Polaris\Entity\RolePermission;
-use Univeros\Polaris\Exception\AuthorizationException;
+use Polaris\Exception\AuthorizationException;
 use Univeros\Polaris\Persistence\MembershipRepository;
 use Univeros\Polaris\Persistence\MembershipRoleRepository;
 use Univeros\Polaris\Persistence\OrganizationRepository;

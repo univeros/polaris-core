@@ -8,11 +8,11 @@ use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Altair\Persistence\Contracts\RepositoryInterface;
 use Override;
-use Univeros\Polaris\Config\AuthConfig;
+use Polaris\Config\AuthConfig;
 use Univeros\Polaris\Entity\Membership;
 use Univeros\Polaris\Entity\Organization;
-use Univeros\Polaris\Exception\InvalidGrantException;
-use Univeros\Polaris\Token\TokenService;
+use Polaris\Exception\InvalidGrantException;
+use Polaris\Token\TokenService;
 
 use function is_string;
 

@@ -6,9 +6,9 @@ namespace Univeros\Polaris\Tests\Functional;
 
 use OTPHP\TOTP;
 use Psr\Http\Message\ResponseInterface;
-use Univeros\Polaris\Event\MfaVerified;
-use Univeros\Polaris\Event\MfaVerifyFailed;
-use Univeros\Polaris\Event\UserRegistered;
+use Polaris\Event\MfaVerified;
+use Polaris\Event\MfaVerifyFailed;
+use Polaris\Event\UserRegistered;
 use Univeros\Polaris\Http\Middleware\MfaTicket;
 
 use function base64_decode;

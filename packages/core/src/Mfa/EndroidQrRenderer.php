@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\Writer\SvgWriter;
 use Override;
-use Univeros\Polaris\Contracts\QrCodeRendererInterface;
+use Polaris\Contract\QrCodeRendererInterface;
 
 /**
  * QR rendering via `endroid/qr-code`, emitting SVG.

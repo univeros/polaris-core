@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Security;
 
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Exception\InvalidConfigException;
-use Univeros\Polaris\Security\Pepper;
+use Polaris\Exception\InvalidConfigException;
+use Polaris\Security\Pepper;
 
 use function ctype_xdigit;
 use function strlen;

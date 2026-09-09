@@ -6,7 +6,7 @@ namespace Univeros\Polaris\Tests\Support;
 
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\InvalidArgumentException;
-use Univeros\Polaris\Support\InMemoryCache;
+use Polaris\Support\InMemoryCache;
 
 final class InMemoryCacheTest extends TestCase
 {

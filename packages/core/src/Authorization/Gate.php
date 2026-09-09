@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Authorization;
+namespace Polaris\Authorization;
 
-use Altair\Http\Contracts\TokenInterface;
-use Univeros\Polaris\Exception\AuthorizationException;
+use Polaris\Contract\TokenInterface;
+use Polaris\Exception\AuthorizationException;
 
 use function array_fill_keys;
 use function is_string;

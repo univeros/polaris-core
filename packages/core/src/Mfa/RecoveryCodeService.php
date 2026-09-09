@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use Cycle\ORM\ORMInterface;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
@@ -13,9 +13,9 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use SensitiveParameter;
 use Symfony\Component\Uid\Uuid;
 use Univeros\Polaris\Entity\RecoveryCode;
-use Univeros\Polaris\Event\MfaRecoveryRegenerated;
-use Univeros\Polaris\Event\MfaRecoveryUsed;
-use Univeros\Polaris\Security\Pepper;
+use Polaris\Event\MfaRecoveryRegenerated;
+use Polaris\Event\MfaRecoveryUsed;
+use Polaris\Security\Pepper;
 
 use function count;
 use function random_int;

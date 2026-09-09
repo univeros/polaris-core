@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Security;
+namespace Polaris\Security;
 
 use Override;
 use Psr\Http\Client\ClientInterface;
@@ -10,7 +10,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Log\LoggerInterface;
 use SensitiveParameter;
 use Throwable;
-use Univeros\Polaris\Contracts\BreachedPasswordCheckInterface;
+use Polaris\Contract\BreachedPasswordCheckInterface;
 
 use function explode;
 use function sha1;

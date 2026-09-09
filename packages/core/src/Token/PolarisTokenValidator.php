@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Token;
+namespace Polaris\Token;
 
-use Altair\Http\Contracts\TokenParserInterface;
-use Altair\Http\Contracts\TokenValidatorInterface;
-use Altair\Http\Exception\AuthorizationTokenException;
+use Polaris\Contract\TokenParserInterface;
+use Polaris\Contract\TokenValidatorInterface;
+use Polaris\Exception\AuthorizationTokenException;
 use Override;
 
 /**

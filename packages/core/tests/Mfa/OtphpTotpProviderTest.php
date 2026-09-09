@@ -6,8 +6,8 @@ namespace Univeros\Polaris\Tests\Mfa;
 
 use OTPHP\TOTP;
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Config\TotpConfig;
-use Univeros\Polaris\Mfa\OtphpTotpProvider;
+use Polaris\Config\TotpConfig;
+use Polaris\Mfa\OtphpTotpProvider;
 use Univeros\Polaris\Tests\Support\FrozenClock;
 
 use function preg_match;

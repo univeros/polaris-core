@@ -12,7 +12,7 @@ use DateTimeImmutable;
  * A refresh-token session/device record (table `auth_refresh_tokens`).
  *
  * The opaque token is never stored — only its keyed HMAC hash
- * ({@see \Univeros\Polaris\Security\Pepper}). `familyId` ties a rotation lineage
+ * ({@see \Polaris\Security\Pepper}). `familyId` ties a rotation lineage
  * together so that replaying a rotated token can revoke the whole family
  * (theft detection). Like every Polaris entity, columns use Cycle's abstract
  * types and are therefore portable across all supported database drivers.

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Http\Middleware;
 
-use Altair\Http\Contracts\TokenGeneratorInterface;
-use Altair\Http\Contracts\TokenInterface;
-use Altair\Http\Contracts\TokenParserInterface;
-use Altair\Http\Exception\InvalidTokenException;
+use Polaris\Contract\TokenGeneratorInterface;
+use Polaris\Contract\TokenInterface;
+use Polaris\Contract\TokenParserInterface;
+use Polaris\Exception\InvalidTokenException;
 use Altair\Http\Rule\RequestPathRule;
 use Laminas\Diactoros\ResponseFactory;
 use Laminas\Diactoros\ServerRequestFactory;
@@ -18,7 +18,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Univeros\Polaris\Http\Middleware\BearerTokenExtractor;
 use Univeros\Polaris\Http\Middleware\MfaTicket;
 use Univeros\Polaris\Http\Middleware\MfaTokenMiddleware;
-use Univeros\Polaris\Token\MfaLoginTokenService;
+use Polaris\Token\MfaLoginTokenService;
 use Univeros\Polaris\Tests\Support\CountingRequestHandler;
 
 use function preg_quote;
@@ -112,7 +112,7 @@ final class MfaTokenMiddlewareTest extends TestCase
             $parser->method('parse')->willReturn($token);
         }
 
-        return new MfaLoginTokenService($this->createStub(\Altair\Http\Contracts\TokenGeneratorInterface::class), $parser);
+        return new MfaLoginTokenService($this->createStub(TokenGeneratorInterface::class), $parser);
     }
 
     private function request(string $path): ServerRequestInterface

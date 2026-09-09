@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Config;
+namespace Polaris\Config;
 
-use Univeros\Polaris\Exception\InvalidConfigException;
-use Univeros\Polaris\Security\Pepper;
+use Polaris\Exception\InvalidConfigException;
+use Polaris\Security\Pepper;
 
 use function hash;
 use function implode;

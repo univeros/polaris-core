@@ -11,40 +11,40 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Uid\Uuid;
 use Throwable;
 use Univeros\Polaris\Entity\AuditLogEntry;
-use Univeros\Polaris\Event\MemberInvited;
-use Univeros\Polaris\Event\MemberJoined;
-use Univeros\Polaris\Event\MemberRemoved;
-use Univeros\Polaris\Event\MemberRolesChanged;
-use Univeros\Polaris\Event\MemberStatusChanged;
-use Univeros\Polaris\Event\MfaEnrolled;
-use Univeros\Polaris\Event\MfaFactorRemoved;
-use Univeros\Polaris\Event\MfaRecoveryRegenerated;
-use Univeros\Polaris\Event\MfaRecoveryUsed;
-use Univeros\Polaris\Event\MfaStepUpCompleted;
-use Univeros\Polaris\Event\MfaVerified;
-use Univeros\Polaris\Event\MfaVerifyFailed;
-use Univeros\Polaris\Event\OrganizationCreated;
-use Univeros\Polaris\Event\OrganizationDeleted;
-use Univeros\Polaris\Event\OrganizationSwitched;
-use Univeros\Polaris\Event\OrganizationUpdated;
-use Univeros\Polaris\Event\OtpChallengeSent;
-use Univeros\Polaris\Event\OtpVerifyFailed;
-use Univeros\Polaris\Event\PasswordChanged;
-use Univeros\Polaris\Event\PasswordResetRequested;
-use Univeros\Polaris\Event\RefreshReuseDetected;
-use Univeros\Polaris\Event\RoleCreated;
-use Univeros\Polaris\Event\RoleDeleted;
-use Univeros\Polaris\Event\RoleUpdated;
-use Univeros\Polaris\Event\SessionsRevoked;
-use Univeros\Polaris\Event\TokenRefreshed;
-use Univeros\Polaris\Event\UserDeleted;
-use Univeros\Polaris\Event\UserDisabled;
-use Univeros\Polaris\Event\UserEmailVerified;
-use Univeros\Polaris\Event\UserEnabled;
-use Univeros\Polaris\Event\UserLocked;
-use Univeros\Polaris\Event\UserLoggedIn;
-use Univeros\Polaris\Event\UserLoginFailed;
-use Univeros\Polaris\Event\UserRegistered;
+use Polaris\Event\MemberInvited;
+use Polaris\Event\MemberJoined;
+use Polaris\Event\MemberRemoved;
+use Polaris\Event\MemberRolesChanged;
+use Polaris\Event\MemberStatusChanged;
+use Polaris\Event\MfaEnrolled;
+use Polaris\Event\MfaFactorRemoved;
+use Polaris\Event\MfaRecoveryRegenerated;
+use Polaris\Event\MfaRecoveryUsed;
+use Polaris\Event\MfaStepUpCompleted;
+use Polaris\Event\MfaVerified;
+use Polaris\Event\MfaVerifyFailed;
+use Polaris\Event\OrganizationCreated;
+use Polaris\Event\OrganizationDeleted;
+use Polaris\Event\OrganizationSwitched;
+use Polaris\Event\OrganizationUpdated;
+use Polaris\Event\OtpChallengeSent;
+use Polaris\Event\OtpVerifyFailed;
+use Polaris\Event\PasswordChanged;
+use Polaris\Event\PasswordResetRequested;
+use Polaris\Event\RefreshReuseDetected;
+use Polaris\Event\RoleCreated;
+use Polaris\Event\RoleDeleted;
+use Polaris\Event\RoleUpdated;
+use Polaris\Event\SessionsRevoked;
+use Polaris\Event\TokenRefreshed;
+use Polaris\Event\UserDeleted;
+use Polaris\Event\UserDisabled;
+use Polaris\Event\UserEmailVerified;
+use Polaris\Event\UserEnabled;
+use Polaris\Event\UserLocked;
+use Polaris\Event\UserLoggedIn;
+use Polaris\Event\UserLoginFailed;
+use Polaris\Event\UserRegistered;
 
 use function json_encode;
 
@@ -54,7 +54,7 @@ use const JSON_THROW_ON_ERROR;
 /**
  * PSR-14 listener persisting every Polaris domain event to the append-only `auth_audit_log`
  * (`docs/auth/events.md`). Subscribe it to the host's event dispatcher for each (or all) of the
- * `Univeros\Polaris\Event\*` classes.
+ * `Polaris\Event\*` classes.
  *
  * Each event maps to a **whitelist** of identifiers: the actor, the org context, the client IP
  * when the event carries one, and a small metadata blob of event-specific ids. Secrets never

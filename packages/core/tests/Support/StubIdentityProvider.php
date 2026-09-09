@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Support;
 
-use Altair\Http\Contracts\IdentityProviderInterface;
+use Polaris\Contract\IdentityProviderInterface;
 use Override;
 
 use function is_string;

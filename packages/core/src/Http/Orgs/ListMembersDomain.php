@@ -7,10 +7,10 @@ namespace Univeros\Polaris\Http\Orgs;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Authorization\Gate;
-use Univeros\Polaris\Authorization\MembershipService;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Authorization\ResolvedAuthority;
+use Polaris\Authorization\Gate;
+use Polaris\Authorization\MembershipService;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\ResolvedAuthority;
 
 /**
  * `GET /orgs/{id}/members` — list the organization's members with their roles.

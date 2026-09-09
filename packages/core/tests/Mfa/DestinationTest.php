@@ -6,7 +6,7 @@ namespace Univeros\Polaris\Tests\Mfa;
 
 use PHPUnit\Framework\TestCase;
 use Univeros\Polaris\Entity\OtpChallenge;
-use Univeros\Polaris\Mfa\Destination;
+use Polaris\Mfa\Destination;
 
 final class DestinationTest extends TestCase
 {

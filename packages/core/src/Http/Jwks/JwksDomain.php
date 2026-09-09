@@ -9,9 +9,9 @@ use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\DomainInterface;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Config\AuthConfig;
-use Univeros\Polaris\Config\Secrets;
-use Univeros\Polaris\Token\JwkSet;
+use Polaris\Config\AuthConfig;
+use Polaris\Config\Secrets;
+use Polaris\Token\JwkSet;
 
 /**
  * Domain behind `GET /auth/.well-known/jwks.json`: serves the public signing key as a

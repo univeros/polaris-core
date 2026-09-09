@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Functional;
 
 use Laminas\Diactoros\ServerRequestFactory;
-use Univeros\Polaris\Event\UserRegistered;
+use Polaris\Event\UserRegistered;
 
 /**
  * End-to-end tests for the wired auth pipeline (issue #15): the real

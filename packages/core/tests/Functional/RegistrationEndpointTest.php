@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Functional;
 
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Event\UserEmailVerified;
-use Univeros\Polaris\Event\UserRegistered;
+use Polaris\Event\UserEmailVerified;
+use Polaris\Event\UserRegistered;
 use Univeros\Polaris\Persistence\UserRepository;
 
 /**

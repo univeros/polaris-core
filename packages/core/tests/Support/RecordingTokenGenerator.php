@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Support;
 
-use Altair\Http\Contracts\TokenGeneratorInterface;
+use Polaris\Contract\TokenGeneratorInterface;
 use Override;
 
 use function count;

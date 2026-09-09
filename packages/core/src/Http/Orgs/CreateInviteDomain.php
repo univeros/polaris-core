@@ -8,10 +8,10 @@ use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use InvalidArgumentException;
 use Override;
-use Univeros\Polaris\Authorization\InvitationService;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Exception\AlreadyMemberException;
-use Univeros\Polaris\Exception\AuthorizationException;
+use Polaris\Authorization\InvitationService;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Exception\AlreadyMemberException;
+use Polaris\Exception\AuthorizationException;
 
 use function filter_var;
 use function is_array;

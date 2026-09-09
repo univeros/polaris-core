@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Mfa;
 
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Mfa\NullOtpMailer;
-use Univeros\Polaris\Mfa\NullSmsSender;
+use Polaris\Mfa\NullOtpMailer;
+use Polaris\Mfa\NullSmsSender;
 
 final class NullDriversTest extends TestCase
 {

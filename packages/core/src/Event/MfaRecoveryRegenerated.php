@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Event;
+namespace Polaris\Event;
 
 /**
  * Emitted when a user regenerates their MFA recovery codes (`mfa.recovery_regenerated`), retiring

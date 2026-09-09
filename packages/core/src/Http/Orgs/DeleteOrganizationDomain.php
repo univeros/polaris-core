@@ -7,8 +7,8 @@ namespace Univeros\Polaris\Http\Orgs;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Authorization\OrganizationService;
-use Univeros\Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\OrganizationService;
+use Polaris\Authorization\PermissionCatalog;
 use Univeros\Polaris\Entity\Organization;
 use Univeros\Polaris\Persistence\OrganizationRepository;
 

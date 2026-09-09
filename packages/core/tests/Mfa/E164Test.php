@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Mfa;
 
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Mfa\E164;
+use Polaris\Mfa\E164;
 
 final class E164Test extends TestCase
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Config;
+namespace Polaris\Config;
 
-use Univeros\Polaris\Exception\InvalidConfigException;
+use Polaris\Exception\InvalidConfigException;
 
 /**
  * Refresh-token settings: lifetime, rotation, reuse detection, and optional sliding expiry.

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Token;
 
-use Altair\Http\Support\TokenConfiguration;
+use Polaris\Token\TokenConfiguration;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
-use Univeros\Polaris\Token\PolarisTokenGenerator;
-use Univeros\Polaris\Token\PolarisTokenParser;
+use Polaris\Token\PolarisTokenGenerator;
+use Polaris\Token\PolarisTokenParser;
 use Univeros\Polaris\Tests\Support\TestKeys;
 
 use function base64_decode;

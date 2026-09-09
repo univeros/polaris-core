@@ -5,23 +5,24 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Bootstrap;
 
 use Altair\Container\Container;
-use Altair\Http\Contracts\TokenConfigurationInterface;
-use Altair\Http\Contracts\TokenFactoryInterface;
-use Altair\Http\Contracts\TokenGeneratorInterface;
-use Altair\Http\Contracts\TokenParserInterface;
-use Altair\Http\Contracts\TokenValidatorInterface;
-use Altair\Http\Jwt\SystemClock;
-use Altair\Http\Support\TokenConfiguration;
+use Polaris\Contract\TokenConfigurationInterface;
+use Altair\Http\Contracts\TokenFactoryInterface as AltairTokenFactory;
+use Polaris\Contract\TokenFactoryInterface;
+use Polaris\Contract\TokenGeneratorInterface;
+use Polaris\Contract\TokenParserInterface;
+use Polaris\Contract\TokenValidatorInterface;
+use Polaris\Support\SystemClock;
+use Polaris\Token\TokenConfiguration;
 use Psr\Clock\ClockInterface;
-use Univeros\Polaris\Config\AuthConfig;
-use Univeros\Polaris\Config\Secrets;
-use Univeros\Polaris\Exception\InvalidConfigException;
+use Polaris\Config\AuthConfig;
+use Polaris\Config\Secrets;
+use Polaris\Exception\InvalidConfigException;
 use Univeros\Polaris\Http\Jwks\JwksDomain;
-use Univeros\Polaris\Token\JwtSignerFactory;
-use Univeros\Polaris\Token\PolarisTokenFactory;
-use Univeros\Polaris\Token\PolarisTokenGenerator;
-use Univeros\Polaris\Token\PolarisTokenParser;
-use Univeros\Polaris\Token\PolarisTokenValidator;
+use Polaris\Token\JwtSignerFactory;
+use Polaris\Token\PolarisTokenFactory;
+use Polaris\Token\PolarisTokenGenerator;
+use Polaris\Token\PolarisTokenParser;
+use Polaris\Token\PolarisTokenValidator;
 
 /**
  * Wires the JWT machinery: the token configuration, the Polaris generator, and the
@@ -77,6 +78,10 @@ final class TokenBindings
         $container->singleton(TokenParserInterface::class, PolarisTokenParser::class);
         $container->singleton(TokenValidatorInterface::class, PolarisTokenValidator::class);
         $container->singleton(TokenFactoryInterface::class, PolarisTokenFactory::class);
+        $container->singleton(
+            AltairTokenFactory::class,
+            static fn(TokenFactoryInterface $factory): AltairTokenFactoryBridge => new AltairTokenFactoryBridge($factory),
+        );
         $container->singleton(JwksDomain::class);
     }
 }

@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Univeros\Polaris\Http\Middleware\AuthRateLimitMiddleware;
 use Univeros\Polaris\Http\Middleware\RateLimitGroup;
-use Univeros\Polaris\Support\InMemoryCache;
+use Polaris\Support\InMemoryCache;
 use Univeros\Polaris\Tests\Support\CountingRequestHandler;
 
 final class AuthRateLimitMiddlewareTest extends TestCase

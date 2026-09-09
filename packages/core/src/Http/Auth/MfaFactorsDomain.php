@@ -8,8 +8,8 @@ use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
 use Univeros\Polaris\Entity\MfaFactor;
-use Univeros\Polaris\Identity\MfaFactorView;
-use Univeros\Polaris\Mfa\MfaManagementService;
+use Polaris\Identity\MfaFactorView;
+use Polaris\Mfa\MfaManagementService;
 
 use function array_map;
 

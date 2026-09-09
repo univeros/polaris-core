@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Token;
 
-use Altair\Http\Exception\InvalidTokenException;
-use Altair\Http\Jwt\LcobucciTokenParser;
-use Altair\Http\Support\TokenConfiguration;
+use Polaris\Exception\InvalidTokenException;
+use Polaris\Token\LcobucciTokenParser;
+use Polaris\Token\TokenConfiguration;
 use Psr\Clock\ClockInterface;
-use Univeros\Polaris\Token\AccessTokenClaims;
-use Univeros\Polaris\Token\MfaLoginTokenService;
+use Polaris\Token\AccessTokenClaims;
+use Polaris\Token\MfaLoginTokenService;
 use Univeros\Polaris\Tests\Support\FrozenClock;
 use Univeros\Polaris\Tests\Support\TestKeys;
 

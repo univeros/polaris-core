@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Contracts;
+namespace Polaris\Contract;
 
 /**
  * Delivers an SMS (typically a one-time code) to a phone number.
  *
  * A port so Polaris stays provider-agnostic and dependency-light: core ships dev drivers
- * ({@see \Univeros\Polaris\Mfa\LogSmsSender}, {@see \Univeros\Polaris\Mfa\NullSmsSender}); a
+ * ({@see \Polaris\Mfa\LogSmsSender}, {@see \Polaris\Mfa\NullSmsSender}); a
  * host binds a production adapter (Twilio/SNS/…) in its container.
  */
 interface SmsSenderInterface

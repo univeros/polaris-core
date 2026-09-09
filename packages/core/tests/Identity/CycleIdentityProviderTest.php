@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Tests\Identity;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Identity\CycleIdentityProvider;
+use Polaris\Identity\CycleIdentityProvider;
 use Univeros\Polaris\Tests\Support\InMemoryUserRepository;
 
 use function array_keys;

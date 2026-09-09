@@ -7,20 +7,20 @@ namespace Univeros\Polaris\Http\Middleware;
 use Altair\Http\Contracts\HttpAuthRuleInterface;
 use Altair\Http\Contracts\MiddlewareInterface;
 use Altair\Http\Contracts\TokenExtractorInterface;
-use Altair\Http\Exception\InvalidTokenException;
+use Polaris\Exception\InvalidTokenException;
 use Override;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Univeros\Polaris\Token\MfaLoginTokenService;
+use Polaris\Token\MfaLoginTokenService;
 
 /**
  * Authenticates the short-lived `login_mfa` ticket on the MFA-gate routes
  * (`/auth/mfa/challenge` and `/auth/mfa/verify`).
  *
  * Those routes are passed through by the access-token {@see \Altair\Http\Middleware\TokenAuthenticationMiddleware}
- * (whose {@see \Univeros\Polaris\Token\PolarisTokenParser} would reject the ticket's `purpose`
+ * (whose {@see \Polaris\Token\PolarisTokenParser} would reject the ticket's `purpose`
  * claim), so this middleware is what guards them: scoped by an {@see HttpAuthRuleInterface} to the
  * gate paths, it pulls the bearer, validates it through {@see MfaLoginTokenService}, and attaches
  * the resolved user id as a request attribute the gate domains read (mirroring how the IP address

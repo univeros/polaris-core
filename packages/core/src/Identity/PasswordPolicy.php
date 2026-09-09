@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Identity;
+namespace Polaris\Identity;
 
 use SensitiveParameter;
-use Univeros\Polaris\Contracts\BreachedPasswordCheckInterface;
+use Polaris\Contract\BreachedPasswordCheckInterface;
 
 use function mb_strlen;
 use function sprintf;
 
 /**
  * Enforces the password policy before hashing: the minimum-length rule (from
- * {@see \Univeros\Polaris\Config\AuthConfig}) and, when an adapter is wired
+ * {@see \Polaris\Config\AuthConfig}) and, when an adapter is wired
  * (`auth.password.breach_check`), the breached-password screen behind
  * {@see BreachedPasswordCheckInterface}. Returns the list of failed rules (empty = valid) so
  * callers can surface them as a `422`.

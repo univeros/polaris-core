@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Token;
+namespace Polaris\Token;
 
-use Altair\Http\Contracts\TokenGeneratorInterface;
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\TokenGeneratorInterface;
+use Polaris\Contract\RepositoryInterface;
 use Cycle\ORM\ORMInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use DateInterval;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Config\AuthConfig;
+use Polaris\Config\AuthConfig;
 use Univeros\Polaris\Entity\RefreshToken;
-use Univeros\Polaris\Event\OrganizationSwitched;
-use Univeros\Polaris\Event\RefreshReuseDetected;
-use Univeros\Polaris\Event\TokenRefreshed;
-use Univeros\Polaris\Exception\InvalidGrantException;
-use Univeros\Polaris\Exception\RefreshTokenReuseException;
-use Univeros\Polaris\Security\Pepper;
+use Polaris\Event\OrganizationSwitched;
+use Polaris\Event\RefreshReuseDetected;
+use Polaris\Event\TokenRefreshed;
+use Polaris\Exception\InvalidGrantException;
+use Polaris\Exception\RefreshTokenReuseException;
+use Polaris\Security\Pepper;
 
 use function base64_encode;
 use function explode;

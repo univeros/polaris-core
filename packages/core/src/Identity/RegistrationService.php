@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Identity;
+namespace Polaris\Identity;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use SensitiveParameter;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Contracts\PasswordHasherInterface;
+use Polaris\Contract\PasswordHasherInterface;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Event\UserRegistered;
-use Univeros\Polaris\Exception\InvalidPasswordException;
-use Univeros\Polaris\Token\ClientContext;
+use Polaris\Event\UserRegistered;
+use Polaris\Exception\InvalidPasswordException;
+use Polaris\Token\ClientContext;
 
 /**
  * Registers new users: validates the password policy, creates the (unverified) account

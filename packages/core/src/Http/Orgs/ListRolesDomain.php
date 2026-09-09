@@ -7,8 +7,8 @@ namespace Univeros\Polaris\Http\Orgs;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Authorization\RoleService;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\RoleService;
 
 /**
  * `GET /orgs/{id}/roles` — list the organization's roles with their permission keys.

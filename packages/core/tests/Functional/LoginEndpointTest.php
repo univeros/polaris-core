@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Functional;
 
-use Altair\Http\Contracts\TokenValidatorInterface;
+use Polaris\Contract\TokenValidatorInterface;
 use DateTimeImmutable;
 use Laminas\Diactoros\ServerRequestFactory;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Event\UserLocked;
-use Univeros\Polaris\Event\UserLoggedIn;
-use Univeros\Polaris\Event\UserRegistered;
+use Polaris\Event\UserLocked;
+use Polaris\Event\UserLoggedIn;
+use Polaris\Event\UserRegistered;
 use Univeros\Polaris\Persistence\UserRepository;
 
 /**

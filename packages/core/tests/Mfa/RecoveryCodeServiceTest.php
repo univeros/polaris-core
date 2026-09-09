@@ -6,9 +6,9 @@ namespace Univeros\Polaris\Tests\Mfa;
 
 use PHPUnit\Framework\TestCase;
 use Univeros\Polaris\Entity\RecoveryCode;
-use Univeros\Polaris\Event\MfaRecoveryRegenerated;
-use Univeros\Polaris\Mfa\RecoveryCodeService;
-use Univeros\Polaris\Security\Pepper;
+use Polaris\Event\MfaRecoveryRegenerated;
+use Polaris\Mfa\RecoveryCodeService;
+use Polaris\Security\Pepper;
 use Univeros\Polaris\Tests\Support\FrozenClock;
 use Univeros\Polaris\Tests\Support\InMemoryRecoveryCodeRepository;
 use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;

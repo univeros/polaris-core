@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Identity;
+namespace Polaris\Identity;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use DateInterval;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
@@ -13,11 +13,11 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Uid\Uuid;
 use Univeros\Polaris\Entity\EmailVerification;
 use Univeros\Polaris\Entity\User;
-use Univeros\Polaris\Event\UserEmailVerified;
-use Univeros\Polaris\Event\UserRegistered;
-use Univeros\Polaris\Exception\InvalidVerificationTokenException;
-use Univeros\Polaris\Security\Pepper;
-use Univeros\Polaris\Token\ClientContext;
+use Polaris\Event\UserEmailVerified;
+use Polaris\Event\UserRegistered;
+use Polaris\Exception\InvalidVerificationTokenException;
+use Polaris\Security\Pepper;
+use Polaris\Token\ClientContext;
 
 use function base64_encode;
 use function random_bytes;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Authorization;
+namespace Polaris\Authorization;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use InvalidArgumentException;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -13,12 +13,12 @@ use Symfony\Component\Uid\Uuid;
 use Univeros\Polaris\Entity\Permission;
 use Univeros\Polaris\Entity\Role;
 use Univeros\Polaris\Entity\RolePermission;
-use Univeros\Polaris\Event\RoleCreated;
-use Univeros\Polaris\Event\RoleDeleted;
-use Univeros\Polaris\Event\RoleUpdated;
-use Univeros\Polaris\Exception\AuthorizationException;
-use Univeros\Polaris\Exception\RoleNotFoundException;
-use Univeros\Polaris\Exception\RoleSlugConflictException;
+use Polaris\Event\RoleCreated;
+use Polaris\Event\RoleDeleted;
+use Polaris\Event\RoleUpdated;
+use Polaris\Exception\AuthorizationException;
+use Polaris\Exception\RoleNotFoundException;
+use Polaris\Exception\RoleSlugConflictException;
 
 use function array_fill_keys;
 use function array_flip;

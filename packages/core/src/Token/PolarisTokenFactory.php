@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Token;
+namespace Polaris\Token;
 
-use Altair\Http\Contracts\IdentityProviderInterface;
-use Altair\Http\Contracts\TokenFactoryInterface;
-use Altair\Http\Contracts\TokenGeneratorInterface;
-use Altair\Http\Contracts\TokenInterface;
-use Altair\Http\Contracts\TokenParserInterface;
-use Altair\Http\Exception\AuthorizationTokenException;
+use Polaris\Contract\IdentityProviderInterface;
+use Polaris\Contract\TokenFactoryInterface;
+use Polaris\Contract\TokenGeneratorInterface;
+use Polaris\Contract\TokenInterface;
+use Polaris\Contract\TokenParserInterface;
+use Polaris\Exception\AuthorizationTokenException;
 use Override;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\Uid\Uuid;

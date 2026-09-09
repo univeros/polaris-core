@@ -6,7 +6,7 @@ namespace Univeros\Polaris\Tests\Config;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Config\RateLimitConfig;
+use Polaris\Config\RateLimitConfig;
 
 final class RateLimitConfigTest extends TestCase
 {

@@ -6,7 +6,7 @@ namespace Univeros\Polaris\Tests\Persistence;
 
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Authorization\PermissionResolver;
+use Polaris\Authorization\PermissionResolver;
 use Univeros\Polaris\Entity\Membership;
 use Univeros\Polaris\Entity\MembershipRole;
 use Univeros\Polaris\Entity\Role;

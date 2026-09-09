@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
-use Altair\Persistence\Contracts\RepositoryInterface;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\RepositoryInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Univeros\Polaris\Entity\MfaFactor;
-use Univeros\Polaris\Event\MfaEnrolled;
+use Polaris\Event\MfaEnrolled;
 
 /**
  * The shared tail of confirming any MFA factor, regardless of channel.

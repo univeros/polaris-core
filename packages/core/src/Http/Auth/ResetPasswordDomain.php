@@ -7,9 +7,9 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Exception\InvalidPasswordException;
-use Univeros\Polaris\Exception\InvalidResetTokenException;
-use Univeros\Polaris\Identity\PasswordResetService;
+use Polaris\Exception\InvalidPasswordException;
+use Polaris\Exception\InvalidResetTokenException;
+use Polaris\Identity\PasswordResetService;
 
 use function trim;
 

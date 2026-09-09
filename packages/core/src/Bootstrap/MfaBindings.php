@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Bootstrap;
 
 use Altair\Container\Container;
-use Altair\Http\Contracts\TokenConfigurationInterface;
-use Altair\Http\Jwt\LcobucciTokenParser;
+use Polaris\Contract\TokenConfigurationInterface;
+use Polaris\Token\LcobucciTokenParser;
 use Altair\Http\Rule\RequestPathRule;
-use Altair\Http\Support\TokenConfiguration;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
-use Altair\Security\Contracts\EncrypterInterface;
-use Altair\Security\Encrypter;
-use Altair\Security\Support\HkdfKey;
+use Polaris\Token\TokenConfiguration;
+use Polaris\Contract\UnitOfWorkInterface;
+use Polaris\Contract\EncrypterInterface;
+use Polaris\Security\SodiumEncrypter;
 use Cycle\ORM\ORMInterface;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -20,14 +19,14 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Psr\SimpleCache\CacheInterface;
-use Univeros\Polaris\Config\AuthConfig;
-use Univeros\Polaris\Config\OtpConfig;
-use Univeros\Polaris\Config\Secrets;
-use Univeros\Polaris\Config\TotpConfig;
-use Univeros\Polaris\Contracts\OtpMailerInterface;
-use Univeros\Polaris\Contracts\QrCodeRendererInterface;
-use Univeros\Polaris\Contracts\SmsSenderInterface;
-use Univeros\Polaris\Contracts\TotpProviderInterface;
+use Polaris\Config\AuthConfig;
+use Polaris\Config\OtpConfig;
+use Polaris\Config\Secrets;
+use Polaris\Config\TotpConfig;
+use Polaris\Contract\OtpMailerInterface;
+use Polaris\Contract\QrCodeRendererInterface;
+use Polaris\Contract\SmsSenderInterface;
+use Polaris\Contract\TotpProviderInterface;
 use Univeros\Polaris\Http\Auth\DeleteFactorDomain;
 use Univeros\Polaris\Http\Auth\EmailEnrollDomain;
 use Univeros\Polaris\Http\Auth\MfaChallengeDomain;
@@ -46,30 +45,30 @@ use Univeros\Polaris\Http\Middleware\MfaTokenMiddleware;
 use Univeros\Polaris\Http\Middleware\StepUpMiddleware;
 use Univeros\Polaris\Http\Rule\AnyRule;
 use Univeros\Polaris\Http\Rule\MethodPathRule;
-use Univeros\Polaris\Identity\MfaLoginService;
-use Univeros\Polaris\Identity\StepUpService;
-use Univeros\Polaris\Mfa\EndroidQrRenderer;
-use Univeros\Polaris\Mfa\LogOtpMailer;
-use Univeros\Polaris\Mfa\LogSmsSender;
-use Univeros\Polaris\Mfa\MfaChallengeVerifier;
-use Univeros\Polaris\Mfa\MfaConfirmation;
-use Univeros\Polaris\Mfa\MfaEnforcement;
-use Univeros\Polaris\Mfa\MfaManagementService;
-use Univeros\Polaris\Mfa\MfaTotpService;
-use Univeros\Polaris\Mfa\OtpFactorService;
-use Univeros\Polaris\Mfa\OtphpTotpProvider;
-use Univeros\Polaris\Mfa\OtpService;
-use Univeros\Polaris\Mfa\RecoveryCodeService;
+use Polaris\Identity\MfaLoginService;
+use Polaris\Identity\StepUpService;
+use Polaris\Mfa\EndroidQrRenderer;
+use Polaris\Mfa\LogOtpMailer;
+use Polaris\Mfa\LogSmsSender;
+use Polaris\Mfa\MfaChallengeVerifier;
+use Polaris\Mfa\MfaConfirmation;
+use Polaris\Mfa\MfaEnforcement;
+use Polaris\Mfa\MfaManagementService;
+use Polaris\Mfa\MfaTotpService;
+use Polaris\Mfa\OtpFactorService;
+use Polaris\Mfa\OtphpTotpProvider;
+use Polaris\Mfa\OtpService;
+use Polaris\Mfa\RecoveryCodeService;
 use Univeros\Polaris\Persistence\MfaFactorRepository;
 use Univeros\Polaris\Persistence\OtpChallengeRepository;
 use Univeros\Polaris\Persistence\RecoveryCodeRepository;
 use Univeros\Polaris\Persistence\UserRepository;
-use Univeros\Polaris\Security\Pepper;
-use Univeros\Polaris\Token\JwtSignerFactory;
-use Univeros\Polaris\Token\MfaLoginTokenService;
-use Univeros\Polaris\Token\PolarisTokenGenerator;
-use Univeros\Polaris\Token\SessionPrincipalResolverInterface;
-use Univeros\Polaris\Token\TokenService;
+use Polaris\Security\Pepper;
+use Polaris\Token\JwtSignerFactory;
+use Polaris\Token\MfaLoginTokenService;
+use Polaris\Token\PolarisTokenGenerator;
+use Polaris\Token\SessionPrincipalResolverInterface;
+use Polaris\Token\TokenService;
 
 use function array_map;
 use function preg_quote;
@@ -176,7 +175,7 @@ final class MfaBindings
 
     /**
      * Bind TOTP enrollment: a secret-at-rest {@see EncrypterInterface} (a {@see Encrypter} over an
-     * {@see HkdfKey} derived from the application key with a distinct context, AES-256-CBC), the
+     * {@see SodiumEncrypter} keyed from the application key), the
      * {@see RecoveryCodeService}, the {@see MfaTotpService}, and the enroll/confirm domains. The
      * repositories the service depends on are plain Cycle repositories the container autowires.
      */
@@ -186,17 +185,7 @@ final class MfaBindings
             $appKey = $secrets->appKey;
             $container->singleton(
                 EncrypterInterface::class,
-                // The default `$allowedClasses = false` MUST stay: TOTP secrets are plain strings, so
-                // decrypt() must never reconstruct objects (no unserialize gadget surface).
-                static fn(): Encrypter => new Encrypter(
-                    new HkdfKey(
-                        $appKey,
-                        null,
-                        'polaris:encrypter:mfa',
-                        EncrypterInterface::AES_256_CBC_CIPHER_KEY_LENGTH,
-                    ),
-                    EncrypterInterface::AES_256_CBC_CIPHER,
-                ),
+                static fn(): SodiumEncrypter => new SodiumEncrypter($appKey),
             );
         }
 

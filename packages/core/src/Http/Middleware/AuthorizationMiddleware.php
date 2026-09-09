@@ -6,14 +6,15 @@ namespace Univeros\Polaris\Http\Middleware;
 
 use Altair\Http\Base\Action;
 use Altair\Http\Contracts\MiddlewareInterface;
-use Altair\Http\Contracts\TokenInterface;
+use Altair\Http\Contracts\TokenInterface as AltairToken;
 use Override;
+use Polaris\Contract\TokenInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Univeros\Polaris\Authorization\Gate;
-use Univeros\Polaris\Authorization\ResolvedAuthority;
+use Polaris\Authorization\Gate;
+use Polaris\Authorization\ResolvedAuthority;
 
 use function constant;
 use function defined;
@@ -50,7 +51,7 @@ final readonly class AuthorizationMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        $token = $request->getAttribute(TokenInterface::TOKEN_KEY);
+        $token = $request->getAttribute(AltairToken::TOKEN_KEY);
         if (!$token instanceof TokenInterface) {
             // The access-token middleware runs first and already rejects an unauthenticated request;
             // fail closed if the ordering ever changes rather than pass a protected route through.

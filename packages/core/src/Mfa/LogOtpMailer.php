@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Mfa;
+namespace Polaris\Mfa;
 
 use Override;
 use Psr\Log\LoggerInterface;
-use Univeros\Polaris\Contracts\OtpMailerInterface;
+use Polaris\Contract\OtpMailerInterface;
 
 /**
  * Dev/test email driver: instead of sending, it writes the recipient, template, and context

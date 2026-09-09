@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Exception;
+namespace Polaris\Exception;
 
 use RuntimeException;
 
