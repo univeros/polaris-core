@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Polaris\Event;
 
-use Univeros\Polaris\Entity\RefreshToken;
+use Polaris\Model\RefreshToken;
 
 /**
  * Emitted when every session for a user is revoked at once — logout-all, or after a

@@ -6,7 +6,7 @@ namespace Polaris\Token;
 
 use Polaris\Contract\RepositoryInterface;
 use Override;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 
 /**
  * Default {@see SessionPrincipalResolverInterface}: resolves only the identity-level

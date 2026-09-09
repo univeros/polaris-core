@@ -8,7 +8,7 @@ use Altair\Http\Validator\RepositoryIdentityValidator;
 use Univeros\Polaris\Bootstrap\AltairIdentityProviderBridge;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Identity\CycleIdentityProvider;
 use Polaris\Security\Argon2idPasswordHasher;
 use Univeros\Polaris\Tests\Support\InMemoryUserRepository;

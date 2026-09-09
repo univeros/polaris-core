@@ -6,11 +6,11 @@ namespace Univeros\Polaris\Http\Auth;
 
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\RepositoryInterface;
 use Override;
 use Polaris\Config\AuthConfig;
-use Univeros\Polaris\Entity\Membership;
-use Univeros\Polaris\Entity\Organization;
+use Polaris\Model\Membership;
+use Polaris\Model\Organization;
 use Polaris\Exception\InvalidGrantException;
 use Polaris\Token\TokenService;
 

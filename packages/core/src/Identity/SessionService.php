@@ -7,7 +7,7 @@ namespace Polaris\Identity;
 use Polaris\Contract\RepositoryInterface;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Univeros\Polaris\Entity\RefreshToken;
+use Polaris\Model\RefreshToken;
 use Polaris\Event\SessionsRevoked;
 use Polaris\Token\AccessTokenDenylist;
 use Polaris\Token\ClientContext;

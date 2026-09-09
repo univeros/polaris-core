@@ -9,18 +9,18 @@ use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 use Polaris\Authorization\Gate;
 use Polaris\Authorization\PermissionResolver;
-use Univeros\Polaris\Entity\Membership;
-use Univeros\Polaris\Entity\MembershipRole;
-use Univeros\Polaris\Entity\Role;
-use Univeros\Polaris\Entity\RolePermission;
+use Polaris\Model\Membership;
+use Polaris\Model\MembershipRole;
+use Polaris\Model\Role;
+use Polaris\Model\RolePermission;
 use Polaris\Exception\AuthorizationException;
-use Univeros\Polaris\Persistence\MembershipRepository;
-use Univeros\Polaris\Persistence\MembershipRoleRepository;
-use Univeros\Polaris\Persistence\OrganizationRepository;
-use Univeros\Polaris\Persistence\PermissionRepository;
-use Univeros\Polaris\Persistence\RolePermissionRepository;
-use Univeros\Polaris\Persistence\RoleRepository;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\MembershipRepository;
+use Polaris\Repository\MembershipRoleRepository;
+use Polaris\Repository\OrganizationRepository;
+use Polaris\Repository\PermissionRepository;
+use Polaris\Repository\RolePermissionRepository;
+use Polaris\Repository\RoleRepository;
+use Polaris\Repository\UserRepository;
 
 use function is_array;
 use function is_string;
@@ -56,13 +56,13 @@ final class GateTest extends DatabaseTestCase
     private function gate(): Gate
     {
         return new Gate(new PermissionResolver(
-            new UserRepository($this->orm, $this->unitOfWork),
-            new OrganizationRepository($this->orm, $this->unitOfWork),
-            new MembershipRepository($this->orm, $this->unitOfWork),
-            new MembershipRoleRepository($this->orm, $this->unitOfWork),
-            new RoleRepository($this->orm, $this->unitOfWork),
-            new RolePermissionRepository($this->orm, $this->unitOfWork),
-            new PermissionRepository($this->orm, $this->unitOfWork),
+            new UserRepository($this->adapter, $this->identities),
+            new OrganizationRepository($this->adapter, $this->identities),
+            new MembershipRepository($this->adapter, $this->identities),
+            new MembershipRoleRepository($this->adapter, $this->identities),
+            new RoleRepository($this->adapter, $this->identities),
+            new RolePermissionRepository($this->adapter, $this->identities),
+            new PermissionRepository($this->adapter, $this->identities),
         ));
     }
 
@@ -82,7 +82,8 @@ final class GateTest extends DatabaseTestCase
         $membership->status = Membership::STATUS_ACTIVE;
         $membership->createdAt = $now;
         $membership->updatedAt = $now;
-        (new MembershipRepository($this->orm, $this->unitOfWork))->save($membership);
+        $this->unitOfWork->persist($membership);
+        $this->unitOfWork->flush();
 
         $role = new Role();
         $role->id = Uuid::v7()->toRfc4122();
@@ -91,17 +92,20 @@ final class GateTest extends DatabaseTestCase
         $role->slug = 'limited';
         $role->createdAt = $now;
         $role->updatedAt = $now;
-        (new RoleRepository($this->orm, $this->unitOfWork))->save($role);
+        $this->unitOfWork->persist($role);
+        $this->unitOfWork->flush();
 
         $grant = new RolePermission();
         $grant->roleId = $role->id;
         $grant->permissionId = $this->permissionId($permissionKey);
-        (new RolePermissionRepository($this->orm, $this->unitOfWork))->save($grant);
+        $this->unitOfWork->persist($grant);
+        $this->unitOfWork->flush();
 
         $link = new MembershipRole();
         $link->membershipId = $membership->id;
         $link->roleId = $role->id;
-        (new MembershipRoleRepository($this->orm, $this->unitOfWork))->save($link);
+        $this->unitOfWork->persist($link);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 

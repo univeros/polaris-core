@@ -4,21 +4,15 @@ declare(strict_types=1);
 
 namespace Polaris\Authorization;
 
-use Cycle\Database\DatabaseInterface;
 use DateTimeImmutable;
+use Polaris\Contract\DatabaseAdapter;
 use Symfony\Component\Uid\Uuid;
 
-use function is_array;
 use function is_string;
 
 /**
- * Writes the {@see PermissionCatalog} into the database — permissions, the system role templates,
- * and the grants linking them.
- *
- * Idempotent by design: every row is looked up before insert, so running the seed repeatedly (or
- * after the catalog grows) converges without duplicates and never disturbs existing ids. The seed
- * migration delegates here; a host could also re-run it after registering new permission
- * contributors. The database is the projection; the catalog is the source of truth.
+ * Makes sure every catalog permission and every system role template exists, with its grants.
+ * Idempotent: rows are looked up by their natural keys and only created when missing.
  */
 final readonly class PermissionCatalogSeeder
 {
@@ -26,7 +20,7 @@ final readonly class PermissionCatalogSeeder
     {
     }
 
-    public function seed(DatabaseInterface $database, DateTimeImmutable $now): void
+    public function seed(DatabaseAdapter $database, DateTimeImmutable $now): void
     {
         $permissionIds = [];
         foreach ($this->catalog->permissions() as $key => $description) {
@@ -44,59 +38,45 @@ final readonly class PermissionCatalogSeeder
         }
     }
 
-    private function ensurePermission(DatabaseInterface $database, string $key, string $description): string
+    private function ensurePermission(DatabaseAdapter $database, string $key, string $description): string
     {
-        foreach ($database->select('id')->from('auth_permissions')->where('key', $key)->fetchAll() as $row) {
-            if (is_array($row) && is_string($id = $row['id'] ?? null)) {
-                return $id;
-            }
+        $row = $database->findOne('auth_permissions', ['key' => $key]);
+        if ($row !== null && is_string($id = $row['id'] ?? null)) {
+            return $id;
         }
 
         $id = Uuid::v7()->toRfc4122();
-        $database->insert('auth_permissions')
-            ->values(['id' => $id, 'key' => $key, 'description' => $description])
-            ->run();
+        $database->insert('auth_permissions', ['id' => $id, 'key' => $key, 'description' => $description]);
 
         return $id;
     }
 
-    private function ensureSystemRole(DatabaseInterface $database, RoleTemplate $template, DateTimeImmutable $now): string
+    private function ensureSystemRole(DatabaseAdapter $database, RoleTemplate $template, DateTimeImmutable $now): string
     {
-        // System roles have organization_id IS NULL; match by slug among them.
-        foreach ($database->select(['id', 'organization_id'])->from('auth_roles')->where('slug', $template->slug)->fetchAll() as $row) {
-            if (is_array($row) && is_string($id = $row['id'] ?? null) && ($row['organization_id'] ?? null) === null) {
-                return $id;
-            }
+        $row = $database->findOne('auth_roles', ['slug' => $template->slug, 'organization_id' => null]);
+        if ($row !== null && is_string($id = $row['id'] ?? null)) {
+            return $id;
         }
 
         $id = Uuid::v7()->toRfc4122();
-        $database->insert('auth_roles')
-            ->values([
-                'id' => $id,
-                'organization_id' => null,
-                'name' => $template->name,
-                'slug' => $template->slug,
-                'description' => $template->description,
-                'is_system' => true,
-                'created_at' => $now,
-                'updated_at' => $now,
-            ])
-            ->run();
+        $database->insert('auth_roles', [
+            'id' => $id,
+            'organization_id' => null,
+            'name' => $template->name,
+            'slug' => $template->slug,
+            'description' => $template->description,
+            'is_system' => true,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
 
         return $id;
     }
 
-    private function ensureRolePermission(DatabaseInterface $database, string $roleId, string $permissionId): void
+    private function ensureRolePermission(DatabaseAdapter $database, string $roleId, string $permissionId): void
     {
-        $existing = $database->select('role_id')
-            ->from('auth_role_permissions')
-            ->where(['role_id' => $roleId, 'permission_id' => $permissionId])
-            ->fetchAll();
-
-        if ($existing === []) {
-            $database->insert('auth_role_permissions')
-                ->values(['role_id' => $roleId, 'permission_id' => $permissionId])
-                ->run();
+        if ($database->count('auth_role_permissions', ['role_id' => $roleId, 'permission_id' => $permissionId]) === 0) {
+            $database->insert('auth_role_permissions', ['role_id' => $roleId, 'permission_id' => $permissionId]);
         }
     }
 }

@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Altair\Persistence\Cycle\CycleRepository;
+use Polaris\Repository\RecoveryCodeRepository;
+use Polaris\Repository\OtpChallengeRepository;
+use Polaris\Repository\MfaFactorRepository;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Entity\MfaFactor;
-use Univeros\Polaris\Entity\OtpChallenge;
-use Univeros\Polaris\Entity\RecoveryCode;
+use Polaris\Model\MfaFactor;
+use Polaris\Model\OtpChallenge;
+use Polaris\Model\RecoveryCode;
 use Polaris\Mfa\ChallengePurpose;
 
 use function str_repeat;
@@ -52,7 +54,7 @@ final class MfaEntitiesPersistenceTest extends DatabaseTestCase
 
     public function testMfaFactorRoundTrips(): void
     {
-        $repository = new CycleRepository(MfaFactor::class, $this->orm, $this->unitOfWork);
+        $repository = new MfaFactorRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-08 10:00:00');
 
         $factor = new MfaFactor();
@@ -65,7 +67,8 @@ final class MfaEntitiesPersistenceTest extends DatabaseTestCase
         $factor->confirmedAt = $now;
         $factor->createdAt = $now;
         $factor->updatedAt = $now;
-        $repository->save($factor);
+        $this->unitOfWork->persist($factor);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -83,7 +86,7 @@ final class MfaEntitiesPersistenceTest extends DatabaseTestCase
 
     public function testOtpChallengeRoundTrips(): void
     {
-        $repository = new CycleRepository(OtpChallenge::class, $this->orm, $this->unitOfWork);
+        $repository = new OtpChallengeRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-08 10:00:00');
         $hash = str_repeat('b', 64);
 
@@ -96,7 +99,8 @@ final class MfaEntitiesPersistenceTest extends DatabaseTestCase
         $challenge->destination = '+15551234567';
         $challenge->expiresAt = $now->modify('+5 minutes');
         $challenge->createdAt = $now;
-        $repository->save($challenge);
+        $this->unitOfWork->persist($challenge);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -115,7 +119,7 @@ final class MfaEntitiesPersistenceTest extends DatabaseTestCase
 
     public function testRecoveryCodeRoundTrips(): void
     {
-        $repository = new CycleRepository(RecoveryCode::class, $this->orm, $this->unitOfWork);
+        $repository = new RecoveryCodeRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-08 10:00:00');
         $hash = str_repeat('c', 64);
 
@@ -124,7 +128,8 @@ final class MfaEntitiesPersistenceTest extends DatabaseTestCase
         $code->userId = Uuid::v7()->toRfc4122();
         $code->codeHash = $hash;
         $code->createdAt = $now;
-        $repository->save($code);
+        $this->unitOfWork->persist($code);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 

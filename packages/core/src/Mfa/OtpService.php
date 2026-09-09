@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Polaris\Mfa;
 
+use Polaris\Contract\Condition;
+use Polaris\Contract\DatabaseAdapter;
+use Polaris\Contract\Increment;
 use Polaris\Contract\RepositoryInterface;
 use Polaris\Contract\UnitOfWorkInterface;
-use Cycle\Database\Injection\Fragment;
-use Cycle\ORM\ORMInterface;
+use Polaris\Schema\Schema;
 use DateInterval;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
@@ -18,8 +20,8 @@ use Symfony\Component\Uid\Uuid;
 use Polaris\Config\OtpConfig;
 use Polaris\Contract\OtpMailerInterface;
 use Polaris\Contract\SmsSenderInterface;
-use Univeros\Polaris\Entity\MfaFactor;
-use Univeros\Polaris\Entity\OtpChallenge;
+use Polaris\Model\MfaFactor;
+use Polaris\Model\OtpChallenge;
 use Polaris\Event\OtpChallengeSent;
 use Polaris\Event\OtpVerifyFailed;
 use Polaris\Exception\InvalidOtpException;
@@ -62,7 +64,7 @@ final readonly class OtpService
         private ClockInterface $clock,
         private EventDispatcherInterface $events,
         private CacheInterface $cache,
-        private ?ORMInterface $orm = null,
+        private ?DatabaseAdapter $database = null,
     ) {
     }
 
@@ -163,7 +165,7 @@ final readonly class OtpService
      */
     private function spendAttempt(OtpChallenge $challenge): void
     {
-        if ($this->orm === null) {
+        if ($this->database === null) {
             ++$challenge->attempts;
             $this->unitOfWork->persist($challenge);
             $this->unitOfWork->flush();
@@ -171,12 +173,11 @@ final readonly class OtpService
             return;
         }
 
-        $source = $this->orm->getSource(OtpChallenge::class);
-        $source->getDatabase()->update(
-            $source->getTable(),
-            ['attempts' => new Fragment('attempts + 1')],
-            ['id' => $challenge->id, 'attempts' => ['<' => $challenge->maxAttempts]],
-        )->run();
+        $this->database->update(
+            Schema::for(OtpChallenge::class)->table,
+            ['id' => $challenge->id, 'attempts' => Condition::lt($challenge->maxAttempts)],
+            ['attempts' => new Increment()],
+        );
     }
 
     /**
@@ -185,18 +186,17 @@ final readonly class OtpService
      */
     private function claimConsumption(OtpChallenge $challenge, DateTimeImmutable $now): bool
     {
-        if ($this->orm === null) {
+        if ($this->database === null) {
             // In-memory test wiring has no database to CAS against; the entity-level
             // consumed check already ran in pending(). Production wiring passes the ORM.
             return true;
         }
 
-        $source = $this->orm->getSource(OtpChallenge::class);
-        $affected = $source->getDatabase()->update(
-            $source->getTable(),
-            ['consumed_at' => $now],
+        $affected = $this->database->update(
+            Schema::for(OtpChallenge::class)->table,
             ['id' => $challenge->id, 'consumed_at' => null],
-        )->run();
+            ['consumed_at' => $now],
+        );
 
         return $affected === 1;
     }

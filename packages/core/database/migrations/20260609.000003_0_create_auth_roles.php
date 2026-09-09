@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Database\Migrations;
 use Cycle\Migrations\Migration;
 
 /**
- * Creates the `auth_roles` table behind {@see \Univeros\Polaris\Entity\Role}.
+ * Creates the `auth_roles` table behind {@see \Polaris\Model\Role}.
  *
  * `unique(organization_id, slug)` keeps role slugs unique within an organization; a null
  * `organization_id` marks a system/global role. Driver-agnostic: only Cycle's abstract column

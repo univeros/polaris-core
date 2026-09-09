@@ -9,7 +9,7 @@ use Polaris\Contract\UnitOfWorkInterface;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Univeros\Polaris\Entity\MfaFactor;
+use Polaris\Model\MfaFactor;
 use Polaris\Event\MfaFactorRemoved;
 use Polaris\Exception\InvalidMfaFactorStateException;
 use Polaris\Exception\LastFactorProtectedException;

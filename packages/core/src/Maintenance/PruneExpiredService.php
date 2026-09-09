@@ -2,48 +2,34 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Maintenance;
+namespace Polaris\Maintenance;
 
-use Cycle\Database\DatabaseInterface;
-use Cycle\ORM\ORMInterface;
 use DateInterval;
+use Polaris\Contract\Condition;
+use Polaris\Contract\DatabaseAdapter;
+use Polaris\Model\EmailVerification;
+use Polaris\Model\OtpChallenge;
+use Polaris\Model\PasswordReset;
+use Polaris\Model\RefreshToken;
+use Polaris\Schema\Schema;
 use Psr\Clock\ClockInterface;
-use Univeros\Polaris\Entity\EmailVerification;
-use Univeros\Polaris\Entity\OtpChallenge;
-use Univeros\Polaris\Entity\PasswordReset;
-use Univeros\Polaris\Entity\RefreshToken;
 
 /**
- * Prunes the expired/consumed transient rows so the auth tables stay small
- * (`docs/auth/data-model.md` §3). The host schedules it — `bin/altair` job, cron, whatever exists;
- * Polaris does not assume a scheduler. Safe to run repeatedly: every delete is bounded by
- * conditions that only ever match dead rows.
- *
- * - `auth_otp_challenges`, `auth_email_verifications`, `auth_password_resets`: consumed or expired.
- * - `auth_refresh_tokens`: expired longer than the grace window ago — recently dead tokens stay
- *   for replay/reuse-detection forensics (default 7 days).
- * - `auth_audit_log` is **not** touched: its retention is host policy (default 1 year + archive).
- *
- * Deletes run as single bulk statements through the entities' own database handles (no
- * row-by-row hydration), so a large backlog prunes in one pass.
+ * Deletes rows that can no longer be used: consumed or expired one-time challenges, and refresh
+ * tokens whose expiry or revocation is older than the grace period that reuse detection needs.
  */
 final class PruneExpiredService
 {
     public const string DEFAULT_REFRESH_GRACE = 'P7D';
 
     public function __construct(
-        private readonly ORMInterface $orm,
+        private readonly DatabaseAdapter $database,
         private readonly ClockInterface $clock,
     ) {
     }
 
     /**
-     * Delete dead transient rows and report how many went, per table.
-     *
-     * @param DateInterval|null $refreshGrace how long expired refresh tokens are kept for
-     *                                        forensics (default 7 days)
-     *
-     * @return array<string, int> table name => rows deleted
+     * @return array<string, int> deleted rows per table
      */
     public function prune(?DateInterval $refreshGrace = null): array
     {
@@ -51,48 +37,16 @@ final class PruneExpiredService
         $refreshCutoff = $now->sub($refreshGrace ?? new DateInterval(self::DEFAULT_REFRESH_GRACE));
 
         $deleted = [];
-        foreach ([OtpChallenge::class, EmailVerification::class, PasswordReset::class] as $entity) {
-            $database = $this->databaseFor($entity);
-            $table = $this->tableFor($entity);
-            $deleted[$table] = $database->delete($table)
-                ->where(static function ($query) use ($now): void {
-                    $query->where('consumed_at', '!=', null)->orWhere('expires_at', '<', $now);
-                })
-                ->run();
+        foreach ([OtpChallenge::class, EmailVerification::class, PasswordReset::class] as $model) {
+            $table = Schema::for($model)->table;
+            $deleted[$table] = $this->database->delete($table, ['consumed_at' => Condition::notNull()])
+                + $this->database->delete($table, ['expires_at' => Condition::lt($now)]);
         }
 
-        // A token is prunable once it has been dead — naturally expired OR explicitly revoked —
-        // for longer than the grace window. Keying on expiry alone would keep revoked long-TTL
-        // (or sliding-mode) session rows forever. A row exactly on the cutoff is still in grace.
-        $database = $this->databaseFor(RefreshToken::class);
-        $deleted['auth_refresh_tokens'] = $database->delete('auth_refresh_tokens')
-            ->where(static function ($query) use ($refreshCutoff): void {
-                $query->where('expires_at', '<', $refreshCutoff)
-                    ->orWhere(static function ($revoked) use ($refreshCutoff): void {
-                        $revoked->where('revoked_at', '!=', null)
-                            ->where('revoked_at', '<', $refreshCutoff);
-                    });
-            })
-            ->run();
+        $tokens = Schema::for(RefreshToken::class)->table;
+        $deleted[$tokens] = $this->database->delete($tokens, ['expires_at' => Condition::lt($refreshCutoff)])
+            + $this->database->delete($tokens, ['revoked_at' => Condition::lt($refreshCutoff)]);
 
         return $deleted;
-    }
-
-    /**
-     * @param class-string $entity
-     */
-    private function databaseFor(string $entity): DatabaseInterface
-    {
-        $source = $this->orm->getSource($entity);
-
-        return $source->getDatabase();
-    }
-
-    /**
-     * @param class-string $entity
-     */
-    private function tableFor(string $entity): string
-    {
-        return $this->orm->getSource($entity)->getTable();
     }
 }

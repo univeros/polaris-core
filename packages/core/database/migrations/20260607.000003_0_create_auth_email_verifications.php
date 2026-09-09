@@ -8,7 +8,7 @@ use Cycle\Migrations\Migration;
 
 /**
  * Creates the `auth_email_verifications` table behind
- * {@see \Univeros\Polaris\Entity\EmailVerification}.
+ * {@see \Polaris\Model\EmailVerification}.
  *
  * Driver-agnostic: only Cycle's abstract column types are used, so the same
  * migration applies cleanly on every supported database engine.

@@ -8,6 +8,7 @@ use Cycle\Migrations\Migration;
 use DateTimeImmutable;
 use Polaris\Authorization\PermissionCatalog;
 use Polaris\Authorization\PermissionCatalogSeeder;
+use Univeros\Polaris\Bootstrap\CycleDatabaseAdapter;
 
 use function array_keys;
 
@@ -25,7 +26,7 @@ final class M20260609000008SeedPermissionsAndSystemRoles extends Migration
 
     public function up(): void
     {
-        (new PermissionCatalogSeeder(new PermissionCatalog()))->seed($this->database(), new DateTimeImmutable('now'));
+        (new PermissionCatalogSeeder(new PermissionCatalog()))->seed(new CycleDatabaseAdapter($this->database()), new DateTimeImmutable('now'));
     }
 
     public function down(): void

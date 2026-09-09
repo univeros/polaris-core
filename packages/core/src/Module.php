@@ -140,7 +140,7 @@ final class Module implements
     #[Override]
     public function entityDirectories(): array
     {
-        return [__DIR__ . '/Entity'];
+        return [];
     }
 
     /**

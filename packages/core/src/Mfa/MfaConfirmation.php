@@ -8,7 +8,7 @@ use Polaris\Contract\RepositoryInterface;
 use Polaris\Contract\UnitOfWorkInterface;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Univeros\Polaris\Entity\MfaFactor;
+use Polaris\Model\MfaFactor;
 use Polaris\Event\MfaEnrolled;
 
 /**

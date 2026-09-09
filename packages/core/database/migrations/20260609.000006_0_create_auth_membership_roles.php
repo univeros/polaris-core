@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Database\Migrations;
 use Cycle\Migrations\Migration;
 
 /**
- * Creates the `auth_membership_roles` join table behind {@see \Univeros\Polaris\Entity\MembershipRole}.
+ * Creates the `auth_membership_roles` join table behind {@see \Polaris\Model\MembershipRole}.
  *
  * This binds a user's roles *within a specific organization*. Composite primary key
  * `(membership_id, role_id)` makes each pairing unique; both columns are `ON DELETE CASCADE`

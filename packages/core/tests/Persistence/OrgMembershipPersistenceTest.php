@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Altair\Persistence\Cycle\CycleRepository;
+use Polaris\Repository\OrganizationRepository;
+use Polaris\Repository\MembershipRepository;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 use Throwable;
-use Univeros\Polaris\Entity\Membership;
-use Univeros\Polaris\Entity\Organization;
+use Polaris\Model\Membership;
+use Polaris\Model\Organization;
 
 /**
  * Verifies the #27 RBAC entities and migrations against a real database driver: the migrations
@@ -43,7 +44,7 @@ final class OrgMembershipPersistenceTest extends DatabaseTestCase
 
     public function testOrganizationRoundTrips(): void
     {
-        $repository = new CycleRepository(Organization::class, $this->orm, $this->unitOfWork);
+        $repository = new OrganizationRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-09 10:00:00');
 
         $organization = new Organization();
@@ -54,7 +55,8 @@ final class OrgMembershipPersistenceTest extends DatabaseTestCase
         $organization->createdBy = Uuid::v7()->toRfc4122();
         $organization->createdAt = $now;
         $organization->updatedAt = $now;
-        $repository->save($organization);
+        $this->unitOfWork->persist($organization);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -68,7 +70,7 @@ final class OrgMembershipPersistenceTest extends DatabaseTestCase
 
     public function testMembershipRoundTrips(): void
     {
-        $repository = new CycleRepository(Membership::class, $this->orm, $this->unitOfWork);
+        $repository = new MembershipRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-09 10:00:00');
 
         $membership = new Membership();
@@ -80,7 +82,8 @@ final class OrgMembershipPersistenceTest extends DatabaseTestCase
         $membership->joinedAt = $now;
         $membership->createdAt = $now;
         $membership->updatedAt = $now;
-        $repository->save($membership);
+        $this->unitOfWork->persist($membership);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -96,7 +99,7 @@ final class OrgMembershipPersistenceTest extends DatabaseTestCase
 
     public function testMembershipUserOrgPairIsUnique(): void
     {
-        $repository = new CycleRepository(Membership::class, $this->orm, $this->unitOfWork);
+        $repository = new MembershipRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-09 10:00:00');
         $userId = Uuid::v7()->toRfc4122();
         $organizationId = Uuid::v7()->toRfc4122();
@@ -107,7 +110,8 @@ final class OrgMembershipPersistenceTest extends DatabaseTestCase
         $first->organizationId = $organizationId;
         $first->createdAt = $now;
         $first->updatedAt = $now;
-        $repository->save($first);
+        $this->unitOfWork->persist($first);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -120,7 +124,8 @@ final class OrgMembershipPersistenceTest extends DatabaseTestCase
 
         $violated = false;
         try {
-            $repository->save($duplicate);
+            $this->unitOfWork->persist($duplicate);
+            $this->unitOfWork->flush();
         } catch (Throwable) {
             $violated = true;
         }

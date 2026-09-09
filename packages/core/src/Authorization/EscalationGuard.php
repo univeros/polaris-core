@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Polaris\Authorization;
 
 use Polaris\Contract\RepositoryInterface;
-use Univeros\Polaris\Entity\Permission;
-use Univeros\Polaris\Entity\RolePermission;
+use Polaris\Model\Permission;
+use Polaris\Model\RolePermission;
 use Polaris\Exception\AuthorizationException;
 
 use function array_fill_keys;

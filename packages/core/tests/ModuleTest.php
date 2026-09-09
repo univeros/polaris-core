@@ -368,11 +368,9 @@ final class ModuleTest extends TestCase
         self::assertContains(['POST', '/auth/mfa/email/confirm', OtpFactorConfirmDomain::class], $routes);
     }
 
-    public function testEntityDirectoriesExist(): void
+    public function testEntityDirectoriesAreNoLongerProvided(): void
     {
-        foreach ((new Module())->entityDirectories() as $directory) {
-            self::assertDirectoryExists($directory);
-        }
+        self::assertSame([], (new Module())->entityDirectories(), 'models are plain records; the schema lives in Polaris\Schema');
     }
 
     public function testMigrationDirectoriesExist(): void

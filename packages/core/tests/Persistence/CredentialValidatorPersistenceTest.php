@@ -8,9 +8,9 @@ use Altair\Http\Validator\RepositoryIdentityValidator;
 use Univeros\Polaris\Bootstrap\AltairIdentityProviderBridge;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Identity\CycleIdentityProvider;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\UserRepository;
 use Polaris\Security\Argon2idPasswordHasher;
 
 /**
@@ -47,7 +47,7 @@ final class CredentialValidatorPersistenceTest extends DatabaseTestCase
     public function testProviderReturnsTheColumnKeyedRecord(): void
     {
         $this->validatorWithPersistedUser('grace@example.com');
-        $provider = new CycleIdentityProvider(new UserRepository($this->orm, $this->unitOfWork));
+        $provider = new CycleIdentityProvider(new UserRepository($this->adapter, $this->identities));
 
         $record = $provider->findOneBy(['email' => 'grace@example.com']);
 
@@ -69,11 +69,12 @@ final class CredentialValidatorPersistenceTest extends DatabaseTestCase
         $user->createdAt = $now;
         $user->updatedAt = $now;
 
-        $repository = new UserRepository($this->orm, $this->unitOfWork);
-        $repository->save($user);
+        $repository = new UserRepository($this->adapter, $this->identities);
+        $this->unitOfWork->persist($user);
+        $this->unitOfWork->flush();
         $this->unitOfWork->clear();
 
-        $provider = new CycleIdentityProvider(new UserRepository($this->orm, $this->unitOfWork));
+        $provider = new CycleIdentityProvider(new UserRepository($this->adapter, $this->identities));
 
         return new RepositoryIdentityValidator(new AltairIdentityProviderBridge($provider), [
             'username' => CycleIdentityProvider::IDENTIFIER_FIELD,

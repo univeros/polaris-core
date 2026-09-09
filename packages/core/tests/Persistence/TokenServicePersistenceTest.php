@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Univeros\Polaris\Bootstrap\UnitOfWorkBridge;
 use Polaris\Config\AuthConfig;
-use Univeros\Polaris\Entity\RefreshToken;
+use Polaris\Model\RefreshToken;
 use Polaris\Event\RefreshReuseDetected;
 use Polaris\Exception\RefreshTokenReuseException;
-use Univeros\Polaris\Persistence\RefreshTokenRepository;
+use Polaris\Repository\RefreshTokenRepository;
 use Polaris\Security\Pepper;
 use Univeros\Polaris\Tests\Support\FrozenClock;
 use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
@@ -37,8 +36,8 @@ final class TokenServicePersistenceTest extends DatabaseTestCase
     private function service(): TokenService
     {
         return new TokenService(
-            new RefreshTokenRepository($this->orm, $this->unitOfWork),
-            new UnitOfWorkBridge($this->unitOfWork),
+            new RefreshTokenRepository($this->adapter, $this->identities),
+            $this->unitOfWork,
             new Pepper('persistence-test-app-key-01234567'),
             new RecordingTokenGenerator(),
             new StubSessionPrincipalResolver(),
@@ -84,7 +83,7 @@ final class TokenServicePersistenceTest extends DatabaseTestCase
 
     private function refreshTokens(): RefreshTokenRepository
     {
-        return new RefreshTokenRepository($this->orm, $this->unitOfWork);
+        return new RefreshTokenRepository($this->adapter, $this->identities);
     }
 
     /**

@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Database\Migrations;
 use Cycle\Migrations\Migration;
 
 /**
- * Creates the `auth_memberships` table behind {@see \Univeros\Polaris\Entity\Membership}.
+ * Creates the `auth_memberships` table behind {@see \Polaris\Model\Membership}.
  *
  * The `unique(user_id, organization_id)` index enforces one membership per user per organization.
  * Driver-agnostic: only Cycle's abstract column types are used, so the same migration applies

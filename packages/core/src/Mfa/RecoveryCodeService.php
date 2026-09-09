@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Polaris\Mfa;
 
+use Polaris\Contract\DatabaseAdapter;
 use Polaris\Contract\RepositoryInterface;
 use Polaris\Contract\UnitOfWorkInterface;
-use Cycle\ORM\ORMInterface;
+use Polaris\Schema\Schema;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use SensitiveParameter;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Entity\RecoveryCode;
+use Polaris\Model\RecoveryCode;
 use Polaris\Event\MfaRecoveryRegenerated;
 use Polaris\Event\MfaRecoveryUsed;
 use Polaris\Security\Pepper;
@@ -50,7 +51,7 @@ final readonly class RecoveryCodeService
         private Pepper $pepper,
         private ClockInterface $clock,
         private EventDispatcherInterface $events,
-        private ?ORMInterface $orm = null,
+        private ?DatabaseAdapter $database = null,
     ) {
     }
 
@@ -126,18 +127,17 @@ final readonly class RecoveryCodeService
      */
     private function claimSpend(RecoveryCode $code, DateTimeImmutable $now): bool
     {
-        if ($this->orm === null) {
+        if ($this->database === null) {
             // In-memory test wiring has no database to CAS against; the entity-level
             // used_at check already ran in unusedFor(). Production wiring passes the ORM.
             return true;
         }
 
-        $source = $this->orm->getSource(RecoveryCode::class);
-        $affected = $source->getDatabase()->update(
-            $source->getTable(),
-            ['used_at' => $now],
+        $affected = $this->database->update(
+            Schema::for(RecoveryCode::class)->table,
             ['id' => $code->id, 'used_at' => null],
-        )->run();
+            ['used_at' => $now],
+        );
 
         return $affected === 1;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Polaris\Mfa;
 
-use Univeros\Polaris\Entity\OtpChallenge;
+use Polaris\Model\OtpChallenge;
 
 use function str_contains;
 use function strrpos;

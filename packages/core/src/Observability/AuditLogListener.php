@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Observability;
 
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use JsonException;
 use Psr\Clock\ClockInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Uid\Uuid;
 use Throwable;
-use Univeros\Polaris\Entity\AuditLogEntry;
+use Polaris\Model\AuditLogEntry;
 use Polaris\Event\MemberInvited;
 use Polaris\Event\MemberJoined;
 use Polaris\Event\MemberRemoved;

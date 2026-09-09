@@ -15,7 +15,7 @@ use Polaris\Contract\OtpMailerInterface;
 use Polaris\Contract\QrCodeRendererInterface;
 use Polaris\Contract\SmsSenderInterface;
 use Polaris\Contract\TotpProviderInterface;
-use Univeros\Polaris\Entity\MfaFactor;
+use Polaris\Model\MfaFactor;
 use Polaris\Event\MfaVerified;
 use Polaris\Event\MfaVerifyFailed;
 use Polaris\Event\UserLoggedIn;

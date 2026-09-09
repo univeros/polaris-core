@@ -7,9 +7,9 @@ namespace Univeros\Polaris\Http\Auth;
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
 use Override;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Mfa\MfaTotpService;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\UserRepository;
 
 /**
  * `POST /auth/mfa/totp/enroll` — start authenticator-app enrollment for the authenticated user:

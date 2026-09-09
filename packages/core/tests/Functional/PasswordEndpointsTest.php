@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Functional;
 
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Event\PasswordChanged;
 use Polaris\Event\PasswordResetRequested;
 use Polaris\Event\UserRegistered;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\UserRepository;
 
 /**
  * End-to-end tests for password reset/change and `GET /auth/me`, driven through the real
@@ -163,7 +163,7 @@ final class PasswordEndpointsTest extends FunctionalTestCase
 
     private function setStatus(string $status): void
     {
-        $users = new UserRepository($this->orm, $this->unitOfWork);
+        $users = new UserRepository($this->adapter, $this->identities);
         $user = $users->findOneBy(['email' => self::EMAIL]);
         self::assertInstanceOf(User::class, $user);
 

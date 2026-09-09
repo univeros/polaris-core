@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Database\Migrations;
 use Cycle\Migrations\Migration;
 
 /**
- * Creates the `auth_organizations` table behind {@see \Univeros\Polaris\Entity\Organization}.
+ * Creates the `auth_organizations` table behind {@see \Polaris\Model\Organization}.
  *
  * Driver-agnostic: only Cycle's abstract column types are used, so the same migration applies
  * cleanly on every supported database engine.

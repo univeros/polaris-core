@@ -6,10 +6,10 @@ namespace Univeros\Polaris\Http\Orgs;
 
 use Altair\Http\Collection\InputCollection;
 use Altair\Http\Contracts\PayloadInterface;
-use Altair\Persistence\Contracts\RepositoryInterface;
+use Polaris\Contract\RepositoryInterface;
 use Override;
 use Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Entity\Organization;
+use Polaris\Model\Organization;
 
 /**
  * `GET /orgs/{id}` — read a single organization.

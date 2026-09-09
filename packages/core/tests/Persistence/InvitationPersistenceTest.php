@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Altair\Persistence\Cycle\CycleRepository;
+use Polaris\Repository\InvitationRepository;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 use Throwable;
-use Univeros\Polaris\Entity\Invitation;
+use Polaris\Model\Invitation;
 
 use function json_decode;
 use function json_encode;
@@ -40,7 +40,7 @@ final class InvitationPersistenceTest extends DatabaseTestCase
 
     public function testInvitationRoundTrips(): void
     {
-        $repository = new CycleRepository(Invitation::class, $this->orm, $this->unitOfWork);
+        $repository = new InvitationRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-09 10:00:00');
         $roleIds = [Uuid::v7()->toRfc4122(), Uuid::v7()->toRfc4122()];
         $tokenHash = Uuid::v7()->toRfc4122();
@@ -54,7 +54,8 @@ final class InvitationPersistenceTest extends DatabaseTestCase
         $invitation->invitedBy = Uuid::v7()->toRfc4122();
         $invitation->expiresAt = $now->modify('+7 days');
         $invitation->createdAt = $now;
-        $repository->save($invitation);
+        $this->unitOfWork->persist($invitation);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -72,18 +73,20 @@ final class InvitationPersistenceTest extends DatabaseTestCase
 
     public function testTokenHashIsUnique(): void
     {
-        $repository = new CycleRepository(Invitation::class, $this->orm, $this->unitOfWork);
+        $repository = new InvitationRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-09 10:00:00');
         $tokenHash = Uuid::v7()->toRfc4122();
 
         $first = $this->newInvitation($tokenHash, $now);
-        $repository->save($first);
+        $this->unitOfWork->persist($first);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
         $violated = false;
         try {
-            $repository->save($this->newInvitation($tokenHash, $now));
+            $this->unitOfWork->persist($this->newInvitation($tokenHash, $now));
+            $this->unitOfWork->flush();
         } catch (Throwable) {
             $violated = true;
         }

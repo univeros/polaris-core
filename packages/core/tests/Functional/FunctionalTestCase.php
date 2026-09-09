@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Functional;
 
 use Altair\Container\Container;
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\DatabaseAdapter;
+use Polaris\Contract\UnitOfWorkInterface;
+use Polaris\Repository\IdentityMap;
 use Polaris\Contract\OtpMailerInterface;
 use Polaris\Contract\SmsSenderInterface;
 use Univeros\Polaris\Tests\Support\RecordingOtpMailer;
 use Univeros\Polaris\Tests\Support\RecordingSmsSender;
-use Cycle\ORM\ORMInterface;
 use Laminas\Diactoros\ResponseFactory;
 use Laminas\Diactoros\ServerRequestFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -59,7 +60,8 @@ abstract class FunctionalTestCase extends DatabaseTestCase
         $this->mailer = new RecordingOtpMailer();
 
         $container = new Container();
-        $container->instance(ORMInterface::class, $this->orm);
+        $container->instance(DatabaseAdapter::class, $this->adapter);
+        $container->instance(IdentityMap::class, $this->identities);
         $container->instance(UnitOfWorkInterface::class, $this->unitOfWork);
         $container->instance(EventDispatcherInterface::class, $this->events);
         $container->instance(ResponseFactoryInterface::class, new ResponseFactory());

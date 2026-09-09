@@ -23,7 +23,7 @@ use function trim;
  */
 final class RegisterDomain extends AuthDomain
 {
-    /** Matches the `display_name` column width in {@see \Univeros\Polaris\Entity\User}. */
+    /** Matches the `display_name` column width in {@see \Polaris\Model\User}. */
     private const int DISPLAY_NAME_MAX = 120;
 
     private const string GENERIC =

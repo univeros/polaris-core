@@ -13,6 +13,7 @@
     <source>
         <include>
             <directory>packages/core/src</directory>
+            <directory>packages/testing/src</directory>
         </include>
     </source>
 </phpunit>

@@ -9,8 +9,8 @@ use Altair\Http\Contracts\PayloadInterface;
 use Override;
 use Polaris\Authorization\OrganizationService;
 use Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Entity\Organization;
-use Univeros\Polaris\Persistence\OrganizationRepository;
+use Polaris\Model\Organization;
+use Polaris\Repository\OrganizationRepository;
 
 /**
  * `DELETE /orgs/{id}` — soft-delete the organization (`status=suspended`, emits `org.deleted`).

@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Tests\Support;
 use Polaris\Contract\RepositoryInterface;
 use LogicException;
 use Override;
-use Univeros\Polaris\Entity\RecoveryCode;
+use Polaris\Model\RecoveryCode;
 
 use function array_key_exists;
 

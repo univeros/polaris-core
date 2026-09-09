@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Database\Migrations;
 use Cycle\Migrations\Migration;
 
 /**
- * Creates the `auth_otp_challenges` table behind {@see \Univeros\Polaris\Entity\OtpChallenge}.
+ * Creates the `auth_otp_challenges` table behind {@see \Polaris\Model\OtpChallenge}.
  *
  * Driver-agnostic: only Cycle's abstract column types are used, so the same migration applies
  * cleanly on every supported database engine.

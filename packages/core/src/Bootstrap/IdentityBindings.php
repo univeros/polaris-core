@@ -6,11 +6,14 @@ namespace Univeros\Polaris\Bootstrap;
 
 use Altair\Container\Container;
 use Altair\Http\Contracts\IdentityProviderInterface as AltairIdentityProvider;
-use Altair\Persistence\Contracts\UnitOfWorkInterface as AltairUnitOfWork;
+use Cycle\Database\DatabaseInterface;
+use Polaris\Contract\DatabaseAdapter;
 use Polaris\Contract\IdentityProviderInterface;
 use Altair\Http\Contracts\IdentityValidatorInterface;
 use Altair\Http\Validator\RepositoryIdentityValidator;
 use Polaris\Contract\UnitOfWorkInterface;
+use Polaris\Repository\IdentityMap;
+use Polaris\Repository\UnitOfWork;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Polaris\Config\AuthConfig;
@@ -32,9 +35,9 @@ use Polaris\Identity\PasswordPolicy;
 use Polaris\Identity\PasswordResetService;
 use Polaris\Identity\RegistrationService;
 use Polaris\Identity\SessionService;
-use Univeros\Polaris\Persistence\EmailVerificationRepository;
-use Univeros\Polaris\Persistence\PasswordResetRepository;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\EmailVerificationRepository;
+use Polaris\Repository\PasswordResetRepository;
+use Polaris\Repository\UserRepository;
 use Polaris\Security\Argon2idPasswordHasher;
 use Polaris\Security\NullBreachedPasswordCheck;
 use Polaris\Security\Pepper;
@@ -75,9 +78,16 @@ final class IdentityBindings
             static fn(IdentityProviderInterface $provider): AltairIdentityProviderBridge
                 => new AltairIdentityProviderBridge($provider),
         );
+        if (!$container->has(DatabaseAdapter::class)) {
+            $container->singleton(
+                DatabaseAdapter::class,
+                static fn(DatabaseInterface $database): CycleDatabaseAdapter => new CycleDatabaseAdapter($database),
+            );
+        }
+        $container->singleton(IdentityMap::class);
         $container->singleton(
             UnitOfWorkInterface::class,
-            static fn(AltairUnitOfWork $unitOfWork): UnitOfWorkBridge => new UnitOfWorkBridge($unitOfWork),
+            static fn(DatabaseAdapter $database, IdentityMap $identities): UnitOfWork => new UnitOfWork($database, $identities),
         );
 
         $container->singleton(

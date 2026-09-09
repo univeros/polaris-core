@@ -10,8 +10,8 @@ use InvalidArgumentException;
 use Override;
 use Polaris\Authorization\OrganizationService;
 use Polaris\Authorization\PermissionCatalog;
-use Univeros\Polaris\Entity\Organization;
-use Univeros\Polaris\Persistence\OrganizationRepository;
+use Polaris\Model\Organization;
+use Polaris\Repository\OrganizationRepository;
 
 use function is_string;
 

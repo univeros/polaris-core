@@ -37,11 +37,11 @@ use Univeros\Polaris\Http\Middleware\NullCredentialsExtractor;
 use Univeros\Polaris\Http\Middleware\RateLimitGroup;
 use Univeros\Polaris\Http\Middleware\TokenSubjectKeyResolver;
 use Univeros\Polaris\Http\Middleware\UnauthorizedResponder;
-use Univeros\Polaris\Maintenance\PruneExpiredService;
+use Polaris\Maintenance\PruneExpiredService;
 use Univeros\Polaris\Notification\NotificationListener;
 use Univeros\Polaris\Observability\AuditLogListener;
 use Univeros\Polaris\Observability\MetricsListener;
-use Univeros\Polaris\Persistence\UserRepository;
+use Polaris\Repository\UserRepository;
 use Polaris\Support\InMemoryCache;
 use Polaris\Token\AccessTokenDenylist;
 

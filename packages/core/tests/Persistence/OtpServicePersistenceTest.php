@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Univeros\Polaris\Bootstrap\UnitOfWorkBridge;
-use Univeros\Polaris\Persistence\OtpChallengeRepository;
+use Polaris\Repository\OtpChallengeRepository;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 use Polaris\Config\OtpConfig;
-use Univeros\Polaris\Entity\OtpChallenge;
+use Polaris\Model\OtpChallenge;
 use Polaris\Exception\InvalidOtpException;
 use Polaris\Mfa\ChallengePurpose;
 use Polaris\Mfa\OtpService;
@@ -106,16 +105,16 @@ final class OtpServicePersistenceTest extends DatabaseTestCase
     private function service(): OtpService
     {
         return new OtpService(
-            new OtpChallengeRepository($this->orm, $this->unitOfWork),
+            new OtpChallengeRepository($this->adapter, $this->identities),
             new RecordingSmsSender(),
             new RecordingOtpMailer(),
             new Pepper(self::APP_KEY),
             OtpConfig::fromArray([]),
-            new UnitOfWorkBridge($this->unitOfWork),
+            $this->unitOfWork,
             FrozenClock::at(self::INSTANT),
             new RecordingEventDispatcher(),
             new InMemoryCache(),
-            $this->orm,
+            $this->adapter,
         );
     }
 }

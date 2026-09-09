@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Altair\Persistence\Contracts\UnitOfWorkInterface;
+use Polaris\Contract\UnitOfWorkInterface;
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 use Psr\Log\NullLogger;
 use RuntimeException;
-use Univeros\Polaris\Entity\AuditLogEntry;
+use Polaris\Model\AuditLogEntry;
 use Polaris\Event\MemberInvited;
 use Polaris\Event\MemberRolesChanged;
 use Polaris\Event\MemberStatusChanged;
@@ -32,7 +32,7 @@ use Polaris\Event\UserLoggedIn;
 use Polaris\Event\UserLoginFailed;
 use Polaris\Event\UserRegistered;
 use Univeros\Polaris\Observability\AuditLogListener;
-use Univeros\Polaris\Persistence\AuditLogRepository;
+use Polaris\Repository\AuditLogRepository;
 
 use function is_array;
 use function json_decode;
@@ -260,7 +260,7 @@ final class AuditLogListenerTest extends DatabaseTestCase
     private function rows(): array
     {
         $rows = [];
-        foreach ((new AuditLogRepository($this->orm, $this->unitOfWork))->findAll() as $row) {
+        foreach ((new AuditLogRepository($this->adapter, $this->identities))->findAll() as $row) {
             $rows[] = $row;
         }
         usort($rows, static fn(AuditLogEntry $a, AuditLogEntry $b): int => $a->id <=> $b->id);

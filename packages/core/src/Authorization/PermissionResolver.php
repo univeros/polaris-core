@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Polaris\Authorization;
 
 use Polaris\Contract\RepositoryInterface;
-use Univeros\Polaris\Entity\Membership;
-use Univeros\Polaris\Entity\MembershipRole;
-use Univeros\Polaris\Entity\Organization;
-use Univeros\Polaris\Entity\Permission;
-use Univeros\Polaris\Entity\Role;
-use Univeros\Polaris\Entity\RolePermission;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\Membership;
+use Polaris\Model\MembershipRole;
+use Polaris\Model\Organization;
+use Polaris\Model\Permission;
+use Polaris\Model\Role;
+use Polaris\Model\RolePermission;
+use Polaris\Model\User;
 
 use function array_keys;
 

@@ -6,7 +6,7 @@ namespace Univeros\Polaris\Tests\Identity;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\User;
 use Polaris\Identity\CycleIdentityProvider;
 use Univeros\Polaris\Tests\Support\InMemoryUserRepository;
 

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Altair\Persistence\Cycle\CycleRepository;
+use Polaris\Repository\UserRepository;
+use Polaris\Repository\RefreshTokenRepository;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
-use Univeros\Polaris\Entity\RefreshToken;
-use Univeros\Polaris\Entity\User;
+use Polaris\Model\RefreshToken;
+use Polaris\Model\User;
 
 use function str_repeat;
 
@@ -39,7 +40,7 @@ final class AuthEntitiesPersistenceTest extends DatabaseTestCase
 
     public function testUserRoundTrips(): void
     {
-        $repository = new CycleRepository(User::class, $this->orm, $this->unitOfWork);
+        $repository = new UserRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-07 10:00:00');
 
         $user = new User();
@@ -50,7 +51,8 @@ final class AuthEntitiesPersistenceTest extends DatabaseTestCase
         $user->failedLoginAt = $now;
         $user->createdAt = $now;
         $user->updatedAt = $now;
-        $repository->save($user);
+        $this->unitOfWork->persist($user);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 
@@ -71,7 +73,7 @@ final class AuthEntitiesPersistenceTest extends DatabaseTestCase
 
     public function testRefreshTokenRoundTrips(): void
     {
-        $repository = new CycleRepository(RefreshToken::class, $this->orm, $this->unitOfWork);
+        $repository = new RefreshTokenRepository($this->adapter, $this->identities);
         $now = new DateTimeImmutable('2026-06-07 10:00:00');
         $hash = str_repeat('a', 64);
 
@@ -82,7 +84,8 @@ final class AuthEntitiesPersistenceTest extends DatabaseTestCase
         $token->tokenHash = $hash;
         $token->expiresAt = $now->modify('+30 days');
         $token->createdAt = $now;
-        $repository->save($token);
+        $this->unitOfWork->persist($token);
+        $this->unitOfWork->flush();
 
         $this->unitOfWork->clear();
 

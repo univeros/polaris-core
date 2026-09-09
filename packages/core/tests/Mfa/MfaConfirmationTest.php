@@ -7,7 +7,7 @@ namespace Univeros\Polaris\Tests\Mfa;
 use Polaris\Contract\RepositoryInterface;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
-use Univeros\Polaris\Entity\MfaFactor;
+use Polaris\Model\MfaFactor;
 use Polaris\Event\MfaEnrolled;
 use Polaris\Mfa\MfaConfirmation;
 use Polaris\Mfa\RecoveryCodeService;
