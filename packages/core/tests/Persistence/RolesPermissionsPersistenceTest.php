@@ -26,32 +26,32 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
 {
     public function testMigrationsCreateTheTablesWithKeysAndIndexes(): void
     {
-        $database = $this->connection();
+        $database = $this->adapter;
 
-        self::assertTrue($database->hasTable('auth_roles'));
-        self::assertTrue($database->hasTable('auth_permissions'));
-        self::assertTrue($database->hasTable('auth_role_permissions'));
-        self::assertTrue($database->hasTable('auth_membership_roles'));
+        self::assertTrue($this->hasTable('auth_roles'));
+        self::assertTrue($this->hasTable('auth_permissions'));
+        self::assertTrue($this->hasTable('auth_role_permissions'));
+        self::assertTrue($this->hasTable('auth_membership_roles'));
 
-        $roles = $database->table('auth_roles');
+        $roles = 'auth_roles';
         foreach (['id', 'organization_id', 'name', 'slug', 'description', 'is_system'] as $column) {
-            self::assertTrue($roles->hasColumn($column), "auth_roles.$column should exist");
+            self::assertTrue($this->hasColumn($roles, $column), "auth_roles.$column should exist");
         }
-        self::assertSame(['id'], $roles->getPrimaryKeys());
-        self::assertTrue($roles->hasIndex(['organization_id', 'slug']));
+        self::assertSame(['id'], $this->primaryKey($roles));
+        self::assertTrue($this->hasIndex($roles, ['organization_id', 'slug']));
 
-        $permissions = $database->table('auth_permissions');
+        $permissions = 'auth_permissions';
         foreach (['id', 'key', 'description'] as $column) {
-            self::assertTrue($permissions->hasColumn($column), "auth_permissions.$column should exist");
+            self::assertTrue($this->hasColumn($permissions, $column), "auth_permissions.$column should exist");
         }
-        self::assertSame(['id'], $permissions->getPrimaryKeys());
-        self::assertTrue($permissions->hasIndex(['key']));
+        self::assertSame(['id'], $this->primaryKey($permissions));
+        self::assertTrue($this->hasIndex($permissions, ['key']));
 
-        $rolePermissions = $database->table('auth_role_permissions');
-        self::assertSame(['role_id', 'permission_id'], $rolePermissions->getPrimaryKeys());
+        $rolePermissions = 'auth_role_permissions';
+        self::assertSame(['role_id', 'permission_id'], $this->primaryKey($rolePermissions));
 
-        $membershipRoles = $database->table('auth_membership_roles');
-        self::assertSame(['membership_id', 'role_id'], $membershipRoles->getPrimaryKeys());
+        $membershipRoles = 'auth_membership_roles';
+        self::assertSame(['membership_id', 'role_id'], $this->primaryKey($membershipRoles));
     }
 
     public function testRoleRoundTrips(): void
@@ -153,13 +153,13 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
         [$roleId, $permissionId] = $this->seedRoleAndPermission();
         $this->insertRolePermission($roleId, $permissionId);
 
-        $database = $this->connection();
-        self::assertSame(1, $database->select()->from('auth_role_permissions')->where('role_id', $roleId)->count());
+        $database = $this->adapter;
+        self::assertSame(1, $database->count('auth_role_permissions', ['role_id' => $roleId]));
 
-        $database->delete('auth_roles', ['id' => $roleId])->run();
+        $database->delete('auth_roles', ['id' => $roleId]);
 
-        self::assertSame(0, $database->select()->from('auth_role_permissions')->where('role_id', $roleId)->count());
-        self::assertSame(1, $database->select()->from('auth_permissions')->where('id', $permissionId)->count(), 'The permission itself must remain.');
+        self::assertSame(0, $database->count('auth_role_permissions', ['role_id' => $roleId]));
+        self::assertSame(1, $database->count('auth_permissions', ['id' => $permissionId]), 'The permission itself must remain.');
     }
 
     public function testDeletingAPermissionCascadesItsRoleGrants(): void
@@ -167,13 +167,13 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
         [$roleId, $permissionId] = $this->seedRoleAndPermission();
         $this->insertRolePermission($roleId, $permissionId);
 
-        $database = $this->connection();
-        self::assertSame(1, $database->select()->from('auth_role_permissions')->where('permission_id', $permissionId)->count());
+        $database = $this->adapter;
+        self::assertSame(1, $database->count('auth_role_permissions', ['permission_id' => $permissionId]));
 
-        $database->delete('auth_permissions', ['id' => $permissionId])->run();
+        $database->delete('auth_permissions', ['id' => $permissionId]);
 
-        self::assertSame(0, $database->select()->from('auth_role_permissions')->where('permission_id', $permissionId)->count());
-        self::assertSame(1, $database->select()->from('auth_roles')->where('id', $roleId)->count(), 'The role itself must remain.');
+        self::assertSame(0, $database->count('auth_role_permissions', ['permission_id' => $permissionId]));
+        self::assertSame(1, $database->count('auth_roles', ['id' => $roleId]), 'The role itself must remain.');
     }
 
     public function testDeletingAMembershipCascadesItsRoleGrants(): void
@@ -182,13 +182,13 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
         $membershipId = $this->seedMembership();
         $this->insertMembershipRole($membershipId, $roleId);
 
-        $database = $this->connection();
-        self::assertSame(1, $database->select()->from('auth_membership_roles')->where('membership_id', $membershipId)->count());
+        $database = $this->adapter;
+        self::assertSame(1, $database->count('auth_membership_roles', ['membership_id' => $membershipId]));
 
-        $database->delete('auth_memberships', ['id' => $membershipId])->run();
+        $database->delete('auth_memberships', ['id' => $membershipId]);
 
-        self::assertSame(0, $database->select()->from('auth_membership_roles')->where('membership_id', $membershipId)->count());
-        self::assertSame(1, $database->select()->from('auth_roles')->where('id', $roleId)->count(), 'The role itself must remain.');
+        self::assertSame(0, $database->count('auth_membership_roles', ['membership_id' => $membershipId]));
+        self::assertSame(1, $database->count('auth_roles', ['id' => $roleId]), 'The role itself must remain.');
     }
 
     public function testDeletingARoleCascadesItsMembershipGrants(): void
@@ -197,27 +197,13 @@ final class RolesPermissionsPersistenceTest extends DatabaseTestCase
         $membershipId = $this->seedMembership();
         $this->insertMembershipRole($membershipId, $roleId);
 
-        $database = $this->connection();
-        self::assertSame(1, $database->select()->from('auth_membership_roles')->where('role_id', $roleId)->count());
+        $database = $this->adapter;
+        self::assertSame(1, $database->count('auth_membership_roles', ['role_id' => $roleId]));
 
-        $database->delete('auth_roles', ['id' => $roleId])->run();
+        $database->delete('auth_roles', ['id' => $roleId]);
 
-        self::assertSame(0, $database->select()->from('auth_membership_roles')->where('role_id', $roleId)->count());
-        self::assertSame(1, $database->select()->from('auth_memberships')->where('id', $membershipId)->count(), 'The membership itself must remain.');
-    }
-
-    public function testMigrationsRollBackCleanly(): void
-    {
-        while ($this->migrator->rollback() !== null) {
-            // Roll back every applied migration.
-        }
-
-        $database = $this->connection();
-
-        self::assertFalse($database->hasTable('auth_membership_roles'));
-        self::assertFalse($database->hasTable('auth_role_permissions'));
-        self::assertFalse($database->hasTable('auth_roles'));
-        self::assertFalse($database->hasTable('auth_permissions'));
+        self::assertSame(0, $database->count('auth_membership_roles', ['role_id' => $roleId]));
+        self::assertSame(1, $database->count('auth_memberships', ['id' => $membershipId]), 'The membership itself must remain.');
     }
 
     /**

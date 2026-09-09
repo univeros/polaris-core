@@ -22,19 +22,19 @@ final class AuthEntitiesPersistenceTest extends DatabaseTestCase
 {
     public function testMigrationsCreateAuthTables(): void
     {
-        $database = $this->connection();
+        $database = $this->adapter;
 
-        self::assertTrue($database->hasTable('auth_users'));
-        self::assertTrue($database->hasTable('auth_refresh_tokens'));
+        self::assertTrue($this->hasTable('auth_users'));
+        self::assertTrue($this->hasTable('auth_refresh_tokens'));
 
-        $users = $database->table('auth_users');
+        $users = 'auth_users';
         foreach (['id', 'email', 'password_hash', 'status', 'mfa_enforced', 'failed_login_at', 'created_at'] as $column) {
-            self::assertTrue($users->hasColumn($column), "auth_users.$column should exist");
+            self::assertTrue($this->hasColumn($users, $column), "auth_users.$column should exist");
         }
 
-        $tokens = $database->table('auth_refresh_tokens');
+        $tokens = 'auth_refresh_tokens';
         foreach (['id', 'user_id', 'family_id', 'token_hash', 'expires_at', 'revoked_at'] as $column) {
-            self::assertTrue($tokens->hasColumn($column), "auth_refresh_tokens.$column should exist");
+            self::assertTrue($this->hasColumn($tokens, $column), "auth_refresh_tokens.$column should exist");
         }
     }
 
@@ -100,17 +100,5 @@ final class AuthEntitiesPersistenceTest extends DatabaseTestCase
         self::assertNull($found->revokedAt);
         self::assertNull($found->revokedReason);
         self::assertInstanceOf(DateTimeImmutable::class, $found->expiresAt);
-    }
-
-    public function testMigrationsRollBackCleanly(): void
-    {
-        while ($this->migrator->rollback() !== null) {
-            // Roll back every applied migration.
-        }
-
-        $database = $this->connection();
-
-        self::assertFalse($database->hasTable('auth_users'));
-        self::assertFalse($database->hasTable('auth_refresh_tokens'));
     }
 }

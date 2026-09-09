@@ -12,7 +12,6 @@ use Altair\Module\Contracts\MiddlewareProviderInterface;
 use Altair\Module\Contracts\MigrationDirectoriesProviderInterface;
 use Altair\Module\Contracts\ModuleInterface;
 use Altair\Module\Contracts\RoutesProviderInterface;
-use Altair\Module\Migration\MigrationSource;
 use Override;
 use Univeros\Polaris\Bootstrap\HttpBindings;
 use Univeros\Polaris\Bootstrap\IdentityBindings;
@@ -144,17 +143,12 @@ final class Module implements
     }
 
     /**
-     * @return list<MigrationSource>
+     * @return list<\Altair\Module\Migration\MigrationSource>
      */
     #[Override]
     public function migrationDirectories(): array
     {
-        return [
-            new MigrationSource(
-                \dirname(__DIR__) . '/database/migrations',
-                __NAMESPACE__ . '\\Database\\Migrations',
-            ),
-        ];
+        return [];
     }
 
     /**

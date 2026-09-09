@@ -9,7 +9,9 @@ use Polaris\Contract\Condition;
 use Polaris\Contract\DatabaseAdapter;
 use Polaris\Contract\Increment;
 use Polaris\Model\OtpChallenge;
+use Polaris\Model\Permission;
 use Polaris\Model\RefreshToken;
+use Polaris\Model\Role;
 use Polaris\Model\RolePermission;
 use Polaris\Model\User;
 use Polaris\Repository\IdentityMap;
@@ -190,10 +192,23 @@ trait AdapterConformanceTests
     {
         $unitOfWork = $this->unitOfWork();
         $links = new RolePermissionRepository($this->adapter(), $unitOfWork->identities());
+        $now = new DateTimeImmutable('2026-06-07 10:00:00');
+        $role = new Role();
+        $role->id = Uuid::v7()->toRfc4122();
+        $role->name = 'Owner';
+        $role->slug = 'owner';
+        $role->createdAt = $now;
+        $role->updatedAt = $now;
+        $permission = new Permission();
+        $permission->id = Uuid::v7()->toRfc4122();
+        $permission->key = 'org.manage';
+        $permission->description = 'Manage the organization';
         $link = new RolePermission();
-        $link->roleId = Uuid::v7()->toRfc4122();
-        $link->permissionId = Uuid::v7()->toRfc4122();
-        $unitOfWork->persist($link);
+        $link->roleId = $role->id;
+        $link->permissionId = $permission->id;
+        foreach ([$role, $permission, $link] as $object) {
+            $unitOfWork->persist($object);
+        }
         $unitOfWork->flush();
         $unitOfWork->clear();
 

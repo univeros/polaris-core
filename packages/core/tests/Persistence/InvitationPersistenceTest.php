@@ -25,17 +25,17 @@ final class InvitationPersistenceTest extends DatabaseTestCase
 {
     public function testMigrationCreatesTheTableWithIndexes(): void
     {
-        $database = $this->connection();
+        $database = $this->adapter;
 
-        self::assertTrue($database->hasTable('auth_invitations'));
+        self::assertTrue($this->hasTable('auth_invitations'));
 
-        $invitations = $database->table('auth_invitations');
+        $invitations = 'auth_invitations';
         foreach (['id', 'organization_id', 'email', 'role_ids', 'token_hash', 'invited_by', 'expires_at', 'accepted_at', 'created_at'] as $column) {
-            self::assertTrue($invitations->hasColumn($column), "auth_invitations.$column should exist");
+            self::assertTrue($this->hasColumn($invitations, $column), "auth_invitations.$column should exist");
         }
-        self::assertTrue($invitations->hasIndex(['token_hash']));
-        self::assertTrue($invitations->hasIndex(['organization_id']));
-        self::assertTrue($invitations->hasIndex(['email']));
+        self::assertTrue($this->hasIndex($invitations, ['token_hash']));
+        self::assertTrue($this->hasIndex($invitations, ['organization_id']));
+        self::assertTrue($this->hasIndex($invitations, ['email']));
     }
 
     public function testInvitationRoundTrips(): void
@@ -92,15 +92,6 @@ final class InvitationPersistenceTest extends DatabaseTestCase
         }
 
         self::assertTrue($violated, 'Two invitations sharing a token hash must violate the unique index.');
-    }
-
-    public function testMigrationsRollBackCleanly(): void
-    {
-        while ($this->migrator->rollback() !== null) {
-            // Roll back every applied migration.
-        }
-
-        self::assertFalse($this->connection()->hasTable('auth_invitations'));
     }
 
     private function newInvitation(string $tokenHash, DateTimeImmutable $now): Invitation

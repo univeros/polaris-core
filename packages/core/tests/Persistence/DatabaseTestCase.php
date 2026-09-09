@@ -4,166 +4,224 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
-use Altair\Persistence\Configuration\DatabaseConnectionFactory;
-use Altair\Persistence\Configuration\DatabaseSettings;
-use Altair\Persistence\Migrations\MigrationConfigFactory;
-use Altair\Persistence\Migrations\MigratorFactory;
-use Cycle\Database\DatabaseInterface;
-use Cycle\Database\DatabaseProviderInterface;
-use Cycle\Migrations\Migrator;
+use DateTimeImmutable;
+use PDO;
 use PHPUnit\Framework\TestCase;
-use Polaris\Contract\DatabaseAdapter;
+use Polaris\Authorization\PermissionCatalog;
+use Polaris\Authorization\PermissionCatalogSeeder;
+use Polaris\Contract\Dialect;
+use Polaris\Pdo\PdoAdapter;
+use Polaris\Pdo\SqlSchema;
 use Polaris\Repository\IdentityMap;
 use Polaris\Repository\UnitOfWork;
-use Throwable;
-use Univeros\Polaris\Bootstrap\CycleDatabaseAdapter;
+use RuntimeException;
 
-use function dirname;
+use function array_map;
+use function array_values;
+use function explode;
 use function getenv;
+use function in_array;
+use function ksort;
+use function preg_match;
+use function sprintf;
+use function trim;
 
 /**
- * Base class for Polaris persistence tests.
+ * Base class for Polaris persistence tests: the Polaris schema on a real database through the
+ * PDO adapter, rebuilt for every test and seeded with the permission catalog and system roles.
  *
- * These tests run against a **real database driver** — never SQLite — chosen from
- * the environment (`DB_CONNECTION`, `DB_DATABASE`, …) and built with the same
- * {@see DatabaseConnectionFactory} the framework uses at runtime. CI runs them
- * against PostgreSQL; a developer can point them at MySQL/SQL Server/etc. by
- * exporting the same env vars. When no database is configured the whole suite is
- * skipped rather than silently falling back to an in-memory engine, so the
- * entities and migrations are always exercised against a production-grade driver.
- *
- * Each test runs the module's real migrations to build the schema, then drives a
- * Cycle ORM wired from the entity attributes — proving the migrations and the
- * entities agree on a portable schema.
+ * The driver comes from the environment (`DB_CONNECTION`, `DB_DATABASE`, `DB_HOST`, `DB_PORT`,
+ * `DB_USER`, `DB_PASSWORD`); CI exports PostgreSQL. Without `DB_CONNECTION` the tests run on an
+ * in-memory SQLite database, so the whole suite runs locally in seconds.
  */
 abstract class DatabaseTestCase extends TestCase
 {
-    private const array ENV_KEYS = [
-        'DB_CONNECTION',
-        'DB_DATABASE',
-        'DB_HOST',
-        'DB_PORT',
-        'DB_USER',
-        'DB_PASSWORD',
-        'DB_CHARSET',
-    ];
-
-    protected ?DatabaseProviderInterface $database = null;
-    protected DatabaseAdapter $adapter;
+    protected PdoAdapter $adapter;
     protected IdentityMap $identities;
     protected UnitOfWork $unitOfWork;
-    protected Migrator $migrator;
 
     protected function setUp(): void
     {
-        $env = $this->testEnvironment();
-
-        if (($env['DB_CONNECTION'] ?? '') === '') {
-            self::markTestSkipped(
-                'Database integration tests require a real driver. Export DB_CONNECTION and '
-                . 'DB_DATABASE (plus DB_HOST/DB_PORT/DB_USER/DB_PASSWORD for server drivers) to '
-                . 'run them — for example against PostgreSQL or MySQL. SQLite is intentionally not used.',
-            );
-        }
-
-        $this->database = (new DatabaseConnectionFactory())->create(DatabaseSettings::fromEnv($env));
-        $this->dropAllTables();
-
-        $config = (new MigrationConfigFactory())->create(
-            directory: self::path('database/migrations'),
-            namespace: 'Univeros\\Polaris\\Database\\Migrations',
-            safe: true,
-        );
-        $this->migrator = (new MigratorFactory())->create($this->database, $config);
-        while ($this->migrator->run() !== null) {
-            // Apply every pending migration.
-        }
-
-        $this->adapter = new CycleDatabaseAdapter($this->database->database('default'));
+        $this->adapter = new PdoAdapter(self::connect());
+        $this->rebuildSchema();
         $this->identities = new IdentityMap();
         $this->unitOfWork = new UnitOfWork($this->adapter, $this->identities);
     }
 
     protected function tearDown(): void
     {
-        if ($this->database !== null) {
-            $this->dropAllTables();
+        if ($this->adapter->dialect() !== Dialect::Sqlite) {
+            foreach (SqlSchema::dropAll($this->adapter->dialect()) as $statement) {
+                $this->adapter->exec($statement);
+            }
         }
     }
 
-    /**
-     * The default-connection database, asserted to be booted.
-     */
-    protected function connection(): DatabaseInterface
+    protected function pdo(): PDO
     {
-        $database = $this->database;
-        if ($database === null) {
-            self::fail('Database connection was not booted.');
-        }
-
-        return $database->database('default');
+        return $this->adapter->pdo();
     }
 
-    /**
-     * Drops every table so each test starts from a clean, dedicated database.
-     *
-     * The RBAC join tables (`auth_role_permissions`, `auth_membership_roles`) carry cascading
-     * foreign keys, so a parent cannot be dropped while a child still references it. Rather than
-     * reflect each table's foreign keys — an `information_schema` query that is slow under load and
-     * would run for every table on every test — we simply drop what we can and retry the rest: a
-     * still-referenced table fails and succeeds on a later pass once its children are gone.
-     * Portable: plain `DROP TABLE`, no driver-specific SQL, no schema introspection.
-     */
-    private function dropAllTables(): void
+    protected function hasTable(string $table): bool
     {
-        $database = $this->database;
-        if ($database === null) {
-            return;
-        }
+        $sql = $this->adapter->dialect() === Dialect::Sqlite
+            ? "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = ?"
+            : 'SELECT COUNT(*) FROM information_schema.tables WHERE table_name = ?';
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute([$table]);
 
-        $connection = $database->database('default');
+        return (int) $statement->fetchColumn() > 0;
+    }
 
-        $remaining = [];
-        foreach ($connection->getTables() as $table) {
-            $remaining[] = $table->getName();
-        }
-
-        while ($remaining !== []) {
-            $progressed = false;
-            foreach ($remaining as $index => $name) {
-                try {
-                    $connection->execute('DROP TABLE IF EXISTS ' . $name);
-                } catch (Throwable) {
-                    continue; // still referenced by another remaining table; retry next pass
+    protected function hasColumn(string $table, string $column): bool
+    {
+        if ($this->adapter->dialect() === Dialect::Sqlite) {
+            foreach ($this->pdo()->query(sprintf('PRAGMA table_info("%s")', $table))->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                if (($row['name'] ?? null) === $column) {
+                    return true;
                 }
-                unset($remaining[$index]);
-                $progressed = true;
             }
 
-            if (!$progressed) {
-                break;
-            }
+            return false;
+        }
+        $statement = $this->pdo()->prepare('SELECT COUNT(*) FROM information_schema.columns WHERE table_name = ? AND column_name = ?');
+        $statement->execute([$table, $column]);
+
+        return (int) $statement->fetchColumn() > 0;
+    }
+
+    /**
+     * @param list<string> $columns in index order
+     */
+    protected function hasIndex(string $table, array $columns): bool
+    {
+        return in_array($columns, $this->indexes($table), true);
+    }
+
+    /**
+     * @return list<string> primary key columns in order
+     */
+    protected function primaryKey(string $table): array
+    {
+        $pdo = $this->pdo();
+        switch ($this->adapter->dialect()) {
+            case Dialect::Sqlite:
+                $columns = [];
+                foreach ($pdo->query(sprintf('PRAGMA table_info("%s")', $table))->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                    if ((int) $row['pk'] > 0) {
+                        $columns[(int) $row['pk']] = (string) $row['name'];
+                    }
+                }
+                ksort($columns);
+
+                return array_values($columns);
+            case Dialect::Postgres:
+                $statement = $pdo->prepare(
+                    'SELECT a.attname FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey)'
+                    . ' WHERE i.indrelid = ?::regclass AND i.indisprimary ORDER BY array_position(i.indkey, a.attnum)',
+                );
+                $statement->execute([$table]);
+
+                return array_map(static fn(mixed $c): string => (string) $c, $statement->fetchAll(PDO::FETCH_COLUMN));
+            default:
+                $columns = [];
+                foreach ($pdo->query(sprintf('SHOW INDEX FROM `%s`', $table))->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                    if ($row['Key_name'] === 'PRIMARY') {
+                        $columns[(int) $row['Seq_in_index']] = (string) $row['Column_name'];
+                    }
+                }
+                ksort($columns);
+
+                return array_values($columns);
         }
     }
 
     /**
-     * @return array<string, string>
+     * @return list<list<string>> the column list of every index on the table
      */
-    private function testEnvironment(): array
+    private function indexes(string $table): array
     {
-        $env = [];
-        foreach (self::ENV_KEYS as $key) {
-            $value = getenv($key);
-            if ($value !== false) {
-                $env[$key] = $value;
-            }
+        $pdo = $this->pdo();
+        $indexes = [];
+        switch ($this->adapter->dialect()) {
+            case Dialect::Sqlite:
+                foreach ($pdo->query(sprintf('PRAGMA index_list("%s")', $table))->fetchAll(PDO::FETCH_ASSOC) as $index) {
+                    $columns = [];
+                    foreach ($pdo->query(sprintf('PRAGMA index_info("%s")', $index['name']))->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                        $columns[(int) $row['seqno']] = (string) $row['name'];
+                    }
+                    ksort($columns);
+                    $indexes[] = array_values($columns);
+                }
+                break;
+            case Dialect::Postgres:
+                $statement = $pdo->prepare('SELECT indexdef FROM pg_indexes WHERE tablename = ?');
+                $statement->execute([$table]);
+                foreach ($statement->fetchAll(PDO::FETCH_COLUMN) as $definition) {
+                    if (preg_match('/\(([^)]+)\)/', (string) $definition, $match) === 1) {
+                        $indexes[] = array_map(static fn(string $c): string => trim($c, ' "'), explode(',', $match[1]));
+                    }
+                }
+                break;
+            default:
+                $byName = [];
+                foreach ($pdo->query(sprintf('SHOW INDEX FROM `%s`', $table))->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                    $byName[(string) $row['Key_name']][(int) $row['Seq_in_index']] = (string) $row['Column_name'];
+                }
+                foreach ($byName as $columns) {
+                    ksort($columns);
+                    $indexes[] = array_values($columns);
+                }
         }
 
-        return $env;
+        return $indexes;
     }
 
-    private static function path(string $relative): string
+    /**
+     * Seeds the permission catalog and system roles, as the 1.0 seed migration did.
+     */
+    protected function seedCatalog(?DateTimeImmutable $now = null): void
     {
-        return dirname(__DIR__, 2) . '/' . $relative;
+        (new PermissionCatalogSeeder(new PermissionCatalog()))->seed($this->adapter, $now ?? new DateTimeImmutable('now'));
+    }
+
+    private function rebuildSchema(): void
+    {
+        foreach (SqlSchema::dropAll($this->adapter->dialect()) as $statement) {
+            $this->adapter->exec($statement);
+        }
+        foreach (SqlSchema::createAll($this->adapter->dialect()) as $statement) {
+            $this->adapter->exec($statement);
+        }
+        $this->seedCatalog();
+    }
+
+    private static function connect(): PDO
+    {
+        $env = static fn(string $key, string $default = ''): string => (($value = getenv($key)) === false || $value === '') ? $default : $value;
+        $driver = $env('DB_CONNECTION');
+
+        if ($driver === '' || $driver === 'sqlite') {
+            $pdo = new PDO('sqlite:' . $env('DB_DATABASE', ':memory:'));
+            $pdo->exec('PRAGMA foreign_keys = ON');
+
+            return $pdo;
+        }
+        if (in_array($driver, ['postgres', 'postgresql', 'pgsql'], true)) {
+            return new PDO(
+                sprintf('pgsql:host=%s;port=%s;dbname=%s', $env('DB_HOST', '127.0.0.1'), $env('DB_PORT', '5432'), $env('DB_DATABASE', 'polaris_test')),
+                $env('DB_USER', 'postgres'),
+                $env('DB_PASSWORD'),
+            );
+        }
+        if ($driver === 'mysql') {
+            return new PDO(
+                sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4', $env('DB_HOST', '127.0.0.1'), $env('DB_PORT', '3306'), $env('DB_DATABASE', 'polaris_test')),
+                $env('DB_USER', 'root'),
+                $env('DB_PASSWORD'),
+            );
+        }
+
+        throw new RuntimeException(sprintf('Unsupported DB_CONNECTION "%s"; use postgres, mysql or sqlite.', $driver));
     }
 }

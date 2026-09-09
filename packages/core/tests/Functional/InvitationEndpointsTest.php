@@ -139,11 +139,7 @@ final class InvitationEndpointsTest extends FunctionalTestCase
         $this->authedPostJson("/orgs/$org/invites", ['email' => 'new@example.com', 'role_slugs' => ['member']], $ownerToken);
         $stale = $this->lastInviteToken();
 
-        $this->connection()->update(
-            'auth_invitations',
-            ['expires_at' => new \DateTimeImmutable('2020-01-01 00:00:00')],
-            ['organization_id' => $org],
-        )->run();
+        $this->adapter->update('auth_invitations', ['organization_id' => $org], ['expires_at' => new \DateTimeImmutable('2020-01-01 00:00:00')]);
         $this->unitOfWork->clear(); // the raw update bypassed the ORM heap; drop the stale entity
 
         self::assertCount(0, $this->json($this->authedGet("/orgs/$org/invites", $ownerToken))['data'] ?? []);
@@ -262,18 +258,18 @@ final class InvitationEndpointsTest extends FunctionalTestCase
     {
         $now = new \DateTimeImmutable('2026-06-10 10:00:00');
         $membershipId = Uuid::v7()->toRfc4122();
-        $this->connection()->insert('auth_memberships')->values([
+        $this->adapter->insert('auth_memberships', [
             'id' => $membershipId,
             'user_id' => $userId,
             'organization_id' => $org,
             'status' => $status,
             'created_at' => $now,
             'updated_at' => $now,
-        ])->run();
-        $this->connection()->insert('auth_membership_roles')->values([
+        ]);
+        $this->adapter->insert('auth_membership_roles', [
             'membership_id' => $membershipId,
             'role_id' => $this->roleId($org, $roleSlug),
-        ])->run();
+        ]);
     }
 
     /**
@@ -349,8 +345,8 @@ final class InvitationEndpointsTest extends FunctionalTestCase
 
     private function userId(string $email): string
     {
-        foreach ($this->connection()->select('id')->from('auth_users')->where(['email' => $email])->fetchAll() as $row) {
-            if (is_array($row) && is_string($row['id'] ?? null)) {
+        foreach ($this->adapter->findMany('auth_users', ['email' => $email]) as $row) {
+            if (is_string($row['id'] ?? null)) {
                 return $row['id'];
             }
         }
@@ -360,8 +356,8 @@ final class InvitationEndpointsTest extends FunctionalTestCase
 
     private function roleId(string $organizationId, string $slug): string
     {
-        foreach ($this->connection()->select('id')->from('auth_roles')->where(['organization_id' => $organizationId, 'slug' => $slug])->fetchAll() as $row) {
-            if (is_array($row) && is_string($row['id'] ?? null)) {
+        foreach ($this->adapter->findMany('auth_roles', ['organization_id' => $organizationId, 'slug' => $slug]) as $row) {
+            if (is_string($row['id'] ?? null)) {
                 return $row['id'];
             }
         }

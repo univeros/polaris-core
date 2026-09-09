@@ -9,7 +9,6 @@ use Polaris\Event\UserDisabled;
 use Polaris\Event\UserRegistered;
 
 use function array_key_last;
-use function is_array;
 use function is_string;
 use function str_contains;
 use function str_repeat;
@@ -232,10 +231,10 @@ final class UserAdminEndpointsTest extends FunctionalTestCase
         $this->createOrg('Root', $session['access']);
 
         $membershipId = $this->idFrom('auth_memberships', ['user_id' => $this->userId('operator@example.com')]);
-        $this->connection()->insert('auth_membership_roles')->values([
+        $this->adapter->insert('auth_membership_roles', [
             'membership_id' => $membershipId,
             'role_id' => $this->systemRoleId('superadmin'),
-        ])->run();
+        ]);
 
         return $session['access'];
     }
@@ -249,10 +248,10 @@ final class UserAdminEndpointsTest extends FunctionalTestCase
         $this->createOrg('Root Two', $session['access']);
 
         $membershipId = $this->idFrom('auth_memberships', ['user_id' => $this->userId('operator2@example.com')]);
-        $this->connection()->insert('auth_membership_roles')->values([
+        $this->adapter->insert('auth_membership_roles', [
             'membership_id' => $membershipId,
             'role_id' => $this->systemRoleId('superadmin'),
-        ])->run();
+        ]);
 
         return $session['access'];
     }
@@ -292,8 +291,8 @@ final class UserAdminEndpointsTest extends FunctionalTestCase
 
     private function systemRoleId(string $slug): string
     {
-        foreach ($this->connection()->select('id')->from('auth_roles')->where(['slug' => $slug, 'organization_id' => null])->fetchAll() as $row) {
-            if (is_array($row) && is_string($row['id'] ?? null)) {
+        foreach ($this->adapter->findMany('auth_roles', ['slug' => $slug, 'organization_id' => null]) as $row) {
+            if (is_string($row['id'] ?? null)) {
                 return $row['id'];
             }
         }
@@ -306,8 +305,8 @@ final class UserAdminEndpointsTest extends FunctionalTestCase
      */
     private function idFrom(string $table, array $where): string
     {
-        foreach ($this->connection()->select('id')->from($table)->where($where)->fetchAll() as $row) {
-            if (is_array($row) && is_string($row['id'] ?? null)) {
+        foreach ($this->adapter->findMany($table, $where) as $row) {
+            if (is_string($row['id'] ?? null)) {
                 return $row['id'];
             }
         }
