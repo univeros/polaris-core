@@ -8,3 +8,5 @@
 /.vscode/
 /packages/*/vendor/
 /packages/*/composer.lock
+/examples/*/vendor/
+/examples/*/composer.lock

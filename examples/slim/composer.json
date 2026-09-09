@@ -1,0 +1,42 @@
+{
+    "name": "polaris/example-slim",
+    "description": "Polaris for PHP demo: Slim 4 + polaris/psr15 + polaris/pdo on SQLite",
+    "type": "project",
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../packages/*",
+            "options": {
+                "symlink": true,
+                "versions": {
+                    "polaris/cli": "0.1.x-dev",
+                    "polaris/core": "0.1.x-dev",
+                    "polaris/pdo": "0.1.x-dev",
+                    "polaris/psr15": "0.1.x-dev",
+                    "polaris/testing": "0.1.x-dev"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "ext-pdo_sqlite": "*",
+        "polaris/cli": "0.1.x-dev",
+        "polaris/core": "0.1.x-dev",
+        "polaris/pdo": "0.1.x-dev",
+        "polaris/psr15": "0.1.x-dev",
+        "slim/psr7": "^1.7",
+        "slim/slim": "^4.14"
+    },
+    "autoload": {
+        "psr-4": {
+            "PolarisDemo\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

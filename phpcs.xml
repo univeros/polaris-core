@@ -8,6 +8,8 @@
     <file>packages/pdo/src</file>
     <file>packages/psr15/src</file>
     <file>packages/cli/src</file>
+    <file>examples/slim/src</file>
+    <file>examples/slim/public</file>
 
     <arg name="colors"/>
     <arg name="warning-severity" value="0"/>
