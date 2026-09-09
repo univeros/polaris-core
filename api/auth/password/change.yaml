@@ -7,6 +7,8 @@ endpoint:
   tags: [auth]
   auth: bearer
   step_up: true
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -15,7 +17,7 @@ input:
     new_password: { type: string, rules: [required, password_policy], sensitive: true }
 
 domain:
-  class: Univeros\Polaris\Http\Auth\ChangePasswordDomain
+  class: Polaris\Http\Auth\ChangePasswordEndpoint
   description: >
     Changes the password for the authenticated user after re-verifying the
     current password. Every other session is revoked; the caller's current

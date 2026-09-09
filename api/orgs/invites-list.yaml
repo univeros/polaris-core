@@ -6,6 +6,8 @@ endpoint:
   tags: [orgs, invites]
   auth: bearer
   requires_permissions: [members.invite]
+  effect: read
+  receipt: false
 
 input:
   source: path
@@ -13,7 +15,7 @@ input:
     id: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\ListInvitesDomain
+  class: Polaris\Http\Orgs\ListInvitesEndpoint
   description: >
     Lists pending (unaccepted, unexpired) invitations only; expired rows are
     hidden, since re-inviting the same email recycles them with a fresh token

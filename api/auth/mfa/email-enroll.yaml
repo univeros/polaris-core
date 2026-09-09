@@ -6,6 +6,8 @@ endpoint:
   tags: [auth, mfa]
   auth: bearer
   rate_limit: mfa_send
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -13,7 +15,7 @@ input:
     email: { type: string, rules: [optional, email, "max:320"] }   # defaults to the account email
 
 domain:
-  class: Univeros\Polaris\Http\Auth\EmailEnrollDomain
+  class: Polaris\Http\Auth\EmailEnrollEndpoint
   description: >
     Creates an unconfirmed email factor for the authenticated user and emails
     a verification code. The destination defaults to the user's account email

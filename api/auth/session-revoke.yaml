@@ -5,6 +5,8 @@ endpoint:
   summary: Revoke a session
   tags: [auth]
   auth: bearer
+  effect: destructive
+  receipt: true
 
 input:
   source: path
@@ -12,7 +14,7 @@ input:
     id: { type: string, rules: [required] }   # the session id (sid / refresh-token family)
 
 domain:
-  class: Univeros\Polaris\Http\Auth\RevokeSessionDomain
+  class: Polaris\Http\Auth\RevokeSessionEndpoint
   description: >
     Revokes a specific session belonging to the authenticated user. A session
     that does not exist or belongs to another user returns the same 404 (no

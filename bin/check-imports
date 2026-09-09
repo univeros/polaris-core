@@ -1,19 +1,30 @@
 #!/usr/bin/env sh
 # Forbidden framework namespaces in package sources (docs/extraction/spec.md §0.6).
-# Advisory until WP5 (always exits 0); WP5 makes it blocking; WP7 requires every count to be zero.
+# Blocking since WP5 for Altair\ and Cycle\ outside the Univeros glue that WP6 (middleware)
+# and WP7 (bootstrap, module) remove; the glue allow-list below shrinks to nothing by WP7.
+# The seeded Univeros\Polaris\ namespace is reported (advisory) until WP7 requires zero.
 set -u
 cd "$(dirname "$0")/.."
 
+ALLOW='packages/core/src/Bootstrap/|packages/core/src/Module\.php|packages/core/src/Http/Middleware/|packages/core/src/Http/Rule/|packages/core/src/Observability/MetricsListener\.php'
+
 lines() { grep -rE --include='*.php' "$1" packages/*/src | grep -vE "${2:-^$}" | wc -l | tr -d ' '; }
+blocking() { grep -rnE --include='*.php' "$1" packages/*/src | grep -vE "^($ALLOW)"; }
 
 altair=$(lines 'Altair\\')
 cycle=$(lines 'Cycle\\')
 legacy=$(lines 'Univeros\\+Polaris')
 other=$(lines 'Univeros\\' 'Univeros\\+Polaris')
 
-printf 'Forbidden namespace references in packages/*/src (advisory until WP5):\n'
-printf '  Altair\\            %5s lines\n' "$altair"
+printf 'Framework namespace references in packages/*/src:\n'
+printf '  Altair\\            %5s lines  (%s in the Univeros glue allow-list)\n' "$altair" "$(grep -rE --include='*.php' 'Altair\\' packages/*/src | grep -cE "^($ALLOW)")"
 printf '  Cycle\\             %5s lines\n' "$cycle"
-printf '  Univeros\\Polaris\\  %5s lines  (seeded namespace, gone by WP7)\n' "$legacy"
+printf '  Univeros\\Polaris\\  %5s lines  (seeded namespace, advisory until WP7)\n' "$legacy"
 printf '  Univeros\\ (other)  %5s lines\n' "$other"
-exit 0
+
+violations=$(blocking 'Altair\\|Cycle\\')
+if [ -n "$violations" ]; then
+    printf '\nForbidden framework references outside the Univeros glue:\n%s\n' "$violations"
+    exit 1
+fi
+printf '  No Altair\\ or Cycle\\ reference outside the Univeros glue.\n'

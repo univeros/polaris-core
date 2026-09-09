@@ -5,12 +5,14 @@ endpoint:
   summary: List the permission catalog
   tags: [permissions]
   auth: bearer
+  effect: read
+  receipt: false
 
 input:
   source: none
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\ListPermissionsDomain
+  class: Polaris\Http\Orgs\ListPermissionsEndpoint
   description: >
     Returns the full permission catalog (Polaris core plus any
     host-contributed keys), for building role-management UIs. Authenticated

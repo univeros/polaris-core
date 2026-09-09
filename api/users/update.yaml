@@ -5,6 +5,8 @@ endpoint:
   summary: Update a user's profile
   tags: [users]
   auth: bearer
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -12,7 +14,7 @@ input:
     display_name: { type: "?string", rules: [string, "max:120"] }
 
 domain:
-  class: Univeros\Polaris\Http\Users\UpdateUserDomain
+  class: Polaris\Http\Users\UpdateUserEndpoint
   description: >
     Updates the profile (currently the display name, 120 characters max).
     Self-access works without any permission key; updating another user

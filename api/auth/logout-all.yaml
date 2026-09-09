@@ -5,12 +5,14 @@ endpoint:
   summary: Log out everywhere
   tags: [auth]
   auth: bearer
+  effect: destructive
+  receipt: true
 
 input:
   source: none
 
 domain:
-  class: Univeros\Polaris\Http\Auth\LogoutAllDomain
+  class: Polaris\Http\Auth\LogoutAllEndpoint
   description: >
     Revokes every session for the authenticated user (the sub from the access
     token), for example after a security scare. Emits auth.sessions_revoked

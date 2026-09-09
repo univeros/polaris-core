@@ -7,6 +7,8 @@ endpoint:
   auth: bearer
   requires_permissions: [org.delete]
   step_up: true
+  effect: destructive
+  receipt: true
 
 input:
   source: path
@@ -14,7 +16,7 @@ input:
     id: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\DeleteOrganizationDomain
+  class: Polaris\Http\Orgs\DeleteOrganizationEndpoint
   description: >
     Soft delete: the organization's status becomes suspended, every member's
     org authority disappears on their next resolution, org-scoped sessions

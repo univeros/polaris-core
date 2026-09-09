@@ -5,6 +5,8 @@ endpoint:
   summary: Create an organization
   tags: [orgs]
   auth: bearer
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -13,7 +15,7 @@ input:
     slug: { type: "?string", rules: ["regex:/^[a-z0-9-]+$/", "max:160"] }   # auto-derived from the name when omitted
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\CreateOrganizationDomain
+  class: Polaris\Http\Orgs\CreateOrganizationEndpoint
   description: >
     Requires a verified email (403 email_unverified otherwise, read from the
     access token). Creates the organization with a unique slug (auto-derived

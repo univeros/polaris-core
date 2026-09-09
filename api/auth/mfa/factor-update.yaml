@@ -6,6 +6,8 @@ endpoint:
   tags: [auth, mfa]
   auth: bearer
   rate_limit: mfa_enroll
+  effect: write
+  receipt: true
 
 input:
   source: body           # plus the {id} path parameter naming the factor
@@ -14,7 +16,7 @@ input:
     default: { type: boolean, rules: [optional] }    # true makes this factor the default
 
 domain:
-  class: Univeros\Polaris\Http\Auth\UpdateFactorDomain
+  class: Polaris\Http\Auth\UpdateFactorEndpoint
   description: >
     Updates one of the authenticated user's factors. An omitted label is left
     unchanged while an empty label clears it; default=true makes the factor

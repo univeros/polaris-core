@@ -7,6 +7,8 @@ endpoint:
   tags: [auth]
   auth: public                     # the reset token itself is the credential
   rate_limit: token_consume
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -15,7 +17,7 @@ input:
     new_password: { type: string, rules: [required, password_policy], sensitive: true }
 
 domain:
-  class: Univeros\Polaris\Http\Auth\ResetPasswordDomain
+  class: Polaris\Http\Auth\ResetPasswordEndpoint
   description: >
     Sets a new password from a single-use reset token, then revokes every
     session (logout everywhere) as account-takeover containment. A bad,

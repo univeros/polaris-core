@@ -19,14 +19,14 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Polaris\Config\AuthConfig;
 use Polaris\Contract\BreachedPasswordCheckInterface;
 use Polaris\Contract\PasswordHasherInterface;
-use Univeros\Polaris\Http\Auth\ChangePasswordDomain;
-use Univeros\Polaris\Http\Auth\ForgotPasswordDomain;
-use Univeros\Polaris\Http\Auth\LoginDomain;
-use Univeros\Polaris\Http\Auth\MeDomain;
-use Univeros\Polaris\Http\Auth\RegisterDomain;
-use Univeros\Polaris\Http\Auth\ResendVerificationDomain;
-use Univeros\Polaris\Http\Auth\ResetPasswordDomain;
-use Univeros\Polaris\Http\Auth\VerifyEmailDomain;
+use Polaris\Http\Auth\ChangePasswordEndpoint;
+use Polaris\Http\Auth\ForgotPasswordEndpoint;
+use Polaris\Http\Auth\LoginEndpoint;
+use Polaris\Http\Auth\MeEndpoint;
+use Polaris\Http\Auth\RegisterEndpoint;
+use Polaris\Http\Auth\ResendVerificationEndpoint;
+use Polaris\Http\Auth\ResetPasswordEndpoint;
+use Polaris\Http\Auth\VerifyEmailEndpoint;
 use Polaris\Identity\CycleIdentityProvider;
 use Polaris\Identity\EmailVerificationService;
 use Polaris\Identity\LoginService;
@@ -162,15 +162,15 @@ final class IdentityBindings
             ),
         );
 
-        $container->singleton(RegisterDomain::class);
-        $container->singleton(VerifyEmailDomain::class);
-        $container->singleton(ResendVerificationDomain::class);
+        $container->singleton(RegisterEndpoint::class);
+        $container->singleton(VerifyEmailEndpoint::class);
+        $container->singleton(ResendVerificationEndpoint::class);
     }
 
     /**
      * Bind the password-login machinery: {@see LoginService} (constant-time verification,
      * status/lockout/verified checks, token issuance via {@see TokenService}) and the
-     * {@see LoginDomain} behind `POST /auth/login`.
+     * {@see LoginEndpoint} behind `POST /auth/login`.
      */
     private function bindLogin(Container $container): void
     {
@@ -197,7 +197,7 @@ final class IdentityBindings
             ),
         );
 
-        $container->singleton(LoginDomain::class);
+        $container->singleton(LoginEndpoint::class);
     }
 
     /**
@@ -232,12 +232,12 @@ final class IdentityBindings
             ),
         );
 
-        $container->singleton(ForgotPasswordDomain::class);
-        $container->singleton(ResetPasswordDomain::class);
-        $container->singleton(ChangePasswordDomain::class);
+        $container->singleton(ForgotPasswordEndpoint::class);
+        $container->singleton(ResetPasswordEndpoint::class);
+        $container->singleton(ChangePasswordEndpoint::class);
         $container->singleton(
-            MeDomain::class,
-            static fn(UserRepository $users): MeDomain => new MeDomain($users),
+            MeEndpoint::class,
+            static fn(UserRepository $users): MeEndpoint => new MeEndpoint($users),
         );
     }
 }

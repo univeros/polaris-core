@@ -17,7 +17,7 @@ use Psr\Clock\ClockInterface;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\Secrets;
 use Polaris\Exception\InvalidConfigException;
-use Univeros\Polaris\Http\Jwks\JwksDomain;
+use Polaris\Http\Jwks\JwksEndpoint;
 use Polaris\Token\JwtSignerFactory;
 use Polaris\Token\PolarisTokenFactory;
 use Polaris\Token\PolarisTokenGenerator;
@@ -82,6 +82,6 @@ final class TokenBindings
             AltairTokenFactory::class,
             static fn(TokenFactoryInterface $factory): AltairTokenFactoryBridge => new AltairTokenFactoryBridge($factory),
         );
-        $container->singleton(JwksDomain::class);
+        $container->singleton(JwksEndpoint::class);
     }
 }

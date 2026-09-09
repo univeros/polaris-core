@@ -7,6 +7,8 @@ endpoint:
   auth: bearer
   requires_permissions: [users.manage]
   step_up: true
+  effect: destructive
+  receipt: true
 
 input:
   source: path
@@ -14,7 +16,7 @@ input:
     id: { type: string, rules: [required] }   # empty body
 
 domain:
-  class: Univeros\Polaris\Http\Users\DisableUserDomain
+  class: Polaris\Http\Users\DisableUserEndpoint
   description: >
     Admin tooling: disables the account, revokes every session, and blocks
     login. Gated on the admin-scoped users.manage key (held only by

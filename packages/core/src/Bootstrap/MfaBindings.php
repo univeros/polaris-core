@@ -27,19 +27,19 @@ use Polaris\Contract\OtpMailerInterface;
 use Polaris\Contract\QrCodeRendererInterface;
 use Polaris\Contract\SmsSenderInterface;
 use Polaris\Contract\TotpProviderInterface;
-use Univeros\Polaris\Http\Auth\DeleteFactorDomain;
-use Univeros\Polaris\Http\Auth\EmailEnrollDomain;
-use Univeros\Polaris\Http\Auth\MfaChallengeDomain;
-use Univeros\Polaris\Http\Auth\MfaFactorsDomain;
-use Univeros\Polaris\Http\Auth\MfaVerifyDomain;
-use Univeros\Polaris\Http\Auth\OtpFactorConfirmDomain;
-use Univeros\Polaris\Http\Auth\RegenerateRecoveryCodesDomain;
-use Univeros\Polaris\Http\Auth\SmsEnrollDomain;
-use Univeros\Polaris\Http\Auth\StepUpChallengeDomain;
-use Univeros\Polaris\Http\Auth\StepUpVerifyDomain;
-use Univeros\Polaris\Http\Auth\TotpConfirmDomain;
-use Univeros\Polaris\Http\Auth\TotpEnrollDomain;
-use Univeros\Polaris\Http\Auth\UpdateFactorDomain;
+use Polaris\Http\Auth\DeleteFactorEndpoint;
+use Polaris\Http\Auth\EmailEnrollEndpoint;
+use Polaris\Http\Auth\MfaChallengeEndpoint;
+use Polaris\Http\Auth\MfaFactorsEndpoint;
+use Polaris\Http\Auth\MfaVerifyEndpoint;
+use Polaris\Http\Auth\OtpFactorConfirmEndpoint;
+use Polaris\Http\Auth\RegenerateRecoveryCodesEndpoint;
+use Polaris\Http\Auth\SmsEnrollEndpoint;
+use Polaris\Http\Auth\StepUpChallengeEndpoint;
+use Polaris\Http\Auth\StepUpVerifyEndpoint;
+use Polaris\Http\Auth\TotpConfirmEndpoint;
+use Polaris\Http\Auth\TotpEnrollEndpoint;
+use Polaris\Http\Auth\UpdateFactorEndpoint;
 use Univeros\Polaris\Http\Middleware\BearerTokenExtractor;
 use Univeros\Polaris\Http\Middleware\MfaTokenMiddleware;
 use Univeros\Polaris\Http\Middleware\StepUpMiddleware;
@@ -240,11 +240,11 @@ final class MfaBindings
                 ClockInterface $clock,
             ): OtpFactorService => new OtpFactorService($factors, $otp, $confirmation, $unitOfWork, $clock),
         );
-        $container->singleton(TotpEnrollDomain::class);
-        $container->singleton(TotpConfirmDomain::class);
-        $container->singleton(SmsEnrollDomain::class);
-        $container->singleton(EmailEnrollDomain::class);
-        $container->singleton(OtpFactorConfirmDomain::class);
+        $container->singleton(TotpEnrollEndpoint::class);
+        $container->singleton(TotpConfirmEndpoint::class);
+        $container->singleton(SmsEnrollEndpoint::class);
+        $container->singleton(EmailEnrollEndpoint::class);
+        $container->singleton(OtpFactorConfirmEndpoint::class);
     }
 
     /**
@@ -317,8 +317,8 @@ final class MfaBindings
             ),
         );
 
-        $container->singleton(MfaChallengeDomain::class);
-        $container->singleton(MfaVerifyDomain::class);
+        $container->singleton(MfaChallengeEndpoint::class);
+        $container->singleton(MfaVerifyEndpoint::class);
 
         $container->singleton(
             MfaTokenMiddleware::class,
@@ -354,9 +354,9 @@ final class MfaBindings
             ): StepUpService => new StepUpService($verifier, $tokens, $events),
         );
 
-        $container->singleton(StepUpChallengeDomain::class);
-        $container->singleton(StepUpVerifyDomain::class);
-        $container->singleton(RegenerateRecoveryCodesDomain::class);
+        $container->singleton(StepUpChallengeEndpoint::class);
+        $container->singleton(StepUpVerifyEndpoint::class);
+        $container->singleton(RegenerateRecoveryCodesEndpoint::class);
 
         $container->singleton(
             StepUpMiddleware::class,
@@ -416,8 +416,8 @@ final class MfaBindings
             ): MfaManagementService => new MfaManagementService($factors, $enforcement, $unitOfWork, $clock, $events),
         );
 
-        $container->singleton(MfaFactorsDomain::class);
-        $container->singleton(UpdateFactorDomain::class);
-        $container->singleton(DeleteFactorDomain::class);
+        $container->singleton(MfaFactorsEndpoint::class);
+        $container->singleton(UpdateFactorEndpoint::class);
+        $container->singleton(DeleteFactorEndpoint::class);
     }
 }

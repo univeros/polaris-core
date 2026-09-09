@@ -5,6 +5,8 @@ endpoint:
   summary: Read a user
   tags: [users]
   auth: bearer
+  effect: read
+  receipt: false
 
 input:
   source: path
@@ -12,7 +14,7 @@ input:
     id: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Users\ReadUserDomain
+  class: Polaris\Http\Users\ReadUserEndpoint
   description: >
     Self-access works without any permission key; reading another user
     requires the admin-scoped users.read key (held only by superadmin),

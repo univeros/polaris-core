@@ -5,12 +5,14 @@ endpoint:
   summary: List active sessions
   tags: [auth]
   auth: bearer
+  effect: read
+  receipt: false
 
 input:
   source: none
 
 domain:
-  class: Univeros\Polaris\Http\Auth\SessionsDomain
+  class: Polaris\Http\Auth\SessionsEndpoint
   description: >
     Lists the authenticated user's active sessions (refresh-token families),
     with the calling session flagged current (matched by sid). Each entry

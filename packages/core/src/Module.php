@@ -16,12 +16,14 @@ use Override;
 use Univeros\Polaris\Bootstrap\HttpBindings;
 use Univeros\Polaris\Bootstrap\IdentityBindings;
 use Univeros\Polaris\Bootstrap\MfaBindings;
+use Univeros\Polaris\Bootstrap\EndpointBindings;
 use Univeros\Polaris\Bootstrap\OrganizationBindings;
-use Univeros\Polaris\Bootstrap\Routes;
 use Univeros\Polaris\Bootstrap\SessionBindings;
 use Univeros\Polaris\Bootstrap\TokenBindings;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\Secrets;
+use Polaris\Http\Manifest\Loader;
+use Univeros\Polaris\Bootstrap\AltairEndpointBridge;
 use Univeros\Polaris\Http\Middleware\AuthenticatedRateLimitMiddleware;
 use Univeros\Polaris\Http\Middleware\AuthorizationMiddleware;
 use Univeros\Polaris\Http\Middleware\AuthRateLimitMiddleware;
@@ -80,6 +82,7 @@ final class Module implements
         (new HttpBindings())->apply($container);
         (new MfaBindings())->apply($container, $authConfig, $secrets);
         (new OrganizationBindings())->apply($container);
+        (new EndpointBindings())->apply($container);
     }
 
     /**
@@ -130,7 +133,12 @@ final class Module implements
     #[Override]
     public function routes(): array
     {
-        return Routes::table();
+        $routes = [];
+        foreach ((new Loader(Loader::defaultDirectory()))->load()->endpoints() as $spec) {
+            $routes[] = [$spec->method, $spec->path, AltairEndpointBridge::id($spec->class)];
+        }
+
+        return $routes;
     }
 
     /**

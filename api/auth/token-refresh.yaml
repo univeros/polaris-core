@@ -7,6 +7,8 @@ endpoint:
   tags: [auth]
   auth: public                     # the refresh token itself is the credential
   rate_limit: token_refresh
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -14,7 +16,7 @@ input:
     refresh_token: { type: string, rules: [required], sensitive: true }
 
 domain:
-  class: Univeros\Polaris\Http\Auth\RefreshTokenDomain
+  class: Polaris\Http\Auth\RefreshTokenEndpoint
   description: >
     Exchanges a refresh token for a fresh access token and (with rotation on,
     the default) a new refresh token; the presented one is consumed. Replaying

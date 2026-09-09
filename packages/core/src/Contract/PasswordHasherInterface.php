@@ -11,7 +11,7 @@ use SensitiveParameter;
  *
  * A port so the algorithm and cost are configurable and swappable by the host.
  * The default implementation uses Argon2id and is compatible with the framework's
- * {@see \Altair\Http\Validator\RepositoryIdentityValidator}, which verifies via
+ * host framework's credential validator, which verifies via
  * the native {@see \password_verify()}.
  */
 interface PasswordHasherInterface

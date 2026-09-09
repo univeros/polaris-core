@@ -6,6 +6,8 @@ endpoint:
   tags: [orgs, invites]
   auth: bearer
   requires_permissions: [members.invite]
+  effect: destructive
+  receipt: true
 
 input:
   source: path
@@ -14,7 +16,7 @@ input:
     inviteId: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\RevokeInviteDomain
+  class: Polaris\Http\Orgs\RevokeInviteEndpoint
   description: >
     Deletes the pending invitation; its emailed token becomes useless. The
     cross-tenant active-org guard applies: the path org must equal the

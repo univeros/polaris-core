@@ -6,12 +6,14 @@ endpoint:
   tags: [auth, mfa]
   auth: bearer
   rate_limit: mfa_enroll
+  effect: read
+  receipt: false
 
 input:
   source: none
 
 domain:
-  class: Univeros\Polaris\Http\Auth\MfaFactorsDomain
+  class: Polaris\Http\Auth\MfaFactorsEndpoint
   description: >
     Returns every factor the authenticated user has, confirmed and pending,
     with masked destinations. Each factor carries id, type, default and

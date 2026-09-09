@@ -6,6 +6,8 @@ endpoint:
   tags: [auth, mfa]
   auth: mfa_token        # the short-lived login_mfa ticket returned by POST /auth/login
   rate_limit: mfa_confirm
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -15,7 +17,7 @@ input:
     type: { type: string, rules: [optional, "in:recovery"] }  # "recovery" forces the recovery-code path
 
 domain:
-  class: Univeros\Polaris\Http\Auth\MfaVerifyDomain
+  class: Polaris\Http\Auth\MfaVerifyEndpoint
   description: >
     Authenticated by the login_mfa ticket. Checks the code against the named
     factor (TOTP, sms, or email) or, when factor_id is omitted or

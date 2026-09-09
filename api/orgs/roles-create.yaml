@@ -6,6 +6,8 @@ endpoint:
   tags: [orgs, roles]
   auth: bearer
   requires_permissions: [roles.manage]
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -16,7 +18,7 @@ input:
     permission_keys: { type: "list<string>", rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\CreateRoleDomain
+  class: Polaris\Http\Orgs\CreateRoleEndpoint
   description: >
     Creates a custom (non-system) role. Every permission key must exist in
     the catalog (422 otherwise) and be held by the actor: the escalation

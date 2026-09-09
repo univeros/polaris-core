@@ -6,6 +6,8 @@ endpoint:
   tags: [auth, mfa]
   auth: mfa_token        # the short-lived login_mfa ticket returned by POST /auth/login
   rate_limit: mfa_send
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -13,7 +15,7 @@ input:
     factor_id: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Auth\MfaChallengeDomain
+  class: Polaris\Http\Auth\MfaChallengeEndpoint
   description: >
     Authenticated by the login_mfa ticket (not an access token). Generates and
     sends the OTP for the named sms or email factor and returns the channel

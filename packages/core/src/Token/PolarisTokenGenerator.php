@@ -17,7 +17,7 @@ use Psr\Clock\ClockInterface;
 /**
  * Mints signed access tokens with the full Polaris claim set using lcobucci/jwt v5.
  *
- * The framework {@see \Altair\Http\Jwt\LcobucciTokenGenerator} cannot emit registered
+ * The framework 1.0 host framework's JWT generator cannot emit registered
  * claims — lcobucci's `Builder::withClaim()` throws for `sub`/`jti`/`nbf` — so this
  * generator maps them onto the dedicated builder methods (`relatedTo`, `identifiedBy`,
  * `canOnlyBeUsedAfter`) and passes everything else through as a custom claim. It also

@@ -18,7 +18,7 @@ use const JSON_THROW_ON_ERROR;
  * The framework returns a bare `403` for a *missing* token and `401` for an *invalid* one. Both
  * are authentication failures, for which RFC 7235 prescribes `401`; this normalises every auth
  * failure to a `401` carrying the same JSON envelope the protected domains emit
- * ({@see \Univeros\Polaris\Http\Auth\AuthDomain::unauthorized()}) plus a `WWW-Authenticate`
+ * ({@see \Polaris\Http\Endpoint::unauthorized()}) plus a `WWW-Authenticate`
  * challenge, so a rejected request looks the same whether the middleware or a domain produced it.
  */
 final class UnauthorizedResponder

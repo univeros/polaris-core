@@ -6,6 +6,8 @@ endpoint:
   tags: [orgs, members]
   auth: bearer
   requires_permissions: [members.update]
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -13,7 +15,7 @@ input:
     status: { type: string, rules: [required, "in:active,suspended"] }
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\ChangeMemberStatusDomain
+  class: Polaris\Http\Orgs\ChangeMemberStatusEndpoint
   description: >
     Suspends or reactivates a membership. Suspending immediately revokes the
     member's sessions scoped to this org; a still-invited member cannot be
