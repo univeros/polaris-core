@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Config;
+namespace Polaris\Tests\Config;
 
 use PHPUnit\Framework\TestCase;
 use Polaris\Config\AuthConfig;

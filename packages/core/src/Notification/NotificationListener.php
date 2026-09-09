@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Notification;
+namespace Polaris\Notification;
 
 use Polaris\Contract\RepositoryInterface;
 use Psr\Log\LoggerInterface;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Psr15;
+namespace Polaris\Tests\Psr15;
 
 use Laminas\Diactoros\ResponseFactory;
 use Laminas\Diactoros\ServerRequestFactory;
@@ -19,7 +19,7 @@ use Polaris\Psr15\Router;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Univeros\Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\FrozenClock;
 
 #[CoversClass(Router::class)]
 #[CoversClass(JsonResponse::class)]

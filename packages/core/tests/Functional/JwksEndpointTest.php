@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Functional;
+namespace Polaris\Tests\Functional;
 
-use Univeros\Polaris\Tests\Support\TestKeys;
+use Polaris\Tests\Support\TestKeys;
 
 use function array_column;
 use function putenv;

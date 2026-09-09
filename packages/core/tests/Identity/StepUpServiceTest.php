@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Identity;
+namespace Polaris\Tests\Identity;
 
 use Polaris\Contract\RepositoryInterface;
 use Polaris\Contract\EncrypterInterface;
@@ -29,13 +29,13 @@ use Polaris\Mfa\RecoveryCodeService;
 use Polaris\Security\Pepper;
 use Polaris\Support\InMemoryCache;
 use Polaris\Token\TokenService;
-use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Tests\Support\InMemoryRecoveryCodeRepository;
-use Univeros\Polaris\Tests\Support\InMemoryRefreshTokenRepository;
-use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
-use Univeros\Polaris\Tests\Support\RecordingTokenGenerator;
-use Univeros\Polaris\Tests\Support\RecordingUnitOfWork;
-use Univeros\Polaris\Tests\Support\StubSessionPrincipalResolver;
+use Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\InMemoryRecoveryCodeRepository;
+use Polaris\Tests\Support\InMemoryRefreshTokenRepository;
+use Polaris\Tests\Support\RecordingEventDispatcher;
+use Polaris\Tests\Support\RecordingTokenGenerator;
+use Polaris\Tests\Support\RecordingUnitOfWork;
+use Polaris\Tests\Support\StubSessionPrincipalResolver;
 
 final class StepUpServiceTest extends TestCase
 {

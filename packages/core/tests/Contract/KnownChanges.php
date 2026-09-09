@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Contract;
+namespace Polaris\Tests\Contract;
 
 /**
  * The recorded 1.0 responses the extraction deliberately changed. Every entry is documented in
@@ -16,7 +16,7 @@ final class KnownChanges
     public static function all(): array
     {
         return [
-            'Univeros\\Polaris\\Tests\\Functional\\MfaLoginGateEndpointsTest::testTheTicketPrincipalCannotBeSpoofedViaTheBody' => [
+            'Polaris\\Tests\\Functional\\MfaLoginGateEndpointsTest::testTheTicketPrincipalCannotBeSpoofedViaTheBody' => [
                 7 => [
                     'status' => 422,
                     'headers' => ['content-type' => ['application/json'], 'x-ratelimit-limit' => ['10']],

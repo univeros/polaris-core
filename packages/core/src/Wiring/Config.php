@@ -10,6 +10,7 @@ use Polaris\Config\Secrets;
 use Polaris\Contract\BreachedPasswordCheckInterface;
 use Polaris\Contract\DatabaseAdapter;
 use Polaris\Contract\EncrypterInterface;
+use Polaris\Contract\MetricsInterface;
 use Polaris\Contract\OtpMailerInterface;
 use Polaris\Contract\QrCodeRendererInterface;
 use Polaris\Contract\RateStore;
@@ -42,6 +43,7 @@ final readonly class Config
         public ?RateLimitConfig $rateLimits = null,
         public ?RateStore $rateStore = null,
         public ?EncrypterInterface $encrypter = null,
+        public ?MetricsInterface $metrics = null,
         public ?TotpProviderInterface $totp = null,
         public ?QrCodeRendererInterface $qrCodes = null,
         public ?ResponseFactoryInterface $responseFactory = null,

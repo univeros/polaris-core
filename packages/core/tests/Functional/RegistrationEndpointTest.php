@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Functional;
+namespace Polaris\Tests\Functional;
 
 use Polaris\Model\User;
 use Polaris\Event\UserEmailVerified;

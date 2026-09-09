@@ -7,7 +7,7 @@ namespace Polaris\Model;
 use DateTimeImmutable;
 
 /**
- * The identity record behind {@see \Univeros\Polaris\Module} (table `auth_users`).
+ * The identity record of Polaris (table `auth_users`).
  *
  * Nothing here is database-specific. The UUID v7 primary key is assigned by the application
  * (never auto-incremented), so identifiers stay opaque and portable.

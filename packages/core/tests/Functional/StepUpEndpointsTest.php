@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Functional;
+namespace Polaris\Tests\Functional;
 
 use OTPHP\TOTP;
 use Psr\Http\Message\ResponseInterface;

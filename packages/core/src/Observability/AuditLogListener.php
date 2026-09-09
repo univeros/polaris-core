@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Observability;
+namespace Polaris\Observability;
 
 use Polaris\Contract\UnitOfWorkInterface;
 use JsonException;

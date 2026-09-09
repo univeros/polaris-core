@@ -12,7 +12,7 @@ use DateTimeImmutable;
  * Rows mirror the PSR-14 domain events (`docs/auth/events.md`): the event name, the acting user
  * and org context where known, the client network context, and a JSON {@see $metadata} blob of
  * event-specific identifiers — **never secrets** (tokens, codes, hashes are excluded by the
- * whitelist in {@see \Univeros\Polaris\Observability\AuditLogListener}). Rows are written once and
+ * whitelist in {@see \Polaris\Observability\AuditLogListener}). Rows are written once and
  * never updated or deleted by the module; retention/archival is host policy
  * (`docs/auth/data-model.md` §3).
  */

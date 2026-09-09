@@ -15,7 +15,7 @@ use Polaris\Model\Organization;
 /**
  * `GET /orgs/{id}` — read a single organization.
  *
- * The {@see \Univeros\Polaris\Http\Middleware\AuthorizationMiddleware} enforces the declared
+ * The `AuthorizationMiddleware` enforces the declared
  * `org.read` permission for the caller's active org. This domain then enforces **cross-tenant
  * isolation** via {@see Endpoint::deniesActiveOrg()}: the requested `{id}` must equal the
  * caller's active org — a token scoped to org A cannot read org B — unless the caller is a superadmin.

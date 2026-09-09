@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\AdapterConformance;
+namespace Polaris\Tests\AdapterConformance;
 
 use DateTimeImmutable;
 use Polaris\Contract\Condition;

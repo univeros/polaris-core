@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Observability;
+namespace Polaris\Observability;
 
-use Altair\Observability\Metrics\Meter;
+use Polaris\Contract\MetricsInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -15,7 +15,7 @@ use function str_starts_with;
 
 /**
  * PSR-14 listener counting every Polaris domain event as an OpenTelemetry-style metric via the
- * framework {@see Meter} (`univeros/observability`): one `polaris.auth.events` counter with an
+ * {@see MetricsInterface}: one `polaris.auth.events` counter with an
  * `event` attribute carrying the catalog name (`docs/auth/events.md`). Alert rules filter on the
  * attribute, e.g. `event = auth.refresh_reuse_detected`, spikes of `user.login_failed` /
  * `user.locked` / `mfa.verify_failed`, and `org.deleted` (`docs/auth/security.md` §8).
@@ -33,7 +33,7 @@ final class MetricsListener
     private const string EVENT_NAMESPACE = 'Polaris\\Event\\';
 
     public function __construct(
-        private readonly Meter $meter,
+        private readonly MetricsInterface $meter,
         private readonly LoggerInterface $logger,
     ) {
     }
@@ -50,7 +50,7 @@ final class MetricsListener
         }
 
         try {
-            $this->meter->counter(self::COUNTER, 1.0, ['event' => $name], description: 'Polaris auth domain events');
+            $this->meter->counter(self::COUNTER, 1.0, ['event' => $name], 'Polaris auth domain events');
         } catch (Throwable $exception) {
             $this->logger->error('Metrics emission failed for {event}: {reason}', [
                 'event' => $name,

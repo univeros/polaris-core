@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Http\Jwks;
+namespace Polaris\Tests\Http\Jwks;
 
 use PHPUnit\Framework\TestCase;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\Secrets;
 use Polaris\Http\Input;
 use Polaris\Http\Jwks\JwksEndpoint;
-use Univeros\Polaris\Tests\Support\TestKeys;
+use Polaris\Tests\Support\TestKeys;
 
 /**
  * The JWKS endpoint serves a `200` JWK Set whose single key is the configured public

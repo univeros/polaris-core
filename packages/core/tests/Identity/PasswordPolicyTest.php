@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Identity;
+namespace Polaris\Tests\Identity;
 
 use PHPUnit\Framework\TestCase;
 use SensitiveParameter;

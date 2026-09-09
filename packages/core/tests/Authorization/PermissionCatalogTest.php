@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Authorization;
+namespace Polaris\Tests\Authorization;
 
 use PHPUnit\Framework\TestCase;
 use Polaris\Authorization\PermissionCatalog;

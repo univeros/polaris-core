@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Observability;
+namespace Polaris\Tests\Observability;
 
-use Altair\Observability\Metrics\Meter;
-use Altair\Observability\Recorder\InMemoryRecorder;
+use Polaris\Tests\Support\RecordingMetrics;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Polaris\Event\RefreshReuseDetected;
 use Polaris\Event\UserLoggedIn;
 use Polaris\Event\UserLoginFailed;
 use Polaris\Event\UserRegistered;
-use Univeros\Polaris\Observability\MetricsListener;
+use Polaris\Observability\MetricsListener;
 
 /**
  * Verifies the #42 {@see MetricsListener}: every Polaris domain event increments the
@@ -22,10 +21,15 @@ use Univeros\Polaris\Observability\MetricsListener;
  */
 final class MetricsListenerTest extends TestCase
 {
+    private function recorder(): RecordingMetrics
+    {
+        return new RecordingMetrics();
+    }
+
     public function testCountsEventsWithTheirCatalogName(): void
     {
-        $recorder = new InMemoryRecorder();
-        $listener = new MetricsListener(new Meter($recorder), new NullLogger());
+        $recorder = $this->recorder();
+        $listener = new MetricsListener($recorder, new NullLogger());
 
         $listener(new UserLoggedIn('user-1', 'session-1', '203.0.113.7'));
         $listener(new UserLoginFailed('user-1', '203.0.113.7'));
@@ -42,8 +46,8 @@ final class MetricsListenerTest extends TestCase
 
     public function testSecretCarryingEventsExposeOnlyTheirName(): void
     {
-        $recorder = new InMemoryRecorder();
-        $listener = new MetricsListener(new Meter($recorder), new NullLogger());
+        $recorder = $this->recorder();
+        $listener = new MetricsListener($recorder, new NullLogger());
 
         $listener(new UserRegistered('user-1', 'new@example.com', 'verification-secret-token'));
 
@@ -54,8 +58,8 @@ final class MetricsListenerTest extends TestCase
 
     public function testIgnoresObjectsOutsideTheEventNamespace(): void
     {
-        $recorder = new InMemoryRecorder();
-        $listener = new MetricsListener(new Meter($recorder), new NullLogger());
+        $recorder = $this->recorder();
+        $listener = new MetricsListener($recorder, new NullLogger());
 
         $listener(new class () {
             public const string NAME = 'not.a.polaris.event';

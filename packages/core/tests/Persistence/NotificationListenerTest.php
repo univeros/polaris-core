@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Persistence;
+namespace Polaris\Tests\Persistence;
 
 use DateTimeImmutable;
 use Psr\Log\NullLogger;
@@ -18,9 +18,9 @@ use Polaris\Event\PasswordChanged;
 use Polaris\Event\PasswordResetRequested;
 use Polaris\Event\UserLocked;
 use Polaris\Event\UserRegistered;
-use Univeros\Polaris\Notification\NotificationListener;
+use Polaris\Notification\NotificationListener;
 use Polaris\Repository\UserRepository;
-use Univeros\Polaris\Tests\Support\RecordingOtpMailer;
+use Polaris\Tests\Support\RecordingOtpMailer;
 
 use function str_repeat;
 

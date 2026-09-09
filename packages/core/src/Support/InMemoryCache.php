@@ -17,7 +17,7 @@ use function time;
  * A minimal in-process PSR-16 cache, backed by a plain array with per-entry TTL.
  *
  * Polaris binds this as the default {@see CacheInterface} only when the host has not bound
- * one, so the module — and its {@see \Univeros\Polaris\Http\Middleware\AuthRateLimitMiddleware}
+ * one, so the module — and its `AuthRateLimitMiddleware`
  * — boots out of the box.
  *
  * **Not for production rate limiting.** PHP is share-nothing: each worker process holds its

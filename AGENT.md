@@ -7,9 +7,9 @@ This repository (`github.com/univeros/polaris-core`) publishes the `polaris/*` C
 ## Status
 
 - **The code is the complete Polaris 1.0.0** (June 2026): authentication, MFA/OTP, sessions and rotating refresh tokens, multi-tenant organizations and RBAC, audit log, 35 PSR-14 events, 52 endpoints specified in `api/**/*.yaml`, 115 test files.
-- **Current task: extraction.** This repository is being restructured into a monorepo so the same code runs in any PHP application: `packages/core` (`Polaris\`, framework-free), `packages/psr15`, `packages/pdo`, `packages/testing`, `packages/cli`. Everything Univeros-specific (`Module.php`, `Bootstrap/*`, Cycle entities and repositories, the Altair HTTP layer) is replaced, not adapted. The authoritative spec is `docs/extraction/spec.md`; work packages WP0–WP8 are executed in order on branches `extract/wpN`.
+- **Extraction (task 1) is done through WP7.** The monorepo holds `packages/core` (`Polaris\`, framework-free), `packages/psr15`, `packages/pdo`, `packages/testing`, `packages/cli`; nothing imports `Altair\`, `Cycle\` or `Univeros\` any more (`bin/check-imports` blocks it). The authoritative spec is `docs/extraction/spec.md`; the decisions taken along the way are in `docs/extraction/decisions.md`, the one behaviour change in `behaviour-changes.md`. WP8 (the Slim demo) is the remaining work package.
 
-Since WP1 the seeded code lives under `packages/core/src` (still in the `Univeros\Polaris\` namespace until each layer is ported) with its tests under `packages/core/tests`; `packages/psr15`, `packages/pdo`, `packages/testing` and `packages/cli` are empty shells until their work package. Check `docs/extraction/decisions.md` for what has been decided since this file was written.
+Entry points: `Polaris::create(new Polaris\Wiring\Config(...))` builds the service graph without a container; `Polaris\Psr15\Pipeline` wraps it as PSR-15 middleware plus handler; `bin/polaris` offers `schema:export`, `schema:diff`, `manifest` and `doctor`. The functional suite replays 184 recorded 1.0 fixtures through the pipeline (`packages/core/tests/Contract`), so every response is contract-frozen. Check `docs/extraction/decisions.md` for what has been decided since this file was written.
 
 ## The rules
 
@@ -55,5 +55,5 @@ bin/polaris manifest   # after WP7: validate api/*.yaml, emit OpenAPI
 ## Namespaces you will see and must not confuse
 
 - `Polaris\` — this repository (new).
-- `Univeros\Polaris\` — the seeded 1.0 code, present until each layer is moved; gone by WP7.
-- `Altair\*` — the Univeros framework's packages (`univeros/http`, `univeros/persistence`, …). Present in the seed; every import is removed by WP7. Never add one.
+- `Univeros\Polaris\` — the 1.0 module's namespace; it belongs to the other repository and appears nowhere here.
+- `Altair\*` — the Univeros framework's packages. Gone since WP7; `bin/check-imports` fails on any reference. Never add one.

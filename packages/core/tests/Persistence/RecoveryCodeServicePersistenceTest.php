@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Persistence;
+namespace Polaris\Tests\Persistence;
 
 use Polaris\Repository\RecoveryCodeRepository;
 use Symfony\Component\Uid\Uuid;
@@ -10,8 +10,8 @@ use Polaris\Model\RecoveryCode;
 use Polaris\Event\MfaRecoveryRegenerated;
 use Polaris\Mfa\RecoveryCodeService;
 use Polaris\Security\Pepper;
-use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
+use Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\RecordingEventDispatcher;
 
 /**
  * Exercises {@see RecoveryCodeService}'s verify/regenerate against a **real database driver**: codes

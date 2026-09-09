@@ -26,26 +26,22 @@
         "psr/simple-cache": "^3.0",
         "spomky-labs/otphp": "^11.3",
         "symfony/uid": "^7.0",
-        "symfony/yaml": "^7.0",
-        "univeros/http": "^2.0",
-        "univeros/module": "^2.0",
-        "univeros/observability": "^2.0",
-        "univeros/persistence": "^2.0",
-        "univeros/security": "^2.0"
+        "symfony/yaml": "^7.0"
     },
     "require-dev": {
+        "polaris/cli": "^0.1",
         "polaris/pdo": "^0.1",
+        "polaris/psr15": "^0.1",
         "polaris/testing": "^0.1"
     },
     "autoload": {
         "psr-4": {
-            "Polaris\\": "src/",
-            "Univeros\\Polaris\\": "src/"
+            "Polaris\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Univeros\\Polaris\\Tests\\": "tests/"
+            "Polaris\\Tests\\": "tests/"
         }
     },
     "extra": {

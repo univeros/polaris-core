@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Pdo;
+namespace Polaris\Tests\Pdo;
 
 use PDO;
 use PHPUnit\Framework\Attributes\CoversClass;

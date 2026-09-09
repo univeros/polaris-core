@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Token;
+namespace Polaris\Tests\Token;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;

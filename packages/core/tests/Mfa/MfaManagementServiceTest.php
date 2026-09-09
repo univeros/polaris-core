@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Mfa;
+namespace Polaris\Tests\Mfa;
 
 use Polaris\Contract\RepositoryInterface;
 use DateTimeImmutable;
@@ -16,9 +16,9 @@ use Polaris\Exception\LastFactorProtectedException;
 use Polaris\Exception\MfaFactorNotFoundException;
 use Polaris\Mfa\MfaEnforcement;
 use Polaris\Mfa\MfaManagementService;
-use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
-use Univeros\Polaris\Tests\Support\RecordingUnitOfWork;
+use Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\RecordingEventDispatcher;
+use Polaris\Tests\Support\RecordingUnitOfWork;
 
 final class MfaManagementServiceTest extends TestCase
 {
