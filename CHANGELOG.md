@@ -1,8 +1,36 @@
 # Changelog
 
-All notable changes to `univeros/polaris` are documented in this file. The
+All notable changes to Polaris for PHP (the `polaris/*` packages) are documented in this file. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
+
+## [Unreleased]
+
+### Polaris for PHP: the framework-agnostic extraction
+
+The 1.0 Univeros module became a monorepo of framework-free packages with the
+same behaviour: `polaris/core` (`Polaris\`), `polaris/psr15`, `polaris/pdo`,
+`polaris/testing`, `polaris/cli`. Every 1.0 response is contract-frozen: the
+functional suite replays 184 request/response sequences (1,201 steps) recorded
+from the 1.0 code through the PSR-15 pipeline. The extraction is documented in
+`docs/extraction/` (spec, decisions, the one behaviour change).
+
+- **Wiring.** `Polaris::create(new Polaris\Wiring\Config(...))` builds the
+  service graph without a container; `Polaris\Psr15\Pipeline` gives any PSR-15
+  host the ordered middleware and the request handler.
+- **Persistence.** Models are plain records; the schema is data
+  (`Polaris\Schema`); repositories run on a `DatabaseAdapter` (`polaris/pdo` for
+  PostgreSQL, MySQL and SQLite; an in-memory adapter in `polaris/testing`). The
+  18 Cycle migrations are replaced by `polaris schema:export`.
+- **Routing.** `api/**/*.yaml` is the router: 52 endpoints, each with `effect`
+  and `receipt`, loaded by `Polaris\Http\Manifest`; the CLI renders OpenAPI 3.1.
+- **Ports.** Repository, unit of work, tokens, identity provider, encrypter
+  (`SodiumEncrypter` default, XChaCha20-Poly1305), rate store (PSR-16 default),
+  metrics (PSR-3 default); PSR-14 listeners exposed through `Polaris::listeners()`.
+- **CLI.** `bin/polaris schema:export`, `schema:diff`, `manifest`, `doctor`.
+- **Demo.** `examples/slim`: Slim 4 on SQLite with an executable walkthrough.
+- **Behaviour change (documented).** A request body field named like a request
+  attribute no longer overrides the attribute (`docs/extraction/behaviour-changes.md`).
 
 ## [1.0.0] - 2026-06-11
 
