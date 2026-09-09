@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Functional;
 
-use Altair\Http\Contracts\TokenParserInterface;
+use Polaris\Contract\TokenParserInterface;
 use Psr\Http\Message\ResponseInterface;
 use Polaris\Event\RefreshReuseDetected;
 use Polaris\Event\SessionsRevoked;

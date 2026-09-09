@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Functional;
 
-use Altair\Http\Contracts\TokenValidatorInterface;
+use Polaris\Contract\TokenValidatorInterface;
 use DateTimeImmutable;
 use Laminas\Diactoros\ServerRequestFactory;
 use Univeros\Polaris\Entity\User;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Univeros\Polaris\Tests\Persistence;
 
 use Univeros\Polaris\Bootstrap\UnitOfWorkBridge;
-use Altair\Persistence\Cycle\CycleRepository;
+use Univeros\Polaris\Persistence\OtpChallengeRepository;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 use Polaris\Config\OtpConfig;
@@ -106,7 +106,7 @@ final class OtpServicePersistenceTest extends DatabaseTestCase
     private function service(): OtpService
     {
         return new OtpService(
-            new CycleRepository(OtpChallenge::class, $this->orm, $this->unitOfWork),
+            new OtpChallengeRepository($this->orm, $this->unitOfWork),
             new RecordingSmsSender(),
             new RecordingOtpMailer(),
             new Pepper(self::APP_KEY),
