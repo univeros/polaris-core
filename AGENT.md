@@ -1,127 +1,59 @@
-# AGENT.md — univeros/polaris
+# AGENT.md — univeros/polaris-core (Polaris for PHP)
 
-Agent guide for this package. **Polaris is the official Univeros auth & user
-management module**: a pluggable, installable feature a host app wires in with one
-line in `config/modules.php`, contributing authentication, MFA/OTP, and
-multi-tenant user/organization management. This file is the orientation an agent
-should read **before** editing — the human-facing README is `README.md`, and the
-full design lives under [`docs/auth/`](docs/auth/).
+Orientation for coding agents working in this repository. Read this before editing. The identity design lives in `docs/auth/`; the current engineering task lives in `docs/extraction/`.
 
-> **Status:** the implementation has not started — `src/` still contains the
-> generated `Sample*` skeleton. The authoritative spec for what to build is in
-> [`docs/auth/`](docs/auth/) (design) and [`api/`](api/) (executable endpoint
-> specs). Build order is [`docs/auth/implementation-plan.md`](docs/auth/implementation-plan.md).
+This repository (`github.com/univeros/polaris-core`) publishes the `polaris/*` Composer packages. It was seeded from `univeros/polaris` v1.0.0. **`univeros/polaris` is a different repository and must never be modified from here.** It remains the Univeros module for Univeros hosts; this repository is the framework-agnostic Polaris for PHP.
 
-## The one rule
+## Status
 
-This package's vendor and namespace are **`univeros/polaris`** and
-**`Univeros\Polaris\`** — they are the source of truth (see every `namespace` in
-`src/`). Use them everywhere. Do **not** rename to:
+- **The code is the complete Polaris 1.0.0** (June 2026): authentication, MFA/OTP, sessions and rotating refresh tokens, multi-tenant organizations and RBAC, audit log, 35 PSR-14 events, 52 endpoints specified in `api/**/*.yaml`, 115 test files.
+- **Current task: extraction.** This repository is being restructured into a monorepo so the same code runs in any PHP application: `packages/core` (`Polaris\`, framework-free), `packages/psr15`, `packages/pdo`, `packages/testing`, `packages/cli`. Everything Univeros-specific (`Module.php`, `Bootstrap/*`, Cycle entities and repositories, the Altair HTTP layer) is replaced, not adapted. The authoritative spec is `docs/extraction/spec.md`; work packages WP0–WP8 are executed in order on branches `extract/wpN`.
 
-- `Altair\*` — the framework's first-party core namespace; or
-- one of the framework's read-only split packages (`univeros/http`,
-  `univeros/persistence`, `univeros/module`, `univeros/security`,
-  `univeros/configuration`, `univeros/cache`, …). Polaris is a distinct module
-  that **consumes** those; it is not one of them.
+Until WP1 lands, code still lives under `src/` with the 1.0 layout. Check `docs/extraction/decisions.md` for what has been decided since this file was written.
 
-> ⚠️ `composer.json` is still the scaffolder placeholder (`vendor/module` /
-> `VendorModule\`), which PSR-4-mismatches the `Univeros\Polaris\` classes in
-> `src/` and breaks autoloading. Fixing it is **Phase 0** of the plan — see
-> [`docs/auth/configuration.md`](docs/auth/configuration.md#composerjson-fix-required).
+## The rules
 
-## What a module is
+1. **No feature work during extraction.** Only what `docs/extraction/spec.md` describes. If a behaviour must change, log it in `docs/extraction/behaviour-changes.md` first.
+2. **`composer qa` (phpcs, phpstan, phpunit) must pass** before any commit is proposed. Do not weaken phpstan level or skip tests to get green.
+3. **Nothing in this repository may import** `Altair\`, `Cycle\`, `Univeros\`, or any framework namespace once WP7 is done. Allowed dependencies are listed in `spec.md` §2.
+4. **Public HTTP contract is frozen.** Every request/response shape in `api/**/*.yaml` and `docs/auth/api-reference.md` stays identical. The contract-freeze fixtures (WP6) enforce it.
+5. **Namespaces.** Everything is `Polaris\*`. No aliases to `Univeros\Polaris\*`; that namespace belongs to the other repository.
+6. **Endpoints are declared in YAML, not in code.** After WP5, `api/**/*.yaml` is the router. Adding or changing an endpoint means editing its spec; the endpoint class only implements it.
+7. **Security-critical code.** Password hashing, token minting and rotation, OTP handling, and encryption are not refactored for style. Move them, fix imports, keep their tests.
 
-`src/Module.php` implements `Altair\Module\Contracts\ModuleInterface` (a
-`ConfigurationInterface` + `name()`) and **opts into capabilities by also
-implementing the narrow provider contracts** — implement only what you ship:
+## How to work a work package
 
-| Contract | Method | Contributes |
-|---|---|---|
-| `RoutesProviderInterface` | `routes()` | HTTP routes |
-| `MiddlewareProviderInterface` | `middleware()` | PSR-15 middleware, ordered by priority |
-| `EntityDirectoriesProviderInterface` | `entityDirectories()` | Cycle entity dirs |
-| `MigrationDirectoriesProviderInterface` | `migrationDirectories()` | DB migrations |
+1. Read `docs/extraction/spec.md` §8 for the WP's scope and acceptance criteria, and `coupling-analysis.md` for the directories involved.
+2. Create branch `extract/wpN` from `main`.
+3. Make the smallest change that meets the acceptance criteria; run `composer qa` continuously.
+4. Record decisions in `docs/extraction/decisions.md`.
+5. Open a pull request whose description lists each acceptance criterion with how it was verified.
 
-Polaris will implement **all four** (it ships routes, auth/authorization
-middleware, entities, and migrations). Drop a capability by removing its
-interface from the `implements` list. A service-only module needs just
-`ModuleInterface` and `univeros/module`.
+## Layout after WP1
 
-## The HTTP lifecycle
-
-Endpoints follow **Action -> Input(DTO) -> Domain -> Responder**. The generated
-`Univeros\Polaris\Http\Actions\SampleAction` + `SampleInput` + `SampleResponder` +
-`Univeros\Polaris\Domain\SampleService` are the canonical pattern — copy their
-shape for new endpoints. The Action stays thin: validate via the Input, call the
-Domain, hand the result to the Responder.
-
-> The `Sample*` files are placeholders. They are replaced by the auth surface
-> defined in [`docs/auth/api-reference.md`](docs/auth/api-reference.md); new
-> endpoints are added by scaffolding from a YAML spec in [`api/`](api/) (see the
-> caveat below), not by hand where `bin/altair` is available.
-
-## Conventions (non-negotiable)
-
-- `declare(strict_types=1);` in **every** PHP file.
-- **Immutability** — never mutate value objects; return new copies via `withX()`.
-- **Native types** over PHPDoc; add PHPDoc only for `array<K,V>` shapes / unions PHP
-  can't express.
-- **Many small files** (200-400 LOC typical), organized by feature.
-- **Tests first**, 80%+ coverage on new code. No new code without a test.
-- **Security-critical code:** secrets are hashed/encrypted at rest, comparisons
-  are constant-time, inputs validated at the boundary, and no user enumeration.
-  See [`docs/auth/security.md`](docs/auth/security.md) before touching auth logic.
-
-## Develop and test in isolation (no host app needed)
-
-```bash
-composer install
-vendor/bin/phpunit
+```
+packages/core/src/{Contract,Model,Schema,Repository,Identity,Mfa,Token,Authorization,Security,Event,Exception,Config,Support,Http,Wiring}
+packages/psr15/src/{RequestHandler.php,Middleware/}
+packages/pdo/src   packages/testing/src   packages/cli/src
+api/                       endpoint specs (router after WP5)
+docs/auth/                 identity design (unchanged)
+docs/extraction/           this task
+examples/slim/             WP8 demo
 ```
 
-`tests/ModuleTest.php` constructs the module and asserts its routes, bindings, and
-directories. Grow it as you add behaviour — the host is never involved to test a
-module in isolation. The full test strategy + acceptance criteria are in
-[`docs/auth/testing.md`](docs/auth/testing.md).
+## Useful commands
 
-## Scaffolding endpoints — important caveat
-
-The `bin/altair spec:scaffold` YAML flow (write a spec, emit the Action/Input/
-Responder/Domain/test) lives in the **framework**, not in this package's
-dependencies. So inside this module:
-
-- The spec YAML **vocabulary is not vendored here** — do not guess it. Confirm with
-  `bin/altair spec:show <spec>` against a framework install before relying on it.
-  The seed specs in [`api/`](api/) are modeled on the documented blocks and carry
-  the same caveat (see [`api/README.md`](api/README.md)).
-- If `bin/altair` is unavailable, **hand-write** the Action/Input/Responder triple
-  following `SampleAction` rather than inventing a structure.
-
-## How a host installs this module
-
-```php
-// host app: config/modules.php
-return [
-    new Univeros\Polaris\Module(),
-];
+```
+composer qa            # cs + stan + test, all packages
+composer test          # phpunit
+composer stan
+composer cs-fix
+bin/polaris doctor     # after WP7
+bin/polaris manifest   # after WP7: validate api/*.yaml, emit OpenAPI
 ```
 
-Routes, middleware, and migrations are then picked up automatically. Entities
-join the host's ORM schema once the host has its one-time
-`SchemaProviderInterface` -> `ModuleAwareSchemaProvider` binding wired (a
-host-level setup that serves every module, not per-module wiring). Polaris also
-requires the host to provide `APP_KEY` + a JWT keypair via env — see
-[`docs/auth/configuration.md`](docs/auth/configuration.md).
+## Namespaces you will see and must not confuse
 
-## Publish
-
-An ordinary Composer package — tag a release and submit to Packagist. Keep the
-`univeros/polaris` / `Univeros\Polaris\` vendor/namespace (see "The one rule").
-
-## Canonical docs
-
-- **Auth module spec (this repo):** [`docs/auth/`](docs/auth/) — start at
-  [`docs/auth/README.md`](docs/auth/README.md).
-- **Executable endpoint specs:** [`api/`](api/).
-- Building a module: <https://github.com/univeros/framework/blob/master/docs/guides/extending.md>
-- Module contract reference: <https://github.com/univeros/framework/blob/master/docs/packages/module.md>
+- `Polaris\` — this repository (new).
+- `Univeros\Polaris\` — the seeded 1.0 code, present until each layer is moved; gone by WP7.
+- `Altair\*` — the Univeros framework's packages (`univeros/http`, `univeros/persistence`, …). Present in the seed; every import is removed by WP7. Never add one.
