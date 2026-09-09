@@ -15,12 +15,12 @@ use Polaris\Authorization\RbacSessionPrincipalResolver;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\Secrets;
 use Polaris\Event\NullEventDispatcher;
-use Univeros\Polaris\Http\Auth\LogoutAllDomain;
-use Univeros\Polaris\Http\Auth\LogoutDomain;
-use Univeros\Polaris\Http\Auth\RefreshTokenDomain;
-use Univeros\Polaris\Http\Auth\RevokeSessionDomain;
-use Univeros\Polaris\Http\Auth\SessionsDomain;
-use Univeros\Polaris\Http\Auth\SwitchOrgDomain;
+use Polaris\Http\Auth\LogoutAllEndpoint;
+use Polaris\Http\Auth\LogoutEndpoint;
+use Polaris\Http\Auth\RefreshTokenEndpoint;
+use Polaris\Http\Auth\RevokeSessionEndpoint;
+use Polaris\Http\Auth\SessionsEndpoint;
+use Polaris\Http\Auth\SwitchOrgEndpoint;
 use Polaris\Identity\SessionService;
 use Polaris\Repository\MembershipRepository;
 use Polaris\Repository\MembershipRoleRepository;
@@ -51,7 +51,7 @@ final class SessionBindings
      * Bind the session machinery: the keyed {@see Pepper} (refresh-token hashing), a
      * no-op PSR-14 dispatcher (until the host wires listeners in Phase 4), the
      * {@see PermissionResolver} and the {@see RbacSessionPrincipalResolver} (which embeds the active
-     * org's roles/scope into issued tokens), the {@see SwitchOrgDomain}, and {@see TokenService},
+     * org's roles/scope into issued tokens), the {@see SwitchOrgEndpoint}, and {@see TokenService},
      * which issues and rotates refresh tokens with reuse detection.
      */
     private function bindSessions(Container $container): void
@@ -96,13 +96,13 @@ final class SessionBindings
         );
 
         $container->singleton(
-            SwitchOrgDomain::class,
+            SwitchOrgEndpoint::class,
             static fn(
                 TokenService $tokens,
                 OrganizationRepository $organizations,
                 MembershipRepository $memberships,
                 AuthConfig $config,
-            ): SwitchOrgDomain => new SwitchOrgDomain($tokens, $organizations, $memberships, $config),
+            ): SwitchOrgEndpoint => new SwitchOrgEndpoint($tokens, $organizations, $memberships, $config),
         );
 
         $container->singleton(
@@ -150,10 +150,10 @@ final class SessionBindings
             ): SessionService => new SessionService($refreshTokens, $tokens, $clock, $events, $denylist),
         );
 
-        $container->singleton(RefreshTokenDomain::class);
-        $container->singleton(LogoutDomain::class);
-        $container->singleton(LogoutAllDomain::class);
-        $container->singleton(SessionsDomain::class);
-        $container->singleton(RevokeSessionDomain::class);
+        $container->singleton(RefreshTokenEndpoint::class);
+        $container->singleton(LogoutEndpoint::class);
+        $container->singleton(LogoutAllEndpoint::class);
+        $container->singleton(SessionsEndpoint::class);
+        $container->singleton(RevokeSessionEndpoint::class);
     }
 }

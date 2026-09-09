@@ -6,6 +6,8 @@ endpoint:
   tags: [auth]
   auth: public
   rate_limit: token_consume
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -13,7 +15,7 @@ input:
     token: { type: string, rules: [required], sensitive: true }
 
 domain:
-  class: Univeros\Polaris\Http\Auth\VerifyEmailDomain
+  class: Polaris\Http\Auth\VerifyEmailEndpoint
   description: >
     Confirms the email address bound to the single-use verification token.
     Idempotent: a token for an already-verified user still returns 200. A bad

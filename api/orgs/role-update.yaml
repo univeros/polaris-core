@@ -6,6 +6,8 @@ endpoint:
   tags: [orgs, roles]
   auth: bearer
   requires_permissions: [roles.manage]
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -15,7 +17,7 @@ input:
     permission_keys: { type: "?list<string>", rules: [] }   # full replacement set when present
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\UpdateRoleDomain
+  class: Polaris\Http\Orgs\UpdateRoleEndpoint
   description: >
     Partially updates a role: name, description, and/or the permission set
     (replaced wholesale when present). The slug is immutable, and the org's

@@ -6,6 +6,8 @@ endpoint:
   tags: [users]
   auth: bearer
   requires_permissions: [users.manage]
+  effect: write
+  receipt: true
 
 input:
   source: path
@@ -13,7 +15,7 @@ input:
     id: { type: string, rules: [required] }   # empty body
 
 domain:
-  class: Univeros\Polaris\Http\Users\EnableUserDomain
+  class: Polaris\Http\Users\EnableUserEndpoint
   description: >
     Admin tooling: reactivates a disabled (or locked) account and clears the
     lockout counters. Gated on the admin-scoped users.manage key (held only

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests;
 
+use Univeros\Polaris\Bootstrap\AltairEndpointBridge;
 use Altair\Container\Container;
 use Altair\Http\Contracts\CredentialsExtractorInterface;
 use Altair\Http\Contracts\IdentityProviderInterface;
@@ -32,11 +33,11 @@ use Polaris\Contract\OtpMailerInterface;
 use Polaris\Contract\QrCodeRendererInterface;
 use Polaris\Contract\SmsSenderInterface;
 use Polaris\Contract\TotpProviderInterface;
-use Univeros\Polaris\Http\Auth\EmailEnrollDomain;
-use Univeros\Polaris\Http\Auth\OtpFactorConfirmDomain;
-use Univeros\Polaris\Http\Auth\SmsEnrollDomain;
-use Univeros\Polaris\Http\Auth\TotpConfirmDomain;
-use Univeros\Polaris\Http\Auth\TotpEnrollDomain;
+use Polaris\Http\Auth\EmailEnrollEndpoint;
+use Polaris\Http\Auth\OtpFactorConfirmEndpoint;
+use Polaris\Http\Auth\SmsEnrollEndpoint;
+use Polaris\Http\Auth\TotpConfirmEndpoint;
+use Polaris\Http\Auth\TotpEnrollEndpoint;
 use Univeros\Polaris\Http\Middleware\AuthRateLimitMiddleware;
 use Polaris\Mfa\EndroidQrRenderer;
 use Polaris\Mfa\LogOtpMailer;
@@ -52,20 +53,20 @@ use Polaris\Support\InMemoryCache;
 use Univeros\Polaris\Tests\Support\RecordingLogger;
 use Polaris\Contract\PasswordHasherInterface;
 use Polaris\Exception\InvalidConfigException;
-use Univeros\Polaris\Http\Auth\ChangePasswordDomain;
-use Univeros\Polaris\Http\Auth\ForgotPasswordDomain;
-use Univeros\Polaris\Http\Auth\LoginDomain;
-use Univeros\Polaris\Http\Auth\LogoutAllDomain;
-use Univeros\Polaris\Http\Auth\LogoutDomain;
-use Univeros\Polaris\Http\Auth\MeDomain;
-use Univeros\Polaris\Http\Auth\RefreshTokenDomain;
-use Univeros\Polaris\Http\Auth\RegisterDomain;
-use Univeros\Polaris\Http\Auth\ResendVerificationDomain;
-use Univeros\Polaris\Http\Auth\ResetPasswordDomain;
-use Univeros\Polaris\Http\Auth\RevokeSessionDomain;
-use Univeros\Polaris\Http\Auth\SessionsDomain;
-use Univeros\Polaris\Http\Auth\VerifyEmailDomain;
-use Univeros\Polaris\Http\Jwks\JwksDomain;
+use Polaris\Http\Auth\ChangePasswordEndpoint;
+use Polaris\Http\Auth\ForgotPasswordEndpoint;
+use Polaris\Http\Auth\LoginEndpoint;
+use Polaris\Http\Auth\LogoutAllEndpoint;
+use Polaris\Http\Auth\LogoutEndpoint;
+use Polaris\Http\Auth\MeEndpoint;
+use Polaris\Http\Auth\RefreshTokenEndpoint;
+use Polaris\Http\Auth\RegisterEndpoint;
+use Polaris\Http\Auth\ResendVerificationEndpoint;
+use Polaris\Http\Auth\ResetPasswordEndpoint;
+use Polaris\Http\Auth\RevokeSessionEndpoint;
+use Polaris\Http\Auth\SessionsEndpoint;
+use Polaris\Http\Auth\VerifyEmailEndpoint;
+use Polaris\Http\Jwks\JwksEndpoint;
 use Polaris\Identity\EmailVerificationService;
 use Polaris\Identity\LoginService;
 use Polaris\Identity\PasswordResetService;
@@ -147,7 +148,7 @@ final class ModuleTest extends TestCase
     public function testContributesTheJwksRoute(): void
     {
         self::assertContains(
-            ['GET', '/auth/.well-known/jwks.json', JwksDomain::class],
+            ['GET', '/auth/.well-known/jwks.json', AltairEndpointBridge::id(JwksEndpoint::class)],
             (new Module())->routes(),
         );
     }
@@ -156,10 +157,10 @@ final class ModuleTest extends TestCase
     {
         $routes = (new Module())->routes();
 
-        self::assertContains(['POST', '/auth/register', RegisterDomain::class], $routes);
-        self::assertContains(['POST', '/auth/email/verify', VerifyEmailDomain::class], $routes);
-        self::assertContains(['POST', '/auth/email/verify/resend', ResendVerificationDomain::class], $routes);
-        self::assertContains(['POST', '/auth/login', LoginDomain::class], $routes);
+        self::assertContains(['POST', '/auth/register', AltairEndpointBridge::id(RegisterEndpoint::class)], $routes);
+        self::assertContains(['POST', '/auth/email/verify', AltairEndpointBridge::id(VerifyEmailEndpoint::class)], $routes);
+        self::assertContains(['POST', '/auth/email/verify/resend', AltairEndpointBridge::id(ResendVerificationEndpoint::class)], $routes);
+        self::assertContains(['POST', '/auth/login', AltairEndpointBridge::id(LoginEndpoint::class)], $routes);
     }
 
     public function testApplyBindsTheLoginService(): void
@@ -168,18 +169,18 @@ final class ModuleTest extends TestCase
         (new Module())->apply($container);
 
         self::assertTrue($container->has(LoginService::class));
-        self::assertTrue($container->has(LoginDomain::class));
+        self::assertTrue($container->has(LoginEndpoint::class));
     }
 
     public function testContributesTheSessionRoutes(): void
     {
         $routes = (new Module())->routes();
 
-        self::assertContains(['POST', '/auth/token/refresh', RefreshTokenDomain::class], $routes);
-        self::assertContains(['POST', '/auth/logout', LogoutDomain::class], $routes);
-        self::assertContains(['POST', '/auth/logout-all', LogoutAllDomain::class], $routes);
-        self::assertContains(['GET', '/auth/sessions', SessionsDomain::class], $routes);
-        self::assertContains(['DELETE', '/auth/sessions/{id}', RevokeSessionDomain::class], $routes);
+        self::assertContains(['POST', '/auth/token/refresh', AltairEndpointBridge::id(RefreshTokenEndpoint::class)], $routes);
+        self::assertContains(['POST', '/auth/logout', AltairEndpointBridge::id(LogoutEndpoint::class)], $routes);
+        self::assertContains(['POST', '/auth/logout-all', AltairEndpointBridge::id(LogoutAllEndpoint::class)], $routes);
+        self::assertContains(['GET', '/auth/sessions', AltairEndpointBridge::id(SessionsEndpoint::class)], $routes);
+        self::assertContains(['DELETE', '/auth/sessions/{id}', AltairEndpointBridge::id(RevokeSessionEndpoint::class)], $routes);
     }
 
     public function testApplyBindsTheSessionService(): void
@@ -188,17 +189,17 @@ final class ModuleTest extends TestCase
         (new Module())->apply($container);
 
         self::assertTrue($container->has(SessionService::class));
-        self::assertTrue($container->has(RefreshTokenDomain::class));
+        self::assertTrue($container->has(RefreshTokenEndpoint::class));
     }
 
     public function testContributesThePasswordAndProfileRoutes(): void
     {
         $routes = (new Module())->routes();
 
-        self::assertContains(['POST', '/auth/password/forgot', ForgotPasswordDomain::class], $routes);
-        self::assertContains(['POST', '/auth/password/reset', ResetPasswordDomain::class], $routes);
-        self::assertContains(['POST', '/auth/password/change', ChangePasswordDomain::class], $routes);
-        self::assertContains(['GET', '/auth/me', MeDomain::class], $routes);
+        self::assertContains(['POST', '/auth/password/forgot', AltairEndpointBridge::id(ForgotPasswordEndpoint::class)], $routes);
+        self::assertContains(['POST', '/auth/password/reset', AltairEndpointBridge::id(ResetPasswordEndpoint::class)], $routes);
+        self::assertContains(['POST', '/auth/password/change', AltairEndpointBridge::id(ChangePasswordEndpoint::class)], $routes);
+        self::assertContains(['GET', '/auth/me', AltairEndpointBridge::id(MeEndpoint::class)], $routes);
     }
 
     public function testApplyBindsThePasswordResetService(): void
@@ -207,7 +208,7 @@ final class ModuleTest extends TestCase
         (new Module())->apply($container);
 
         self::assertTrue($container->has(PasswordResetService::class));
-        self::assertTrue($container->has(MeDomain::class));
+        self::assertTrue($container->has(MeEndpoint::class));
     }
 
     public function testApplyBindsTheRegistrationServices(): void
@@ -219,9 +220,9 @@ final class ModuleTest extends TestCase
             PasswordHasherInterface::class,
             RegistrationService::class,
             EmailVerificationService::class,
-            RegisterDomain::class,
-            VerifyEmailDomain::class,
-            ResendVerificationDomain::class,
+            RegisterEndpoint::class,
+            VerifyEmailEndpoint::class,
+            ResendVerificationEndpoint::class,
         ];
 
         foreach ($bindings as $id) {
@@ -325,8 +326,8 @@ final class ModuleTest extends TestCase
     {
         $routes = (new Module())->routes();
 
-        self::assertContains(['POST', '/auth/mfa/totp/enroll', TotpEnrollDomain::class], $routes);
-        self::assertContains(['POST', '/auth/mfa/totp/confirm', TotpConfirmDomain::class], $routes);
+        self::assertContains(['POST', '/auth/mfa/totp/enroll', AltairEndpointBridge::id(TotpEnrollEndpoint::class)], $routes);
+        self::assertContains(['POST', '/auth/mfa/totp/confirm', AltairEndpointBridge::id(TotpConfirmEndpoint::class)], $routes);
     }
 
     public function testApplyBindsTheTotpEnrollmentMachinery(): void
@@ -345,11 +346,11 @@ final class ModuleTest extends TestCase
             MfaTotpService::class,
             OtpService::class,
             OtpFactorService::class,
-            TotpEnrollDomain::class,
-            TotpConfirmDomain::class,
-            SmsEnrollDomain::class,
-            EmailEnrollDomain::class,
-            OtpFactorConfirmDomain::class,
+            TotpEnrollEndpoint::class,
+            TotpConfirmEndpoint::class,
+            SmsEnrollEndpoint::class,
+            EmailEnrollEndpoint::class,
+            OtpFactorConfirmEndpoint::class,
         ];
 
         foreach ($bindings as $id) {
@@ -361,10 +362,10 @@ final class ModuleTest extends TestCase
     {
         $routes = (new Module())->routes();
 
-        self::assertContains(['POST', '/auth/mfa/sms/enroll', SmsEnrollDomain::class], $routes);
-        self::assertContains(['POST', '/auth/mfa/sms/confirm', OtpFactorConfirmDomain::class], $routes);
-        self::assertContains(['POST', '/auth/mfa/email/enroll', EmailEnrollDomain::class], $routes);
-        self::assertContains(['POST', '/auth/mfa/email/confirm', OtpFactorConfirmDomain::class], $routes);
+        self::assertContains(['POST', '/auth/mfa/sms/enroll', AltairEndpointBridge::id(SmsEnrollEndpoint::class)], $routes);
+        self::assertContains(['POST', '/auth/mfa/sms/confirm', AltairEndpointBridge::id(OtpFactorConfirmEndpoint::class)], $routes);
+        self::assertContains(['POST', '/auth/mfa/email/enroll', AltairEndpointBridge::id(EmailEnrollEndpoint::class)], $routes);
+        self::assertContains(['POST', '/auth/mfa/email/confirm', AltairEndpointBridge::id(OtpFactorConfirmEndpoint::class)], $routes);
     }
 
     public function testEntityDirectoriesAreNoLongerProvided(): void

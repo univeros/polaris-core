@@ -6,6 +6,8 @@ endpoint:
   tags: [auth, mfa]
   auth: bearer
   rate_limit: mfa_confirm
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -15,7 +17,7 @@ input:
     type: { type: string, rules: [optional, "in:recovery"] }  # "recovery" forces the recovery-code path
 
 domain:
-  class: Univeros\Polaris\Http\Auth\StepUpVerifyDomain
+  class: Polaris\Http\Auth\StepUpVerifyEndpoint
   description: >
     On a live bearer session, checks the code against the named factor or,
     when factor_id is omitted or type=recovery, against the user's recovery

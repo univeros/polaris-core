@@ -6,6 +6,8 @@ endpoint:
   tags: [orgs, roles]
   auth: bearer
   requires_permissions: [roles.manage]
+  effect: destructive
+  receipt: true
 
 input:
   source: path
@@ -14,7 +16,7 @@ input:
     roleId: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\DeleteRoleDomain
+  class: Polaris\Http\Orgs\DeleteRoleEndpoint
   description: >
     Deletes a custom role; the database cascade detaches it from all
     memberships. The cloned owner/admin/member templates and system roles

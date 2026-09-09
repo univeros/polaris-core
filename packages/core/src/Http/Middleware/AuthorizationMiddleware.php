@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Http\Middleware;
 
+use Univeros\Polaris\Bootstrap\AltairEndpointBridge;
 use Altair\Http\Base\Action;
 use Altair\Http\Contracts\MiddlewareInterface;
 use Altair\Http\Contracts\TokenInterface as AltairToken;
@@ -81,7 +82,7 @@ final readonly class AuthorizationMiddleware implements MiddlewareInterface
             return [];
         }
 
-        $constant = $action->getDomainClassName() . '::REQUIRES_PERMISSIONS';
+        $constant = AltairEndpointBridge::endpointClass($action->getDomainClassName()) . '::REQUIRES_PERMISSIONS';
         if (!defined($constant)) {
             return [];
         }

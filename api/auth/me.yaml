@@ -5,12 +5,14 @@ endpoint:
   summary: Read the authenticated identity
   tags: [auth]
   auth: bearer
+  effect: read
+  receipt: false
 
 input:
   source: none
 
 domain:
-  class: Univeros\Polaris\Http\Auth\MeDomain
+  class: Polaris\Http\Auth\MeEndpoint
   description: >
     Returns the authenticated user's identity record. The orgs and roles
     fields are returned as empty collections in the current implementation.

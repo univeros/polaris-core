@@ -7,6 +7,8 @@ endpoint:
   tags: [auth]
   auth: public
   rate_limit: login
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -15,7 +17,7 @@ input:
     password: { type: string, rules: [required], sensitive: true }
 
 domain:
-  class: Univeros\Polaris\Http\Auth\LoginDomain
+  class: Polaris\Http\Auth\LoginEndpoint
   description: >
     Verifies the password with timing parity for unknown accounts and tracks
     failed attempts (repeated failures lock the account for

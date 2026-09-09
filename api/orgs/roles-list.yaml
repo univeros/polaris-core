@@ -6,6 +6,8 @@ endpoint:
   tags: [orgs, roles]
   auth: bearer
   requires_permissions: [roles.read]
+  effect: read
+  receipt: false
 
 input:
   source: path
@@ -13,7 +15,7 @@ input:
     id: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\ListRolesDomain
+  class: Polaris\Http\Orgs\ListRolesEndpoint
   description: >
     Lists every role in the org, both the cloned system templates
     (owner/admin/member, is_system true) and custom roles, each with its

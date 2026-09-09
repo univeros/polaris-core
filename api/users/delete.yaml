@@ -6,6 +6,8 @@ endpoint:
   tags: [users]
   auth: bearer
   step_up: true
+  effect: destructive
+  receipt: true
 
 input:
   source: path
@@ -13,7 +15,7 @@ input:
     id: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Users\DeleteUserDomain
+  class: Polaris\Http\Users\DeleteUserEndpoint
   description: >
     The right-to-erasure flow: anonymizes the account rather than dropping
     the row. The email becomes a hash at deleted.invalid, the profile is

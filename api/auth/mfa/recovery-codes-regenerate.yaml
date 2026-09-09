@@ -6,12 +6,14 @@ endpoint:
   tags: [auth, mfa]
   auth: bearer
   step_up: true          # requires now - auth_time <= security.step_up.max_age
+  effect: destructive
+  receipt: true
 
 input:
   source: none
 
 domain:
-  class: Univeros\Polaris\Http\Auth\RegenerateRecoveryCodesDomain
+  class: Polaris\Http\Auth\RegenerateRecoveryCodesEndpoint
   description: >
     Step-up gated (StepUpMiddleware rejects a stale session with
     401 step_up_required before the domain runs). Retires the user's prior

@@ -7,6 +7,8 @@ endpoint:
   tags: [auth]
   auth: public
   rate_limit: password_forgot
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -14,7 +16,7 @@ input:
     email: { type: string, rules: [required, email, "max:320"] }
 
 domain:
-  class: Univeros\Polaris\Http\Auth\ForgotPasswordDomain
+  class: Polaris\Http\Auth\ForgotPasswordEndpoint
   description: >
     Requests a password reset. Always returns a generic 202; internally a
     single-use reset challenge is created (and the notification dispatched)

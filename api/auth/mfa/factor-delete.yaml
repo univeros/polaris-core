@@ -7,6 +7,8 @@ endpoint:
   auth: bearer
   step_up: true          # requires now - auth_time <= security.step_up.max_age
   rate_limit: mfa_enroll
+  effect: destructive
+  receipt: true
 
 input:
   source: path
@@ -14,7 +16,7 @@ input:
     id: { type: string, rules: [required] }   # the factor id
 
 domain:
-  class: Univeros\Polaris\Http\Auth\DeleteFactorDomain
+  class: Polaris\Http\Auth\DeleteFactorEndpoint
   description: >
     Step-up gated (StepUpMiddleware rejects a stale session with
     401 step_up_required before the domain runs). Removes one of the

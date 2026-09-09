@@ -5,12 +5,14 @@ endpoint:
   summary: JWKS document
   tags: [auth]
   auth: public
+  effect: read
+  receipt: false
 
 input:
   source: none
 
 domain:
-  class: Univeros\Polaris\Http\Jwks\JwksDomain
+  class: Polaris\Http\Jwks\JwksEndpoint
   description: >
     Serves the public access-token signing key as a JWK Set keyed by kid, so
     resource servers can verify access tokens. During a key rotation the

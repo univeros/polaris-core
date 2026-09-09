@@ -7,6 +7,8 @@ endpoint:
   tags: [auth]
   auth: public
   rate_limit: register
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -16,7 +18,7 @@ input:
     display_name: { type: "?string", rules: ["max:120"] }
 
 domain:
-  class: Univeros\Polaris\Http\Auth\RegisterDomain
+  class: Polaris\Http\Auth\RegisterEndpoint
   description: >
     Registers the user and triggers email verification. Always returns a generic
     202 message regardless of whether the address already exists

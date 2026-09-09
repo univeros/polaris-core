@@ -5,6 +5,8 @@ endpoint:
   summary: Switch the active organization
   tags: [auth]
   auth: bearer
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -12,7 +14,7 @@ input:
     organization_id: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Auth\SwitchOrgDomain
+  class: Polaris\Http\Auth\SwitchOrgEndpoint
   description: >
     Re-scopes the current session to an organization the caller is an active
     member of, returning a fresh access token carrying that org's

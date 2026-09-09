@@ -6,6 +6,8 @@ endpoint:
   tags: [orgs, members]
   auth: bearer
   requires_permissions: [members.read]
+  effect: read
+  receipt: false
 
 input:
   source: path
@@ -13,7 +15,7 @@ input:
     id: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\ListMembersDomain
+  class: Polaris\Http\Orgs\ListMembersEndpoint
   description: >
     Lists the members with user_id, email, display_name, status
     (active|invited|suspended), and role slugs. The cross-tenant active-org

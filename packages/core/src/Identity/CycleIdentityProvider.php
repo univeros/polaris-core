@@ -13,7 +13,7 @@ use Polaris\Model\User;
  * Adapts the {@see User} repository to the framework's {@see IdentityProviderInterface}
  * so HTTP authentication can look an identity up without depending on the ORM.
  *
- * The framework's {@see \Altair\Http\Validator\RepositoryIdentityValidator} calls
+ * The framework's host framework's credential validator calls
  * {@see findOneBy()} with the configured identifier field (`email`) and then reads
  * the password hash from the returned record under the configured key
  * (`password_hash`). The record is therefore keyed by **database column names** —

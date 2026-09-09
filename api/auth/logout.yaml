@@ -5,12 +5,14 @@ endpoint:
   summary: Log out the current session
   tags: [auth]
   auth: bearer
+  effect: write
+  receipt: true
 
 input:
   source: none
 
 domain:
-  class: Univeros\Polaris\Http\Auth\LogoutDomain
+  class: Polaris\Http\Auth\LogoutEndpoint
   description: >
     Revokes the caller's current session (the sid carried by the access
     token). The stateless access token stays valid until it expires; the

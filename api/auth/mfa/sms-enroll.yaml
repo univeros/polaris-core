@@ -6,6 +6,8 @@ endpoint:
   tags: [auth, mfa]
   auth: bearer
   rate_limit: mfa_send
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -13,7 +15,7 @@ input:
     phone_e164: { type: string, rules: [required, e164] }   # strict E.164 format
 
 domain:
-  class: Univeros\Polaris\Http\Auth\SmsEnrollDomain
+  class: Polaris\Http\Auth\SmsEnrollEndpoint
   description: >
     Validates the E.164 phone number, creates an unconfirmed SMS factor for
     the authenticated user, and texts a verification code to it. Returns the

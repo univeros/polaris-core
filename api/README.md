@@ -30,6 +30,8 @@ endpoint:
   auth: public            # public | bearer | mfa_token; step-up-gated routes add `step_up: true`
   requires_permissions: [] # the domain's REQUIRES_PERMISSIONS, where declared
   rate_limit: login        # per-IP budget group; omitted when only the global per-user budget applies
+  effect: write            # read | write | destructive (see docs/extraction/effects.md)
+  receipt: true            # defaults to true for write/destructive, false for read
 
 input:
   source: body             # body | path | query | none
@@ -37,7 +39,7 @@ input:
     email: { type: string, rules: [required, email, "max:320"] }
 
 domain:
-  class: Univeros\Polaris\Http\Auth\LoginDomain   # the class registered in src/Bootstrap/Routes.php
+  class: Polaris\Http\Auth\LoginEndpoint         # the Endpoint the manifest loader routes to
   description: >
     What the endpoint does, as implemented.
 

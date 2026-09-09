@@ -15,29 +15,29 @@ use Polaris\Authorization\OrganizationService;
 use Polaris\Authorization\PermissionCatalog;
 use Polaris\Authorization\PermissionResolver;
 use Polaris\Authorization\RoleService;
-use Univeros\Polaris\Http\Auth\AcceptInviteDomain;
-use Univeros\Polaris\Http\Orgs\ChangeMemberRolesDomain;
-use Univeros\Polaris\Http\Orgs\ChangeMemberStatusDomain;
-use Univeros\Polaris\Http\Orgs\CreateInviteDomain;
-use Univeros\Polaris\Http\Orgs\CreateOrganizationDomain;
-use Univeros\Polaris\Http\Orgs\CreateRoleDomain;
-use Univeros\Polaris\Http\Orgs\DeleteOrganizationDomain;
-use Univeros\Polaris\Http\Orgs\DeleteRoleDomain;
-use Univeros\Polaris\Http\Orgs\ListInvitesDomain;
-use Univeros\Polaris\Http\Orgs\ListMembersDomain;
-use Univeros\Polaris\Http\Orgs\ListOrganizationsDomain;
-use Univeros\Polaris\Http\Orgs\ListPermissionsDomain;
-use Univeros\Polaris\Http\Orgs\ListRolesDomain;
-use Univeros\Polaris\Http\Orgs\ReadOrganizationDomain;
-use Univeros\Polaris\Http\Orgs\RemoveMemberDomain;
-use Univeros\Polaris\Http\Orgs\RevokeInviteDomain;
-use Univeros\Polaris\Http\Orgs\UpdateOrganizationDomain;
-use Univeros\Polaris\Http\Orgs\UpdateRoleDomain;
-use Univeros\Polaris\Http\Users\DeleteUserDomain;
-use Univeros\Polaris\Http\Users\DisableUserDomain;
-use Univeros\Polaris\Http\Users\EnableUserDomain;
-use Univeros\Polaris\Http\Users\ReadUserDomain;
-use Univeros\Polaris\Http\Users\UpdateUserDomain;
+use Polaris\Http\Auth\AcceptInviteEndpoint;
+use Polaris\Http\Orgs\ChangeMemberRolesEndpoint;
+use Polaris\Http\Orgs\ChangeMemberStatusEndpoint;
+use Polaris\Http\Orgs\CreateInviteEndpoint;
+use Polaris\Http\Orgs\CreateOrganizationEndpoint;
+use Polaris\Http\Orgs\CreateRoleEndpoint;
+use Polaris\Http\Orgs\DeleteOrganizationEndpoint;
+use Polaris\Http\Orgs\DeleteRoleEndpoint;
+use Polaris\Http\Orgs\ListInvitesEndpoint;
+use Polaris\Http\Orgs\ListMembersEndpoint;
+use Polaris\Http\Orgs\ListOrganizationsEndpoint;
+use Polaris\Http\Orgs\ListPermissionsEndpoint;
+use Polaris\Http\Orgs\ListRolesEndpoint;
+use Polaris\Http\Orgs\ReadOrganizationEndpoint;
+use Polaris\Http\Orgs\RemoveMemberEndpoint;
+use Polaris\Http\Orgs\RevokeInviteEndpoint;
+use Polaris\Http\Orgs\UpdateOrganizationEndpoint;
+use Polaris\Http\Orgs\UpdateRoleEndpoint;
+use Polaris\Http\Users\DeleteUserEndpoint;
+use Polaris\Http\Users\DisableUserEndpoint;
+use Polaris\Http\Users\EnableUserEndpoint;
+use Polaris\Http\Users\ReadUserEndpoint;
+use Polaris\Http\Users\UpdateUserEndpoint;
 use Polaris\Identity\SessionService;
 use Polaris\Identity\UserAdminService;
 use Polaris\Repository\EmailVerificationRepository;
@@ -98,15 +98,15 @@ final class OrganizationBindings
             ),
         );
 
-        $container->singleton(CreateOrganizationDomain::class);
-        $container->singleton(ListOrganizationsDomain::class);
+        $container->singleton(CreateOrganizationEndpoint::class);
+        $container->singleton(ListOrganizationsEndpoint::class);
         $container->singleton(
-            ReadOrganizationDomain::class,
-            static fn(OrganizationRepository $organizations): ReadOrganizationDomain
-                => new ReadOrganizationDomain($organizations),
+            ReadOrganizationEndpoint::class,
+            static fn(OrganizationRepository $organizations): ReadOrganizationEndpoint
+                => new ReadOrganizationEndpoint($organizations),
         );
-        $container->singleton(UpdateOrganizationDomain::class);
-        $container->singleton(DeleteOrganizationDomain::class);
+        $container->singleton(UpdateOrganizationEndpoint::class);
+        $container->singleton(DeleteOrganizationEndpoint::class);
 
         $container->singleton(
             EscalationGuard::class,
@@ -142,10 +142,10 @@ final class OrganizationBindings
                 $events,
             ),
         );
-        $container->singleton(ListMembersDomain::class);
-        $container->singleton(ChangeMemberRolesDomain::class);
-        $container->singleton(ChangeMemberStatusDomain::class);
-        $container->singleton(RemoveMemberDomain::class);
+        $container->singleton(ListMembersEndpoint::class);
+        $container->singleton(ChangeMemberRolesEndpoint::class);
+        $container->singleton(ChangeMemberStatusEndpoint::class);
+        $container->singleton(RemoveMemberEndpoint::class);
 
         $container->singleton(
             InvitationService::class,
@@ -177,10 +177,10 @@ final class OrganizationBindings
                 $events,
             ),
         );
-        $container->singleton(CreateInviteDomain::class);
-        $container->singleton(ListInvitesDomain::class);
-        $container->singleton(RevokeInviteDomain::class);
-        $container->singleton(AcceptInviteDomain::class);
+        $container->singleton(CreateInviteEndpoint::class);
+        $container->singleton(ListInvitesEndpoint::class);
+        $container->singleton(RevokeInviteEndpoint::class);
+        $container->singleton(AcceptInviteEndpoint::class);
 
         $container->singleton(
             RoleService::class,
@@ -204,11 +204,11 @@ final class OrganizationBindings
                 $events,
             ),
         );
-        $container->singleton(ListRolesDomain::class);
-        $container->singleton(CreateRoleDomain::class);
-        $container->singleton(UpdateRoleDomain::class);
-        $container->singleton(DeleteRoleDomain::class);
-        $container->singleton(ListPermissionsDomain::class);
+        $container->singleton(ListRolesEndpoint::class);
+        $container->singleton(CreateRoleEndpoint::class);
+        $container->singleton(UpdateRoleEndpoint::class);
+        $container->singleton(DeleteRoleEndpoint::class);
+        $container->singleton(ListPermissionsEndpoint::class);
 
         $container->singleton(
             UserAdminService::class,
@@ -238,10 +238,10 @@ final class OrganizationBindings
                 $events,
             ),
         );
-        $container->singleton(ReadUserDomain::class);
-        $container->singleton(UpdateUserDomain::class);
-        $container->singleton(DisableUserDomain::class);
-        $container->singleton(EnableUserDomain::class);
-        $container->singleton(DeleteUserDomain::class);
+        $container->singleton(ReadUserEndpoint::class);
+        $container->singleton(UpdateUserEndpoint::class);
+        $container->singleton(DisableUserEndpoint::class);
+        $container->singleton(EnableUserEndpoint::class);
+        $container->singleton(DeleteUserEndpoint::class);
     }
 }

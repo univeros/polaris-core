@@ -6,6 +6,8 @@ endpoint:
   tags: [orgs]
   auth: bearer
   requires_permissions: [org.read]
+  effect: read
+  receipt: false
 
 input:
   source: path
@@ -13,7 +15,7 @@ input:
     id: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\ReadOrganizationDomain
+  class: Polaris\Http\Orgs\ReadOrganizationEndpoint
   description: >
     Returns the organization's id, name, slug, and status. The cross-tenant
     active-org guard applies: the path org must equal the caller's active org

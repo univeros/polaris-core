@@ -6,6 +6,8 @@ endpoint:
   tags: [auth, mfa]
   auth: bearer
   rate_limit: mfa_confirm
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -14,7 +16,7 @@ input:
     code: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Auth\OtpFactorConfirmDomain
+  class: Polaris\Http\Auth\OtpFactorConfirmEndpoint
   description: >
     Verifies the delivered code against the named pending factor's own
     challenge and marks the factor confirmed (one domain serves both the sms

@@ -5,7 +5,9 @@ endpoint:
   summary: Accept an organization invitation
   tags: [auth, invites]
   auth: bearer
-  rate_limit: "token_consume: 10 per 300s per IP"
+  rate_limit: token_consume   # 10 per 300s per IP
+  effect: write
+  receipt: true
 
 input:
   source: body
@@ -13,7 +15,7 @@ input:
     token: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Auth\AcceptInviteDomain
+  class: Polaris\Http\Auth\AcceptInviteEndpoint
   description: >
     Accepts an invitation by its emailed one-time token. Authenticated but
     not permission-gated, since the caller has no standing in the org yet.

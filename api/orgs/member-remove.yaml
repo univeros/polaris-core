@@ -6,6 +6,8 @@ endpoint:
   tags: [orgs, members]
   auth: bearer
   requires_permissions: [members.remove]
+  effect: destructive
+  receipt: true
 
 input:
   source: path
@@ -14,7 +16,7 @@ input:
     userId: { type: string, rules: [required] }
 
 domain:
-  class: Univeros\Polaris\Http\Orgs\RemoveMemberDomain
+  class: Polaris\Http\Orgs\RemoveMemberEndpoint
   description: >
     Removes the membership. The cross-tenant active-org guard applies: the
     path org must equal the caller's active org or the request is 403
