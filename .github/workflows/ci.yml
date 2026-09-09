@@ -67,3 +67,26 @@ jobs:
 
       - name: Tests (phpunit)
         run: composer test
+
+  demo:
+    name: Slim demo walkthrough
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: openssl, sodium, gd, mbstring, pdo_sqlite, sqlite3
+          coverage: none
+
+      - name: Install the demo
+        working-directory: examples/slim
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Set up and run the walkthrough
+        working-directory: examples/slim
+        run: |
+          bin/setup
+          bin/walkthrough.sh
