@@ -202,18 +202,18 @@ final class MembershipEndpointsTest extends FunctionalTestCase
     {
         $now = new DateTimeImmutable('2026-06-10 10:00:00');
         $membershipId = Uuid::v7()->toRfc4122();
-        $this->connection()->insert('auth_memberships')->values([
+        $this->adapter->insert('auth_memberships', [
             'id' => $membershipId,
             'user_id' => $userId,
             'organization_id' => $org,
             'status' => $status,
             'created_at' => $now,
             'updated_at' => $now,
-        ])->run();
-        $this->connection()->insert('auth_membership_roles')->values([
+        ]);
+        $this->adapter->insert('auth_membership_roles', [
             'membership_id' => $membershipId,
             'role_id' => $this->roleId($org, $roleSlug),
-        ])->run();
+        ]);
     }
 
     /**
@@ -307,8 +307,8 @@ final class MembershipEndpointsTest extends FunctionalTestCase
      */
     private function idFrom(string $table, array $where): string
     {
-        foreach ($this->connection()->select('id')->from($table)->where($where)->fetchAll() as $row) {
-            if (is_array($row) && is_string($row['id'] ?? null)) {
+        foreach ($this->adapter->findMany($table, $where) as $row) {
+            if (is_string($row['id'] ?? null)) {
                 return $row['id'];
             }
         }

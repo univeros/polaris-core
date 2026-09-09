@@ -10,7 +10,6 @@ use Polaris\Authorization\PermissionCatalogSeeder;
 
 use function array_column;
 use function count;
-use function is_array;
 use function is_string;
 
 /**
@@ -26,7 +25,7 @@ final class PermissionCatalogSeedPersistenceTest extends DatabaseTestCase
         $catalog = new PermissionCatalog();
         $expected = $catalog->permissions();
 
-        $rows = $this->connection()->select('key')->from('auth_permissions')->fetchAll();
+        $rows = $this->adapter->findMany('auth_permissions', []);
         $keys = array_column($rows, 'key');
 
         self::assertCount(count($expected), $keys);
@@ -37,45 +36,35 @@ final class PermissionCatalogSeedPersistenceTest extends DatabaseTestCase
 
     public function testSeedsSystemRoleTemplatesWithGrants(): void
     {
-        $database = $this->connection();
+        $database = $this->adapter;
 
-        self::assertSame(4, $database->select()->from('auth_roles')->where('is_system', true)->count());
+        self::assertSame(4, $database->count('auth_roles', ['is_system' => true]));
 
         // owner = all 10 org permissions; admin = 9 (no org.delete); member = 3; superadmin = all 12.
-        self::assertSame(10, $database->select()->from('auth_role_permissions')->where('role_id', $this->systemRoleId('owner'))->count());
-        self::assertSame(9, $database->select()->from('auth_role_permissions')->where('role_id', $this->systemRoleId('admin'))->count());
-        self::assertSame(3, $database->select()->from('auth_role_permissions')->where('role_id', $this->systemRoleId('member'))->count());
-        self::assertSame(12, $database->select()->from('auth_role_permissions')->where('role_id', $this->systemRoleId('superadmin'))->count());
+        self::assertSame(10, $database->count('auth_role_permissions', ['role_id' => $this->systemRoleId('owner')]));
+        self::assertSame(9, $database->count('auth_role_permissions', ['role_id' => $this->systemRoleId('admin')]));
+        self::assertSame(3, $database->count('auth_role_permissions', ['role_id' => $this->systemRoleId('member')]));
+        self::assertSame(12, $database->count('auth_role_permissions', ['role_id' => $this->systemRoleId('superadmin')]));
     }
 
     public function testReseedingIsIdempotent(): void
     {
-        $database = $this->connection();
-        $permissionsBefore = $database->select()->from('auth_permissions')->count();
-        $rolesBefore = $database->select()->from('auth_roles')->count();
-        $grantsBefore = $database->select()->from('auth_role_permissions')->count();
+        $database = $this->adapter;
+        $permissionsBefore = $database->count('auth_permissions', []);
+        $rolesBefore = $database->count('auth_roles', []);
+        $grantsBefore = $database->count('auth_role_permissions', []);
 
         (new PermissionCatalogSeeder(new PermissionCatalog()))->seed($this->adapter, new DateTimeImmutable('2026-06-09 12:00:00'));
 
-        self::assertSame($permissionsBefore, $database->select()->from('auth_permissions')->count());
-        self::assertSame($rolesBefore, $database->select()->from('auth_roles')->count());
-        self::assertSame($grantsBefore, $database->select()->from('auth_role_permissions')->count());
-    }
-
-    public function testMigrationRollsBackCleanly(): void
-    {
-        while ($this->migrator->rollback() !== null) {
-            // Roll back every applied migration, seed first then schema.
-        }
-
-        self::assertFalse($this->connection()->hasTable('auth_permissions'));
-        self::assertFalse($this->connection()->hasTable('auth_roles'));
+        self::assertSame($permissionsBefore, $database->count('auth_permissions', []));
+        self::assertSame($rolesBefore, $database->count('auth_roles', []));
+        self::assertSame($grantsBefore, $database->count('auth_role_permissions', []));
     }
 
     private function systemRoleId(string $slug): string
     {
-        foreach ($this->connection()->select(['id', 'organization_id'])->from('auth_roles')->where('slug', $slug)->fetchAll() as $row) {
-            if (is_array($row) && is_string($id = $row['id'] ?? null) && ($row['organization_id'] ?? null) === null) {
+        foreach ($this->adapter->findMany('auth_roles', ['slug' => $slug]) as $row) {
+            if (is_string($id = $row['id'] ?? null) && ($row['organization_id'] ?? null) === null) {
                 return $id;
             }
         }

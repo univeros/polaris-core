@@ -17,7 +17,6 @@ use Polaris\Contract\TokenValidatorInterface;
 use Altair\Http\Middleware\TokenAuthenticationMiddleware;
 use Altair\Http\Support\MiddlewarePriority;
 use Altair\Module\Contracts\MiddlewareProviderInterface;
-use Altair\Module\Migration\MigrationSource;
 use Polaris\Contract\EncrypterInterface;
 use Laminas\Diactoros\ResponseFactory;
 use PHPUnit\Framework\TestCase;
@@ -373,11 +372,8 @@ final class ModuleTest extends TestCase
         self::assertSame([], (new Module())->entityDirectories(), 'models are plain records; the schema lives in Polaris\Schema');
     }
 
-    public function testMigrationDirectoriesExist(): void
+    public function testMigrationDirectoriesAreNoLongerProvided(): void
     {
-        foreach ((new Module())->migrationDirectories() as $source) {
-            self::assertInstanceOf(MigrationSource::class, $source);
-            self::assertDirectoryExists($source->directory);
-        }
+        self::assertSame([], (new Module())->migrationDirectories(), 'the schema is exported from Polaris\Schema, not migrated');
     }
 }

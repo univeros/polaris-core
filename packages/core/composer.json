@@ -29,6 +29,7 @@
         "univeros/security": "^2.0"
     },
     "require-dev": {
+        "polaris/pdo": "^0.1",
         "polaris/testing": "^0.1"
     },
     "autoload": {

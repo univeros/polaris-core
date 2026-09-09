@@ -22,7 +22,6 @@ use Polaris\Repository\RolePermissionRepository;
 use Polaris\Repository\RoleRepository;
 use Polaris\Repository\UserRepository;
 
-use function is_array;
 use function is_string;
 
 /**
@@ -132,8 +131,8 @@ final class GateTest extends DatabaseTestCase
 
     private function permissionId(string $key): string
     {
-        foreach ($this->connection()->select('id')->from('auth_permissions')->where('key', $key)->fetchAll() as $row) {
-            if (is_array($row) && is_string($row['id'] ?? null)) {
+        foreach ($this->adapter->findMany('auth_permissions', ['key' => $key]) as $row) {
+            if (is_string($row['id'] ?? null)) {
                 return $row['id'];
             }
         }

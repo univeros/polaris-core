@@ -10,7 +10,6 @@ use Symfony\Component\Uid\Uuid;
 use Polaris\Maintenance\PruneExpiredService;
 
 use function bin2hex;
-use function is_array;
 use function is_string;
 use function random_bytes;
 
@@ -90,7 +89,7 @@ final class PruneExpiredServiceTest extends DatabaseTestCase
     private function seedOtpChallenge(?string $consumedAt, string $expiresAt): string
     {
         $id = Uuid::v7()->toRfc4122();
-        $this->connection()->insert('auth_otp_challenges')->values([
+        $this->adapter->insert('auth_otp_challenges', [
             'id' => $id,
             'user_id' => Uuid::v7()->toRfc4122(),
             'purpose' => 'login',
@@ -99,7 +98,7 @@ final class PruneExpiredServiceTest extends DatabaseTestCase
             'consumed_at' => $consumedAt === null ? null : new DateTimeImmutable($consumedAt),
             'expires_at' => new DateTimeImmutable($expiresAt),
             'created_at' => new DateTimeImmutable('2026-06-10 10:00:00'),
-        ])->run();
+        ]);
 
         return $id;
     }
@@ -107,7 +106,7 @@ final class PruneExpiredServiceTest extends DatabaseTestCase
     private function seedChallengeRow(string $table, string $expiresAt, ?string $consumedAt = null): string
     {
         $id = Uuid::v7()->toRfc4122();
-        $this->connection()->insert($table)->values([
+        $this->adapter->insert($table, [
             'id' => $id,
             'user_id' => Uuid::v7()->toRfc4122(),
             'email' => 'someone@example.com',
@@ -115,7 +114,7 @@ final class PruneExpiredServiceTest extends DatabaseTestCase
             'consumed_at' => $consumedAt === null ? null : new DateTimeImmutable($consumedAt),
             'expires_at' => new DateTimeImmutable($expiresAt),
             'created_at' => new DateTimeImmutable('2026-06-10 10:00:00'),
-        ])->run();
+        ]);
 
         return $id;
     }
@@ -123,7 +122,7 @@ final class PruneExpiredServiceTest extends DatabaseTestCase
     private function seedRefreshToken(string $expiresAt, ?string $revokedAt = null): string
     {
         $id = Uuid::v7()->toRfc4122();
-        $this->connection()->insert('auth_refresh_tokens')->values([
+        $this->adapter->insert('auth_refresh_tokens', [
             'id' => $id,
             'user_id' => Uuid::v7()->toRfc4122(),
             'family_id' => Uuid::v7()->toRfc4122(),
@@ -132,19 +131,19 @@ final class PruneExpiredServiceTest extends DatabaseTestCase
             'revoked_reason' => $revokedAt === null ? null : 'logout',
             'expires_at' => new DateTimeImmutable($expiresAt),
             'created_at' => new DateTimeImmutable('2026-06-01 00:00:00'),
-        ])->run();
+        ]);
 
         return $id;
     }
 
     private function seedAuditRow(): void
     {
-        $this->connection()->insert('auth_audit_log')->values([
+        $this->adapter->insert('auth_audit_log', [
             'id' => Uuid::v7()->toRfc4122(),
             'event' => 'user.logged_in',
             'metadata' => '{}',
             'created_at' => new DateTimeImmutable('2020-01-01 00:00:00'), // ancient — still kept
-        ])->run();
+        ]);
     }
 
     /**
@@ -153,8 +152,8 @@ final class PruneExpiredServiceTest extends DatabaseTestCase
     private function ids(string $table): array
     {
         $ids = [];
-        foreach ($this->connection()->select('id')->from($table)->fetchAll() as $row) {
-            if (is_array($row) && is_string($row['id'] ?? null)) {
+        foreach ($this->adapter->findMany($table, []) as $row) {
+            if (is_string($row['id'] ?? null)) {
                 $ids[] = $row['id'];
             }
         }

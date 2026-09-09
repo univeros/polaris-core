@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Tests\Persistence;
 
+use PDO;
 use Polaris\Repository\OtpChallengeRepository;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
@@ -37,7 +38,7 @@ final class OtpServicePersistenceTest extends DatabaseTestCase
         $challenge = $this->seedChallenge();
 
         // Another worker exhausted the budget after this process loaded the row.
-        $this->connection()->update('auth_otp_challenges', ['attempts' => $challenge->maxAttempts], ['id' => $challenge->id])->run();
+        $this->adapter->update('auth_otp_challenges', ['id' => $challenge->id], ['attempts' => $challenge->maxAttempts]);
 
         try {
             $this->service()->verify($challenge->userId, (string) $challenge->factorId, '000000', ChallengePurpose::LoginMfa);
@@ -48,7 +49,7 @@ final class OtpServicePersistenceTest extends DatabaseTestCase
 
         // The conditional UPDATE must not reset or exceed the exhausted budget (the old
         // entity-level ++ would have written stale attempts + 1 = 1, reopening the budget).
-        $row = $this->connection()->query('SELECT attempts FROM auth_otp_challenges')->fetch();
+        $row = $this->pdo()->query('SELECT attempts FROM auth_otp_challenges')->fetch(PDO::FETCH_ASSOC);
         self::assertSame($challenge->maxAttempts, (int) $row['attempts']);
     }
 
@@ -57,11 +58,7 @@ final class OtpServicePersistenceTest extends DatabaseTestCase
         $challenge = $this->seedChallenge();
 
         // Another worker consumed the challenge after this process loaded the row.
-        $this->connection()->update(
-            'auth_otp_challenges',
-            ['consumed_at' => new DateTimeImmutable(self::INSTANT)],
-            ['id' => $challenge->id],
-        )->run();
+        $this->adapter->update('auth_otp_challenges', ['id' => $challenge->id], ['consumed_at' => new DateTimeImmutable(self::INSTANT)]);
 
         $this->expectException(InvalidOtpException::class);
 
@@ -74,7 +71,7 @@ final class OtpServicePersistenceTest extends DatabaseTestCase
 
         $this->service()->verify($challenge->userId, (string) $challenge->factorId, self::CODE, ChallengePurpose::LoginMfa);
 
-        $row = $this->connection()->query('SELECT consumed_at FROM auth_otp_challenges')->fetch();
+        $row = $this->pdo()->query('SELECT consumed_at FROM auth_otp_challenges')->fetch(PDO::FETCH_ASSOC);
         self::assertNotNull($row['consumed_at'], 'the challenge is consumed in the database');
     }
 

@@ -11,7 +11,6 @@ use Polaris\Token\SessionPrincipal;
 use Polaris\Token\TokenService;
 
 use function array_key_last;
-use function is_array;
 use function is_string;
 
 /**
@@ -39,29 +38,24 @@ final class OrganizationEndpointsTest extends FunctionalTestCase
         $orgId = is_string($data['id'] ?? null) ? $data['id'] : '';
         self::assertNotSame('', $orgId);
 
-        $database = $this->connection();
+        $database = $this->adapter;
 
         // The org is persisted with the caller as creator.
-        self::assertSame(1, $database->select()->from('auth_organizations')
-            ->where(['id' => $orgId, 'created_by' => $userId, 'status' => 'active'])->count());
+        self::assertSame(1, $database->count('auth_organizations', ['id' => $orgId, 'created_by' => $userId, 'status' => 'active']));
 
         // owner/admin/member templates are cloned into org-scoped, tenant-editable roles (not superadmin).
-        self::assertSame(3, $database->select()->from('auth_roles')
-            ->where(['organization_id' => $orgId, 'is_system' => false])->count());
+        self::assertSame(3, $database->count('auth_roles', ['organization_id' => $orgId, 'is_system' => false]));
         $ownerRoleId = $this->roleId($orgId, 'owner');
         self::assertNotSame('', $ownerRoleId);
-        self::assertSame(0, $database->select()->from('auth_roles')
-            ->where(['organization_id' => $orgId, 'slug' => 'superadmin'])->count());
+        self::assertSame(0, $database->count('auth_roles', ['organization_id' => $orgId, 'slug' => 'superadmin']));
 
         // The cloned owner role carries all 10 org permissions.
-        self::assertSame(10, $database->select()->from('auth_role_permissions')
-            ->where('role_id', $ownerRoleId)->count());
+        self::assertSame(10, $database->count('auth_role_permissions', ['role_id' => $ownerRoleId]));
 
         // The caller has an active owner membership.
         $membershipId = $this->activeMembershipId($orgId, $userId);
         self::assertNotSame('', $membershipId);
-        self::assertSame(1, $database->select()->from('auth_membership_roles')
-            ->where(['membership_id' => $membershipId, 'role_id' => $ownerRoleId])->count());
+        self::assertSame(1, $database->count('auth_membership_roles', ['membership_id' => $membershipId, 'role_id' => $ownerRoleId]));
 
         // org.created is emitted.
         $events = $this->events->ofType(OrganizationCreated::class);
@@ -86,14 +80,14 @@ final class OrganizationEndpointsTest extends FunctionalTestCase
         $access = $this->registerVerifyLogin(self::EMAIL);
         self::assertSame(201, $this->authedPostJson('/orgs', ['name' => 'Acme'], $access)->getStatusCode());
 
-        $rolesBefore = $this->connection()->select()->from('auth_roles')->count();
-        $membershipsBefore = $this->connection()->select()->from('auth_memberships')->count();
+        $rolesBefore = $this->adapter->count('auth_roles', []);
+        $membershipsBefore = $this->adapter->count('auth_memberships', []);
 
         self::assertSame(409, $this->authedPostJson('/orgs', ['name' => 'Acme'], $access)->getStatusCode());
 
-        self::assertSame($rolesBefore, $this->connection()->select()->from('auth_roles')->count());
-        self::assertSame($membershipsBefore, $this->connection()->select()->from('auth_memberships')->count());
-        self::assertSame(1, $this->connection()->select()->from('auth_organizations')->count());
+        self::assertSame($rolesBefore, $this->adapter->count('auth_roles', []));
+        self::assertSame($membershipsBefore, $this->adapter->count('auth_memberships', []));
+        self::assertSame(1, $this->adapter->count('auth_organizations', []));
     }
 
     public function testNameIsRequiredAndUnderivableSlugIsRejected(): void
@@ -168,19 +162,17 @@ final class OrganizationEndpointsTest extends FunctionalTestCase
 
     private function userId(string $email): string
     {
-        return $this->firstId($this->connection()->select('id')->from('auth_users')->where('email', $email)->fetchAll());
+        return $this->firstId($this->adapter->findMany('auth_users', ['email' => $email]));
     }
 
     private function roleId(string $organizationId, string $slug): string
     {
-        return $this->firstId($this->connection()->select('id')->from('auth_roles')
-            ->where(['organization_id' => $organizationId, 'slug' => $slug])->fetchAll());
+        return $this->firstId($this->adapter->findMany('auth_roles', ['organization_id' => $organizationId, 'slug' => $slug]));
     }
 
     private function activeMembershipId(string $organizationId, string $userId): string
     {
-        return $this->firstId($this->connection()->select('id')->from('auth_memberships')
-            ->where(['organization_id' => $organizationId, 'user_id' => $userId, 'status' => 'active'])->fetchAll());
+        return $this->firstId($this->adapter->findMany('auth_memberships', ['organization_id' => $organizationId, 'user_id' => $userId, 'status' => 'active']));
     }
 
     /**
@@ -189,7 +181,7 @@ final class OrganizationEndpointsTest extends FunctionalTestCase
     private function firstId(array $rows): string
     {
         foreach ($rows as $row) {
-            if (is_array($row) && is_string($row['id'] ?? null)) {
+            if (is_string($row['id'] ?? null)) {
                 return $row['id'];
             }
         }

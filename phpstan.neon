@@ -4,3 +4,4 @@ parameters:
         - packages/core/src
         - packages/core/tests
         - packages/testing/src
+        - packages/pdo/src

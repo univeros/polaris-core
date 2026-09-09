@@ -19,7 +19,6 @@ use Polaris\Repository\RolePermissionRepository;
 use Polaris\Repository\RoleRepository;
 use Polaris\Repository\UserRepository;
 
-use function is_array;
 use function is_string;
 
 /**
@@ -170,8 +169,8 @@ final class PermissionResolverTest extends DatabaseTestCase
 
     private function superadminRoleId(): string
     {
-        foreach ($this->connection()->select(['id', 'organization_id'])->from('auth_roles')->where('slug', 'superadmin')->fetchAll() as $row) {
-            if (is_array($row) && is_string($row['id'] ?? null) && ($row['organization_id'] ?? null) === null) {
+        foreach ($this->adapter->findMany('auth_roles', ['slug' => 'superadmin']) as $row) {
+            if (is_string($row['id'] ?? null) && ($row['organization_id'] ?? null) === null) {
                 return $row['id'];
             }
         }
@@ -184,8 +183,8 @@ final class PermissionResolverTest extends DatabaseTestCase
      */
     private function idFrom(string $table, array $where): string
     {
-        foreach ($this->connection()->select('id')->from($table)->where($where)->fetchAll() as $row) {
-            if (is_array($row) && is_string($row['id'] ?? null)) {
+        foreach ($this->adapter->findMany($table, $where) as $row) {
+            if (is_string($row['id'] ?? null)) {
                 return $row['id'];
             }
         }

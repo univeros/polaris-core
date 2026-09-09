@@ -10,7 +10,6 @@ use Polaris\Event\OrganizationDeleted;
 use Polaris\Event\UserRegistered;
 
 use function array_key_last;
-use function is_array;
 use function is_string;
 use function str_repeat;
 
@@ -153,18 +152,18 @@ final class OrganizationLifecycleEndpointsTest extends FunctionalTestCase
 
         $now = new \DateTimeImmutable('2026-06-10 10:00:00');
         $membershipId = Uuid::v7()->toRfc4122();
-        $this->connection()->insert('auth_memberships')->values([
+        $this->adapter->insert('auth_memberships', [
             'id' => $membershipId,
             'user_id' => $userId,
             'organization_id' => $org,
             'status' => 'active',
             'created_at' => $now,
             'updated_at' => $now,
-        ])->run();
-        $this->connection()->insert('auth_membership_roles')->values([
+        ]);
+        $this->adapter->insert('auth_membership_roles', [
             'membership_id' => $membershipId,
             'role_id' => $this->roleId($org, $roleSlug),
-        ])->run();
+        ]);
 
         return $this->switchOrg($session['access'], $org);
     }
@@ -175,10 +174,10 @@ final class OrganizationLifecycleEndpointsTest extends FunctionalTestCase
         $root = $this->createOrg('Root', $session['access']);
 
         $membershipId = $this->idFrom('auth_memberships', ['user_id' => $this->userId('operator@example.com')]);
-        $this->connection()->insert('auth_membership_roles')->values([
+        $this->adapter->insert('auth_membership_roles', [
             'membership_id' => $membershipId,
             'role_id' => $this->idFrom('auth_roles', ['slug' => 'superadmin', 'organization_id' => null]),
-        ])->run();
+        ]);
 
         // Re-scope so the fresh token's roles claim carries the superadmin override (the
         // active-org guard reads claims; the Gate re-resolves from the DB either way).
@@ -243,8 +242,8 @@ final class OrganizationLifecycleEndpointsTest extends FunctionalTestCase
      */
     private function idFrom(string $table, array $where): string
     {
-        foreach ($this->connection()->select('id')->from($table)->where($where)->fetchAll() as $row) {
-            if (is_array($row) && is_string($row['id'] ?? null)) {
+        foreach ($this->adapter->findMany($table, $where) as $row) {
+            if (is_string($row['id'] ?? null)) {
                 return $row['id'];
             }
         }

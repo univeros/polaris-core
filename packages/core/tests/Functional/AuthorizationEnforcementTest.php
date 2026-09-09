@@ -116,10 +116,10 @@ final class AuthorizationEnforcementTest extends FunctionalTestCase
 
     private function grantSuperadmin(string $userId, string $organizationId): void
     {
-        $this->connection()->insert('auth_membership_roles')->values([
+        $this->adapter->insert('auth_membership_roles', [
             'membership_id' => $this->idFrom('auth_memberships', ['user_id' => $userId, 'organization_id' => $organizationId]),
             'role_id' => $this->idFrom('auth_roles', ['slug' => 'superadmin']),
-        ])->run();
+        ]);
     }
 
     private function userId(string $email): string
@@ -132,8 +132,8 @@ final class AuthorizationEnforcementTest extends FunctionalTestCase
      */
     private function idFrom(string $table, array $where): string
     {
-        foreach ($this->connection()->select('id')->from($table)->where($where)->fetchAll() as $row) {
-            if (is_array($row) && is_string($row['id'] ?? null)) {
+        foreach ($this->adapter->findMany($table, $where) as $row) {
+            if (is_string($row['id'] ?? null)) {
                 return $row['id'];
             }
         }
