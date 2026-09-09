@@ -6,13 +6,13 @@
          failOnWarning="true"
          failOnRisky="true">
     <testsuites>
-        <testsuite name="module">
-            <directory>tests</directory>
+        <testsuite name="core">
+            <directory>packages/core/tests</directory>
         </testsuite>
     </testsuites>
     <source>
         <include>
-            <directory>src</directory>
+            <directory>packages/core/src</directory>
         </include>
     </source>
 </phpunit>

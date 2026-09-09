@@ -2,8 +2,8 @@
 <ruleset name="Polaris">
     <description>Polaris coding standard (PSR-12).</description>
 
-    <file>src</file>
-    <file>tests</file>
+    <file>packages/core/src</file>
+    <file>packages/core/tests</file>
 
     <arg name="colors"/>
     <arg name="warning-severity" value="0"/>

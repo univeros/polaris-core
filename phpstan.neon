@@ -1,5 +1,5 @@
 parameters:
     level: 5
     paths:
-        - src
-        - tests
+        - packages/core/src
+        - packages/core/tests

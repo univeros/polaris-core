@@ -1,0 +1,25 @@
+{
+    "name": "polaris/psr15",
+    "description": "PSR-15 request handler and middleware for Polaris for PHP",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.3",
+        "polaris/core": "^0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\Psr15\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

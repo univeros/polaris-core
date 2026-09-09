@@ -48,8 +48,10 @@ jobs:
           extensions: openssl, sodium, gd, mbstring, pdo_pgsql, pgsql
           coverage: none
 
-      - name: Validate composer.json
-        run: composer validate --strict
+      - name: Validate composer.json (root and packages)
+        run: |
+          composer validate --strict
+          for pkg in packages/*/composer.json; do composer validate --strict --no-check-lock "$pkg"; done
 
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
@@ -59,6 +61,9 @@ jobs:
 
       - name: Static analysis (phpstan)
         run: composer stan
+
+      - name: Forbidden framework imports (advisory until WP5)
+        run: composer imports
 
       - name: Tests (phpunit)
         run: composer test
