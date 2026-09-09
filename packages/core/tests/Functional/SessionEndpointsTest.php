@@ -162,7 +162,7 @@ final class SessionEndpointsTest extends FunctionalTestCase
 
     private function sidOf(string $accessToken): string
     {
-        $parser = $this->container->get(TokenParserInterface::class);
+        $parser = $this->graph->tokenParser();
         self::assertInstanceOf(TokenParserInterface::class, $parser);
 
         return (string) $parser->parse($accessToken)->getMetadata('sid');

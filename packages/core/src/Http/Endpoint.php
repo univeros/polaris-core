@@ -8,7 +8,7 @@ use Polaris\Authorization\PermissionCatalog;
 use Polaris\Authorization\ResolvedAuthority;
 use Polaris\Contract\TokenInterface;
 use Polaris\Token\ClientContext;
-use Univeros\Polaris\Http\Middleware\MfaTicket;
+use Polaris\Http\MfaTicket;
 
 use function filter_var;
 use function in_array;

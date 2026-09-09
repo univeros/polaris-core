@@ -137,7 +137,7 @@ final class StepUpEndpointsTest extends FunctionalTestCase
     /** A valid access token whose auth_time is far past the step-up window (but not itself expired). */
     private function staleToken(string $userId): string
     {
-        $tokens = $this->container->get(TokenService::class);
+        $tokens = $this->graph->tokens();
         self::assertInstanceOf(TokenService::class, $tokens);
         $principal = new SessionPrincipal(
             userId: $userId,

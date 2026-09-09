@@ -1,0 +1,119 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "6weJX5-LtZuXZnpxU8heTI-uEhNeEFq-J5ALH7Jwdak"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "User-Agent": [
+                    "Browser/1.0 (Functional)"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjI3Ljc2MjUwMSwibmJmIjoxNzg4OTg2NjI3Ljc2MjUwMSwiZXhwIjoxNzg4OTg3NTI3Ljc2MjUwMSwic3ViIjoiMDFhMDg3ZTktOTU4ZS03MjQ0LTg3OGQtNjYyYmVhOWNkNDgxIiwianRpIjoiMDFhMDg3ZTktOTZiMi03N2FmLThmMDUtOThlMmQ0YmM1NmJiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LTk2YjItNzYxZi04ZjA1LTk4ZTJkMzkwZGZjNiIsImF1dGhfdGltZSI6MTc4ODk4NjYyN30.T01mDV-oXYH3R4iXlnAdQ2xPD95oHhdzbF4NZRxS3Ibmyz0VgHlNfRzoXpJHHRYbIWkmg3P6PvBCi_lpnPPRYHIS_R39-Nldi6pirvmVCTgmZZFcalySZ-jKVYUKQPu96cq-rvmEcC53l85hpw3BGdwtg-Avbzrd5XfLKsL8CIJ5QeNbr31aJPnW4IhBPVH2ty0ClSyvjRCudAhH6FuyCLTP-9jfsMwB5LYjV9kb5bniSkIX1HDKHWprjiVQ3NALeznwpZlf6zVNhm_RhupiK9G8DNqD6oELM5zXJZ3ciCgim2lj3d9tB8xPP3SmWb1ec9RfdLZQ9H-K1dWSH_keKQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "CEy77IifyW0G4qiPNYt5Zk-EdlXkxW0Kzbt6ys3iinE",
+                    "user": {
+                        "id": "01a087e9-958e-7244-878d-662bea9cd481",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    }
+]

@@ -1,0 +1,158 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "founder@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "80KX17w-PV5Kmisn2TS2YVQfMrYaaCFXwKZdUc92NN4"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "founder@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjU3LjM3OTc1OSwibmJmIjoxNzg4OTg2NjU3LjM3OTc1OSwiZXhwIjoxNzg4OTg3NTU3LjM3OTc1OSwic3ViIjoiMDFhMDg3ZWEtMDk0OS03ODQ1LWFjMTAtYjI3NTM2M2MxM2ZkIiwianRpIjoiMDFhMDg3ZWEtMGE2My03YmJhLThhMjAtNmU1MzQ2ZjNkODc4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTBhNjMtN2E2Ni04YTIwLTZlNTM0NWNhN2RiNyIsImF1dGhfdGltZSI6MTc4ODk4NjY1N30.ot8-St33_uoV3p1N8c8WzTu1gSm33sEkeus8gwFuU1gpzL32RJfgPwEQyRGtLjTg0LmsxZXOW5Ih7hCxQsb-tcwmhZ6CFNeZKJlaIprpsigmosjo2TBsVeJ3Nr3WGhimLL5Mg9yOTU3VEv0GI2_9804O9vBCw0lWmx52QA1nncbR5Wv131t9pdzA1D8273upyQJ5jnR_zDlj3562UX6l7z5bsDIT7tgqmILI3CWjlY-rhP4hPDxjBCCVPslUSnTn9_z1FVWdgHPhnwovmf6IGVcoUXp0-9ziYfTrqZlQIABb5DfOpl7rziidJmEtWmm5vDo-kn7PKeQDThNVixdvOg",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "WwWaMDsW5baInE5kBNKjAxfpYSgJtZICJ1jJAFYY_pI",
+                    "user": {
+                        "id": "01a087ea-0949-7845-ac10-b275363c13fd",
+                        "email": "founder@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjU3LjM3OTc1OSwibmJmIjoxNzg4OTg2NjU3LjM3OTc1OSwiZXhwIjoxNzg4OTg3NTU3LjM3OTc1OSwic3ViIjoiMDFhMDg3ZWEtMDk0OS03ODQ1LWFjMTAtYjI3NTM2M2MxM2ZkIiwianRpIjoiMDFhMDg3ZWEtMGE2My03YmJhLThhMjAtNmU1MzQ2ZjNkODc4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTBhNjMtN2E2Ni04YTIwLTZlNTM0NWNhN2RiNyIsImF1dGhfdGltZSI6MTc4ODk4NjY1N30.ot8-St33_uoV3p1N8c8WzTu1gSm33sEkeus8gwFuU1gpzL32RJfgPwEQyRGtLjTg0LmsxZXOW5Ih7hCxQsb-tcwmhZ6CFNeZKJlaIprpsigmosjo2TBsVeJ3Nr3WGhimLL5Mg9yOTU3VEv0GI2_9804O9vBCw0lWmx52QA1nncbR5Wv131t9pdzA1D8273upyQJ5jnR_zDlj3562UX6l7z5bsDIT7tgqmILI3CWjlY-rhP4hPDxjBCCVPslUSnTn9_z1FVWdgHPhnwovmf6IGVcoUXp0-9ziYfTrqZlQIABb5DfOpl7rziidJmEtWmm5vDo-kn7PKeQDThNVixdvOg"
+                ]
+            },
+            "body": {
+                "name": "Acme Inc"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a087ea-0a65-7908-aa42-e3808e35a944",
+                    "name": "Acme Inc",
+                    "slug": "acme-inc",
+                    "role": "owner"
+                }
+            }
+        }
+    }
+]

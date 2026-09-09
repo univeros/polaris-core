@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66b48bf5beda4dfcf956fd89422613ce",
+    "content-hash": "18e768715065fb9528038dee08c2c2f8",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1820,7 +1820,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/core",
-                "reference": "66185d5281dcaf973eb5420255846025b2695cf8"
+                "reference": "98f34a7c63feafcf5961ca5cc608baec0d09acad"
             },
             "require": {
                 "endroid/qr-code": "^6.0",
@@ -1828,7 +1828,11 @@
                 "lcobucci/jwt": "^5.6",
                 "php": ">=8.3",
                 "psr/clock": "^1.0",
+                "psr/event-dispatcher": "^1.0",
                 "psr/http-client": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0",
+                "psr/log": "^3.0",
+                "psr/simple-cache": "^3.0",
                 "spomky-labs/otphp": "^11.3",
                 "symfony/uid": "^7.0",
                 "symfony/yaml": "^7.0",
@@ -1917,11 +1921,16 @@
             "dist": {
                 "type": "path",
                 "url": "packages/psr15",
-                "reference": "103448e950e8f4102f878801802183e6aa1ac949"
+                "reference": "d2ddcc7c5613fb3c853c794bb34f3dd8facda2d2"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/core": "^0.1"
+                "polaris/core": "^0.1",
+                "psr/clock": "^1.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0"
             },
             "type": "library",
             "extra": {

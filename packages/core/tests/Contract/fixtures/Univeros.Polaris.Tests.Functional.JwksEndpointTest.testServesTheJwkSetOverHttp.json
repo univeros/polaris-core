@@ -1,0 +1,30 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/auth/.well-known/jwks.json",
+            "headers": [],
+            "body": null
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "keys": [
+                    {
+                        "kty": "RSA",
+                        "use": "sig",
+                        "alg": "RS256",
+                        "kid": "eb8e7ee8bf81aaf78d4e7113c5002ea6a184f0cf12ce744b9eab00dd6681d9bd",
+                        "n": "vyv2sfBGPX3pGiqMsygkD4xoKuRn3qKhsRpnVvvSKPlhMfipyR5KdBE4Lty4afwg0I1vRFrQcIeDjAs5kTw07Tw3kIE2UjAiuyKrcFr0MpVjSbgvqz1WHegsj8ToTwLpsbL5wr421hzv2d6_qWgEy5zryBmnnKhGHygu3XlqBs7PViAX-XA2tdqsyIyX3zitGbTjiepQIvrhkfE9X7nn4G2am2esDMEN7EjLdpQOZbqN3uTNPAWdFRqmrH6B6BzzNL125LwHFyuydrSHmfo-4jKLCEOgde4QETC_7WFw50T7g1Uz__WpPkBbue4NsjjZR2z4AtJ4spxUE54UML0Kiw",
+                        "e": "AQAB"
+                    }
+                ]
+            }
+        }
+    }
+]

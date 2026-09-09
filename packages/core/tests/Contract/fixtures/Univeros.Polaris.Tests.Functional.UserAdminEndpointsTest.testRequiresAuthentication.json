@@ -1,0 +1,52 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/users/01a087ea-798d-7098-9ff4-0202991eda36",
+            "headers": [],
+            "body": null
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer"
+                ]
+            },
+            "body": {
+                "error": "unauthorized",
+                "message": "Authentication is required."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/users/01a087ea-798d-7098-9ff4-0202991eda36/disable",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": []
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer"
+                ]
+            },
+            "body": {
+                "error": "unauthorized",
+                "message": "Authentication is required."
+            }
+        }
+    }
+]

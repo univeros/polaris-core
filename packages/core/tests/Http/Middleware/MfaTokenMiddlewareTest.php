@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Univeros\Polaris\Http\Middleware\BearerTokenExtractor;
-use Univeros\Polaris\Http\Middleware\MfaTicket;
+use Polaris\Http\MfaTicket;
 use Univeros\Polaris\Http\Middleware\MfaTokenMiddleware;
 use Polaris\Token\MfaLoginTokenService;
 use Univeros\Polaris\Tests\Support\CountingRequestHandler;

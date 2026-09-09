@@ -112,7 +112,7 @@ final class OrganizationEndpointsTest extends FunctionalTestCase
         $this->unitOfWork->clear();
         $userId = $this->userId('unverified@example.com');
 
-        $tokens = $this->container->get(TokenService::class);
+        $tokens = $this->graph->tokens();
         self::assertInstanceOf(TokenService::class, $tokens);
         $principal = new SessionPrincipal(userId: $userId, emailVerified: false);
         $access = $tokens->issue($principal, ClientContext::none())->accessToken;

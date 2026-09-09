@@ -1,0 +1,15 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/auth/does-not-exist",
+            "headers": [],
+            "body": null
+        },
+        "response": {
+            "status": 404,
+            "headers": [],
+            "body": ""
+        }
+    }
+]

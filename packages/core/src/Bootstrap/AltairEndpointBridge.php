@@ -16,7 +16,7 @@ use Polaris\Http\Attributes;
 use Polaris\Http\Endpoint;
 use Polaris\Http\Input;
 use Univeros\Polaris\Http\Middleware\ClientContextMiddleware;
-use Univeros\Polaris\Http\Middleware\MfaTicket;
+use Polaris\Http\MfaTicket;
 
 use function str_ends_with;
 use function strlen;

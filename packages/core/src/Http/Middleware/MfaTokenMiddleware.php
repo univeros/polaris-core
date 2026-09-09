@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Univeros\Polaris\Http\Middleware;
 
+use Polaris\Http\MfaTicket;
 use Altair\Http\Contracts\HttpAuthRuleInterface;
 use Altair\Http\Contracts\MiddlewareInterface;
 use Altair\Http\Contracts\TokenExtractorInterface;

@@ -1,0 +1,36 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify/resend",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "nobody@example.com"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "If the address is registered and unverified, a new verification message has been sent."
+            }
+        }
+    }
+]
