@@ -1,8 +1,8 @@
 {
-    "name": "univeros/polaris",
-    "description": "Authentication, MFA/OTP, and user & organization management for Univeros apps.",
+    "name": "polaris/monorepo",
+    "description": "Polaris for PHP: self-hosted authentication, MFA, organizations and RBAC for any PHP application",
     "type": "library",
-    "license": "proprietary",
+    "license": "MIT",
     "keywords": ["univeros", "altair", "authentication", "mfa", "otp", "totp", "rbac", "users", "jwt"],
     "homepage": "https://univeros.io",
     "support": {
