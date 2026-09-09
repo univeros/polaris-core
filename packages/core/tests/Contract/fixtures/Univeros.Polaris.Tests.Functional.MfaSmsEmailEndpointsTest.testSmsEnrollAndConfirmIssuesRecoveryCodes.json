@@ -1,0 +1,208 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "W91-PZAwRf7YoOeicuQSOX68CsqDrHVXf8_AciwcPrY"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjUzLjE2NjIxNywibmJmIjoxNzg4OTg2NjUzLjE2NjIxNywiZXhwIjoxNzg4OTg3NTUzLjE2NjIxNywic3ViIjoiMDFhMDg3ZTktZjhjZS03NWJiLWI4NzUtODJjYTU0ZDRkNDlkIiwianRpIjoiMDFhMDg3ZTktZjllZS03MzNjLWFmMGItYjJjZDgzMWU2NzBkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LWY5ZWUtNzE5MC1hZjBiLWIyY2Q4MjljNGVlMSIsImF1dGhfdGltZSI6MTc4ODk4NjY1M30.D8udD_ZBj4kW50zXHLJXxAn-sYmfcrb_7jfHe9TMItnXuErDaHH7GXwMoqu9t4P2WYn4OyRCBNjmR-XIUicPiCH2MIqWN3u0jYAAXdNBCQVYLXiZg_UPmEz7_a9b1B4u0JjgNkHaNAYuenjQ1FsGOF6Dr2zvE4mhNBm_V_7uOfsPAPTC2sQcTpEoAoY6zP4f97kpA2uglHhoTmiqHGr0zxL2LJ-EAyu0nejLs1BsTGSUQkl48guV_oXhSjUXmMEW9qU1jQj0-U1k1YXmNEWh8mGYWCzuTjl60o9cFFLzUOgm-c0uuMFYoG4pZq2bjegiDil7FpiymII9EOkxgzXnQQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "S01G9S1ZFlMluwX6gh9TJnE7Ui2Mw_rlcOR5spXl8TE",
+                    "user": {
+                        "id": "01a087e9-f8ce-75bb-b875-82ca54d4d49d",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/mfa/sms/enroll",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjUzLjE2NjIxNywibmJmIjoxNzg4OTg2NjUzLjE2NjIxNywiZXhwIjoxNzg4OTg3NTUzLjE2NjIxNywic3ViIjoiMDFhMDg3ZTktZjhjZS03NWJiLWI4NzUtODJjYTU0ZDRkNDlkIiwianRpIjoiMDFhMDg3ZTktZjllZS03MzNjLWFmMGItYjJjZDgzMWU2NzBkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LWY5ZWUtNzE5MC1hZjBiLWIyY2Q4MjljNGVlMSIsImF1dGhfdGltZSI6MTc4ODk4NjY1M30.D8udD_ZBj4kW50zXHLJXxAn-sYmfcrb_7jfHe9TMItnXuErDaHH7GXwMoqu9t4P2WYn4OyRCBNjmR-XIUicPiCH2MIqWN3u0jYAAXdNBCQVYLXiZg_UPmEz7_a9b1B4u0JjgNkHaNAYuenjQ1FsGOF6Dr2zvE4mhNBm_V_7uOfsPAPTC2sQcTpEoAoY6zP4f97kpA2uglHhoTmiqHGr0zxL2LJ-EAyu0nejLs1BsTGSUQkl48guV_oXhSjUXmMEW9qU1jQj0-U1k1YXmNEWh8mGYWCzuTjl60o9cFFLzUOgm-c0uuMFYoG4pZq2bjegiDil7FpiymII9EOkxgzXnQQ"
+                ]
+            },
+            "body": {
+                "phone_e164": "+14155550101"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987000"
+                ]
+            },
+            "body": {
+                "data": {
+                    "factor_id": "01a087e9-f9f0-70b8-9346-79e0b42c2a92",
+                    "destination": "+1 *** *** 0101"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/mfa/sms/confirm",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjUzLjE2NjIxNywibmJmIjoxNzg4OTg2NjUzLjE2NjIxNywiZXhwIjoxNzg4OTg3NTUzLjE2NjIxNywic3ViIjoiMDFhMDg3ZTktZjhjZS03NWJiLWI4NzUtODJjYTU0ZDRkNDlkIiwianRpIjoiMDFhMDg3ZTktZjllZS03MzNjLWFmMGItYjJjZDgzMWU2NzBkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LWY5ZWUtNzE5MC1hZjBiLWIyY2Q4MjljNGVlMSIsImF1dGhfdGltZSI6MTc4ODk4NjY1M30.D8udD_ZBj4kW50zXHLJXxAn-sYmfcrb_7jfHe9TMItnXuErDaHH7GXwMoqu9t4P2WYn4OyRCBNjmR-XIUicPiCH2MIqWN3u0jYAAXdNBCQVYLXiZg_UPmEz7_a9b1B4u0JjgNkHaNAYuenjQ1FsGOF6Dr2zvE4mhNBm_V_7uOfsPAPTC2sQcTpEoAoY6zP4f97kpA2uglHhoTmiqHGr0zxL2LJ-EAyu0nejLs1BsTGSUQkl48guV_oXhSjUXmMEW9qU1jQj0-U1k1YXmNEWh8mGYWCzuTjl60o9cFFLzUOgm-c0uuMFYoG4pZq2bjegiDil7FpiymII9EOkxgzXnQQ"
+                ]
+            },
+            "body": {
+                "factor_id": "01a087e9-f9f0-70b8-9346-79e0b42c2a92",
+                "code": "688288"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "confirmed",
+                    "recovery_codes": [
+                        "a32dz-wcfet",
+                        "jwqch-4pkar",
+                        "ufqzg-7hj4x",
+                        "eg3uq-c34de",
+                        "jwrhz-cczzd",
+                        "ydbyv-xeaz4",
+                        "zsazt-aexux",
+                        "butbd-4fgt3",
+                        "7xxd3-6kf2k",
+                        "rekmg-kqkpq"
+                    ]
+                }
+            }
+        }
+    }
+]

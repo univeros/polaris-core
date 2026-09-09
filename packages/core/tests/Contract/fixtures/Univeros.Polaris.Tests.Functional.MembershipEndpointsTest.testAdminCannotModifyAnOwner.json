@@ -1,0 +1,396 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "founder@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "1A5vn9Y0h1amhZbNjSgNCsc-xSr2h4ZpHw6CXzsoCfg"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "founder@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjQ0LjkyNTY5MywibmJmIjoxNzg4OTg2NjQ0LjkyNTY5MywiZXhwIjoxNzg4OTg3NTQ0LjkyNTY5Mywic3ViIjoiMDFhMDg3ZTktZDg5YS03NzdjLThiY2ItN2NhYzIyZDIxMzk1IiwianRpIjoiMDFhMDg3ZTktZDliZC03YWFjLTgwM2MtMmQ5ZjViOGJlZThiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LWQ5YmQtNzhkOC04MDNjLTJkOWY1YWE2YWMzYSIsImF1dGhfdGltZSI6MTc4ODk4NjY0NH0.bTdvu1rHxPJU4ZJafZQeLf2ZrTJDyMKUEpz_3WXaGjoHXk-LpyIal0vrBoTpArkWR2oPBZJ80kgbuNvpNCMoH09tyfD-oajlTqofK1U1-kLgUMD49luIHLb_642Tfj_ASzew2Mm0jwMeZ5CFgsXACEWo1cWdtvPAYaKsAf4rRHCa5QhSRb2OEmA0e8u-jzVJRyKS12ixSbUIwom9_IKifhSJJjrGav0ZJpgPeufFfT8fJEUr7asFfgL93taRltWd6xnroUz36NUwFeuKTLzoXZFSPmIsdr7GTVf6uOT2H47BN3a0vi2yNnvkIIkcdoo6dRTCsQhSyfDMNWSPbb1J8Q",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "cPK5900s1UIVz3b5u3bYtl52dNvRuhBPpGpkLsWiwtE",
+                    "user": {
+                        "id": "01a087e9-d89a-777c-8bcb-7cac22d21395",
+                        "email": "founder@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjQ0LjkyNTY5MywibmJmIjoxNzg4OTg2NjQ0LjkyNTY5MywiZXhwIjoxNzg4OTg3NTQ0LjkyNTY5Mywic3ViIjoiMDFhMDg3ZTktZDg5YS03NzdjLThiY2ItN2NhYzIyZDIxMzk1IiwianRpIjoiMDFhMDg3ZTktZDliZC03YWFjLTgwM2MtMmQ5ZjViOGJlZThiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LWQ5YmQtNzhkOC04MDNjLTJkOWY1YWE2YWMzYSIsImF1dGhfdGltZSI6MTc4ODk4NjY0NH0.bTdvu1rHxPJU4ZJafZQeLf2ZrTJDyMKUEpz_3WXaGjoHXk-LpyIal0vrBoTpArkWR2oPBZJ80kgbuNvpNCMoH09tyfD-oajlTqofK1U1-kLgUMD49luIHLb_642Tfj_ASzew2Mm0jwMeZ5CFgsXACEWo1cWdtvPAYaKsAf4rRHCa5QhSRb2OEmA0e8u-jzVJRyKS12ixSbUIwom9_IKifhSJJjrGav0ZJpgPeufFfT8fJEUr7asFfgL93taRltWd6xnroUz36NUwFeuKTLzoXZFSPmIsdr7GTVf6uOT2H47BN3a0vi2yNnvkIIkcdoo6dRTCsQhSyfDMNWSPbb1J8Q"
+                ]
+            },
+            "body": {
+                "name": "Acme"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a087e9-d9bf-76f8-8cf3-3ec07e5e4f1f",
+                    "name": "Acme",
+                    "slug": "acme",
+                    "role": "owner"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/switch-org",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjQ0LjkyNTY5MywibmJmIjoxNzg4OTg2NjQ0LjkyNTY5MywiZXhwIjoxNzg4OTg3NTQ0LjkyNTY5Mywic3ViIjoiMDFhMDg3ZTktZDg5YS03NzdjLThiY2ItN2NhYzIyZDIxMzk1IiwianRpIjoiMDFhMDg3ZTktZDliZC03YWFjLTgwM2MtMmQ5ZjViOGJlZThiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LWQ5YmQtNzhkOC04MDNjLTJkOWY1YWE2YWMzYSIsImF1dGhfdGltZSI6MTc4ODk4NjY0NH0.bTdvu1rHxPJU4ZJafZQeLf2ZrTJDyMKUEpz_3WXaGjoHXk-LpyIal0vrBoTpArkWR2oPBZJ80kgbuNvpNCMoH09tyfD-oajlTqofK1U1-kLgUMD49luIHLb_642Tfj_ASzew2Mm0jwMeZ5CFgsXACEWo1cWdtvPAYaKsAf4rRHCa5QhSRb2OEmA0e8u-jzVJRyKS12ixSbUIwom9_IKifhSJJjrGav0ZJpgPeufFfT8fJEUr7asFfgL93taRltWd6xnroUz36NUwFeuKTLzoXZFSPmIsdr7GTVf6uOT2H47BN3a0vi2yNnvkIIkcdoo6dRTCsQhSyfDMNWSPbb1J8Q"
+                ]
+            },
+            "body": {
+                "organization_id": "01a087e9-d9bf-76f8-8cf3-3ec07e5e4f1f"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjQ0LjkyODI0MywibmJmIjoxNzg4OTg2NjQ0LjkyODI0MywiZXhwIjoxNzg4OTg3NTQ0LjkyODI0Mywic3ViIjoiMDFhMDg3ZTktZDg5YS03NzdjLThiY2ItN2NhYzIyZDIxMzk1IiwianRpIjoiMDFhMDg3ZTktZDljMC03M2I5LTljN2MtNGIxNTEzZTFhODRkIiwib3JnIjoiMDFhMDg3ZTktZDliZi03NmY4LThjZjMtM2VjMDdlNWU0ZjFmIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDg3ZTktZDliZC03OGQ4LTgwM2MtMmQ5ZjVhYTZhYzNhIiwiYXV0aF90aW1lIjoxNzg4OTg2NjQ0fQ.Xa9YgSqIGhSAZrsnPBk4pMO9ixo8lcqZXQ2ow_8fBjICHxLEDGEmdjdz0z2YyTi83cSR3r_s_57Py13VftC7aF7I65U7dHg44JJ89h1gWzgTTsGDmkm_cx4NsJH_e9q4Ildd_BynNotWTzHeStwXOEhp-jb2PKFuhiLdP5Vdx0j52PDre3o0PLo3wWqKVzrHcgYPQPxNvHCH8uvpVCjr0-8581aNBRpU324npbiNHl_aZDu6k-85ghiadSMcTbnaIssjJEaU9OsD04Gdzpp2vQwpQwc2VNdPRI9mM3dq4iW9XBWmdcTBDoocn53-n7Wv6yfRZlGqOfaoxB-FEet7RA",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "org": "01a087e9-d9bf-76f8-8cf3-3ec07e5e4f1f"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "admin@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "ewumrOPy8p95D5bQxBpgP3qU__OiM1kilTjBLFY9HIc"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "admin@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjQ1LjIxOTAxMywibmJmIjoxNzg4OTg2NjQ1LjIxOTAxMywiZXhwIjoxNzg4OTg3NTQ1LjIxOTAxMywic3ViIjoiMDFhMDg3ZTktZDljMS03NjRjLThkNDktMjA5MWU4Zjk0MzQ5IiwianRpIjoiMDFhMDg3ZTktZGFlMy03MDA1LTg3OTktYjQ0MmFjNGI3MzJhIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LWRhZTItN2UyNS04MzQxLTBkZjJkNzU3OGVkNiIsImF1dGhfdGltZSI6MTc4ODk4NjY0NX0.WccecaE7pX_XkWz0c6H_0MH8Xs84LDx2VauXbNvCa5W780U3CUUUKwTtH3o365aNwtwKCUjYtaJ5Ferijz5tYNIkJKiWZ3K1alzVWZTtorVU6rtjA5vHkJk27liN8FEhTx-B4jGBHhgs1bDGtDPBHpM6wr1QlAWwNY4ON--iPjz48GLLEBW9l0SEj-k1l-UBN6PJm_1fxoZWem8G3IFN91hXly5XFSQAqtUF1F7V8e4e5nEB2CCwOOaglqzb1xurX8ZA1SMQffTOBvCuXUh4W-DesHfpXCySgJ4MTl_rD3Saph8NX4_yZqJjF2AVNFiL0jwnFC67pgaGHlK1_5mXvQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "Z--bh57C-R-bq8qAgTMGGteSCD9xhMw5zYzAlnKC1mw",
+                    "user": {
+                        "id": "01a087e9-d9c1-764c-8d49-2091e8f94349",
+                        "email": "admin@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/switch-org",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjQ1LjIxOTAxMywibmJmIjoxNzg4OTg2NjQ1LjIxOTAxMywiZXhwIjoxNzg4OTg3NTQ1LjIxOTAxMywic3ViIjoiMDFhMDg3ZTktZDljMS03NjRjLThkNDktMjA5MWU4Zjk0MzQ5IiwianRpIjoiMDFhMDg3ZTktZGFlMy03MDA1LTg3OTktYjQ0MmFjNGI3MzJhIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LWRhZTItN2UyNS04MzQxLTBkZjJkNzU3OGVkNiIsImF1dGhfdGltZSI6MTc4ODk4NjY0NX0.WccecaE7pX_XkWz0c6H_0MH8Xs84LDx2VauXbNvCa5W780U3CUUUKwTtH3o365aNwtwKCUjYtaJ5Ferijz5tYNIkJKiWZ3K1alzVWZTtorVU6rtjA5vHkJk27liN8FEhTx-B4jGBHhgs1bDGtDPBHpM6wr1QlAWwNY4ON--iPjz48GLLEBW9l0SEj-k1l-UBN6PJm_1fxoZWem8G3IFN91hXly5XFSQAqtUF1F7V8e4e5nEB2CCwOOaglqzb1xurX8ZA1SMQffTOBvCuXUh4W-DesHfpXCySgJ4MTl_rD3Saph8NX4_yZqJjF2AVNFiL0jwnFC67pgaGHlK1_5mXvQ"
+                ]
+            },
+            "body": {
+                "organization_id": "01a087e9-d9bf-76f8-8cf3-3ec07e5e4f1f"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjQ1LjIyMDk2NCwibmJmIjoxNzg4OTg2NjQ1LjIyMDk2NCwiZXhwIjoxNzg4OTg3NTQ1LjIyMDk2NCwic3ViIjoiMDFhMDg3ZTktZDljMS03NjRjLThkNDktMjA5MWU4Zjk0MzQ5IiwianRpIjoiMDFhMDg3ZTktZGFlNC03ZWZiLTliNWEtNzY2YmI2ZjNmYWM5Iiwib3JnIjoiMDFhMDg3ZTktZDliZi03NmY4LThjZjMtM2VjMDdlNWU0ZjFmIiwicm9sZXMiOlsiYWRtaW4iXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDg3ZTktZGFlMi03ZTI1LTgzNDEtMGRmMmQ3NTc4ZWQ2IiwiYXV0aF90aW1lIjoxNzg4OTg2NjQ1fQ.HMudqTDA2wHbxCfjXXZkEDKZrInmnEU3SMNxSFWMf06fl_Z5S0A-WPiREme_RxB57GUNEkvCZPkTo78UP5Zk1QDolefFp250ULczxKy7Yaxpo_PO0xpUjHT-U1RtFuZ_2nK8lxD4WGl7xrjzoiapdZK-k0YtFP7DnrWzA05OqUIncx7Pw9wVszeW2ni_0SKm9B8dy7MoiKrS-tdCbHZ8VF7fOH8U0cJuV3Wkw9Z6AkrZGB-gbEjKrOQh98EepmOFdOG8VsJ5lQQvTW587ECH72ups2taHUwIGSH5hdkjiLyuvSeJXfVmU_Sbl_CzedM0Wbu7ruhqq8Zbwo9jzAqQug",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "org": "01a087e9-d9bf-76f8-8cf3-3ec07e5e4f1f"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "PATCH",
+            "uri": "/orgs/01a087e9-d9bf-76f8-8cf3-3ec07e5e4f1f/members/01a087e9-d89a-777c-8bcb-7cac22d21395/roles",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjQ1LjIyMDk2NCwibmJmIjoxNzg4OTg2NjQ1LjIyMDk2NCwiZXhwIjoxNzg4OTg3NTQ1LjIyMDk2NCwic3ViIjoiMDFhMDg3ZTktZDljMS03NjRjLThkNDktMjA5MWU4Zjk0MzQ5IiwianRpIjoiMDFhMDg3ZTktZGFlNC03ZWZiLTliNWEtNzY2YmI2ZjNmYWM5Iiwib3JnIjoiMDFhMDg3ZTktZDliZi03NmY4LThjZjMtM2VjMDdlNWU0ZjFmIiwicm9sZXMiOlsiYWRtaW4iXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDg3ZTktZGFlMi03ZTI1LTgzNDEtMGRmMmQ3NTc4ZWQ2IiwiYXV0aF90aW1lIjoxNzg4OTg2NjQ1fQ.HMudqTDA2wHbxCfjXXZkEDKZrInmnEU3SMNxSFWMf06fl_Z5S0A-WPiREme_RxB57GUNEkvCZPkTo78UP5Zk1QDolefFp250ULczxKy7Yaxpo_PO0xpUjHT-U1RtFuZ_2nK8lxD4WGl7xrjzoiapdZK-k0YtFP7DnrWzA05OqUIncx7Pw9wVszeW2ni_0SKm9B8dy7MoiKrS-tdCbHZ8VF7fOH8U0cJuV3Wkw9Z6AkrZGB-gbEjKrOQh98EepmOFdOG8VsJ5lQQvTW587ECH72ups2taHUwIGSH5hdkjiLyuvSeJXfVmU_Sbl_CzedM0Wbu7ruhqq8Zbwo9jzAqQug"
+                ]
+            },
+            "body": {
+                "role_slugs": [
+                    "member"
+                ]
+            }
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "error": "forbidden",
+                "message": "Only an owner can modify an owner."
+            }
+        }
+    }
+]

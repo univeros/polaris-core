@@ -1,0 +1,116 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "EOS3sT6nxDSZm8ZXwFN9hDBWrAd-0N3FyxQMLTK2V0c"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjI3LjQ2NDkwNiwibmJmIjoxNzg4OTg2NjI3LjQ2NDkwNiwiZXhwIjoxNzg4OTg3NTI3LjQ2NDkwNiwic3ViIjoiMDFhMDg3ZTktOTQ2NS03Y2ViLWJlMGQtMTEzNzEyNWI2NTliIiwianRpIjoiMDFhMDg3ZTktOTU4OC03ZTAxLTk4Y2UtOGQ1M2QwMWM0NmJhIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LTk1ODgtN2M0MS05OGNlLThkNTNjZWNlNTE0OSIsImF1dGhfdGltZSI6MTc4ODk4NjYyN30.nugbTGv0T-E6DGH7F_Qosw4cW5SyNc0Li8KNQmPFqsTlRNH11ntxwvEbL-Cz6Qv7nMjUvAiMId3LhxjcYCKD1WelUZP3np3RS8EsVU7BLgdD3tECUzgDo6-5pGgqWi5XrF7fKn9yODYqKTUq1lMGGzUqDF0SZVBW9ASHuWZsDNhIqzdsnESqXW2324P3W9eipsDSOcTHnyf8ymx9F29j_Scy6SckdknpwPPsOXaa6ETDWlsw5z7fr2mThwU-Yzgf6KUQtDmBbbXksd7EeTD3GpGN0RWsNYfw1zB5kUv-DlLOsmO_bhq26EmjpdwISqyy9guE-xbDH6Fz_mO0t1pg8Q",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "icGoKpem1N1RnPof0Bgy_ai3Eb-BYvILkVeNfJBQtyc",
+                    "user": {
+                        "id": "01a087e9-9465-7ceb-be0d-1137125b659b",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    }
+]

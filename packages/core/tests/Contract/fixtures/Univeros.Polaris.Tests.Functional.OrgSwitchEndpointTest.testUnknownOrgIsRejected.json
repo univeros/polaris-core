@@ -1,0 +1,154 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "founder@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "dA77sasG2LR46PyACMLonV048q3GEhpfIlFwUnJQx8w"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "founder@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjU2Ljc5ODU3OCwibmJmIjoxNzg4OTg2NjU2Ljc5ODU3OCwiZXhwIjoxNzg4OTg3NTU2Ljc5ODU3OCwic3ViIjoiMDFhMDg3ZWEtMDZmNy03Yjg5LWE4ZDQtZWE1ZWMyMTBmYjM0IiwianRpIjoiMDFhMDg3ZWEtMDgxZS03OGU1LWIzZTMtN2ExYWM3NWRkM2NjIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTA4MWUtNzc3OS1iM2UzLTdhMWFjNTdmYTgxNyIsImF1dGhfdGltZSI6MTc4ODk4NjY1Nn0.aUlRgzcVByJ_BRDa9udmne4vhzdAiPR3wrr3vd2XySoAIXHGhYDjCcLzETGnACgmxzcN0UuQpKroHnelO4xrtV1G5lBVkptqd1umCa5AjgJr6TGpAUkDVIFXOnOkUjjWYIU8uAbBdtF4W3jPVet_cwaJl-vtXuZtcRWh5xMAEM5wAlGJ2_vuB36EEo2StXAmaEQIxDGEU7JcESlhRJvG_kOx-4pztv-2Xa0jd_iWmr3lpcQmN_StV45_GeiLT-WTWygLgWBe-Bhti3b83zqgmATu_izP6Qr04_Gmr-m9AqpBvBuOOOnBJ3ZOfQAW-1Foc7B_JlKKKSQfGsO_CzkwFw",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "C5-q-LALd0PMe6aHfLQFjvo1Vy81lGPTgZcdF8pEycE",
+                    "user": {
+                        "id": "01a087ea-06f7-7b89-a8d4-ea5ec210fb34",
+                        "email": "founder@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/switch-org",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjU2Ljc5ODU3OCwibmJmIjoxNzg4OTg2NjU2Ljc5ODU3OCwiZXhwIjoxNzg4OTg3NTU2Ljc5ODU3OCwic3ViIjoiMDFhMDg3ZWEtMDZmNy03Yjg5LWE4ZDQtZWE1ZWMyMTBmYjM0IiwianRpIjoiMDFhMDg3ZWEtMDgxZS03OGU1LWIzZTMtN2ExYWM3NWRkM2NjIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTA4MWUtNzc3OS1iM2UzLTdhMWFjNTdmYTgxNyIsImF1dGhfdGltZSI6MTc4ODk4NjY1Nn0.aUlRgzcVByJ_BRDa9udmne4vhzdAiPR3wrr3vd2XySoAIXHGhYDjCcLzETGnACgmxzcN0UuQpKroHnelO4xrtV1G5lBVkptqd1umCa5AjgJr6TGpAUkDVIFXOnOkUjjWYIU8uAbBdtF4W3jPVet_cwaJl-vtXuZtcRWh5xMAEM5wAlGJ2_vuB36EEo2StXAmaEQIxDGEU7JcESlhRJvG_kOx-4pztv-2Xa0jd_iWmr3lpcQmN_StV45_GeiLT-WTWygLgWBe-Bhti3b83zqgmATu_izP6Qr04_Gmr-m9AqpBvBuOOOnBJ3ZOfQAW-1Foc7B_JlKKKSQfGsO_CzkwFw"
+                ]
+            },
+            "body": {
+                "organization_id": "01a087ea-0820-70b5-b9a4-820a09980194"
+            }
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "error": "not_found",
+                "message": "The organization does not exist."
+            }
+        }
+    }
+]

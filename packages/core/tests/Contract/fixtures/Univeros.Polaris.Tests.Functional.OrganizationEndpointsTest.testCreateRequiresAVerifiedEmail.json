@@ -1,0 +1,75 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "unverified@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjU4LjQyMjk4OCwibmJmIjoxNzg4OTg2NjU4LjQyMjk4OCwiZXhwIjoxNzg4OTg3NTU4LjQyMjk4OCwic3ViIjoiMDFhMDg3ZWEtMGRkZS03N2VmLThkNzctNDg0YjIyNDhhMjRhIiwianRpIjoiMDFhMDg3ZWEtMGU3Ni03ZjRlLTg3ZGYtMmQwOGQyZTYyNTE4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibWZhIjpmYWxzZSwiYW1yIjpbInB3ZCJdLCJzaWQiOiIwMWEwODdlYS0wZTc2LTdlOGUtODdkZi0yZDA4ZDI4YTE4ZTEifQ.RwwlZlCuzl619SYoAYYNR9PAR0YJNfwmLieHGquLZklFD10tctqcA9SmoVmnis05usHlwR4BJieMTixAdEDvwmFDNQX9lpoT7GFd9lQ4VrMPO2pMHYdlcl9qA5VuGxfpVHwKsUaSfUuO7eEiMOnjDeNFBs-ycCGZJAzN6V1f-q1h80h6zL2LZtVuvKQQ7KUDRdp1YR-B88stfHQJQ_HBfpspyNqTBwV3VgfQv9f8fKYOFtRiYL7PRN_DgJ6tGPLZYd5FahOwY1bqDxvwN1Q08GZ8A1agrAcmD9-RNf3cPQ1iihJQKEg_yJXXf0BLtoiF-L87HkSWHYe-neOssmW3iw"
+                ]
+            },
+            "body": {
+                "name": "Acme"
+            }
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "error": "email_unverified",
+                "message": "Verify your email address before creating an organization."
+            }
+        }
+    }
+]

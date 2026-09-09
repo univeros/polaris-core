@@ -1,0 +1,155 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "gt2gFtsDoeR5dK17Z5a9AsP9l7vNOyVCgU2c6SzDuZ4"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjUzLjQ4MDIzNywibmJmIjoxNzg4OTg2NjUzLjQ4MDIzNywiZXhwIjoxNzg4OTg3NTUzLjQ4MDIzNywic3ViIjoiMDFhMDg3ZTktZjlmMy03ODFjLWI1NTEtN2UzNThlYmNjYTliIiwianRpIjoiMDFhMDg3ZTktZmIyOC03MzhlLTkxMjctNDI2OTM3ZjgzZGIxIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LWZiMjgtNzFkYS05MTI3LTQyNjkzNjgyNWZlMSIsImF1dGhfdGltZSI6MTc4ODk4NjY1M30.Qjpo3GNBGMO7Ki_q-Mr7-SkQxNgZcvE281MA8EqgGAY3oLmt9ad94hxZQVu5cJJ4uOukFkn2246v1zay9wZ3IMyLCt-0muoecHe9tqCdCH0wO51zeOdHha0E-Gby79njEHLlVnwZkPw8tGIvYHxi2ZQeqHWoRPGCmKXm5b5L6Yz7S86KOpid_VR_GJF11LI6VFwhlhKc_INFsmuTDesSE89PoN2K3Og7fJ4XyMT0MtRXBUuFRfWggf1iOxzdDZgJ-l-miNbzy3ajJ6N4qBc7ezQYFNquANgcAmUWA_v2on7luBMkBq690Cc-Q5tYeEytdXAw_hC43rjenOC5YMYAyg",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "0L2s6o35ZLIHQe8aXQn4-6tFeVVoqzlTlx9oEhgzReM",
+                    "user": {
+                        "id": "01a087e9-f9f3-781c-b551-7e358ebcca9b",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/mfa/sms/enroll",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjUzLjQ4MDIzNywibmJmIjoxNzg4OTg2NjUzLjQ4MDIzNywiZXhwIjoxNzg4OTg3NTUzLjQ4MDIzNywic3ViIjoiMDFhMDg3ZTktZjlmMy03ODFjLWI1NTEtN2UzNThlYmNjYTliIiwianRpIjoiMDFhMDg3ZTktZmIyOC03MzhlLTkxMjctNDI2OTM3ZjgzZGIxIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LWZiMjgtNzFkYS05MTI3LTQyNjkzNjgyNWZlMSIsImF1dGhfdGltZSI6MTc4ODk4NjY1M30.Qjpo3GNBGMO7Ki_q-Mr7-SkQxNgZcvE281MA8EqgGAY3oLmt9ad94hxZQVu5cJJ4uOukFkn2246v1zay9wZ3IMyLCt-0muoecHe9tqCdCH0wO51zeOdHha0E-Gby79njEHLlVnwZkPw8tGIvYHxi2ZQeqHWoRPGCmKXm5b5L6Yz7S86KOpid_VR_GJF11LI6VFwhlhKc_INFsmuTDesSE89PoN2K3Og7fJ4XyMT0MtRXBUuFRfWggf1iOxzdDZgJ-l-miNbzy3ajJ6N4qBc7ezQYFNquANgcAmUWA_v2on7luBMkBq690Cc-Q5tYeEytdXAw_hC43rjenOC5YMYAyg"
+                ]
+            },
+            "body": {
+                "phone_e164": "415-555-0101"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987000"
+                ]
+            },
+            "body": {
+                "errors": [
+                    "A valid E.164 phone number is required."
+                ]
+            }
+        }
+    }
+]

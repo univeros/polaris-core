@@ -52,7 +52,7 @@ final class LoginEndpointTest extends FunctionalTestCase
         self::assertCount(1, $this->events->ofType(UserLoggedIn::class));
 
         // The minted access token verifies against the module's own validator.
-        $validator = $this->container->get(TokenValidatorInterface::class);
+        $validator = $this->graph->tokenValidator();
         self::assertInstanceOf(TokenValidatorInterface::class, $validator);
         self::assertTrue($validator->validate((string) $data['access_token']));
     }
@@ -65,7 +65,7 @@ final class LoginEndpointTest extends FunctionalTestCase
             ->withHeader('Content-Type', 'application/json')
             ->withHeader('User-Agent', 'Browser/1.0 (Functional)')
             ->withParsedBody(['email' => self::EMAIL, 'password' => self::PASSWORD]);
-        self::assertSame(200, $this->harness->handle($request)->getStatusCode());
+        self::assertSame(200, $this->handle($request)->getStatusCode());
 
         // The ClientContextMiddleware → ClientContext → event chain holds end to end (#90).
         $logins = $this->events->ofType(UserLoggedIn::class);

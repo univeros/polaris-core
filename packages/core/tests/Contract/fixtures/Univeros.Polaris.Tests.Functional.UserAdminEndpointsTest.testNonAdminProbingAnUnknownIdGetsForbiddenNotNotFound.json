@@ -1,0 +1,182 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "alice@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "lFCdvHsHwteLipYvCLIfspEc-vyvsQclnh_kTA5d6AQ"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "alice@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjgzLjc3MjYwMiwibmJmIjoxNzg4OTg2NjgzLjc3MjYwMiwiZXhwIjoxNzg4OTg3NTgzLjc3MjYwMiwic3ViIjoiMDFhMDg3ZWEtNzA2MC03YWZkLTk4YTAtZDMwZjYyMGI2ZTRlIiwianRpIjoiMDFhMDg3ZWEtNzE3Yy03OTQxLTk3MmEtYWNiZTkzNDViNTM1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTcxN2MtNzdkZC05NzJhLWFjYmU5Mjc0NGY2YiIsImF1dGhfdGltZSI6MTc4ODk4NjY4M30.GN-GeQElJ3w5Rto8ik-3CI9c4v0BFM2O1-QuOVmfrWiB4Ulzu9gyWV7fM3dwu9_qYka88tofOem49lO6O-Do0zybbVdm3ne-vryvvkV1WK7GEfca2NA7PY8nwFCQiP9esIhdoj356OTWxIGsGybGhuFisYyCnIXYCvtgom9h9FD22X3VME8s_RPvNEjQ3f9MqNstjyvx2CqzgXGIog9aSToNaRaRDmRT0cTFdKg3t4rSboAiBRkBQPUx56rzadQFIioqGcrcCkIotYQFrIqAI0mDKxZp14lsywKkujVQGptFo-7xbB9EpHIeBLinx6tnTEcs1gDyje7qYYIsol376Q",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "3YC8MdoJDd6OipLvBYEZEBDDKOmrEEe-mEzOyHLg-R4",
+                    "user": {
+                        "id": "01a087ea-7060-7afd-98a0-d30f620b6e4e",
+                        "email": "alice@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/users/01a087ea-717d-7f49-a9e3-bb701d136e8e",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjgzLjc3MjYwMiwibmJmIjoxNzg4OTg2NjgzLjc3MjYwMiwiZXhwIjoxNzg4OTg3NTgzLjc3MjYwMiwic3ViIjoiMDFhMDg3ZWEtNzA2MC03YWZkLTk4YTAtZDMwZjYyMGI2ZTRlIiwianRpIjoiMDFhMDg3ZWEtNzE3Yy03OTQxLTk3MmEtYWNiZTkzNDViNTM1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTcxN2MtNzdkZC05NzJhLWFjYmU5Mjc0NGY2YiIsImF1dGhfdGltZSI6MTc4ODk4NjY4M30.GN-GeQElJ3w5Rto8ik-3CI9c4v0BFM2O1-QuOVmfrWiB4Ulzu9gyWV7fM3dwu9_qYka88tofOem49lO6O-Do0zybbVdm3ne-vryvvkV1WK7GEfca2NA7PY8nwFCQiP9esIhdoj356OTWxIGsGybGhuFisYyCnIXYCvtgom9h9FD22X3VME8s_RPvNEjQ3f9MqNstjyvx2CqzgXGIog9aSToNaRaRDmRT0cTFdKg3t4rSboAiBRkBQPUx56rzadQFIioqGcrcCkIotYQFrIqAI0mDKxZp14lsywKkujVQGptFo-7xbB9EpHIeBLinx6tnTEcs1gDyje7qYYIsol376Q"
+                ]
+            },
+            "body": null
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "error": "forbidden",
+                "message": "You may only manage your own account."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/users/01a087ea-717d-7f49-a9e3-bb701d136e8e",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjgzLjc3MjYwMiwibmJmIjoxNzg4OTg2NjgzLjc3MjYwMiwiZXhwIjoxNzg4OTg3NTgzLjc3MjYwMiwic3ViIjoiMDFhMDg3ZWEtNzA2MC03YWZkLTk4YTAtZDMwZjYyMGI2ZTRlIiwianRpIjoiMDFhMDg3ZWEtNzE3Yy03OTQxLTk3MmEtYWNiZTkzNDViNTM1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTcxN2MtNzdkZC05NzJhLWFjYmU5Mjc0NGY2YiIsImF1dGhfdGltZSI6MTc4ODk4NjY4M30.GN-GeQElJ3w5Rto8ik-3CI9c4v0BFM2O1-QuOVmfrWiB4Ulzu9gyWV7fM3dwu9_qYka88tofOem49lO6O-Do0zybbVdm3ne-vryvvkV1WK7GEfca2NA7PY8nwFCQiP9esIhdoj356OTWxIGsGybGhuFisYyCnIXYCvtgom9h9FD22X3VME8s_RPvNEjQ3f9MqNstjyvx2CqzgXGIog9aSToNaRaRDmRT0cTFdKg3t4rSboAiBRkBQPUx56rzadQFIioqGcrcCkIotYQFrIqAI0mDKxZp14lsywKkujVQGptFo-7xbB9EpHIeBLinx6tnTEcs1gDyje7qYYIsol376Q"
+                ]
+            },
+            "body": null
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "error": "forbidden",
+                "message": "You may only manage your own account."
+            }
+        }
+    }
+]

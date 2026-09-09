@@ -1,0 +1,190 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "35Lnb7lXwcUumFd_WuLtK-UYKE8WTb60DovSIAcoqRk"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjczLjY5MDA3NCwibmJmIjoxNzg4OTg2NjczLjY5MDA3NCwiZXhwIjoxNzg4OTg3NTczLjY5MDA3NCwic3ViIjoiMDFhMDg3ZWEtNDhmYy03YzQ3LTkxMGEtYWNhY2NhMjUxNzBlIiwianRpIjoiMDFhMDg3ZWEtNGExYS03MTAxLTg5MmEtZjIxMzM1NWI2M2U3Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTRhMTktN2VmMS05MWFiLTNmZDczYmU5NzE4MSIsImF1dGhfdGltZSI6MTc4ODk4NjY3M30.Ac9BXzjy0qrMXKVdLzxl4Pnq8RRrbvCwetwPdDhXzzYHmVk0sxwdKVFyu-5mtDbLpOHmWjRU7DnD88rFvledJoNYBSL78YxhPOttk5G7kEudB5yyb1wkE8yuABfPT9k9QCImrLy4w_5FjSCCYThpLybH5RcokpyNr7-T9O-G8WjN33gmD8fDJo0h9tqmzAsA0pcI6RcRr9kvtTKET8gXm0Qi2ABNCYZvwHPEJ9pvi4rW-2BZ23aTsbk5mCJ88SY1q9wZO2zk2JVVG4ibm8E6uGyEev9pLvJF6axL6zcGIZazSvNCeoEJZ-voy6DULEFQtxJCo59WXxY5hOBWmTPKHQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "UVXHdjc12fxUhtFX7V_Nfu_qtDnyiiqIpPsg4w5_6Rc",
+                    "user": {
+                        "id": "01a087ea-48fc-7c47-910a-acacca25170e",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/token/refresh",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "refresh_token": "UVXHdjc12fxUhtFX7V_Nfu_qtDnyiiqIpPsg4w5_6Rc"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "59"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjczLjY5MTc0MiwibmJmIjoxNzg4OTg2NjczLjY5MTc0MiwiZXhwIjoxNzg4OTg3NTczLjY5MTc0Miwic3ViIjoiMDFhMDg3ZWEtNDhmYy03YzQ3LTkxMGEtYWNhY2NhMjUxNzBlIiwianRpIjoiMDFhMDg3ZWEtNGExYi03Yjg3LWI3MDAtNzg0YzliNDgyNDNjIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTRhMTktN2VmMS05MWFiLTNmZDczYmU5NzE4MSIsImF1dGhfdGltZSI6MTc4ODk4NjY3M30.LfJepiZ2jYTYZPLYKaZHmrFVulqFAQUfbEzHYohiOxelFIk7gJIHDOjU4R4CcrHvKtzHZtZ5cczkTPV5StnYG2RMpt7YG-iZ3TlfunjvhEkcQgnFxYFLUDFAawuAcVwbhJQ6TsZo1jVNBSjnFjPHiuETbH9_-jC9ABOKtpT67q1Zu5_O1qCqgQiQnRDR4AJ0oH9E27WdkqVqZJOWg5LxJBLJItvmtxXLrJp_bh6luNGZyLCo67QWa28LBsbMn963PQo9UquFSOXZFjrrjPQHDg0i_krcUSSJdPf8RTv7tMF0K5Feq0xyX8qZfq7TO-txmMa2ZSWP_WMzMqe6Gk54_A",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "96B5QtxCf0lqYh2KpFilVDwG9JrNRjiBvi9Hz8yZfiQ"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/token/refresh",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "refresh_token": "UVXHdjc12fxUhtFX7V_Nfu_qtDnyiiqIpPsg4w5_6Rc"
+            }
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "58"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "error": "invalid_grant",
+                "message": "The refresh token is invalid or expired."
+            }
+        }
+    }
+]

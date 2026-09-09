@@ -1,0 +1,157 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "lRmYA_nylM0ApaKI8DnDnoN_w5mN76RhBuDCgex7LVs"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjE0LjMzMSwibmJmIjoxNzg4OTg2NjE0LjMzMSwiZXhwIjoxNzg4OTg3NTE0LjMzMSwic3ViIjoiMDFhMDg3ZTktNjBmOC03NTJmLWJkYjEtMjY0ZGU0NzkwMzM2IiwianRpIjoiMDFhMDg3ZTktNjIzYS03ZjNlLWFiMTItN2M4YjEwYmU2ZmQ2Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LTYyM2EtNzFmYS1hYjEyLTdjOGIwZmU3Zjk0NCIsImF1dGhfdGltZSI6MTc4ODk4NjYxNH0.WhbnEYQb7XsaqcJrCh2BIYa_EStjLO8-6GTlCNw0TDrnN1Ha-ASu-uB2vQdv2lLaArDEqh48we0GQvKxHps1iQPm-HKoHuqcvi7gMLIfQ8Cq1a9vEj-NygbKuyh9mdVbuBWAlOoHfB7NWiADpwOYwpFicG1mM5GuyAuDD-uAu1fsycNm6xK39CsthrVTS4UfSB4Nkp8q8JzKfSo-2gOzTm8AJ47GSEdvrchMtdZ7sXECvx2V-yAGtGuznQUSOJD9ZSREGn4P4Ui671JbRv37pnvb-ra9mRz9TpnOOPMc7UvcqYXab66_in_ZSrCXZQyltsgWkbcNFmc6qQ5E9QjlIg",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "wknA9-p0aC9GuXUAgwC9lDpGuwVerzot4M0H6uFOd7Q",
+                    "user": {
+                        "id": "01a087e9-60f8-752f-bdb1-264de4790336",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/auth/me",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjE0LjMzMSwibmJmIjoxNzg4OTg2NjE0LjMzMSwiZXhwIjoxNzg4OTg3NTE0LjMzMSwic3ViIjoiMDFhMDg3ZTktNjBmOC03NTJmLWJkYjEtMjY0ZGU0NzkwMzM2IiwianRpIjoiMDFhMDg3ZTktNjIzYS03ZjNlLWFiMTItN2M4YjEwYmU2ZmQ2Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2U5LTYyM2EtNzFmYS1hYjEyLTdjOGIwZmU3Zjk0NCIsImF1dGhfdGltZSI6MTc4ODk4NjYxNH0.WhbnEYQb7XsaqcJrCh2BIYa_EStjLO8-6GTlCNw0TDrnN1Ha-ASu-uB2vQdv2lLaArDEqh48we0GQvKxHps1iQPm-HKoHuqcvi7gMLIfQ8Cq1a9vEj-NygbKuyh9mdVbuBWAlOoHfB7NWiADpwOYwpFicG1mM5GuyAuDD-uAu1fsycNm6xK39CsthrVTS4UfSB4Nkp8q8JzKfSo-2gOzTm8AJ47GSEdvrchMtdZ7sXECvx2V-yAGtGuznQUSOJD9ZSREGn4P4Ui671JbRv37pnvb-ra9mRz9TpnOOPMc7UvcqYXab66_in_ZSrCXZQyltsgWkbcNFmc6qQ5E9QjlIg"
+                ]
+            },
+            "body": null
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986640"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a087e9-60f8-752f-bdb1-264de4790336",
+                    "email": "ada@example.com",
+                    "email_verified": true,
+                    "display_name": null,
+                    "status": "active",
+                    "mfa_enforced": false,
+                    "orgs": [],
+                    "roles": []
+                }
+            }
+        }
+    }
+]

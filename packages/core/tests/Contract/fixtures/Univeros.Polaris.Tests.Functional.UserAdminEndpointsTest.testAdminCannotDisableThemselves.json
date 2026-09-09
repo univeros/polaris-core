@@ -1,0 +1,194 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "operator@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "QVNQw1gS5rd-yIOhCiCiAYfApsKPar1cV3zG6FpZ5fY"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "operator@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjgxLjA3ODUxMiwibmJmIjoxNzg4OTg2NjgxLjA3ODUxMiwiZXhwIjoxNzg4OTg3NTgxLjA3ODUxMiwic3ViIjoiMDFhMDg3ZWEtNjVhNy03NWJlLTk5ZDQtMjJkZjM5YzhjNDFhIiwianRpIjoiMDFhMDg3ZWEtNjZmNi03N2Q2LWIwMzYtMTg5Y2QxODc0OTliIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTY2ZjYtNzVlMi1iMDM2LTE4OWNkMDM4ZGZhNiIsImF1dGhfdGltZSI6MTc4ODk4NjY4MH0.dMX_BJYDgqTQxldta1aYGK9mqHdZKwAV8m4uIfPcBK7Fi5iddJqX-g0U3GwOGzau77Fe8-uY2JBqH3XhmALs5vrFF78v1Qj-hNfn3r8ax-A3evgO9z9jJh44SK8geezl1e5LwtrPWJJOAPkdeb9186raHAy97UQVp_5dv7NHTSwxcH92H3nWh3xfvgjDCUpmShuBCzEetQcQZXQZoD4oG6sjIUsmedbo0KevJtny6JL4TKtYuVpLNWJflsslMh4BCDOogcwqd6DLr2Zc7eGTfu6aZRsoGFk5RuzL9fulN_QYM1SxXEF9Aw-lcdf12n2wn6WvqnQoeNPG3VbzQs317w",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "52j1rcqAY82eeYwTUqnwfdbC3inhNpiy1gWiLWxoQHY",
+                    "user": {
+                        "id": "01a087ea-65a7-75be-99d4-22df39c8c41a",
+                        "email": "operator@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjgxLjA3ODUxMiwibmJmIjoxNzg4OTg2NjgxLjA3ODUxMiwiZXhwIjoxNzg4OTg3NTgxLjA3ODUxMiwic3ViIjoiMDFhMDg3ZWEtNjVhNy03NWJlLTk5ZDQtMjJkZjM5YzhjNDFhIiwianRpIjoiMDFhMDg3ZWEtNjZmNi03N2Q2LWIwMzYtMTg5Y2QxODc0OTliIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTY2ZjYtNzVlMi1iMDM2LTE4OWNkMDM4ZGZhNiIsImF1dGhfdGltZSI6MTc4ODk4NjY4MH0.dMX_BJYDgqTQxldta1aYGK9mqHdZKwAV8m4uIfPcBK7Fi5iddJqX-g0U3GwOGzau77Fe8-uY2JBqH3XhmALs5vrFF78v1Qj-hNfn3r8ax-A3evgO9z9jJh44SK8geezl1e5LwtrPWJJOAPkdeb9186raHAy97UQVp_5dv7NHTSwxcH92H3nWh3xfvgjDCUpmShuBCzEetQcQZXQZoD4oG6sjIUsmedbo0KevJtny6JL4TKtYuVpLNWJflsslMh4BCDOogcwqd6DLr2Zc7eGTfu6aZRsoGFk5RuzL9fulN_QYM1SxXEF9Aw-lcdf12n2wn6WvqnQoeNPG3VbzQs317w"
+                ]
+            },
+            "body": {
+                "name": "Root"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a087ea-66f9-7683-a02e-8b0ef75cd401",
+                    "name": "Root",
+                    "slug": "root",
+                    "role": "owner"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/users/01a087ea-65a7-75be-99d4-22df39c8c41a/disable",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjgxLjA3ODUxMiwibmJmIjoxNzg4OTg2NjgxLjA3ODUxMiwiZXhwIjoxNzg4OTg3NTgxLjA3ODUxMiwic3ViIjoiMDFhMDg3ZWEtNjVhNy03NWJlLTk5ZDQtMjJkZjM5YzhjNDFhIiwianRpIjoiMDFhMDg3ZWEtNjZmNi03N2Q2LWIwMzYtMTg5Y2QxODc0OTliIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTY2ZjYtNzVlMi1iMDM2LTE4OWNkMDM4ZGZhNiIsImF1dGhfdGltZSI6MTc4ODk4NjY4MH0.dMX_BJYDgqTQxldta1aYGK9mqHdZKwAV8m4uIfPcBK7Fi5iddJqX-g0U3GwOGzau77Fe8-uY2JBqH3XhmALs5vrFF78v1Qj-hNfn3r8ax-A3evgO9z9jJh44SK8geezl1e5LwtrPWJJOAPkdeb9186raHAy97UQVp_5dv7NHTSwxcH92H3nWh3xfvgjDCUpmShuBCzEetQcQZXQZoD4oG6sjIUsmedbo0KevJtny6JL4TKtYuVpLNWJflsslMh4BCDOogcwqd6DLr2Zc7eGTfu6aZRsoGFk5RuzL9fulN_QYM1SxXEF9Aw-lcdf12n2wn6WvqnQoeNPG3VbzQs317w"
+                ]
+            },
+            "body": []
+        },
+        "response": {
+            "status": 409,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "error": "conflict",
+                "message": "You cannot disable your own account."
+            }
+        }
+    }
+]

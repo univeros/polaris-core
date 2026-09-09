@@ -1,0 +1,220 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "someone@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788987600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "mt9yZZ3r2jC5YvN4PSDZkK6crhxXVbJ-OLWIS1cAjGw"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "someone@example.com",
+                "password": "Sup3r-Secret-Passw0rd"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjY3LjcwNTgzNywibmJmIjoxNzg4OTg2NjY3LjcwNTgzNywiZXhwIjoxNzg4OTg3NTY3LjcwNTgzNywic3ViIjoiMDFhMDg3ZWEtMzE5ZC03MTZhLWFlOGItY2I1ZTVlYmM2N2ZjIiwianRpIjoiMDFhMDg3ZWEtMzJiOS03Y2VkLTgxNDUtZDg0NmI4MzBhMzdiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTMyYjktN2I1NS04MTQ1LWQ4NDZiNzVmYzZjMiIsImF1dGhfdGltZSI6MTc4ODk4NjY2N30.XoMA5IOFPKETV--yY_lTnB63YGPiid6aIq3opzbJ87wkMfMcibPCd9LIAGyZGEJxfhW3QOC_23y2jdnUI7WeTPnJ95V3sC0ueyfXSEuM5u86kh3vvQ6W2Ulcf9M3NMVl9QGIY0GsUhLvpu4q36K6QN2CfGgSoCNz9l4HmlV42ocbK4upLxYrKp7TfymU2kFp5G0IWoE7Md1oCMhZEPmI0bZEmmhqbvwYMxpnTALUSbqFY9AEeHMWmgeMALTlppBJSKZNhqc1dFi0pdCEakfTNK6Q8dLGfPK11oNDjdGU88OpAGXCLUEuoP335ykhGsC9TsCr6OEor-1jkLJk2tNL0g",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "RYNa3WQ6-vHHW0GWSaaj2nZgNuabAibhr_oms3PP6HQ",
+                    "user": {
+                        "id": "01a087ea-319d-716a-ae8b-cb5e5ebc67fc",
+                        "email": "someone@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/permissions",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImViOGU3ZWU4YmY4MWFhZjc4ZDRlNzExM2M1MDAyZWE2YTE4NGYwY2YxMmNlNzQ0YjllYWIwMGRkNjY4MWQ5YmQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg4OTg2NjY3LjcwNTgzNywibmJmIjoxNzg4OTg2NjY3LjcwNTgzNywiZXhwIjoxNzg4OTg3NTY3LjcwNTgzNywic3ViIjoiMDFhMDg3ZWEtMzE5ZC03MTZhLWFlOGItY2I1ZTVlYmM2N2ZjIiwianRpIjoiMDFhMDg3ZWEtMzJiOS03Y2VkLTgxNDUtZDg0NmI4MzBhMzdiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA4N2VhLTMyYjktN2I1NS04MTQ1LWQ4NDZiNzVmYzZjMiIsImF1dGhfdGltZSI6MTc4ODk4NjY2N30.XoMA5IOFPKETV--yY_lTnB63YGPiid6aIq3opzbJ87wkMfMcibPCd9LIAGyZGEJxfhW3QOC_23y2jdnUI7WeTPnJ95V3sC0ueyfXSEuM5u86kh3vvQ6W2Ulcf9M3NMVl9QGIY0GsUhLvpu4q36K6QN2CfGgSoCNz9l4HmlV42ocbK4upLxYrKp7TfymU2kFp5G0IWoE7Md1oCMhZEPmI0bZEmmhqbvwYMxpnTALUSbqFY9AEeHMWmgeMALTlppBJSKZNhqc1dFi0pdCEakfTNK6Q8dLGfPK11oNDjdGU88OpAGXCLUEuoP335ykhGsC9TsCr6OEor-1jkLJk2tNL0g"
+                ]
+            },
+            "body": null
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1788986700"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "key": "org.read",
+                        "description": "View the organization profile"
+                    },
+                    {
+                        "key": "org.update",
+                        "description": "Edit organization name and settings"
+                    },
+                    {
+                        "key": "org.delete",
+                        "description": "Delete the organization"
+                    },
+                    {
+                        "key": "members.read",
+                        "description": "List organization members"
+                    },
+                    {
+                        "key": "members.invite",
+                        "description": "Send membership invitations"
+                    },
+                    {
+                        "key": "members.update",
+                        "description": "Change a member's roles or suspend them"
+                    },
+                    {
+                        "key": "members.remove",
+                        "description": "Remove a member from the organization"
+                    },
+                    {
+                        "key": "roles.read",
+                        "description": "List roles"
+                    },
+                    {
+                        "key": "roles.manage",
+                        "description": "Create, update and delete custom roles and assignments"
+                    },
+                    {
+                        "key": "users.read",
+                        "description": "Read user records (admin scope)"
+                    },
+                    {
+                        "key": "users.manage",
+                        "description": "Disable and enable users (admin scope)"
+                    },
+                    {
+                        "key": "audit.read",
+                        "description": "Read the organization's audit log"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/permissions",
+            "headers": [],
+            "body": null
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer"
+                ]
+            },
+            "body": {
+                "error": "unauthorized",
+                "message": "Authentication is required."
+            }
+        }
+    }
+]

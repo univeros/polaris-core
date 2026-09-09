@@ -153,7 +153,7 @@ final class MfaManagementEndpointsTest extends FunctionalTestCase
     /** A valid access token whose auth_time is past the step-up window. */
     private function staleToken(string $userId): string
     {
-        $tokens = $this->container->get(TokenService::class);
+        $tokens = $this->graph->tokens();
         self::assertInstanceOf(TokenService::class, $tokens);
         $principal = new SessionPrincipal(
             userId: $userId,
@@ -168,7 +168,7 @@ final class MfaManagementEndpointsTest extends FunctionalTestCase
 
     private function enforceMfa(string $userId): void
     {
-        $users = $this->container->get(UserRepository::class);
+        $users = $this->graph->users();
         self::assertInstanceOf(UserRepository::class, $users);
         $user = $users->find($userId);
         self::assertInstanceOf(User::class, $user);

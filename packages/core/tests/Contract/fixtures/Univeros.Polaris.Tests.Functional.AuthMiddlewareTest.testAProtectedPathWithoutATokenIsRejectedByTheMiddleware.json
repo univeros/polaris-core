@@ -1,0 +1,25 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/auth/me",
+            "headers": [],
+            "body": null
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer"
+                ]
+            },
+            "body": {
+                "error": "unauthorized",
+                "message": "Authentication is required."
+            }
+        }
+    }
+]

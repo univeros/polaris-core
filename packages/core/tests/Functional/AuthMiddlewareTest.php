@@ -51,7 +51,7 @@ final class AuthMiddlewareTest extends FunctionalTestCase
             'POST /auth/logout' => $this->postJson('/auth/logout', []),
             'POST /auth/logout-all' => $this->postJson('/auth/logout-all', []),
             'POST /auth/password/change' => $this->postJson('/auth/password/change', []),
-            'DELETE /auth/sessions/{id}' => $this->harness->handle(
+            'DELETE /auth/sessions/{id}' => $this->handle(
                 (new ServerRequestFactory())->createServerRequest('DELETE', '/auth/sessions/abc'),
             ),
         ];
