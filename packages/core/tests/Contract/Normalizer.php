@@ -7,10 +7,12 @@ namespace Univeros\Polaris\Tests\Contract;
 use function count;
 use function is_array;
 use function is_string;
+use function json_encode;
 use function ksort;
 use function preg_match;
 use function str_starts_with;
 use function strlen;
+use function usort;
 
 /**
  * Makes two responses comparable across runs: every value that is minted per run (ids, tokens,
@@ -43,6 +45,20 @@ final class Normalizer
         ];
     }
 
+    /**
+     * @param list<mixed> $values
+     */
+    private static function allArrays(array $values): bool
+    {
+        foreach ($values as $v) {
+            if (!is_array($v)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static function value(mixed $value, string $key): mixed
     {
         if (is_array($value)) {
@@ -55,6 +71,10 @@ final class Normalizer
             }
             if (!array_is_list($out)) {
                 ksort($out);
+            } elseif ($out !== [] && self::allArrays($out)) {
+                // 1.0 never ordered its record lists (the driver's row order leaked through), so the
+                // contract holds the set of records, not their order.
+                usort($out, static fn(array $a, array $b): int => json_encode($a) <=> json_encode($b));
             }
 
             return $out;
