@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6eef8ade89910a0e8ca595193350d2c",
+    "content-hash": "66b48bf5beda4dfcf956fd89422613ce",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1781,6 +1781,190 @@
                 }
             ],
             "time": "2025-12-27T19:41:33+00:00"
+        },
+        {
+            "name": "polaris/cli",
+            "version": "0.1.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/cli",
+                "reference": "c39ad53f50dca15d30543bfb79cc095f72b8017d"
+            },
+            "require": {
+                "php": ">=8.3",
+                "polaris/core": "^0.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\Cli\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Command-line tools for Polaris for PHP: schema export and diff, manifest, doctor",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "polaris/core",
+            "version": "0.1.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/core",
+                "reference": "55784b818580f920904f4008d0319bda49bab4ba"
+            },
+            "require": {
+                "endroid/qr-code": "^6.0",
+                "php": ">=8.3",
+                "psr/http-client": "^1.0",
+                "spomky-labs/otphp": "^11.3",
+                "symfony/uid": "^7.0",
+                "univeros/http": "^2.0",
+                "univeros/module": "^2.0",
+                "univeros/observability": "^2.0",
+                "univeros/persistence": "^2.0",
+                "univeros/security": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Univeros\\Polaris\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Univeros\\Polaris\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Polaris for PHP core: authentication, MFA/OTP, sessions, multi-tenant organizations and RBAC, framework-free",
+            "keywords": [
+                "authentication",
+                "jwt",
+                "mfa",
+                "organizations",
+                "otp",
+                "rbac",
+                "totp",
+                "users"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "polaris/pdo",
+            "version": "0.1.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/pdo",
+                "reference": "0e105d160a8afed94c30328576a37e6bd6325dfe"
+            },
+            "require": {
+                "ext-pdo": "*",
+                "php": ">=8.3",
+                "polaris/core": "^0.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\Pdo\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "PDO database adapter (SQLite, MySQL, PostgreSQL) for Polaris for PHP",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "polaris/psr15",
+            "version": "0.1.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/psr15",
+                "reference": "103448e950e8f4102f878801802183e6aa1ac949"
+            },
+            "require": {
+                "php": ">=8.3",
+                "polaris/core": "^0.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\Psr15\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "PSR-15 request handler and middleware for Polaris for PHP",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "polaris/testing",
+            "version": "0.1.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/testing",
+                "reference": "08f31fed6e5b4d4d26e27acd64213d976db45f07"
+            },
+            "require": {
+                "php": ">=8.3",
+                "polaris/core": "^0.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\Testing\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "In-memory adapter, fakes and fixtures for testing applications built on Polaris for PHP",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "psr/cache",
@@ -6942,16 +7126,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.13.5",
+            "version": "3.13.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "0ca86845ce43291e8f5692c7356fccf3bcf02bf4"
+                "reference": "4c378e1a528ea066890fc2397cbdd2f94eb2fc91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/0ca86845ce43291e8f5692c7356fccf3bcf02bf4",
-                "reference": "0ca86845ce43291e8f5692c7356fccf3bcf02bf4",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/4c378e1a528ea066890fc2397cbdd2f94eb2fc91",
+                "reference": "4c378e1a528ea066890fc2397cbdd2f94eb2fc91",
                 "shasum": ""
             },
             "require": {
@@ -7017,7 +7201,7 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-11-04T16:30:35+00:00"
+            "time": "2026-08-06T00:17:32+00:00"
         },
         {
             "name": "staabm/side-effects-detector",
@@ -7124,7 +7308,13 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "polaris/cli": 20,
+        "polaris/core": 20,
+        "polaris/pdo": 20,
+        "polaris/psr15": 20,
+        "polaris/testing": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

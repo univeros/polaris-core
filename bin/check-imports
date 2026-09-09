@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+# Forbidden framework namespaces in package sources (docs/extraction/spec.md §0.6).
+# Advisory until WP5 (always exits 0); WP5 makes it blocking; WP7 requires every count to be zero.
+set -u
+cd "$(dirname "$0")/.."
+
+lines() { grep -rE --include='*.php' "$1" packages/*/src | grep -vE "${2:-^$}" | wc -l | tr -d ' '; }
+
+altair=$(lines 'Altair\\')
+cycle=$(lines 'Cycle\\')
+legacy=$(lines 'Univeros\\+Polaris')
+other=$(lines 'Univeros\\' 'Univeros\\+Polaris')
+
+printf 'Forbidden namespace references in packages/*/src (advisory until WP5):\n'
+printf '  Altair\\            %5s lines\n' "$altair"
+printf '  Cycle\\             %5s lines\n' "$cycle"
+printf '  Univeros\\Polaris\\  %5s lines  (seeded namespace, gone by WP7)\n' "$legacy"
+printf '  Univeros\\ (other)  %5s lines\n' "$other"
+exit 0

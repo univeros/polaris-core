@@ -1,0 +1,25 @@
+{
+    "name": "polaris/cli",
+    "description": "Command-line tools for Polaris for PHP: schema export and diff, manifest, doctor",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.3",
+        "polaris/core": "^0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\Cli\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

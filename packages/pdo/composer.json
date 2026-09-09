@@ -1,0 +1,26 @@
+{
+    "name": "polaris/pdo",
+    "description": "PDO database adapter (SQLite, MySQL, PostgreSQL) for Polaris for PHP",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.3",
+        "ext-pdo": "*",
+        "polaris/core": "^0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\Pdo\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

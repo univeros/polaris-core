@@ -9,7 +9,7 @@ This repository (`github.com/univeros/polaris-core`) publishes the `polaris/*` C
 - **The code is the complete Polaris 1.0.0** (June 2026): authentication, MFA/OTP, sessions and rotating refresh tokens, multi-tenant organizations and RBAC, audit log, 35 PSR-14 events, 52 endpoints specified in `api/**/*.yaml`, 115 test files.
 - **Current task: extraction.** This repository is being restructured into a monorepo so the same code runs in any PHP application: `packages/core` (`Polaris\`, framework-free), `packages/psr15`, `packages/pdo`, `packages/testing`, `packages/cli`. Everything Univeros-specific (`Module.php`, `Bootstrap/*`, Cycle entities and repositories, the Altair HTTP layer) is replaced, not adapted. The authoritative spec is `docs/extraction/spec.md`; work packages WP0–WP8 are executed in order on branches `extract/wpN`.
 
-Until WP1 lands, code still lives under `src/` with the 1.0 layout. Check `docs/extraction/decisions.md` for what has been decided since this file was written.
+Since WP1 the seeded code lives under `packages/core/src` (still in the `Univeros\Polaris\` namespace until each layer is ported) with its tests under `packages/core/tests`; `packages/psr15`, `packages/pdo`, `packages/testing` and `packages/cli` are empty shells until their work package. Check `docs/extraction/decisions.md` for what has been decided since this file was written.
 
 ## The rules
 
