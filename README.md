@@ -1,43 +1,72 @@
-# Polaris
+# Polaris for PHP
 
-> **Authentication, MFA & user management for the [Univeros](https://univeros.io) framework.**
-> One line in `config/modules.php` — a complete, production-grade identity stack.
+> **Self-hosted authentication, MFA, organizations and RBAC for any PHP application.**
+> Framework-free core, PSR-15 for HTTP, PDO for storage, one object graph and no container.
 
 ![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?logo=php&logoColor=white)
-![Univeros module](https://img.shields.io/badge/Univeros-module-1d76db)
+![Framework-agnostic](https://img.shields.io/badge/framework-agnostic-1d76db)
 ![Multi-tenant](https://img.shields.io/badge/multi--tenant-RBAC-0052cc)
 ![MFA](https://img.shields.io/badge/MFA-TOTP%20%C2%B7%20SMS%20%C2%B7%20email-d93f0b)
-![Status](https://img.shields.io/badge/status-in%20development-orange)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-Polaris is the official **authentication & user-management module** for Univeros /
-Altair applications. A host registers one class and the app gains email-verified
-login, JWT access tokens with **rotating refresh tokens**, **multi-factor
-authentication** (TOTP/QR, SMS, email), single-use recovery codes, **multi-tenant
-organizations with role-based access control**, and a hardened security
-posture — contributed as routes, Cycle entities, migrations, and middleware with
-**no further host wiring**.
+Polaris gives an application a complete identity stack it owns: email-verified
+registration, password login with Argon2id, JWT access tokens with **rotating
+refresh tokens** and theft detection, **multi-factor authentication** (TOTP by QR,
+SMS, email, recovery codes, step-up), **multi-tenant organizations with role-based
+access control**, an append-only audit log and PSR-14 events. The HTTP contract is
+52 endpoints declared in `api/**/*.yaml`; every response is contract-frozen by a
+recorded fixture suite.
 
 The name is the idea: *Polaris* is the fixed star your application's identity
 navigates by.
 
 ---
 
-## Why Polaris
+## Packages
 
-- **🔌 Drop-in.** Implements the standard Univeros module contracts. Register it,
-  run migrations, done — no per-module bootstrapping.
-- **🔐 Secure by default.** Argon2id passwords, asymmetric JWT signing, refresh
-  tokens & OTP codes hashed at rest, rotation with theft detection, rate limiting,
-  lockout, audit logging, and no user enumeration.
-- **🏢 Multi-tenant.** First-class organizations, memberships, and per-org roles —
-  one user, many orgs, different permissions in each.
-- **📱 MFA-first.** TOTP authenticator apps (provisioned by QR), SMS OTP, and email
-  OTP, plus recovery codes and step-up authentication for sensitive actions.
-- **🧩 Framework-native.** Builds on the existing `Altair\Http` auth contracts
-  (`TokenGeneratorInterface`, `IdentityProviderInterface`, …) instead of inventing
-  parallel machinery, and is operated entirely through `bin/altair`.
-- **📦 Dependency-light & portable.** SMS and email delivery are pluggable ports —
-  no vendor SDK is baked into the core.
+| Package | Namespace | What it is |
+| --- | --- | --- |
+| `polaris/core` | `Polaris\` | The domain: identity, MFA, tokens, organizations, authorization, the schema, the endpoints, the manifest, the wiring. Depends only on PSR interfaces and a few libraries (`lcobucci/jwt`, `spomky-labs/otphp`, `endroid/qr-code`, `symfony/uid`, `symfony/yaml`). |
+| `polaris/psr15` | `Polaris\Psr15\` | Router, middleware stack and request handler for any PSR-15 host (Slim, Mezzio, Laravel or Symfony through their PSR bridges). |
+| `polaris/pdo` | `Polaris\Pdo\` | The database adapter for PostgreSQL, MySQL and SQLite, the DDL exporter and the schema inspector. |
+| `polaris/testing` | `Polaris\Testing\` | The in-memory database adapter for tests of applications built on Polaris. |
+| `polaris/cli` | `Polaris\Cli\` | `bin/polaris`: `schema:export`, `schema:diff`, `manifest` (JSON, OpenAPI 3.1), `doctor`. |
+
+This repository is the monorepo; each package is published to its own read-only
+repository for Composer.
+
+---
+
+## Quick start
+
+The fastest way to see everything is the Slim demo:
+
+```sh
+cd examples/slim
+composer install
+bin/setup            # .env, RS256 keys, SQLite schema, permission catalog
+bin/walkthrough.sh   # register → verify → login → TOTP → MFA login → organization
+```
+
+The whole integration is [`examples/slim/src/bootstrap.php`](examples/slim/src/bootstrap.php):
+
+```php
+$polaris = Polaris::create(new Config(
+    secrets: EnvironmentConfig::secrets(),   // APP_KEY, AUTH_JWT_* from the environment
+    auth: EnvironmentConfig::auth(),         // issuer, audience, feature flags
+    database: new PdoAdapter($pdo),          // PostgreSQL, MySQL or SQLite
+    mailer: $mailer,                         // OtpMailerInterface: verification and OTP emails
+    sms: $sms,                               // SmsSenderInterface
+    dispatcher: $dispatcher,                 // PSR-14; subscribe $polaris->listeners()
+));
+
+$pipeline = new Pipeline($polaris->graph(), $responseFactory);
+$pipeline->middleware();   // ordered PSR-15 middleware for your stack
+$pipeline->handler();      // the PSR-15 handler serving every route in api/
+```
+
+Every port has a working default (in-memory cache, log mailer and SMS sender, system
+clock, libsodium encrypter, PSR-3 metrics); pass your own to replace it.
 
 ---
 
@@ -51,62 +80,22 @@ navigates by.
 | **MFA / OTP** | **TOTP (QR)**, **SMS OTP**, **email OTP**, recovery codes, login-MFA gate, step-up |
 | **Passwords** | Argon2id, policy enforcement, breached-password hook, reset & change (logout-everywhere) |
 | **Multi-tenant RBAC** | Organizations, memberships, roles, permissions, invitations, org switching |
-| **Authorization** | Declarative permission guard middleware + a programmatic `Gate` with policies |
+| **Authorization** | Declarative per-endpoint permissions + a programmatic `Gate` |
 | **Security** | Rate limiting, account lockout, anti-enumeration, audit log, key rotation |
-| **Ops** | PSR-14 domain events, notification fan-out, transient-row pruning, observability |
-
----
-
-## Quick start
-
-```bash
-composer require univeros/polaris
-```
-
-```php
-// config/modules.php
-return [
-    new Univeros\Polaris\Module(),
-];
-```
-
-Provide the secrets (env / secret manager):
-
-```bash
-export APP_KEY="…"                              # 32-byte base64
-export AUTH_JWT_PRIVATE_KEY="$(cat private.pem)" # signs access tokens
-export AUTH_JWT_PUBLIC_KEY="$(cat public.pem)"   # verification / JWKS
-```
-
-Apply the migrations and verify:
-
-```bash
-bin/altair db:migrate
-bin/altair routes:list --format=json | grep auth
-bin/altair doctor
-```
-
-That single registration contributes every `/auth`, `/users`, and `/orgs` route,
-the entities, the migrations, the auth/authorization middleware, and the container
-bindings. Bind production SMS/email providers in your host container when you're
-ready — Polaris ships dev (log) drivers so flows work out of the box.
+| **Ops** | PSR-14 domain events, notification fan-out, transient-row pruning, metrics |
 
 ---
 
 ## How it works
 
-Every endpoint follows the framework's **Action → Input → Domain → Responder**
-shape, and Polaris plugs into the framework's existing auth seams rather than
-replacing them:
-
 ```
-HTTP edge   Action            thin route target — declares input/responder/domain + required permissions
-            Input (readonly)  typed request DTO with validation rules()
-            Responder         Payload → JSON / RFC 9457 Problem Details
-Domain      *Service          business logic, transactional, emits PSR-14 events
-            Contracts/*       ports: SmsSender, OtpMailer, PasswordHasher, Clock, …
-Persistence Entity/* (Cycle)  UUID-v7 entities → host ORM schema
-Security    token machinery   implements Altair\Http\Contracts\* (TokenFactory, IdentityProvider, …)
+HTTP        api/**/*.yaml        the manifest: method, path, auth, rate limit, effect, input rules, endpoint class
+            Polaris\Psr15        RouteMiddleware → ClientContext → rate limits → token / MFA-ticket auth → step-up → denylist → authorization → RequestHandler
+            Polaris\Http         Endpoint(Input): Result — parse, call a service, map the outcome
+Domain      Identity, Mfa, Token, Authorization   services, transactional, emitting PSR-14 events
+            Polaris\Contract     ports: DatabaseAdapter, repositories, tokens, encrypter, mailer, SMS, rate store, metrics, …
+Persistence Polaris\Schema       the tables as data; Polaris\Repository over any DatabaseAdapter (polaris/pdo, polaris/testing)
+Wiring      Polaris\Wiring\Graph every service built explicitly from a Config; no container
 ```
 
 Login returns a short-lived **JWT access token** plus a **rotating refresh
@@ -118,7 +107,8 @@ revokes the entire token family.
 ## API surface
 
 A representative slice (full catalog in
-[`docs/auth/api-reference.md`](docs/auth/api-reference.md)):
+[`docs/auth/api-reference.md`](docs/auth/api-reference.md); `bin/polaris manifest --format=openapi`
+renders the OpenAPI 3.1 document):
 
 | Method | Path | Purpose |
 | --- | --- | --- |
@@ -132,12 +122,8 @@ A representative slice (full catalog in
 | `POST` | `/orgs/{id}/invites` | Invite a member |
 | `POST` | `/auth/switch-org` | Switch active org → re-scoped token |
 
-> **Versioning & mounting are the host's responsibility.** Polaris contributes
-> relative, unversioned routes; the host front controller mounts them under
-> whatever scheme (e.g. a `/v1` prefix) it uses for its own surface.
-
-Endpoints are generated from YAML specs under [`api/`](api/) via
-`bin/altair spec:scaffold`.
+Routes are relative; mount the handler under whatever prefix your application uses
+(`Pipeline` takes a path prefix).
 
 ---
 
@@ -147,17 +133,14 @@ Three factor types, one uniform verification flow:
 
 - **TOTP (authenticator app)** — RFC 6238 via `spomky-labs/otphp`; enrolled by
   scanning a QR code (`otpauth://` provisioning URI). Secrets are encrypted at
-  rest.
-- **SMS OTP** — 6-digit codes delivered through your `SmsSenderInterface` binding.
-- **Email OTP** — 6-digit codes delivered through your `OtpMailerInterface`
-  binding.
+  rest (XChaCha20-Poly1305).
+- **SMS OTP** — 6-digit codes delivered through your `SmsSenderInterface`.
+- **Email OTP** — 6-digit codes delivered through your `OtpMailerInterface`.
 - **Recovery codes** — 10 single-use codes, hashed at rest.
 - **Step-up** — sensitive operations (password change, removing a factor, deleting
-  an org) require a recent strong authentication.
+  an org or a user) require a recent strong authentication.
 
-SMS and email delivery are **provider-agnostic ports** — bind Twilio, Vonage, SES,
-SMTP, or anything else; dev `Log` drivers ship in the box. Details in
-[`docs/auth/mfa-otp.md`](docs/auth/mfa-otp.md).
+Details in [`docs/auth/mfa-otp.md`](docs/auth/mfa-otp.md).
 
 ---
 
@@ -172,7 +155,7 @@ User ──< Membership >── Organization
 
 Org creators become `owner`; `admin`/`member` templates are seeded per org and
 fully customizable. The access token carries the active org and resolved roles, so
-authorization is mostly stateless; an `AuthorizationMiddleware` enforces
+authorization is mostly stateless; the authorization middleware enforces
 per-endpoint permissions and a `Gate` handles the rules permissions can't express
 (last-owner protection, role hierarchy). Cross-tenant access is denied by design.
 See [`docs/auth/rbac.md`](docs/auth/rbac.md).
@@ -182,77 +165,75 @@ See [`docs/auth/rbac.md`](docs/auth/rbac.md).
 ## Security
 
 Polaris follows established standards — **JWT** (RFC 7519), **JWKS** (RFC 7517),
-**TOTP** (RFC 6238), **OAuth 2.0 refresh semantics + Security BCP** (RFC 9700),
-**Problem Details** (RFC 9457), and **OWASP ASVS** for password storage. Secrets
-are never stored in plaintext (hashed or encrypted at rest), comparisons are
-constant-time, and signing keys are asymmetric with `kid`-based rotation. Full
-threat model in [`docs/auth/security.md`](docs/auth/security.md).
+**TOTP** (RFC 6238), **OAuth 2.0 refresh semantics + Security BCP** (RFC 9700), and
+**OWASP ASVS** for password storage. Secrets are never stored in plaintext (hashed
+or encrypted at rest), comparisons are constant-time, and signing keys are
+asymmetric with `kid`-based rotation. Full threat model in
+[`docs/auth/security.md`](docs/auth/security.md).
+
+---
+
+## Database
+
+The schema is data (`Polaris\Schema`), so there are no migrations to carry:
+
+```sh
+bin/polaris schema:export --target=sql:postgres > schema.sql   # also sql:mysql, sql:sqlite
+bin/polaris schema:diff --dsn='pgsql:host=…;dbname=…'           # what a live database is missing
+bin/polaris doctor --dsn=…                                       # secrets, keys, manifest, connectivity, schema
+```
+
+`polaris/pdo` runs on PostgreSQL, MySQL and SQLite; the adapter conformance suite
+runs on all of them plus the in-memory adapter.
 
 ---
 
 ## Documentation
 
-The complete, authoritative specification lives in [`docs/auth/`](docs/auth/):
+The specification lives in [`docs/auth/`](docs/auth/):
 
 | Doc | Contents |
 | --- | --- |
-| [README](docs/auth/README.md) | Overview, goals, framework integration |
-| [data-model](docs/auth/data-model.md) | Entities, tables, relationships, migrations |
+| [README](docs/auth/README.md) | Overview and goals |
+| [data-model](docs/auth/data-model.md) | Models, tables, relationships |
 | [flows](docs/auth/flows.md) | Register, login, refresh rotation, sessions, password |
 | [mfa-otp](docs/auth/mfa-otp.md) | TOTP/QR, SMS, email, recovery, step-up |
 | [rbac](docs/auth/rbac.md) | Orgs, memberships, roles, permissions, guard |
 | [api-reference](docs/auth/api-reference.md) | Full endpoint catalog + error format |
 | [security](docs/auth/security.md) | Threat model, crypto, key management |
-| [configuration](docs/auth/configuration.md) | Config schema, env, bindings, deps |
+| [configuration](docs/auth/configuration.md) | Config schema, env, deps |
 | [events](docs/auth/events.md) | PSR-14 domain events |
 | [testing](docs/auth/testing.md) | Test strategy + acceptance criteria |
-| [implementation-plan](docs/auth/implementation-plan.md) | Phased build order |
 
-Agent-oriented orientation is in [`AGENT.md`](AGENT.md).
-
----
-
-## Roadmap & status
-
-Polaris is in **active development**, built in five phases tracked on GitHub:
-
-| Phase | Milestone |
-| --- | --- |
-| **0 — Foundation** | identity, config/secrets, deps, CI |
-| **1 — Identity core** | register, login, JWT + rotating refresh, sessions |
-| **2 — MFA & OTP** | TOTP/QR, SMS, email, recovery, step-up |
-| **3 — Multi-tenant RBAC** | orgs, roles, permissions, invitations |
-| **4 — Hardening & ops** | audit, observability, key rotation, sign-off |
-
-Progress lives in the [milestones](https://github.com/univeros/polaris/milestones)
-and [issues](https://github.com/univeros/polaris/issues); each phase has an `epic`
-tracking issue.
+The extraction from the Univeros module, with every decision taken, is in
+[`docs/extraction/`](docs/extraction/). Agent-oriented orientation is in
+[`AGENT.md`](AGENT.md).
 
 ---
 
 ## Testing
 
-```bash
+```sh
 composer install
-vendor/bin/phpunit
+composer qa          # phpcs, phpstan, forbidden-import check, phpunit
 ```
 
-The target is **≥ 80 % coverage** with unit, integration, and E2E layers, with
-TOTP validated against RFC 6238 vectors and OTP channels exercised through
-in-memory senders. See [`docs/auth/testing.md`](docs/auth/testing.md).
+Without `DB_CONNECTION` the database tests run on in-memory SQLite (the whole suite
+in about a minute); CI runs them against PostgreSQL. The functional suite replays
+184 recorded 1.0 fixtures through the PSR-15 pipeline, so every response is
+contract-frozen.
 
 ---
 
 ## Contributing
 
 Issues and pull requests are welcome on
-[github.com/univeros/polaris](https://github.com/univeros/polaris). Please read
-[`AGENT.md`](AGENT.md) and the relevant spec doc first, follow the conventions
-(strict types, immutability, small files, tests-first), and run `composer qa`
-before opening a PR.
+[github.com/univeros/polaris-core](https://github.com/univeros/polaris-core). Please
+read [`AGENT.md`](AGENT.md) first, follow the conventions (strict types,
+immutability, small files, tests-first), and run `composer qa` before opening a PR.
 
 ---
 
 ## License
 
-Proprietary. © Univeros. See `composer.json`.
+MIT. See `composer.json`.

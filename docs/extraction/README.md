@@ -14,3 +14,14 @@ Everything needed to run task 1 (building the framework-agnostic `polaris/*` mon
 Working rules (from `spec.md` §0): no feature work; tests green at every merged step; public HTTP contract frozen; no `Altair\`, `Cycle\`, or `Univeros\` import survives past WP7, and none is ever added.
 
 Branches: `extract/wp0` … `extract/wp8`, one at a time, each merged before the next starts.
+
+## Status (2026-09-09)
+
+Task 1 is done: WP0 to WP8 are merged. Against the definition of done (`spec.md` §9):
+
+- Zero framework imports anywhere, CI-enforced (`bin/check-imports`); all suites green.
+- Adapter conformance suite green on in-memory, SQLite and PostgreSQL (CI).
+- The 52 routes are contract-frozen: 184 fixtures recorded from the 1.0 code replay through PSR-15, identical after normalisation, with one documented change (`behaviour-changes.md`).
+- The Slim demo runs from a clean clone in about a minute (`examples/slim`).
+- `behaviour-changes.md`, `effects.md` and `decisions.md` are in place; `univeros/polaris` is unchanged.
+- Open for the owner: the first `v0.1.0` tags need the per-package split repositories (org, names, split tooling: see the WP0 decision), and a `LICENSE` file needs the copyright line.
