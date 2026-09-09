@@ -24,7 +24,7 @@ use function is_string;
  * subject via the {@see IdentityProviderInterface} and issues a minimal access token.
  *
  * Org/roles/session (`sid`) enrichment belongs to the interactive login flow
- * ({@see \Univeros\Polaris\Module} Phase 1 — `LoginService`/`TokenService`), which calls
+ * (the login flow — `LoginService`/`TokenService`), which calls
  * the generator with a fully-resolved {@see AccessTokenClaims}; this factory deliberately
  * issues an unscoped token for the basic-credentials path.
  */

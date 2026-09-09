@@ -5,3 +5,5 @@ parameters:
         - packages/core/tests
         - packages/testing/src
         - packages/pdo/src
+        - packages/psr15/src
+        - packages/cli/src

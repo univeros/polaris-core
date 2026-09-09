@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Token;
+namespace Polaris\Tests\Token;
 
 use Polaris\Exception\InvalidTokenException;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
-use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Tests\Support\TestKeys;
+use Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\TestKeys;
 use Polaris\Token\AccessTokenClaims;
 
 /**

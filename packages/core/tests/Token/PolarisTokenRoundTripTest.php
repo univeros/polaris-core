@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Token;
+namespace Polaris\Tests\Token;
 
-use Univeros\Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\FrozenClock;
 use Polaris\Token\AccessTokenClaims;
 
 /**

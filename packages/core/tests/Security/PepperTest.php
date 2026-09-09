@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Security;
+namespace Polaris\Tests\Security;
 
 use PHPUnit\Framework\TestCase;
 use Polaris\Exception\InvalidConfigException;

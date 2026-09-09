@@ -21,6 +21,7 @@ use Polaris\Contract\BreachedPasswordCheckInterface;
 use Polaris\Contract\DatabaseAdapter;
 use Polaris\Contract\EncrypterInterface;
 use Polaris\Contract\IdentityProviderInterface;
+use Polaris\Contract\MetricsInterface;
 use Polaris\Contract\OtpMailerInterface;
 use Polaris\Contract\PasswordHasherInterface;
 use Polaris\Contract\QrCodeRendererInterface;
@@ -42,7 +43,7 @@ use Polaris\Http\Endpoint;
 use Polaris\Http\Manifest\Loader;
 use Polaris\Http\Manifest\Manifest;
 use Polaris\Http\Orgs\ReadOrganizationEndpoint;
-use Polaris\Identity\CycleIdentityProvider;
+use Polaris\Identity\RepositoryIdentityProvider;
 use Polaris\Identity\EmailVerificationService;
 use Polaris\Identity\LoginService;
 use Polaris\Identity\MfaLoginService;
@@ -65,6 +66,9 @@ use Polaris\Mfa\OtpFactorService;
 use Polaris\Mfa\OtphpTotpProvider;
 use Polaris\Mfa\OtpService;
 use Polaris\Mfa\RecoveryCodeService;
+use Polaris\Notification\NotificationListener;
+use Polaris\Observability\AuditLogListener;
+use Polaris\Observability\MetricsListener;
 use Polaris\Repository\EmailVerificationRepository;
 use Polaris\Repository\IdentityMap;
 use Polaris\Repository\InvitationRepository;
@@ -87,6 +91,7 @@ use Polaris\Security\Pepper;
 use Polaris\Security\SodiumEncrypter;
 use Polaris\Support\CacheRateStore;
 use Polaris\Support\InMemoryCache;
+use Polaris\Support\LogMetrics;
 use Polaris\Support\SystemClock;
 use Polaris\Token\AccessTokenDenylist;
 use Polaris\Token\JwtSignerFactory;
@@ -291,7 +296,7 @@ final class Graph
 
     public function identityProvider(): IdentityProviderInterface
     {
-        return $this->once(CycleIdentityProvider::class, fn(): CycleIdentityProvider => new CycleIdentityProvider($this->users()));
+        return $this->once(RepositoryIdentityProvider::class, fn(): RepositoryIdentityProvider => new RepositoryIdentityProvider($this->users()));
     }
 
     public function tokenFactory(): TokenFactoryInterface
@@ -592,6 +597,26 @@ final class Graph
             $this->clock(),
             $this->events(),
         ));
+    }
+
+    public function metrics(): MetricsInterface
+    {
+        return $this->config->metrics ?? $this->once(LogMetrics::class, fn(): LogMetrics => new LogMetrics($this->logger()));
+    }
+
+    /**
+     * The PSR-14 listeners Polaris ships (audit log, notifications, metrics). Subscribe them to the
+     * dispatcher you pass in {@see Config}; each is a callable taking one event.
+     *
+     * @return list<callable(object): void>
+     */
+    public function listeners(): array
+    {
+        return [
+            $this->once(AuditLogListener::class, fn(): AuditLogListener => new AuditLogListener($this->unitOfWork(), $this->clock(), $this->logger())),
+            $this->once(NotificationListener::class, fn(): NotificationListener => new NotificationListener($this->mailer(), $this->users(), $this->logger())),
+            $this->once(MetricsListener::class, fn(): MetricsListener => new MetricsListener($this->metrics(), $this->logger())),
+        ];
     }
 
     public function prune(): PruneExpiredService

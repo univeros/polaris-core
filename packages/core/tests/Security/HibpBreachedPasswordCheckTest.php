@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Security;
+namespace Polaris\Tests\Security;
 
 use Laminas\Diactoros\RequestFactory;
 use Laminas\Diactoros\Response\TextResponse;

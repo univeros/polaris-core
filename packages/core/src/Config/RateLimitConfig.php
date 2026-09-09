@@ -18,7 +18,7 @@ use function is_array;
  *
  * Most groups are per-IP budgets over an endpoint group; `authenticated` is the global
  * per-user budget across every authenticated endpoint (600/min per user id, spec §5), enforced
- * by {@see \Univeros\Polaris\Http\Middleware\AuthenticatedRateLimitMiddleware} after token
+ * by `AuthenticatedRateLimitMiddleware` after token
  * authentication.
  */
 final readonly class RateLimitConfig

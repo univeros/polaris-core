@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Mfa;
+namespace Polaris\Tests\Mfa;
 
 use OTPHP\TOTP;
 use PHPUnit\Framework\TestCase;
 use Polaris\Config\TotpConfig;
 use Polaris\Mfa\OtphpTotpProvider;
-use Univeros\Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\FrozenClock;
 
 use function preg_match;
 use function rawurlencode;

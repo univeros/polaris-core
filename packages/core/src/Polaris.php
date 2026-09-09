@@ -34,6 +34,14 @@ final class Polaris
         return $this->graph;
     }
 
+    /**
+     * @return list<callable(object): void>
+     */
+    public function listeners(): array
+    {
+        return $this->graph->listeners();
+    }
+
     public function manifest(): Manifest
     {
         return $this->graph->manifest();

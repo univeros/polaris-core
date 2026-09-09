@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Persistence;
+namespace Polaris\Tests\Persistence;
 
 use PDO;
 use Polaris\Repository\OtpChallengeRepository;
@@ -15,10 +15,10 @@ use Polaris\Mfa\ChallengePurpose;
 use Polaris\Mfa\OtpService;
 use Polaris\Security\Pepper;
 use Polaris\Support\InMemoryCache;
-use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
-use Univeros\Polaris\Tests\Support\RecordingOtpMailer;
-use Univeros\Polaris\Tests\Support\RecordingSmsSender;
+use Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\RecordingEventDispatcher;
+use Polaris\Tests\Support\RecordingOtpMailer;
+use Polaris\Tests\Support\RecordingSmsSender;
 
 /**
  * Exercises {@see OtpService} verify against a **real database driver**, proving the conditional

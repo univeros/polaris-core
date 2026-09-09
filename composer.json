@@ -40,7 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Univeros\\Polaris\\Tests\\": "packages/core/tests/"
+            "Polaris\\Tests\\": "packages/core/tests/"
         }
     },
     "scripts": {

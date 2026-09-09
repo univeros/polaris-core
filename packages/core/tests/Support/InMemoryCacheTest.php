@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Support;
+namespace Polaris\Tests\Support;
 
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\InvalidArgumentException;

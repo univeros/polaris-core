@@ -6,6 +6,8 @@
     <file>packages/core/tests</file>
     <file>packages/testing/src</file>
     <file>packages/pdo/src</file>
+    <file>packages/psr15/src</file>
+    <file>packages/cli/src</file>
 
     <arg name="colors"/>
     <arg name="warning-severity" value="0"/>

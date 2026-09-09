@@ -25,7 +25,6 @@ final class InvitationSchema
         ])
             ->unique(['token_hash'], 'auth_invitations_token_hash_unique')
             ->index(['organization_id'], 'auth_invitations_org_index')
-            ->index(['email'], 'auth_invitations_email_index')
-            ->index(['expires_at'], 'auth_invitations_expires_index');
+            ->index(['email'], 'auth_invitations_email_index');
     }
 }

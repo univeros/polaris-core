@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Mfa;
+namespace Polaris\Tests\Mfa;
 
 use Polaris\Contract\RepositoryInterface;
 use DateTimeImmutable;
@@ -12,10 +12,10 @@ use Polaris\Event\MfaEnrolled;
 use Polaris\Mfa\MfaConfirmation;
 use Polaris\Mfa\RecoveryCodeService;
 use Polaris\Security\Pepper;
-use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Tests\Support\InMemoryRecoveryCodeRepository;
-use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
-use Univeros\Polaris\Tests\Support\RecordingUnitOfWork;
+use Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\InMemoryRecoveryCodeRepository;
+use Polaris\Tests\Support\RecordingEventDispatcher;
+use Polaris\Tests\Support\RecordingUnitOfWork;
 
 final class MfaConfirmationTest extends TestCase
 {

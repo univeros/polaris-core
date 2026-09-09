@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Mfa;
+namespace Polaris\Tests\Mfa;
 
 use Polaris\Contract\RepositoryInterface;
 use DateTimeImmutable;
@@ -18,11 +18,11 @@ use Polaris\Mfa\ChallengePurpose;
 use Polaris\Mfa\OtpService;
 use Polaris\Security\Pepper;
 use Polaris\Support\InMemoryCache;
-use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
-use Univeros\Polaris\Tests\Support\RecordingOtpMailer;
-use Univeros\Polaris\Tests\Support\RecordingSmsSender;
-use Univeros\Polaris\Tests\Support\RecordingUnitOfWork;
+use Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\RecordingEventDispatcher;
+use Polaris\Tests\Support\RecordingOtpMailer;
+use Polaris\Tests\Support\RecordingSmsSender;
+use Polaris\Tests\Support\RecordingUnitOfWork;
 use Polaris\Token\ClientContext;
 
 use function preg_match;

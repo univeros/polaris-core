@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Functional;
+namespace Polaris\Tests\Functional;
 
 use Laminas\Diactoros\ResponseFactory;
 use Laminas\Diactoros\ServerRequestFactory;
@@ -14,12 +14,12 @@ use Polaris\Wiring\Config;
 use Polaris\Wiring\Graph;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Univeros\Polaris\Tests\Contract\Fixture;
-use Univeros\Polaris\Tests\Persistence\DatabaseTestCase;
-use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
-use Univeros\Polaris\Tests\Support\RecordingOtpMailer;
-use Univeros\Polaris\Tests\Support\RecordingSmsSender;
-use Univeros\Polaris\Tests\Support\TestKeys;
+use Polaris\Tests\Contract\Fixture;
+use Polaris\Tests\Persistence\DatabaseTestCase;
+use Polaris\Tests\Support\RecordingEventDispatcher;
+use Polaris\Tests\Support\RecordingOtpMailer;
+use Polaris\Tests\Support\RecordingSmsSender;
+use Polaris\Tests\Support\TestKeys;
 
 use function getenv;
 use function in_array;

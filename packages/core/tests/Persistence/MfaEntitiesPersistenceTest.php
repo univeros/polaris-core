@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Persistence;
+namespace Polaris\Tests\Persistence;
 
 use Polaris\Repository\RecoveryCodeRepository;
 use Polaris\Repository\OtpChallengeRepository;

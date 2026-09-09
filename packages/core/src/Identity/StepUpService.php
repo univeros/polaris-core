@@ -18,7 +18,7 @@ use Polaris\Token\TokenService;
 
 /**
  * Step-up re-authentication (issue #25): re-verify a factor while already logged in to refresh the
- * session's `auth_time`, so a sensitive operation gated by {@see \Univeros\Polaris\Http\Middleware\StepUpMiddleware}
+ * session's `auth_time`, so a sensitive operation gated by `StepUpMiddleware`
  * can proceed.
  *
  * It reuses the shared {@see MfaChallengeVerifier} (purpose `step_up`) for the factor routing and on

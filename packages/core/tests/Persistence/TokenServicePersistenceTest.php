@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Persistence;
+namespace Polaris\Tests\Persistence;
 
 use Polaris\Config\AuthConfig;
 use Polaris\Model\RefreshToken;
@@ -10,10 +10,10 @@ use Polaris\Event\RefreshReuseDetected;
 use Polaris\Exception\RefreshTokenReuseException;
 use Polaris\Repository\RefreshTokenRepository;
 use Polaris\Security\Pepper;
-use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
-use Univeros\Polaris\Tests\Support\RecordingTokenGenerator;
-use Univeros\Polaris\Tests\Support\StubSessionPrincipalResolver;
+use Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\RecordingEventDispatcher;
+use Polaris\Tests\Support\RecordingTokenGenerator;
+use Polaris\Tests\Support\StubSessionPrincipalResolver;
 use Polaris\Token\ClientContext;
 use Polaris\Token\SessionPrincipal;
 use Polaris\Token\TokenService;

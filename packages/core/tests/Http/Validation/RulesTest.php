@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Http\Validation;
+namespace Polaris\Tests\Http\Validation;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;

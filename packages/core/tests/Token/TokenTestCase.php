@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Token;
+namespace Polaris\Tests\Token;
 
 use Polaris\Token\TokenConfiguration;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
 use Polaris\Token\PolarisTokenGenerator;
 use Polaris\Token\PolarisTokenParser;
-use Univeros\Polaris\Tests\Support\TestKeys;
+use Polaris\Tests\Support\TestKeys;
 
 use function base64_decode;
 use function explode;

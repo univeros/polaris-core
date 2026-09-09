@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Token;
+namespace Polaris\Tests\Token;
 
 use PHPUnit\Framework\TestCase;
 use Polaris\Exception\InvalidConfigException;
-use Univeros\Polaris\Tests\Support\TestKeys;
+use Polaris\Tests\Support\TestKeys;
 use Polaris\Token\JwkSet;
 
 use function openssl_pkey_get_details;

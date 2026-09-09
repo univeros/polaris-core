@@ -13,7 +13,7 @@ use function is_int;
 /**
  * Instant access-token revocation (`docs/auth/security.md` §3, `security.access_token.denylist`):
  * a logout-everywhere / disable / erase records a per-user revocation watermark in the cache, and
- * {@see \Univeros\Polaris\Http\Middleware\DenylistMiddleware} rejects any access token issued at
+ * `DenylistMiddleware` rejects any access token issued at
  * or before it — one cache read per request, no per-token bookkeeping.
  *
  * Entries live exactly one access-token TTL: after that every token they could affect has expired

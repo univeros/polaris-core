@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Token;
+namespace Polaris\Tests\Token;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
@@ -15,11 +15,11 @@ use Polaris\Event\TokenRefreshed;
 use Polaris\Exception\InvalidGrantException;
 use Polaris\Exception\RefreshTokenReuseException;
 use Polaris\Security\Pepper;
-use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Tests\Support\InMemoryRefreshTokenRepository;
-use Univeros\Polaris\Tests\Support\RecordingEventDispatcher;
-use Univeros\Polaris\Tests\Support\RecordingTokenGenerator;
-use Univeros\Polaris\Tests\Support\StubSessionPrincipalResolver;
+use Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\InMemoryRefreshTokenRepository;
+use Polaris\Tests\Support\RecordingEventDispatcher;
+use Polaris\Tests\Support\RecordingTokenGenerator;
+use Polaris\Tests\Support\StubSessionPrincipalResolver;
 use Polaris\Token\ClientContext;
 use Polaris\Token\SessionPrincipal;
 use Polaris\Token\TokenService;

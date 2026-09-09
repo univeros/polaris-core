@@ -16,7 +16,7 @@ use function trim;
 
 /**
  * `DELETE /auth/mfa/factors/{id}` — remove one of the authenticated user's factors (spec §8).
- * Step-up gated (enforced by {@see \Univeros\Polaris\Http\Middleware\StepUpMiddleware}); removing the
+ * Step-up gated (enforced by `StepUpMiddleware`); removing the
  * last confirmed factor is blocked while MFA is enforced for the user (`409`).
  */
 final class DeleteFactorEndpoint extends Endpoint

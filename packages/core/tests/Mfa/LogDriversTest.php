@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Mfa;
+namespace Polaris\Tests\Mfa;
 
 use PHPUnit\Framework\TestCase;
 use Polaris\Mfa\LogOtpMailer;
 use Polaris\Mfa\LogSmsSender;
-use Univeros\Polaris\Tests\Support\RecordingLogger;
+use Polaris\Tests\Support\RecordingLogger;
 
 final class LogDriversTest extends TestCase
 {

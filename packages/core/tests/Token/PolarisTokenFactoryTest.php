@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Token;
+namespace Polaris\Tests\Token;
 
 use Polaris\Contract\IdentityProviderInterface;
 use Polaris\Exception\AuthorizationTokenException;
 use Polaris\Token\TokenConfiguration;
 use Psr\Clock\ClockInterface;
-use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Tests\Support\StubIdentityProvider;
+use Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\StubIdentityProvider;
 use Polaris\Token\AccessTokenClaims;
 use Polaris\Token\PolarisTokenFactory;
 

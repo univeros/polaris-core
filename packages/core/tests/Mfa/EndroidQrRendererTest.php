@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Mfa;
+namespace Polaris\Tests\Mfa;
 
 use PHPUnit\Framework\TestCase;
 use Polaris\Mfa\EndroidQrRenderer;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Model;
+namespace Polaris\Tests\Model;
 
 use PHPUnit\Framework\TestCase;
 use Polaris\Model\Permission;

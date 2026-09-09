@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Token;
+namespace Polaris\Tests\Token;
 
 use Polaris\Exception\InvalidTokenException;
 use Polaris\Token\LcobucciTokenParser;
@@ -10,8 +10,8 @@ use Polaris\Token\TokenConfiguration;
 use Psr\Clock\ClockInterface;
 use Polaris\Token\AccessTokenClaims;
 use Polaris\Token\MfaLoginTokenService;
-use Univeros\Polaris\Tests\Support\FrozenClock;
-use Univeros\Polaris\Tests\Support\TestKeys;
+use Polaris\Tests\Support\FrozenClock;
+use Polaris\Tests\Support\TestKeys;
 
 final class MfaLoginTokenServiceTest extends TokenTestCase
 {

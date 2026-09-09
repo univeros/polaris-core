@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Persistence;
+namespace Polaris\Tests\Persistence;
 
 use Polaris\Contract\UnitOfWorkInterface;
 use DateTimeImmutable;
@@ -31,7 +31,7 @@ use Polaris\Event\UserLocked;
 use Polaris\Event\UserLoggedIn;
 use Polaris\Event\UserLoginFailed;
 use Polaris\Event\UserRegistered;
-use Univeros\Polaris\Observability\AuditLogListener;
+use Polaris\Observability\AuditLogListener;
 use Polaris\Repository\AuditLogRepository;
 
 use function is_array;

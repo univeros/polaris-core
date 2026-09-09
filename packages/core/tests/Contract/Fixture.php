@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Univeros\Polaris\Tests\Contract;
+namespace Polaris\Tests\Contract;
 
 use PHPUnit\Framework\Assert;
 use Psr\Http\Message\ResponseInterface;

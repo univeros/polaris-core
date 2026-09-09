@@ -16,7 +16,7 @@ use function is_string;
  *
  * It resolves the caller's effective permissions for the token's `org` via {@see PermissionResolver}
  * (so the system `superadmin` override applies automatically) and tests the requirement against
- * them. The {@see \Univeros\Polaris\Http\Middleware\AuthorizationMiddleware} uses {@see allows()} for
+ * them. The `AuthorizationMiddleware` uses {@see allows()} for
  * the declarative edge check; domain services use {@see authorize()} for row-level / conditional
  * checks. Policy callbacks for rules permissions alone cannot express (e.g. last-owner protection)
  * are attached by the domains that own those invariants.
