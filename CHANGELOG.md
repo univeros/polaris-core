@@ -6,6 +6,12 @@ the project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-09-10
+
+The first release of Polaris for PHP: the framework-agnostic packages extracted from
+`univeros/polaris` 1.0.0 with every response contract-frozen, the Laravel, Symfony and Yii
+adapters, and the TypeScript client. One version line for all of them.
+
 ### Framework adapters
 
 - **`polaris/laravel`** (`Polaris\Laravel\`): a service provider that builds Polaris from
@@ -160,4 +166,6 @@ endpoints).
   configuration, the token model, the permission catalog, and the tenant
   invariants.
 
+[Unreleased]: https://github.com/univeros/polaris-core/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/univeros/polaris-core/releases/tag/v0.1.0
 [1.0.0]: https://github.com/univeros/polaris/releases/tag/v1.0.0

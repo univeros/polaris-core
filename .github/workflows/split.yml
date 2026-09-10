@@ -1,18 +1,24 @@
 name: Split packages
 
 # Mirrors every package under packages/ to its own read-only repository, so a consumer can
-# `composer require polaris/<package>` without the monorepo (docs/extraction/decisions.md, WP0
-# and the 2026-09-10 split entries). Dormant until the owner sets two things on this repository:
-#   - the variable SPLIT_ORG: the GitHub organisation (or user) holding the split repositories,
-#     which are named after the package directory: <SPLIT_ORG>/core, /psr15, /pdo, /testing, /cli;
-#   - the secret SPLIT_TOKEN: a token with contents:write on those repositories.
-# Every push to main force-updates each split's main; a v* tag is pushed to every split at the
-# split commit, so the packages share one version line.
+# `composer require polaris/<package>` without the monorepo (docs/extraction/decisions.md, WP0 and
+# the 2026-09-10 split and release entries; docs/adapters/decisions.md, release). Dormant until the
+# owner sets, on this repository:
+#   - the variable SPLIT_ORG: the GitHub organisation (or user) holding the split repositories;
+#   - the variable SPLIT_PREFIX (optional): prepended to the package directory name, because under
+#     `univeros` the bare names collide with the framework's own split (`univeros/cli`) and with this
+#     monorepo (`univeros/polaris-core`); the target is <SPLIT_ORG>/<SPLIT_PREFIX><package>;
+#   - the secret SPLIT_TOKEN: a token with contents:write on those repositories;
+#   - the secret PACKAGIST_AUTH (optional): "username:apiToken", so Packagist is pinged after a push.
+# Every push to main force-updates each split's main; a v* tag is pushed to every split at the split
+# commit, so the packages share one version line. workflow_dispatch runs it on any branch or tag, for
+# the first split of an existing tag.
 
 on:
   push:
     branches: [main]
     tags: ['v*']
+  workflow_dispatch:
 
 jobs:
   split:
@@ -22,12 +28,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: [core, psr15, pdo, testing, cli]
+        package: [core, psr15, pdo, testing, cli, laravel, symfony, yii]
 
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          # The runner's GITHUB_TOKEN must not land in git's extraheader: it only writes to this
+          # repository and would shadow SPLIT_TOKEN on the push (a 403 on the split repository).
+          persist-credentials: false
 
       - name: Split packages/${{ matrix.package }}
         run: |
@@ -35,13 +44,32 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           echo "split=$(git subtree split --prefix="packages/${{ matrix.package }}" HEAD)" >> "$GITHUB_ENV"
 
-      - name: Push to ${{ vars.SPLIT_ORG }}/${{ matrix.package }}
+      - name: Push to ${{ vars.SPLIT_ORG }}/${{ vars.SPLIT_PREFIX }}${{ matrix.package }}
         env:
-          TARGET: https://x-access-token:${{ secrets.SPLIT_TOKEN }}@github.com/${{ vars.SPLIT_ORG }}/${{ matrix.package }}.git
+          TARGET: https://x-access-token:${{ secrets.SPLIT_TOKEN }}@github.com/${{ vars.SPLIT_ORG }}/${{ vars.SPLIT_PREFIX }}${{ matrix.package }}.git
         run: |
           if [ "${{ github.ref_type }}" = "tag" ]; then
             git tag -f "${{ github.ref_name }}" "$split"
-            git push --force "$TARGET" "refs/tags/${{ github.ref_name }}"
+            git -c http.https://github.com/.extraheader= push --force "$TARGET" "refs/tags/${{ github.ref_name }}"
           else
-            git push --force "$TARGET" "$split:refs/heads/main"
+            git -c http.https://github.com/.extraheader= push --force "$TARGET" "$split:refs/heads/main"
           fi
+
+      # Best effort: the split repositories only change through this workflow, so this ping is the
+      # auto-update path; a missing secret or a failed ping warns and never fails the split.
+      - name: Notify Packagist
+        env:
+          PACKAGIST_AUTH: ${{ secrets.PACKAGIST_AUTH }}
+          REPOSITORY: https://github.com/${{ vars.SPLIT_ORG }}/${{ vars.SPLIT_PREFIX }}${{ matrix.package }}
+        run: |
+          if [ -z "$PACKAGIST_AUTH" ]; then
+            echo "::warning::PACKAGIST_AUTH is not set; Packagist is not notified for $REPOSITORY"
+            exit 0
+          fi
+          code=$(curl -s -o /tmp/packagist.json -w '%{http_code}' \
+            --config <(printf 'header = "Authorization: Bearer %s"\nheader = "Content-Type: application/json"\n' "$PACKAGIST_AUTH") \
+            -X POST https://packagist.org/api/update-package -d "{\"repository\":\"$REPOSITORY\"}")
+          case "$code" in
+            200|202) echo "Packagist updated $REPOSITORY (HTTP $code)" ;;
+            *) echo "::warning::Packagist returned HTTP $code for $REPOSITORY: $(cut -c1-200 /tmp/packagist.json)" ;;
+          esac
