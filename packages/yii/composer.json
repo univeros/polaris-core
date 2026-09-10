@@ -1,0 +1,51 @@
+{
+    "name": "polaris/yii",
+    "description": "Yii 3 adapter for Polaris for PHP: config plugin, routes, authentication method, mail bridge, console commands",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.3",
+        "polaris/cli": "^0.1",
+        "polaris/core": "^0.1",
+        "polaris/pdo": "^0.1",
+        "polaris/psr15": "^0.1",
+        "psr/container": "^1.1 || ^2.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.1 || ^2.0",
+        "psr/http-server-handler": "^1.0",
+        "yiisoft/auth": "^3.0",
+        "yiisoft/definitions": "^3.0",
+        "yiisoft/router": "^4.0"
+    },
+    "suggest": {
+        "yiisoft/config": "Merges this package's config-plugin groups (params, di, di-console, routes, events-web, events-console) into the application",
+        "yiisoft/mailer": "Delivers the Polaris emails through the Yii mailer (polaris.mailer: mail)",
+        "yiisoft/yii-console": "Runs the polaris:* commands this package registers"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\Yii\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        },
+        "config-plugin-options": {
+            "source-directory": "config"
+        },
+        "config-plugin": {
+            "params": "params.php",
+            "di": "di.php",
+            "di-console": "di-console.php",
+            "routes": "routes.php",
+            "events-web": "events-web.php",
+            "events-console": "events-console.php"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

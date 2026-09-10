@@ -22,6 +22,9 @@
         <testsuite name="symfony">
             <directory>packages/symfony/tests</directory>
         </testsuite>
+        <testsuite name="yii">
+            <directory>packages/yii/tests</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>
@@ -32,6 +35,7 @@
             <directory>packages/cli/src</directory>
             <directory>packages/laravel/src</directory>
             <directory>packages/symfony/src</directory>
+            <directory>packages/yii/src</directory>
         </include>
     </source>
 </phpunit>

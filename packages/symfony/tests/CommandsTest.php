@@ -6,15 +6,13 @@ namespace Polaris\Symfony\Tests;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use Polaris\Symfony\Command\SchemaCreateCommand;
-use Polaris\Symfony\Command\SchemaDropCommand;
+use Polaris\Symfony\PolarisBundle;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 use function json_decode;
 
-#[CoversClass(SchemaCreateCommand::class)]
-#[CoversClass(SchemaDropCommand::class)]
+#[CoversClass(PolarisBundle::class)]
 final class CommandsTest extends TestCase
 {
     public function testTheConsoleCarriesThePolarisCommandsOnTheConfiguredDatabase(): void

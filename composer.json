@@ -21,7 +21,8 @@
                     "polaris/pdo": "0.1.x-dev",
                     "polaris/psr15": "0.1.x-dev",
                     "polaris/symfony": "0.1.x-dev",
-                    "polaris/testing": "0.1.x-dev"
+                    "polaris/testing": "0.1.x-dev",
+                    "polaris/yii": "0.1.x-dev"
                 }
             }
         }
@@ -34,21 +35,31 @@
         "polaris/pdo": "0.1.x-dev",
         "polaris/psr15": "0.1.x-dev",
         "polaris/symfony": "0.1.x-dev",
-        "polaris/testing": "0.1.x-dev"
+        "polaris/testing": "0.1.x-dev",
+        "polaris/yii": "0.1.x-dev"
     },
     "require-dev": {
+        "httpsoft/http-message": "^1.1",
         "laminas/laminas-diactoros": "^3.0",
         "orchestra/testbench-core": "^11.4",
         "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^12.5",
         "squizlabs/php_codesniffer": "^3.13.6",
-        "symfony/mailer": "^7.4 || ^8.0"
+        "symfony/mailer": "^7.4 || ^8.0",
+        "yiisoft/di": "^1.3",
+        "yiisoft/mailer": "^6.1",
+        "yiisoft/request-body-parser": "^1.1",
+        "yiisoft/router-fastroute": "^4.0",
+        "yiisoft/yii-console": "^2.4",
+        "yiisoft/yii-event": "^2.2",
+        "yiisoft/yii-http": "^1.1"
     },
     "autoload-dev": {
         "psr-4": {
             "Polaris\\Tests\\": "packages/core/tests/",
             "Polaris\\Laravel\\Tests\\": "packages/laravel/tests/",
-            "Polaris\\Symfony\\Tests\\": "packages/symfony/tests/"
+            "Polaris\\Symfony\\Tests\\": "packages/symfony/tests/",
+            "Polaris\\Yii\\Tests\\": "packages/yii/tests/"
         }
     },
     "scripts": {
@@ -65,13 +76,18 @@
             "@putenv POLARIS_HARNESS=Polaris\\Symfony\\Tests\\Harness",
             "phpunit --testsuite functional"
         ],
+        "test:yii": [
+            "@putenv POLARIS_HARNESS=Polaris\\Yii\\Tests\\Harness",
+            "phpunit --testsuite functional"
+        ],
         "qa": [
             "@cs",
             "@stan",
             "@imports",
             "@test",
             "@test:laravel",
-            "@test:symfony"
+            "@test:symfony",
+            "@test:yii"
         ]
     },
     "config": {
