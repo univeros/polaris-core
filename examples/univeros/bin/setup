@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * One-time setup: .env with a generated APP_KEY, an RS256 key pair, the SQLite schema through
+ * `polaris schema:create`, then `schema:diff` and `doctor` as the proof. Safe to run again.
+ */
+
+use PolarisDemo\Env;
+
+$root = dirname(__DIR__);
+require $root . '/vendor/autoload.php';
+
+if (!is_file("$root/.env")) {
+    $env = (string) file_get_contents("$root/.env.example");
+    $env = preg_replace('/^APP_KEY=.*$/m', 'APP_KEY=' . bin2hex(random_bytes(24)), $env);
+    file_put_contents("$root/.env", $env);
+    echo "created .env\n";
+}
+@mkdir("$root/var/keys", 0700, true);
+if (!is_file("$root/var/keys/private.pem")) {
+    $key = openssl_pkey_new(['private_key_bits' => 2048, 'private_key_type' => OPENSSL_KEYTYPE_RSA]);
+    if ($key === false) {
+        fwrite(STDERR, "openssl could not generate a key pair\n");
+        exit(1);
+    }
+    openssl_pkey_export($key, $private);
+    file_put_contents("$root/var/keys/private.pem", $private);
+    file_put_contents("$root/var/keys/public.pem", openssl_pkey_get_details($key)['key']);
+    chmod("$root/var/keys/private.pem", 0600);
+    echo "generated var/keys/{private,public}.pem\n";
+}
+
+Env::load($root);
+$dsn = 'sqlite:' . Env::sqlitePath($root, Env::require('POLARIS_DSN'));
+$commands = is_file(Env::sqlitePath($root, Env::require('POLARIS_DSN'))) ? [] : ["schema:create --dsn=" . escapeshellarg($dsn)];
+foreach ([...$commands, 'schema:diff --dsn=' . escapeshellarg($dsn), 'doctor --dsn=' . escapeshellarg($dsn)] as $command) {
+    echo "\n$ vendor/bin/polaris $command\n";
+    passthru(PHP_BINARY . ' ' . escapeshellarg("$root/vendor/bin/polaris") . ' ' . $command, $status);
+    if ($status !== 0) {
+        fwrite(STDERR, "polaris $command failed ($status)\n");
+        exit($status);
+    }
+}
+echo "\nNext: php -S 127.0.0.1:8080 -t public   then   bin/walkthrough.sh\n";

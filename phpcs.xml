@@ -27,6 +27,10 @@
     <file>examples/yii/src</file>
     <file>examples/yii/config</file>
     <file>examples/yii/public</file>
+    <file>examples/univeros/src</file>
+    <file>examples/univeros/app</file>
+    <file>examples/univeros/config</file>
+    <file>examples/univeros/public</file>
 
     <arg name="colors"/>
     <arg name="warning-severity" value="0"/>

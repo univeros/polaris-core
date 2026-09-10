@@ -90,6 +90,9 @@ In Yii 3, `polaris/yii` is a `yiisoft/config` plugin: set the `polaris` params, 
 the definitions, the `polaris/authentication` middleware and the `polaris:*` commands are there
 ([`examples/yii`](examples/yii) is the complete host).
 
+On Univeros, or any other PSR-15 framework, `polaris/psr15` is enough: one module binds Polaris
+and one middleware serves its routes ([`examples/univeros`](examples/univeros) is the complete host).
+
 ---
 
 ## Features

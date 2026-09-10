@@ -16,7 +16,7 @@ Entry points: `Polaris::create(new Polaris\Wiring\Config(...))` builds the servi
 
 1. **No feature work on core.** Only what the current task's spec describes (`docs/adapters/spec.md`). If a behaviour must change, log it in `docs/extraction/behaviour-changes.md` first.
 2. **`composer qa` (phpcs, phpstan, phpunit) must pass** before any commit is proposed. Do not weaken phpstan level or skip tests to get green.
-3. **Nothing in this repository may import** `Altair\`, `Cycle\` or `Univeros\`; framework namespaces (`Illuminate\`, `Symfony\Bundle\`, `Yiisoft\`, ...) only inside their adapter package. Allowed dependencies are listed in each spec's §2.
+3. **No package may import** `Altair\`, `Cycle\` or `Univeros\` (only the `examples/univeros` demo, a host, does); framework namespaces (`Illuminate\`, `Symfony\Bundle\`, `Yiisoft\`, ...) only inside their adapter package. Allowed dependencies are listed in each spec's §2.
 4. **Public HTTP contract is frozen.** Every request/response shape in `api/**/*.yaml` and `docs/auth/api-reference.md` stays identical. The contract-freeze fixtures (WP6) enforce it.
 5. **Namespaces.** Everything is `Polaris\*`. No aliases to `Univeros\Polaris\*`; that namespace belongs to the other repository.
 6. **Endpoints are declared in YAML, not in code.** `packages/core/api/**/*.yaml` is the router. Adding or changing an endpoint means editing its spec; the endpoint class only implements it.
@@ -43,7 +43,7 @@ packages/core/api/         endpoint specs, the router (shipped inside polaris/co
 docs/auth/                 identity design (unchanged)
 docs/extraction/           task 1 (complete)
 docs/adapters/             task 2 (in progress: the TypeScript client is next)
-examples/                  walkthrough.sh (shared), slim/, laravel/, symfony/, yii/; one demo per adapter
+examples/                  walkthrough.sh (shared), slim/, laravel/, symfony/, yii/, univeros/; one demo per host
 ```
 
 ## Useful commands

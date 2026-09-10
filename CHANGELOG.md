@@ -37,6 +37,8 @@ the project adheres to [Semantic Versioning](https://semver.org/).
 - `polaris/pdo`: `SchemaInstaller` creates the tables and seeds the catalog on a
   connection, or drops them; the adapters' migrations and commands call it.
 - `polaris/cli`: `schema:create` and `schema:drop` (`--dsn`, or a host's connection).
+- **Demo.** `examples/univeros`: the Univeros 2 skeleton with a module binding Polaris
+  and one PSR-15 middleware serving the Polaris routes through `polaris/psr15`.
 - `polaris/core`: `Polaris\Notification\MailTemplates`, the plain-text subjects and
   bodies the Symfony and Yii mail bridges send.
 - `polaris/cli`: `schema:diff` and `doctor` accept a host's connection, secrets and auth

@@ -6,7 +6,9 @@ set -u
 cd "${1:-$(dirname "$0")/..}" || exit 2
 
 status=0
-violations=$(grep -rnE --include='*.php' 'Altair\\|Cycle\\|Univeros\\' packages/*/src packages/*/tests examples/*/src 2>/dev/null)
+# examples/univeros is a Univeros host, like the Slim, Laravel, Symfony and Yii demos are hosts; the
+# packages stay free of these namespaces.
+violations=$(grep -rnE --include='*.php' 'Altair\\|Cycle\\|Univeros\\' packages/*/src packages/*/tests examples/*/src 2>/dev/null | grep -vE '^examples/univeros/')
 if [ -n "$violations" ]; then
     printf 'Forbidden framework references:\n%s\n' "$violations"
     status=1
