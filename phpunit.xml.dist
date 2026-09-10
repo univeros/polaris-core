@@ -8,6 +8,16 @@
     <testsuites>
         <testsuite name="core">
             <directory>packages/core/tests</directory>
+            <exclude>packages/core/tests/Functional</exclude>
+            <exclude>packages/core/tests/Contract</exclude>
+        </testsuite>
+        <!-- The functional suite and the contract freeze; POLARIS_HARNESS runs them through a framework's kernel. -->
+        <testsuite name="functional">
+            <directory>packages/core/tests/Functional</directory>
+            <directory>packages/core/tests/Contract</directory>
+        </testsuite>
+        <testsuite name="laravel">
+            <directory>packages/laravel/tests</directory>
         </testsuite>
     </testsuites>
     <source>
@@ -17,6 +27,7 @@
             <directory>packages/pdo/src</directory>
             <directory>packages/psr15/src</directory>
             <directory>packages/cli/src</directory>
+            <directory>packages/laravel/src</directory>
         </include>
     </source>
 </phpunit>

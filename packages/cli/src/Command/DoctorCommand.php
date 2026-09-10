@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Polaris\Cli\Command;
 
+use Closure;
+use PDO;
 use Polaris\Cli\Database;
+use Polaris\Config\AuthConfig;
 use Polaris\Config\EnvironmentConfig;
+use Polaris\Config\Secrets;
 use Polaris\Http\Manifest\Loader;
 use Polaris\Pdo\SchemaDiff;
 use Polaris\Pdo\SchemaInspector;
@@ -28,6 +32,25 @@ use function sprintf;
 final class DoctorCommand extends Command
 {
     private bool $healthy = true;
+    private readonly ?Closure $secrets;
+    private readonly ?Closure $auth;
+    private readonly ?Closure $connection;
+
+    /**
+     * A host passes its own configuration and connection; without them the environment is read, as
+     * `bin/polaris` does.
+     *
+     * @param (callable(): Secrets)|null $secrets
+     * @param (callable(): AuthConfig)|null $auth
+     * @param (callable(): PDO)|null $connection used when no `--dsn` is given
+     */
+    public function __construct(?callable $secrets = null, ?callable $auth = null, ?callable $connection = null)
+    {
+        $this->secrets = $secrets === null ? null : $secrets(...);
+        $this->auth = $auth === null ? null : $auth(...);
+        $this->connection = $connection === null ? null : $connection(...);
+        parent::__construct();
+    }
 
     protected function configure(): void
     {
@@ -44,8 +67,8 @@ final class DoctorCommand extends Command
         $this->healthy = true;
 
         try {
-            $secrets = EnvironmentConfig::secrets();
-            $this->report($output, true, 'secrets: APP_KEY, AUTH_JWT_PRIVATE_KEY, AUTH_JWT_PUBLIC_KEY, AUTH_JWT_KID present');
+            $secrets = $this->secrets === null ? EnvironmentConfig::secrets() : ($this->secrets)();
+            $this->report($output, true, 'secrets: app key, JWT private key, JWT public key and kid present');
             $this->report($output, openssl_pkey_get_private($secrets->jwtPrivateKey) !== false, 'keys: AUTH_JWT_PRIVATE_KEY parses');
             $this->report($output, openssl_pkey_get_public($secrets->jwtPublicKey) !== false, 'keys: AUTH_JWT_PUBLIC_KEY parses');
             if ($secrets->jwtPreviousPublicKey !== null) {
@@ -56,7 +79,7 @@ final class DoctorCommand extends Command
         }
 
         try {
-            $auth = EnvironmentConfig::auth();
+            $auth = $this->auth === null ? EnvironmentConfig::auth() : ($this->auth)();
             JwtSignerFactory::create($auth->accessToken->signer);
             $this->report($output, true, sprintf('auth: issuer "%s", signer %s, access token ttl %ds', $auth->issuer, $auth->accessToken->signer, $auth->accessToken->ttl));
         } catch (Throwable $exception) {
@@ -72,14 +95,15 @@ final class DoctorCommand extends Command
         }
 
         $dsn = Database::dsn($input->getOption('dsn'));
-        if ($dsn === null) {
+        if ($dsn === null && $this->connection === null) {
             $output->writeln(' - database: skipped (pass --dsn or set POLARIS_DSN)');
         } else {
             try {
-                $pdo = Database::connect($dsn, $input->getOption('user'), $input->getOption('password'));
+                $pdo = $dsn === null ? ($this->connection)() : Database::connect($dsn, $input->getOption('user'), $input->getOption('password'));
+                $dialect = $dsn === null ? Database::dialectOf($pdo) : Database::dialect($dsn);
                 $pdo->query('SELECT 1');
                 $this->report($output, true, 'database: connected');
-                $differences = (new SchemaDiff(new SchemaInspector($pdo, Database::dialect($dsn)), Database::dialect($dsn)))->run();
+                $differences = (new SchemaDiff(new SchemaInspector($pdo, $dialect), $dialect))->run();
                 $this->report($output, $differences === [], $differences === [] ? 'schema: matches the Polaris schema' : sprintf('schema: %d difference(s), run schema:diff', count($differences)));
             } catch (Throwable $exception) {
                 $this->report($output, false, 'database: ' . $exception->getMessage());

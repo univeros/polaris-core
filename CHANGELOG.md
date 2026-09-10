@@ -6,6 +6,20 @@ the project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Framework adapters
+
+- **`polaris/laravel`** (`Polaris\Laravel\`): a service provider that builds Polaris from
+  `config/polaris.php` on Laravel's connection, cache, logger, events and mailer; the 52
+  endpoints as named Laravel routes under `path_prefix`; the `polaris` guard
+  (`auth:polaris`) for the application's own routes; `polaris:install` (config and the
+  migration that creates the tables and seeds the catalog) and the CLI commands as
+  `polaris:schema:export`, `polaris:schema:diff`, `polaris:manifest`, `polaris:doctor`; a
+  plain-text mail bridge (`mailer: mail`). The functional suite and the 184 contract
+  fixtures replay through Laravel's HTTP kernel in CI; `examples/laravel` runs the shared
+  walkthrough. Spec and decisions in `docs/adapters/`.
+- `polaris/cli`: `schema:diff` and `doctor` accept a host's connection, secrets and auth
+  settings; `symfony/*` constraints allow Symfony 8.
+
 ### Polaris for PHP: the framework-agnostic extraction
 
 The 1.0 Univeros module became a monorepo of framework-free packages with the

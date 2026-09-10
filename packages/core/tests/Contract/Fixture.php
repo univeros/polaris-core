@@ -32,8 +32,9 @@ final class Fixture
 
     /**
      * @param list<array{request: array<string, mixed>, response: array<string, mixed>}> $steps
+     * @param list<string> $transportHeaders header names the host adds to every response, ignored
      */
-    private function __construct(private readonly string $test, array $steps)
+    private function __construct(private readonly string $test, array $steps, private readonly array $transportHeaders)
     {
         $this->steps = $steps;
     }
@@ -43,7 +44,10 @@ final class Fixture
         return __DIR__ . '/fixtures';
     }
 
-    public static function for(string $test): ?self
+    /**
+     * @param list<string> $transportHeaders
+     */
+    public static function for(string $test, array $transportHeaders = []): ?self
     {
         $file = self::directory() . '/' . str_replace(['\\', '::'], '.', $test) . '.json';
         if (!is_file($file)) {
@@ -52,7 +56,7 @@ final class Fixture
         /** @var list<array{request: array<string, mixed>, response: array<string, mixed>}> $steps */
         $steps = json_decode((string) file_get_contents($file), true);
 
-        return new self($test, $steps);
+        return new self($test, $steps, $transportHeaders);
     }
 
     public function compare(ServerRequestInterface $request, ResponseInterface $response): void
@@ -78,8 +82,8 @@ final class Fixture
             'status' => $response->getStatusCode(),
             'headers' => $response->getHeaders(),
             'body' => json_decode($body, true) ?? $body,
-        ]);
-        $expected = KnownChanges::all()[$this->test][$this->cursor + 1] ?? Normalizer::response($step['response']);
+        ], $this->transportHeaders);
+        $expected = KnownChanges::all()[$this->test][$this->cursor + 1] ?? Normalizer::response($step['response'], $this->transportHeaders);
         Assert::assertSame($expected, $actual, $label);
         ++$this->cursor;
     }

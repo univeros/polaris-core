@@ -6,6 +6,7 @@ namespace Polaris\Cli;
 
 use PDO;
 use Polaris\Contract\Dialect;
+use Polaris\Pdo\PdoAdapter;
 
 use function getenv;
 use function is_string;
@@ -35,6 +36,11 @@ final class Database
         }
 
         return $pdo;
+    }
+
+    public static function dialectOf(PDO $pdo): Dialect
+    {
+        return (new PdoAdapter($pdo))->dialect();
     }
 
     public static function dialect(string $dsn): Dialect

@@ -36,11 +36,12 @@ Entry points: `Polaris::create(new Polaris\Wiring\Config(...))` builds the servi
 packages/core/src/{Contract,Model,Schema,Repository,Identity,Mfa,Token,Authorization,Security,Event,Exception,Config,Support,Http,Wiring}
 packages/psr15/src/{RequestHandler.php,Middleware/}
 packages/pdo/src   packages/testing/src   packages/cli/src
+packages/laravel/src/{PolarisServiceProvider.php,PolarisFactory.php,Auth,Console,Events,Http,Mail,Schema}   the Laravel adapter (task 2 WP1)
 packages/core/api/         endpoint specs, the router (shipped inside polaris/core)
 docs/auth/                 identity design (unchanged)
 docs/extraction/           task 1 (complete)
-docs/adapters/             task 2 (in progress); packages/{laravel,symfony,yii} arrive with it
-examples/slim/             the Slim demo; one demo per adapter joins it
+docs/adapters/             task 2 (in progress); packages/{symfony,yii} arrive with it
+examples/                  walkthrough.sh (shared), slim/, laravel/; one demo per adapter
 ```
 
 ## Useful commands

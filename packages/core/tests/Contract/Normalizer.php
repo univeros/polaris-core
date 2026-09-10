@@ -24,14 +24,15 @@ final class Normalizer
 
     /**
      * @param array<string, mixed> $response  {status, headers, body}
+     * @param list<string> $transportHeaders lower-case names a host adds to every response, ignored too
      * @return array<string, mixed>
      */
-    public static function response(array $response): array
+    public static function response(array $response, array $transportHeaders = []): array
     {
         $headers = [];
         foreach ((array) ($response['headers'] ?? []) as $name => $values) {
             $lower = strtolower((string) $name);
-            if (in_array($lower, self::VOLATILE_HEADERS, true)) {
+            if (in_array($lower, self::VOLATILE_HEADERS, true) || in_array($lower, $transportHeaders, true)) {
                 continue;
             }
             $headers[$lower] = is_array($values) ? array_values($values) : [$values];

@@ -7,3 +7,5 @@ parameters:
         - packages/pdo/src
         - packages/psr15/src
         - packages/cli/src
+        - packages/laravel/src
+        - packages/laravel/tests

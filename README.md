@@ -31,6 +31,7 @@ navigates by.
 | `polaris/pdo` | `Polaris\Pdo\` | The database adapter for PostgreSQL, MySQL and SQLite, the DDL exporter and the schema inspector. |
 | `polaris/testing` | `Polaris\Testing\` | The in-memory database adapter for tests of applications built on Polaris. |
 | `polaris/cli` | `Polaris\Cli\` | `bin/polaris`: `schema:export`, `schema:diff`, `manifest` (JSON, OpenAPI 3.1), `doctor`. |
+| `polaris/laravel` | `Polaris\Laravel\` | Laravel 13: service provider, the endpoints as routes, the `polaris` guard, mail bridge, `polaris:*` artisan commands. |
 
 This repository is the monorepo; each package is published to its own read-only
 repository for Composer.
@@ -67,6 +68,16 @@ $pipeline->handler();      // the PSR-15 handler serving every route in packages
 
 Every port has a working default (in-memory cache, log mailer and SMS sender, system
 clock, libsodium encrypter, PSR-3 metrics); pass your own to replace it.
+
+In Laravel the same graph comes from `config/polaris.php` and Laravel's own services:
+
+```sh
+composer require polaris/laravel
+php artisan polaris:install && php artisan migrate   # config, tables, permission catalog
+```
+
+then `Route::middleware('auth:polaris')` protects your routes with Polaris access tokens
+([`examples/laravel`](examples/laravel) is the complete host).
 
 ---
 

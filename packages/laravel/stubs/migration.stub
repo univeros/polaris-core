@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
+use Polaris\Laravel\Schema\PolarisSchema;
+
+/**
+ * Creates the Polaris tables for this connection's dialect and seeds the permission catalog and the
+ * system roles (Polaris\Laravel\Schema\PolarisSchema). Runs outside the migrator's transaction because
+ * Polaris opens its own.
+ */
+return new class extends Migration
+{
+    public $withinTransaction = false;
+
+    public function up(): void
+    {
+        PolarisSchema::create(DB::connection($this->getConnection())->getPdo());
+    }
+
+    public function down(): void
+    {
+        PolarisSchema::drop(DB::connection($this->getConnection())->getPdo());
+    }
+};
