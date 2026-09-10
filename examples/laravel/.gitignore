@@ -1,0 +1,6 @@
+/vendor/
+/.env
+/storage/*
+!/storage/.gitkeep
+/database/polaris.sqlite
+/database/migrations/*_create_polaris_tables.php

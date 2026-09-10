@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Polaris\Cli\Command;
 
+use Closure;
+use PDO;
 use Polaris\Cli\Database;
 use Polaris\Pdo\SchemaDiff;
 use Polaris\Pdo\SchemaInspector;
@@ -18,6 +20,17 @@ use function sprintf;
 
 final class SchemaDiffCommand extends Command
 {
+    private readonly ?Closure $connection;
+
+    /**
+     * @param (callable(): PDO)|null $connection the host's connection, used when no `--dsn` is given
+     */
+    public function __construct(?callable $connection = null)
+    {
+        $this->connection = $connection === null ? null : $connection(...);
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
         $this
@@ -31,14 +44,15 @@ final class SchemaDiffCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $dsn = Database::dsn($input->getOption('dsn'));
-        if ($dsn === null) {
+        if ($dsn === null && $this->connection === null) {
             $output->writeln('<error>Pass --dsn or set POLARIS_DSN.</error>');
 
             return Command::INVALID;
         }
         try {
-            $pdo = Database::connect($dsn, $input->getOption('user'), $input->getOption('password'));
-            $differences = (new SchemaDiff(new SchemaInspector($pdo, Database::dialect($dsn)), Database::dialect($dsn)))->run();
+            $pdo = $dsn === null ? ($this->connection)() : Database::connect($dsn, $input->getOption('user'), $input->getOption('password'));
+            $dialect = $dsn === null ? Database::dialectOf($pdo) : Database::dialect($dsn);
+            $differences = (new SchemaDiff(new SchemaInspector($pdo, $dialect), $dialect))->run();
         } catch (Throwable $exception) {
             $output->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
 

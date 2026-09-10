@@ -1,12 +1,34 @@
 #!/usr/bin/env sh
-# Forbidden framework namespaces in the packages (docs/extraction/spec.md §0.6): none, anywhere.
-# Blocking since WP7 for Altair\, Cycle\ and Univeros\ in every package's src and tests.
+# Forbidden namespaces (docs/extraction/spec.md §0.6, docs/adapters/spec.md §0.4): Altair\, Cycle\ and
+# Univeros\ nowhere; a framework's namespaces only inside its adapter package and its demo.
+# Usage: bin/check-imports [root]   (the root defaults to the repository; tests pass a fixture tree)
 set -u
-cd "$(dirname "$0")/.."
+cd "${1:-$(dirname "$0")/..}" || exit 2
 
-violations=$(grep -rnE --include='*.php' 'Altair\\|Cycle\\|Univeros\\' packages/*/src packages/*/tests 2>/dev/null)
+status=0
+violations=$(grep -rnE --include='*.php' 'Altair\\|Cycle\\|Univeros\\' packages/*/src packages/*/tests examples/*/src 2>/dev/null)
 if [ -n "$violations" ]; then
     printf 'Forbidden framework references:\n%s\n' "$violations"
-    exit 1
+    status=1
 fi
-printf 'No Altair\\, Cycle\\ or Univeros\\ reference in packages/*/src or packages/*/tests.\n'
+
+# allowed-dirs:pattern — the pattern may appear only under packages/<dir> and examples/<dir> for the
+# listed dirs (Laravel is built on HttpFoundation, so the Symfony pattern is allowed there as well).
+for rule in \
+    'laravel:Illuminate\\|Laravel\\' \
+    'symfony|laravel:Symfony\\Bundle\\|Symfony\\Component\\(HttpKernel|HttpFoundation|DependencyInjection|Security|Config|Routing)\\' \
+    'yii:Yiisoft\\'
+do
+    allowed=${rule%%:*}
+    pattern=${rule#*:}
+    leaks=$(grep -rnE --include='*.php' "$pattern" packages/*/src packages/*/tests examples/*/src examples/*/public 2>/dev/null | grep -vE "^(packages|examples)/($allowed)/")
+    if [ -n "$leaks" ]; then
+        printf 'namespaces matching %s outside packages/{%s} and examples/{%s}:\n%s\n' "$pattern" "$allowed" "$allowed" "$leaks"
+        status=1
+    fi
+done
+
+if [ "$status" -eq 0 ]; then
+    printf 'No Altair\\, Cycle\\ or Univeros\\ reference; framework namespaces only in their adapter package.\n'
+fi
+exit "$status"

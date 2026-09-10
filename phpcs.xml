@@ -8,8 +8,14 @@
     <file>packages/pdo/src</file>
     <file>packages/psr15/src</file>
     <file>packages/cli/src</file>
+    <file>packages/laravel/src</file>
+    <file>packages/laravel/tests</file>
     <file>examples/slim/src</file>
     <file>examples/slim/public</file>
+    <file>examples/laravel/src</file>
+    <file>examples/laravel/bootstrap</file>
+    <file>examples/laravel/config</file>
+    <file>examples/laravel/public</file>
 
     <arg name="colors"/>
     <arg name="warning-severity" value="0"/>

@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Polaris\Tests\Functional;
 
-use Laminas\Diactoros\ResponseFactory;
 use Laminas\Diactoros\ServerRequestFactory;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\Secrets;
-use Polaris\Polaris;
-use Polaris\Psr15\Pipeline;
 use Polaris\Wiring\Config;
 use Polaris\Wiring\Graph;
 use Psr\Http\Message\ResponseInterface;
@@ -24,18 +21,20 @@ use Polaris\Tests\Support\TestKeys;
 use function getenv;
 use function in_array;
 use function is_array;
+use function is_string;
 use function json_decode;
 use function putenv;
 
 /**
  * End-to-end tests through the PSR-15 pipeline on the database the environment selects, with
  * the contract freeze: every response is compared, normalised, to what the 1.0 code answered
- * for the same test (`tests/Contract/fixtures`).
+ * for the same test (`tests/Contract/fixtures`). `POLARIS_HARNESS` names a {@see Harness} class
+ * to run the same requests through a framework's kernel instead of the bare pipeline.
  */
 abstract class FunctionalTestCase extends DatabaseTestCase
 {
     protected Graph $graph;
-    protected Pipeline $harness;
+    protected Harness $harness;
     protected RecordingEventDispatcher $events;
     protected RecordingSmsSender $sms;
     protected RecordingOtpMailer $mailer;
@@ -55,7 +54,7 @@ abstract class FunctionalTestCase extends DatabaseTestCase
         $this->sms = new RecordingSmsSender();
         $this->mailer = new RecordingOtpMailer();
         $this->boot();
-        $this->fixture = Fixture::for(static::class . '::' . $this->name());
+        $this->fixture = Fixture::for(static::class . '::' . $this->name(), $this->harness::transportHeaders());
     }
 
     /**
@@ -63,7 +62,7 @@ abstract class FunctionalTestCase extends DatabaseTestCase
      */
     protected function boot(): void
     {
-        $polaris = Polaris::create(new Config(
+        $this->harness = self::harnessClass()::create(new Config(
             secrets: Secrets::fromEnvironment(self::environment()),
             auth: AuthConfig::fromArray(self::authConfigArray()),
             database: $this->adapter,
@@ -71,8 +70,7 @@ abstract class FunctionalTestCase extends DatabaseTestCase
             sms: $this->sms,
             dispatcher: $this->events,
         ));
-        $this->graph = $polaris->graph();
-        $this->harness = new Pipeline($this->graph, new ResponseFactory());
+        $this->graph = $this->harness->graph();
         // One identity map for the test and the application, as the Cycle heap was shared in 1.0.
         $this->identities = $this->graph->identities();
         $this->unitOfWork = $this->graph->unitOfWork();
@@ -160,6 +158,22 @@ abstract class FunctionalTestCase extends DatabaseTestCase
         $response->getBody()->rewind();
 
         return is_array($decoded) ? $decoded : [];
+    }
+
+    /**
+     * @return class-string<Harness>
+     */
+    private static function harnessClass(): string
+    {
+        $class = getenv('POLARIS_HARNESS');
+        if (!is_string($class) || $class === '') {
+            return PipelineHarness::class;
+        }
+        if (!is_subclass_of($class, Harness::class)) {
+            throw new \RuntimeException("POLARIS_HARNESS must name a class implementing Polaris\\Tests\\Functional\\Harness, got $class");
+        }
+
+        return $class;
     }
 
     /**

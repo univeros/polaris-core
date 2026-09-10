@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * One-time setup: .env with a generated APP_KEY, an RS256 key pair, the storage directories, the SQLite
+ * file, `polaris:install` (config and migration), `migrate`, then `polaris:schema:diff` and
+ * `polaris:doctor` as the proof. Safe to run again.
+ */
+
+$root = dirname(__DIR__);
+
+if (!is_file("$root/.env")) {
+    $env = (string) file_get_contents("$root/.env.example");
+    $env = preg_replace('/^APP_KEY=.*$/m', 'APP_KEY=base64:' . base64_encode(random_bytes(32)), $env);
+    file_put_contents("$root/.env", $env);
+    echo "created .env\n";
+}
+foreach (['storage/keys', 'storage/logs', 'storage/framework/cache/data', 'storage/framework/sessions', 'storage/framework/views', 'bootstrap/cache', 'database/migrations'] as $directory) {
+    @mkdir("$root/$directory", 0755, true);
+}
+if (!is_file("$root/storage/keys/private.pem")) {
+    $key = openssl_pkey_new(['private_key_bits' => 2048, 'private_key_type' => OPENSSL_KEYTYPE_RSA]);
+    if ($key === false) {
+        fwrite(STDERR, "openssl could not generate a key pair\n");
+        exit(1);
+    }
+    openssl_pkey_export($key, $private);
+    file_put_contents("$root/storage/keys/private.pem", $private);
+    file_put_contents("$root/storage/keys/public.pem", openssl_pkey_get_details($key)['key']);
+    chmod("$root/storage/keys/private.pem", 0600);
+    echo "generated storage/keys/{private,public}.pem\n";
+}
+if (!is_file("$root/database/polaris.sqlite")) {
+    touch("$root/database/polaris.sqlite");
+}
+
+foreach (['polaris:install --no-interaction', 'migrate --force --no-interaction', 'polaris:schema:diff', 'polaris:doctor'] as $command) {
+    echo "\n$ php artisan $command\n";
+    passthru(PHP_BINARY . ' ' . escapeshellarg("$root/artisan") . ' ' . $command, $status);
+    if ($status !== 0) {
+        fwrite(STDERR, "artisan $command failed ($status)\n");
+        exit($status);
+    }
+}
+echo "\nNext: php -S 127.0.0.1:8080 -t public   then   bin/walkthrough.sh\n";

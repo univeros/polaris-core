@@ -1,0 +1,43 @@
+{
+    "name": "polaris/example-laravel",
+    "description": "Polaris for PHP demo: Laravel 13 + polaris/laravel on SQLite",
+    "type": "project",
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../packages/*",
+            "options": {
+                "symlink": true,
+                "versions": {
+                    "polaris/cli": "0.1.x-dev",
+                    "polaris/core": "0.1.x-dev",
+                    "polaris/laravel": "0.1.x-dev",
+                    "polaris/pdo": "0.1.x-dev",
+                    "polaris/psr15": "0.1.x-dev",
+                    "polaris/testing": "0.1.x-dev"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "ext-pdo_sqlite": "*",
+        "laravel/framework": "^13.0",
+        "polaris/cli": "0.1.x-dev",
+        "polaris/core": "0.1.x-dev",
+        "polaris/laravel": "0.1.x-dev",
+        "polaris/pdo": "0.1.x-dev",
+        "polaris/psr15": "0.1.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "PolarisDemo\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
