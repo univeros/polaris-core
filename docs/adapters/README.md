@@ -11,8 +11,8 @@ Everything needed to run task 2 (the Laravel, Symfony and Yii adapters and the T
 
 Working rules (from `spec.md` §0): no feature work on core; every adapter is proven by the functional suite plus the 184 contract fixtures through its own HTTP kernel; framework namespaces only in their package (`bin/check-imports`); PHP 8.3 stays the floor.
 
-Branches: `adapters/wp1` … `adapters/wp4`, one at a time, each merged before the next starts.
+Branches: `adapters/wp1` … `adapters/wp5`, one at a time, each merged before the next starts.
 
 ## Status (2026-09-10)
 
-WP0 (preparation) is done: the split workflow, the per-package READMEs and the manifest inside `polaris/core` (PR #12), this folder (PR #13). WP1 (Laravel), WP2 (Symfony) and WP3 (Yii) are done: `packages/{laravel,symfony,yii}` with `examples/{laravel,symfony,yii}`; the functional suite and the 184 fixtures replay through each framework's kernel in CI, each demo runs the shared walkthrough. WP4 (the TypeScript client) is next.
+WP0 (preparation) is done: the split workflow, the per-package READMEs and the manifest inside `polaris/core` (PR #12), this folder (PR #13). WP1 (Laravel), WP2 (Symfony) and WP3 (Yii) are done: `packages/{laravel,symfony,yii}` with `examples/{laravel,symfony,yii}`; the functional suite and the 184 fixtures replay through each framework's kernel in CI, each demo runs the shared walkthrough. WP4 is the Univeros adapter (spec §6b, added on 2026-09-10 at the owner's request; `examples/univeros` exists as a pure `polaris/psr15` host on PR #17's branch and is reworked on the adapter); WP5 is the TypeScript client.
