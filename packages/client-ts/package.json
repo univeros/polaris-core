@@ -3,6 +3,10 @@
     "version": "0.1.0",
     "description": "Typed TypeScript client for Polaris for PHP, generated from the route manifest",
     "license": "MIT",
+    "author": {
+        "name": "2am.tech",
+        "url": "https://2am.tech"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/univeros/polaris-core.git",

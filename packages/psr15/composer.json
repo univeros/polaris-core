@@ -3,6 +3,12 @@
     "description": "PSR-15 request handler and middleware for Polaris for PHP",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
     "require": {
         "php": ">=8.3",
         "polaris/core": "^0.1",

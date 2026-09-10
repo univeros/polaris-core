@@ -3,6 +3,12 @@
     "description": "PDO database adapter (SQLite, MySQL, PostgreSQL) for Polaris for PHP",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
     "require": {
         "php": ">=8.3",
         "ext-pdo": "*",

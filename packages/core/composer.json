@@ -3,6 +3,12 @@
     "description": "Polaris for PHP core: authentication, MFA/OTP, sessions, multi-tenant organizations and RBAC, framework-free",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
     "keywords": [
         "authentication",
         "mfa",

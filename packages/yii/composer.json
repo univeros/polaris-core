@@ -3,6 +3,12 @@
     "description": "Yii 3 adapter for Polaris for PHP: config plugin, routes, authentication method, mail bridge, console commands",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
     "require": {
         "php": ">=8.3",
         "polaris/cli": "^0.1",

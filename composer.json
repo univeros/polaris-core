@@ -3,6 +3,12 @@
     "description": "Polaris for PHP: self-hosted authentication, MFA, organizations and RBAC for any PHP application",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
     "homepage": "https://github.com/univeros/polaris-core",
     "support": {
         "issues": "https://github.com/univeros/polaris-core/issues",
