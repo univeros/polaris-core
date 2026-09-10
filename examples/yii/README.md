@@ -33,3 +33,5 @@ bin/walkthrough.sh              # register → verify → login → TOTP → MFA
 Swap the DSN for PostgreSQL or MySQL (or leave it null and define `PDO` or a `Yiisoft\Db` connection in
 the container), `mailer` for `mail` (the Yii mailer) or your own `OtpMailerInterface` id, and the same
 application runs in production.
+
+Polaris for PHP is created and maintained by [2am.tech](https://2am.tech).

@@ -42,4 +42,4 @@ on). The adapter passes the Polaris conformance suite on all three.
 
 ## License
 
-MIT.
+MIT. Polaris for PHP is created and maintained by [2am.tech](https://2am.tech).

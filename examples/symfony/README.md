@@ -31,3 +31,5 @@ renders the OpenAPI document; `polaris:schema:export` prints the DDL for another
 Swap the DSN for PostgreSQL or MySQL (or `database: { service: doctrine.dbal.default_connection }` to reuse
 Doctrine's connection), `mailer` for `mail` (Symfony Mailer) or your own `OtpMailerInterface` service, and
 the same application runs in production.
+
+Polaris for PHP is created and maintained by [2am.tech](https://2am.tech).

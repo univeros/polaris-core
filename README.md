@@ -263,4 +263,4 @@ immutability, small files, tests-first), and run `composer qa` before opening a 
 
 ## License
 
-MIT. See `composer.json`.
+MIT. See `composer.json`. Polaris for PHP is created and maintained by [2am.tech](https://2am.tech).
