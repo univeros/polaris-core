@@ -15,4 +15,4 @@ Branches: `adapters/wp1` … `adapters/wp4`, one at a time, each merged before t
 
 ## Status (2026-09-10)
 
-WP0 (preparation) is done: the split workflow, the per-package READMEs and the manifest inside `polaris/core` (PR #12), this folder (PR #13). WP1 (Laravel, `packages/laravel`, `examples/laravel`) is done: the functional suite and the 184 fixtures replay through Laravel's kernel in CI, the demo runs the shared walkthrough. WP2 (Symfony) is next.
+WP0 (preparation) is done: the split workflow, the per-package READMEs and the manifest inside `polaris/core` (PR #12), this folder (PR #13). WP1 (Laravel, `packages/laravel`, `examples/laravel`) and WP2 (Symfony, `packages/symfony`, `examples/symfony`) are done: the functional suite and the 184 fixtures replay through each framework's kernel in CI, each demo runs the shared walkthrough. WP3 (Yii) is next.

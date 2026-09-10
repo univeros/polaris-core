@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    PolarisDemo\Controller\:
+        resource: '../src/Controller/'
+
+    PolarisDemo\FileMailer:
+        arguments: ['%kernel.project_dir%/var/mail.log']

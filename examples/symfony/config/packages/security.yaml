@@ -1,0 +1,9 @@
+# The application's own routes behind Polaris access tokens: /app/* needs a valid bearer token.
+security:
+    firewalls:
+        app:
+            pattern: ^/app
+            stateless: true
+            custom_authenticators: [Polaris\Symfony\Security\PolarisAuthenticator]
+    access_control:
+        - { path: ^/app, roles: ROLE_USER }

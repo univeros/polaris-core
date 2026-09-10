@@ -71,6 +71,9 @@ jobs:
       - name: Functional suite and contract fixtures through Laravel's kernel
         run: composer test:laravel
 
+      - name: Functional suite and contract fixtures through Symfony's kernel
+        run: composer test:symfony
+
   demo:
     name: Slim demo walkthrough
     runs-on: ubuntu-latest
@@ -113,6 +116,29 @@ jobs:
 
       - name: Set up and run the walkthrough
         working-directory: examples/laravel
+        run: |
+          bin/setup
+          bin/walkthrough.sh
+
+  demo-symfony:
+    name: Symfony demo walkthrough
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: openssl, sodium, gd, mbstring, pdo_sqlite, sqlite3
+          coverage: none
+
+      - name: Install the demo
+        working-directory: examples/symfony
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Set up and run the walkthrough
+        working-directory: examples/symfony
         run: |
           bin/setup
           bin/walkthrough.sh
