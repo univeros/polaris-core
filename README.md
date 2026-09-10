@@ -33,6 +33,7 @@ navigates by.
 | `polaris/cli` | `Polaris\Cli\` | `bin/polaris`: `schema:export`, `schema:diff`, `manifest` (JSON, OpenAPI 3.1), `doctor`. |
 | `polaris/laravel` | `Polaris\Laravel\` | Laravel 13: service provider, the endpoints as routes, the `polaris` guard, mail bridge, `polaris:*` artisan commands. |
 | `polaris/symfony` | `Polaris\Symfony\` | Symfony 7.4 / 8: bundle, the endpoints as routes, a firewall authenticator, mail bridge, `polaris:*` console commands. |
+| `polaris/yii` | `Polaris\Yii\` | Yii 3: config plugin, the endpoints as routes, an authentication method, mail bridge, `polaris:*` console commands. |
 
 This repository is the monorepo; each package is published to its own read-only
 repository for Composer.
@@ -84,6 +85,10 @@ In Symfony, register `Polaris\Symfony\PolarisBundle`, describe the same graph un
 in `config/packages/polaris.yaml`, import the routes with `type: polaris`, and put
 `Polaris\Symfony\Security\PolarisAuthenticator` on a firewall
 ([`examples/symfony`](examples/symfony) is the complete host).
+
+In Yii 3, `polaris/yii` is a `yiisoft/config` plugin: set the `polaris` params, and the routes,
+the definitions, the `polaris/authentication` middleware and the `polaris:*` commands are there
+([`examples/yii`](examples/yii) is the complete host).
 
 ---
 

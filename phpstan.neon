@@ -11,3 +11,6 @@ parameters:
         - packages/laravel/tests
         - packages/symfony/src
         - packages/symfony/tests
+        - packages/yii/src
+        - packages/yii/config
+        - packages/yii/tests

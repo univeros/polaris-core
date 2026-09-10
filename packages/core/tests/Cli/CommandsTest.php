@@ -48,6 +48,23 @@ final class CommandsTest extends TestCase
         self::assertSame(2, $tester->execute(['--target' => 'laravel']));
     }
 
+    public function testSchemaCreateAndDropRunOnTheDsn(): void
+    {
+        $file = tempnam(sys_get_temp_dir(), 'polaris-schema');
+        try {
+            $create = new CommandTester($this->app->find('schema:create'));
+            self::assertSame(0, $create->execute(['--dsn' => 'sqlite:' . $file]), $create->getDisplay());
+            $diff = new CommandTester($this->app->find('schema:diff'));
+            self::assertSame(0, $diff->execute(['--dsn' => 'sqlite:' . $file]), $diff->getDisplay());
+            $drop = new CommandTester($this->app->find('schema:drop'));
+            self::assertSame(0, $drop->execute(['--dsn' => 'sqlite:' . $file]), $drop->getDisplay());
+            self::assertSame(1, $diff->execute(['--dsn' => 'sqlite:' . $file]));
+            self::assertSame(2, $create->execute([]), 'no dsn, no connection');
+        } finally {
+            unlink($file);
+        }
+    }
+
     public function testManifestPrintsJsonAndOpenApi(): void
     {
         $tester = new CommandTester($this->app->find('manifest'));

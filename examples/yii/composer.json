@@ -1,0 +1,76 @@
+{
+    "name": "polaris/example-yii",
+    "description": "Polaris for PHP demo: Yii 3 + polaris/yii on SQLite",
+    "type": "project",
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../packages/*",
+            "options": {
+                "symlink": true,
+                "versions": {
+                    "polaris/cli": "0.1.x-dev",
+                    "polaris/core": "0.1.x-dev",
+                    "polaris/laravel": "0.1.x-dev",
+                    "polaris/pdo": "0.1.x-dev",
+                    "polaris/psr15": "0.1.x-dev",
+                    "polaris/symfony": "0.1.x-dev",
+                    "polaris/testing": "0.1.x-dev",
+                    "polaris/yii": "0.1.x-dev"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "ext-pdo_sqlite": "*",
+        "httpsoft/http-message": "^1.1",
+        "polaris/cli": "0.1.x-dev",
+        "polaris/core": "0.1.x-dev",
+        "polaris/pdo": "0.1.x-dev",
+        "polaris/psr15": "0.1.x-dev",
+        "polaris/yii": "0.1.x-dev",
+        "yiisoft/auth": "^3.0",
+        "yiisoft/cache-file": "^3.0",
+        "yiisoft/config": "^1.6",
+        "yiisoft/error-handler": "^4.0",
+        "yiisoft/log": "^2.0",
+        "yiisoft/request-body-parser": "^1.1",
+        "yiisoft/router-fastroute": "^4.0",
+        "yiisoft/yii-console": "^2.0",
+        "yiisoft/yii-event": "^2.0",
+        "yiisoft/yii-runner-console": "^2.0",
+        "yiisoft/yii-runner-http": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PolarisDemo\\": "src/"
+        }
+    },
+    "extra": {
+        "config-plugin-options": {
+            "source-directory": "config"
+        },
+        "config-plugin": {
+            "params": "params.php",
+            "params-web": ["$params"],
+            "params-console": ["$params"],
+            "di": "di.php",
+            "di-web": ["$di", "di-web.php"],
+            "di-console": ["$di"],
+            "routes": "routes.php",
+            "events": "events.php",
+            "events-web": ["$events"],
+            "events-console": ["$events"]
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "yiisoft/config": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

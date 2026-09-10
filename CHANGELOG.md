@@ -26,8 +26,19 @@ the project adheres to [Semantic Versioning](https://semver.org/).
   `polaris:*`; a plain-text Symfony Mailer bridge (`mailer: mail`). The functional
   suite and the 184 contract fixtures replay through Symfony's HTTP kernel in CI;
   `examples/symfony` runs the shared walkthrough.
+- **`polaris/yii`** (`Polaris\Yii\`): a `yiisoft/config` plugin whose `polaris` params
+  become the `Config`, `Polaris`, `Graph` and `Pipeline` definitions on the application's
+  connection (a DSN, a PDO or a `Yiisoft\Db` connection), cache, logger, dispatcher and
+  mailer; the 52 endpoints as routes in the `routes` group, PSR-15 straight through; an
+  authentication method and the `polaris/authentication` middleware for the application's
+  own routes; the `polaris:*` commands for `yiisoft/yii-console`; a plain-text Yii mailer
+  bridge (`mailer: mail`). The functional suite and the 184 contract fixtures replay
+  through the Yii application in CI; `examples/yii` runs the shared walkthrough.
 - `polaris/pdo`: `SchemaInstaller` creates the tables and seeds the catalog on a
   connection, or drops them; the adapters' migrations and commands call it.
+- `polaris/cli`: `schema:create` and `schema:drop` (`--dsn`, or a host's connection).
+- `polaris/core`: `Polaris\Notification\MailTemplates`, the plain-text subjects and
+  bodies the Symfony and Yii mail bridges send.
 - `polaris/cli`: `schema:diff` and `doctor` accept a host's connection, secrets and auth
   settings; `symfony/*` constraints allow Symfony 8.
 

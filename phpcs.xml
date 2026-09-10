@@ -12,6 +12,9 @@
     <file>packages/laravel/tests</file>
     <file>packages/symfony/src</file>
     <file>packages/symfony/tests</file>
+    <file>packages/yii/src</file>
+    <file>packages/yii/config</file>
+    <file>packages/yii/tests</file>
     <file>examples/slim/src</file>
     <file>examples/slim/public</file>
     <file>examples/laravel/src</file>
@@ -21,6 +24,9 @@
     <file>examples/symfony/src</file>
     <file>examples/symfony/config/bundles.php</file>
     <file>examples/symfony/public</file>
+    <file>examples/yii/src</file>
+    <file>examples/yii/config</file>
+    <file>examples/yii/public</file>
 
     <arg name="colors"/>
     <arg name="warning-severity" value="0"/>

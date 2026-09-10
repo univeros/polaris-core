@@ -165,12 +165,12 @@ Apply the framework's session, cookie or CSRF middleware to Polaris routes; alte
 
 `packages/yii`, `Polaris\Yii\`, Yii 3 (`yiisoft/yii-http ^1.1`, `yiisoft/router ^4.0`, `yiisoft/di`, `yiisoft/config`, `yiisoft/auth`, `yiisoft/yii-console`).
 
-- **Config plugin** (`extra.config-plugin`): `config/di.php` (the `Polaris`, `Graph`, `Pipeline` definitions from `params['polaris']`, §3.1; `database` accepts a PDO service, a `yiisoft/db` connection (`getPDO()`), or a DSN), `config/params.php` (the defaults), `config/routes.php` (one catch-all `Route::methods([...], '{path:.*}')` group under the prefix whose middleware is `Pipeline::middleware()` and whose action is `Pipeline::handler()`; PSR-15 native, no bridge), `config/di-console.php` and `config/params-console.php` (the commands).
-- **Events**: `yiisoft/event-dispatcher` is PSR-14; the plugin's `config/events.php` maps each Polaris event class to the listeners, the Yii way.
-- **Auth**: `Auth\PolarisAuthenticationMethod` (`Yiisoft\Auth\AuthenticationMethodInterface`, bearer) returning `Auth\PolarisIdentity` (`IdentityInterface` with the user and the token) for `yiisoft/auth`'s `Authentication` middleware on the host's routes.
-- **Console**: `polaris/schema:create`, `polaris/schema:drop`, and the four CLI commands.
-- **`Tests\Harness`**: a `Yiisoft\Di\Container` built from the plugin's config arrays with the test's instances as definitions; `Yiisoft\Yii\Http\Application::handle()`.
-- **`examples/yii`**: a `yiisoft/app`-shaped minimal host: `config/`, `public/index.php`, `yii`, `bin/setup`, `bin/walkthrough.sh`, README.
+- **Config plugin** (`extra.config-plugin`): `config/di.php` (the `Polaris`, `Graph`, `Pipeline` definitions from `params['polaris']`, §3.1; `database` is a DSN, or the application's `PDO`, `yiisoft/db` connection (`getPDO()`) or `DatabaseAdapter` definition), `config/params.php` (the defaults and the `yiisoft/yii-console` command map), `config/routes.php` (one named route per manifest endpoint under the prefix, `polaris.auth.login` and so on, whose action is `PolarisController::handle`, the whole pipeline; PSR-15 native, no bridge), `config/di-console.php` (the commands, renamed through `setName()`).
+- **Events**: `yiisoft/event-dispatcher` is PSR-14 but dispatches by exact class; the plugin's `config/events-web.php` and `events-console.php` map every `Polaris\Event` class to `PolarisListener`, the Yii way.
+- **Auth**: `Auth\PolarisAuthenticationMethod` (`Yiisoft\Auth\AuthenticationMethodInterface`, bearer, `WWW-Authenticate: Bearer` challenge) returning `Auth\PolarisIdentity` (`IdentityInterface` with the user and the token); the `polaris/authentication` definition is `yiisoft/auth`'s `Authentication` middleware with it and a 401 in Polaris's envelope, for the host's routes.
+- **Console**: the six CLI commands (`schema:create` and `schema:drop` included) as `polaris:*`, through the `yiisoft/yii-console` command map.
+- **`Tests\Harness`**: a `Yiisoft\Di\Container` built from the plugin's config files plus what an application provides (PSR-17 factories, the route collection, the dispatcher, the HTTP application on `RequestBodyParser` and the router) with the test's instances as definitions; `Yiisoft\Yii\Http\Application::handle()`; no transport headers.
+- **`examples/yii`**: a `yiisoft/app`-shaped minimal host on the HTTP and console runners: `config/{params,di,di-web,routes,events}.php`, `public/index.php`, `yii`, a `/app/me` route behind `polaris/authentication`, `bin/setup`, `bin/walkthrough.sh`, README.
 
 ---
 

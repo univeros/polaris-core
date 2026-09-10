@@ -9,7 +9,9 @@ use Override;
 use PDO;
 use Polaris\Cli\Command\DoctorCommand;
 use Polaris\Cli\Command\ManifestCommand;
+use Polaris\Cli\Command\SchemaCreateCommand;
 use Polaris\Cli\Command\SchemaDiffCommand;
+use Polaris\Cli\Command\SchemaDropCommand;
 use Polaris\Cli\Command\SchemaExportCommand;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\RateLimitConfig;
@@ -18,8 +20,6 @@ use Polaris\Contract\DatabaseAdapter;
 use Polaris\Pdo\PdoAdapter;
 use Polaris\Polaris;
 use Polaris\Psr15\Pipeline;
-use Polaris\Symfony\Command\SchemaCreateCommand;
-use Polaris\Symfony\Command\SchemaDropCommand;
 use Polaris\Symfony\Event\PolarisEventSubscriber;
 use Polaris\Symfony\Http\PolarisController;
 use Polaris\Symfony\Mail\OtpMailer;
@@ -166,8 +166,8 @@ final class PolarisBundle extends AbstractBundle
             ->args([service_closure('polaris.secrets'), service_closure('polaris.auth'), service_closure('polaris.pdo')])
             ->call('setName', ['polaris:doctor'])
             ->tag('console.command');
-        $services->set(SchemaCreateCommand::class)->args([service_closure('polaris.pdo')])->tag('console.command');
-        $services->set(SchemaDropCommand::class)->args([service_closure('polaris.pdo')])->tag('console.command');
+        $services->set(SchemaCreateCommand::class)->args([service_closure('polaris.pdo')])->call('setName', ['polaris:schema:create'])->tag('console.command');
+        $services->set(SchemaDropCommand::class)->args([service_closure('polaris.pdo')])->call('setName', ['polaris:schema:drop'])->tag('console.command');
     }
 
     /**
