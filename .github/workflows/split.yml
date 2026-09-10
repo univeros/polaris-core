@@ -8,7 +8,7 @@ name: Split packages
 #   - the variable SPLIT_PREFIX (optional): prepended to the package directory name, because under
 #     `univeros` the bare names collide with the framework's own split (`univeros/cli`) and with this
 #     monorepo (`univeros/polaris-core`); the target is <SPLIT_ORG>/<SPLIT_PREFIX><package>;
-#   - the secret POLARIS_TOKEN: a token with contents:write on those repositories;
+#   - the secret POLARIS_SPLIT_TOKEN: a token with contents:write on those repositories;
 #   - the secret PACKAGIST_AUTH (optional): "username:apiToken", so Packagist is pinged after a push.
 # Every push to main force-updates each split's main; a v* tag is pushed to every split at the split
 # commit, so the packages share one version line. workflow_dispatch with `tag` pushes an existing tag
@@ -54,7 +54,7 @@ jobs:
 
       - name: Push to ${{ vars.SPLIT_ORG }}/${{ vars.SPLIT_PREFIX }}${{ matrix.package }}
         env:
-          TARGET: https://x-access-token:${{ secrets.POLARIS_TOKEN }}@github.com/${{ vars.SPLIT_ORG }}/${{ vars.SPLIT_PREFIX }}${{ matrix.package }}.git
+          TARGET: https://x-access-token:${{ secrets.POLARIS_SPLIT_TOKEN }}@github.com/${{ vars.SPLIT_ORG }}/${{ vars.SPLIT_PREFIX }}${{ matrix.package }}.git
         run: |
           if [ -n "$tag" ]; then
             git tag -f "$tag" "$split"
