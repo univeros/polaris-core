@@ -43,7 +43,12 @@
             "required": ["class"],
             "properties": { "class": { "type": "string" }, "description": { "type": "string" } }
         },
-        "output": { "type": "object", "properties": { "status": { "type": "integer" } } },
+        "output": {
+            "type": "object",
+            "description": "The success response: its status, and its body as `example` (plus `example_<variant>` where one endpoint answers two shapes). The examples type the response in the OpenAPI document and in the TypeScript client.",
+            "properties": { "status": { "type": "integer" }, "example": { "type": "object" } },
+            "patternProperties": { "^example_": { "type": "object" } }
+        },
         "errors": { "type": "array", "items": { "type": "object", "required": ["status", "code"], "properties": { "status": { "type": "integer" }, "code": { "type": ["string", "null"] } } } },
         "events": { "type": "array", "items": { "type": "string" } }
     }

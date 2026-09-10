@@ -7,6 +7,8 @@ namespace Polaris\Http\Manifest;
 use Polaris\Http\Validation\Rule;
 
 use function array_map;
+use function array_values;
+use function count;
 use function explode;
 use function preg_match_all;
 use function sprintf;
@@ -15,8 +17,9 @@ use function trim;
 
 /**
  * An OpenAPI 3.1 document generated from the manifest: one operation per spec, request bodies
- * and parameters from `input`, security from `auth`, responses from `output` and `errors`, and
- * the Polaris policy fields as `x-polaris-*` extensions.
+ * and parameters from `input`, security from `auth`, responses from `output` (the success body typed
+ * from its example by {@see ExampleSchema}) and `errors`, and the Polaris policy fields as
+ * `x-polaris-*` extensions.
  */
 final class OpenApi
 {
@@ -114,6 +117,15 @@ final class OpenApi
         $responses = [];
         $status = (string) ($spec->outputStatus ?? 200);
         $responses[$status] = ['description' => 'Success'];
+        if ($spec->outputExamples !== []) {
+            $content = ['schema' => ExampleSchema::fromExamples($spec->outputExamples)];
+            if (count($spec->outputExamples) === 1) {
+                $content['example'] = $spec->outputExamples['example'] ?? array_values($spec->outputExamples)[0];
+            } else {
+                $content['examples'] = array_map(static fn(array $example): array => ['value' => $example], $spec->outputExamples);
+            }
+            $responses[$status]['content'] = ['application/json' => $content];
+        }
         foreach ($spec->errors as $error) {
             $code = (string) $error['status'];
             $description = $error['code'] === null ? 'Error' : $error['code'];

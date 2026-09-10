@@ -34,6 +34,7 @@ navigates by.
 | `polaris/laravel` | `Polaris\Laravel\` | Laravel 13: service provider, the endpoints as routes, the `polaris` guard, mail bridge, `polaris:*` artisan commands. |
 | `polaris/symfony` | `Polaris\Symfony\` | Symfony 7.4 / 8: bundle, the endpoints as routes, a firewall authenticator, mail bridge, `polaris:*` console commands. |
 | `polaris/yii` | `Polaris\Yii\` | Yii 3: config plugin, the endpoints as routes, an authentication method, mail bridge, `polaris:*` console commands. |
+| `@polaris-auth/client` (npm) | `packages/client-ts` | The TypeScript client generated from the manifest: `openapi-fetch` typed by the 52 endpoints, request bodies, `data` and `error` checked at compile time. |
 
 This repository is the monorepo; each package is published to its own read-only
 repository for Composer.
@@ -89,6 +90,10 @@ in `config/packages/polaris.yaml`, import the routes with `type: polaris`, and p
 In Yii 3, `polaris/yii` is a `yiisoft/config` plugin: set the `polaris` params, and the routes,
 the definitions, the `polaris/authentication` middleware and the `polaris:*` commands are there
 ([`examples/yii`](examples/yii) is the complete host).
+
+From a browser or Node, `@polaris-auth/client` ([`packages/client-ts`](packages/client-ts)) is the same
+contract typed: `createClient({ baseUrl, token })` over `openapi-fetch`, generated from
+`polaris manifest --format=openapi` and drift-checked in CI.
 
 ---
 

@@ -18,6 +18,7 @@ final readonly class EndpointSpec
      * @param list<string> $requiresPermissions
      * @param list<FieldSpec> $fields
      * @param class-string $class
+     * @param array<string, array<string, mixed>> $outputExamples the `output.example` and `output.example_*` bodies, by key
      * @param list<array{status: int, code: string|null}> $errors
      * @param list<string> $events
      */
@@ -37,6 +38,7 @@ final readonly class EndpointSpec
         public array $fields,
         public string $class,
         public ?int $outputStatus,
+        public array $outputExamples,
         public array $errors,
         public array $events,
     ) {
