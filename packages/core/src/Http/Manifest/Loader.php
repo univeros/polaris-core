@@ -40,7 +40,7 @@ final class Loader
 
     public static function defaultDirectory(): string
     {
-        return dirname(__DIR__, 5) . '/api';
+        return dirname(__DIR__, 3) . '/api';
     }
 
     public function load(): Manifest

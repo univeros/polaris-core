@@ -2,10 +2,10 @@
 
 One YAML spec per implemented endpoint, regenerated from the shipped code
 (Phases 1-4). The human-readable counterpart is
-[`docs/auth/api-reference.md`](../docs/auth/api-reference.md); both describe
+[`docs/auth/api-reference.md`](../../../docs/auth/api-reference.md); both describe
 the same surface, and the code is the source of truth for each. For operating
 the module as an agent, see
-[`.ai/skills/polaris/SKILL.md`](../.ai/skills/polaris/SKILL.md).
+[`.ai/skills/polaris/SKILL.md`](../../../.ai/skills/polaris/SKILL.md).
 
 ## Layout
 

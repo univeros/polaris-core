@@ -14,7 +14,7 @@ registration, password login with Argon2id, JWT access tokens with **rotating
 refresh tokens** and theft detection, **multi-factor authentication** (TOTP by QR,
 SMS, email, recovery codes, step-up), **multi-tenant organizations with role-based
 access control**, an append-only audit log and PSR-14 events. The HTTP contract is
-52 endpoints declared in `api/**/*.yaml`; every response is contract-frozen by a
+52 endpoints declared in `packages/core/api/**/*.yaml`; every response is contract-frozen by a
 recorded fixture suite.
 
 The name is the idea: *Polaris* is the fixed star your application's identity
@@ -62,7 +62,7 @@ $polaris = Polaris::create(new Config(
 
 $pipeline = new Pipeline($polaris->graph(), $responseFactory);
 $pipeline->middleware();   // ordered PSR-15 middleware for your stack
-$pipeline->handler();      // the PSR-15 handler serving every route in api/
+$pipeline->handler();      // the PSR-15 handler serving every route in packages/core/api/
 ```
 
 Every port has a working default (in-memory cache, log mailer and SMS sender, system
@@ -89,7 +89,7 @@ clock, libsodium encrypter, PSR-3 metrics); pass your own to replace it.
 ## How it works
 
 ```
-HTTP        api/**/*.yaml        the manifest: method, path, auth, rate limit, effect, input rules, endpoint class
+HTTP        core/api/**/*.yaml   the manifest: method, path, auth, rate limit, effect, input rules, endpoint class
             Polaris\Psr15        RouteMiddleware → ClientContext → rate limits → token / MFA-ticket auth → step-up → denylist → authorization → RequestHandler
             Polaris\Http         Endpoint(Input): Result — parse, call a service, map the outcome
 Domain      Identity, Mfa, Token, Authorization   services, transactional, emitting PSR-14 events

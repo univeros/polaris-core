@@ -55,7 +55,7 @@ curl -s -X POST $URL/auth/switch-org -H "Authorization: Bearer $ACCESS" \
 curl -s $URL/orgs/<org id>/members -H "Authorization: Bearer <scoped access token>"
 ```
 
-Every endpoint is declared in `../../api/**/*.yaml`; `../../bin/polaris manifest --format=openapi` renders the OpenAPI document, `bin/polaris doctor --dsn=sqlite:var/polaris.sqlite` (with the `.env` loaded) checks the deployment.
+Every endpoint is declared in `../../packages/core/api/**/*.yaml`; `../../bin/polaris manifest --format=openapi` renders the OpenAPI document, `bin/polaris doctor --dsn=sqlite:var/polaris.sqlite` (with the `.env` loaded) checks the deployment.
 
 ## What the host provides
 

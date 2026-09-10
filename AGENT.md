@@ -6,7 +6,7 @@ This repository (`github.com/univeros/polaris-core`) publishes the `polaris/*` C
 
 ## Status
 
-- **The code is the complete Polaris 1.0.0** (June 2026): authentication, MFA/OTP, sessions and rotating refresh tokens, multi-tenant organizations and RBAC, audit log, 35 PSR-14 events, 52 endpoints specified in `api/**/*.yaml`, 115 test files.
+- **The code is the complete Polaris 1.0.0** (June 2026): authentication, MFA/OTP, sessions and rotating refresh tokens, multi-tenant organizations and RBAC, audit log, 35 PSR-14 events, 52 endpoints specified in `packages/core/api/**/*.yaml`, 115 test files.
 - **Extraction (task 1) is done through WP7.** The monorepo holds `packages/core` (`Polaris\`, framework-free), `packages/psr15`, `packages/pdo`, `packages/testing`, `packages/cli`; nothing imports `Altair\`, `Cycle\` or `Univeros\` any more (`bin/check-imports` blocks it). The authoritative spec is `docs/extraction/spec.md`; the decisions taken along the way are in `docs/extraction/decisions.md`, the one behaviour change in `behaviour-changes.md`. WP8 (the Slim demo) is the remaining work package.
 
 Entry points: `Polaris::create(new Polaris\Wiring\Config(...))` builds the service graph without a container; `Polaris\Psr15\Pipeline` wraps it as PSR-15 middleware plus handler; `bin/polaris` offers `schema:export`, `schema:diff`, `manifest` and `doctor`. The functional suite replays 184 recorded 1.0 fixtures through the pipeline (`packages/core/tests/Contract`), so every response is contract-frozen. Check `docs/extraction/decisions.md` for what has been decided since this file was written.
@@ -18,7 +18,7 @@ Entry points: `Polaris::create(new Polaris\Wiring\Config(...))` builds the servi
 3. **Nothing in this repository may import** `Altair\`, `Cycle\`, `Univeros\`, or any framework namespace once WP7 is done. Allowed dependencies are listed in `spec.md` §2.
 4. **Public HTTP contract is frozen.** Every request/response shape in `api/**/*.yaml` and `docs/auth/api-reference.md` stays identical. The contract-freeze fixtures (WP6) enforce it.
 5. **Namespaces.** Everything is `Polaris\*`. No aliases to `Univeros\Polaris\*`; that namespace belongs to the other repository.
-6. **Endpoints are declared in YAML, not in code.** After WP5, `api/**/*.yaml` is the router. Adding or changing an endpoint means editing its spec; the endpoint class only implements it.
+6. **Endpoints are declared in YAML, not in code.** `packages/core/api/**/*.yaml` is the router. Adding or changing an endpoint means editing its spec; the endpoint class only implements it.
 7. **Security-critical code.** Password hashing, token minting and rotation, OTP handling, and encryption are not refactored for style. Move them, fix imports, keep their tests.
 
 ## How to work a work package
@@ -35,7 +35,7 @@ Entry points: `Polaris::create(new Polaris\Wiring\Config(...))` builds the servi
 packages/core/src/{Contract,Model,Schema,Repository,Identity,Mfa,Token,Authorization,Security,Event,Exception,Config,Support,Http,Wiring}
 packages/psr15/src/{RequestHandler.php,Middleware/}
 packages/pdo/src   packages/testing/src   packages/cli/src
-api/                       endpoint specs (router after WP5)
+packages/core/api/         endpoint specs, the router (shipped inside polaris/core)
 docs/auth/                 identity design (unchanged)
 docs/extraction/           this task
 examples/slim/             WP8 demo
@@ -49,7 +49,7 @@ composer test          # phpunit
 composer stan
 composer cs-fix
 bin/polaris doctor     # after WP7
-bin/polaris manifest   # after WP7: validate api/*.yaml, emit OpenAPI
+bin/polaris manifest   # validate packages/core/api/**/*.yaml, emit OpenAPI
 ```
 
 ## Namespaces you will see and must not confuse
