@@ -42,6 +42,17 @@ the project adheres to [Semantic Versioning](https://semver.org/).
 - `polaris/cli`: `schema:diff` and `doctor` accept a host's connection, secrets and auth
   settings; `symfony/*` constraints allow Symfony 8.
 
+### TypeScript client
+
+- **`@polaris-auth/client`** (`packages/client-ts`, npm): `createClient({ baseUrl, token })`
+  over `openapi-fetch`, typed by `src/schema.d.ts`, which `openapi-typescript` generates
+  from `polaris manifest --format=openapi`; `withToken()` binds another token. Checked in
+  and drift-checked in CI; the smoke test runs register, verify, login and `/auth/me`
+  through the client against the Slim demo.
+- `polaris manifest --format=openapi` types every success response from the spec's
+  `output.example` (`Polaris\Http\Manifest\ExampleSchema`, JSON Schema by example;
+  `example_<variant>` keys become a `oneOf`), so the generated client types `data`.
+
 ### Polaris for PHP: the framework-agnostic extraction
 
 The 1.0 Univeros module became a monorepo of framework-free packages with the

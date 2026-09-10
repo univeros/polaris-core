@@ -1,0 +1,43 @@
+{
+    "name": "@polaris-auth/client",
+    "version": "0.1.0",
+    "description": "Typed TypeScript client for Polaris for PHP, generated from the route manifest",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/univeros/polaris-core.git",
+        "directory": "packages/client-ts"
+    },
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist",
+        "src",
+        "openapi.json"
+    ],
+    "engines": {
+        "node": ">=20"
+    },
+    "scripts": {
+        "generate": "php ../../bin/polaris manifest --format=openapi > openapi.json && openapi-typescript openapi.json -o src/schema.d.ts",
+        "typecheck": "tsc --noEmit",
+        "build": "tsc -p tsconfig.build.json",
+        "test": "vitest run"
+    },
+    "dependencies": {
+        "openapi-fetch": "^0.17.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.20.2",
+        "openapi-typescript": "^7.13.0",
+        "typescript": "^5.9.3",
+        "vitest": "^4.1.11"
+    }
+}

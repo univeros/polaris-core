@@ -21,6 +21,7 @@ use function is_string;
 use function sort;
 use function sprintf;
 use function str_ends_with;
+use function str_starts_with;
 use function strtoupper;
 use function substr;
 
@@ -123,9 +124,28 @@ final class Loader
             fields: $this->fields(is_array($input['fields'] ?? null) ? $input['fields'] : [], $name),
             class: $class,
             outputStatus: is_int($output['status'] ?? null) ? $output['status'] : null,
+            outputExamples: $this->examples($output),
             errors: $this->errors($document['errors'] ?? [], $name),
             events: $this->strings($document['events'] ?? []),
         );
+    }
+
+    /**
+     * The response bodies a spec shows: `example` and any `example_<variant>` (login's `example_mfa_required`).
+     *
+     * @param array<string, mixed> $output
+     * @return array<string, array<string, mixed>>
+     */
+    private function examples(array $output): array
+    {
+        $examples = [];
+        foreach ($output as $key => $value) {
+            if (($key === 'example' || str_starts_with($key, 'example_')) && is_array($value)) {
+                $examples[$key] = $value;
+            }
+        }
+
+        return $examples;
     }
 
     /**

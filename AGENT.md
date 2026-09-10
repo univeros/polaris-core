@@ -8,7 +8,7 @@ This repository (`github.com/univeros/polaris-core`) publishes the `polaris/*` C
 
 - **The code is the complete Polaris 1.0.0** (June 2026): authentication, MFA/OTP, sessions and rotating refresh tokens, multi-tenant organizations and RBAC, audit log, 35 PSR-14 events, 52 endpoints specified in `packages/core/api/**/*.yaml`, 115 test files.
 - **Extraction (task 1) is complete.** The monorepo holds `packages/core` (`Polaris\`, framework-free), `packages/psr15`, `packages/pdo`, `packages/testing`, `packages/cli`; nothing imports `Altair\`, `Cycle\` or `Univeros\` any more (`bin/check-imports` blocks it). The spec was `docs/extraction/spec.md`; the decisions taken along the way are in `docs/extraction/decisions.md`, the one behaviour change in `behaviour-changes.md`; the Slim demo is `examples/slim`.
-- **Framework adapters (task 2) are in progress.** The spec is `docs/adapters/spec.md` (Laravel, Symfony, Yii, then the TypeScript client); decisions go to `docs/adapters/decisions.md`. Every adapter is proven by the functional suite and the contract fixtures replayed through its own HTTP kernel.
+- **Framework adapters and the TypeScript client (task 2) are complete.** The spec is `docs/adapters/spec.md` (Laravel, Symfony, Yii, the TypeScript client; the Univeros module is `univeros/polaris` 2.0 in its own repository, prepared as `docs/adapters/univeros-polaris-2.0.md`); decisions are in `docs/adapters/decisions.md`. Every adapter is proven by the functional suite and the contract fixtures replayed through its own HTTP kernel; the client is generated from the manifest and smoke-tested against the Slim demo.
 
 Entry points: `Polaris::create(new Polaris\Wiring\Config(...))` builds the service graph without a container; `Polaris\Psr15\Pipeline` wraps it as PSR-15 middleware plus handler; `bin/polaris` offers `schema:export`, `schema:diff`, `manifest` and `doctor`. The functional suite replays 184 recorded 1.0 fixtures through the pipeline (`packages/core/tests/Contract`), so every response is contract-frozen. Check `docs/extraction/decisions.md` for what has been decided since this file was written.
 
@@ -39,10 +39,11 @@ packages/pdo/src   packages/testing/src   packages/cli/src
 packages/laravel/src/{PolarisServiceProvider.php,PolarisFactory.php,Auth,Console,Events,Http,Mail,Schema}   the Laravel adapter (task 2 WP1)
 packages/symfony/src/{PolarisBundle.php,Factory.php,Event,Http,Mail,Routing,Security}                        the Symfony adapter (task 2 WP2)
 packages/yii/{config,src/{Factory.php,Auth,Event,Http,Mail}}                                                 the Yii 3 adapter (task 2 WP3)
+packages/client-ts/{src/{index.ts,schema.d.ts},test,openapi.json}                                           the TypeScript client (task 2 WP5), npm @polaris-auth/client, not a Composer package
 packages/core/api/         endpoint specs, the router (shipped inside polaris/core)
 docs/auth/                 identity design (unchanged)
 docs/extraction/           task 1 (complete)
-docs/adapters/             task 2 (in progress: the TypeScript client is next)
+docs/adapters/             task 2 (complete)
 examples/                  walkthrough.sh (shared), slim/, laravel/, symfony/, yii/; one demo per adapter
 ```
 
@@ -55,6 +56,7 @@ composer stan
 composer cs-fix
 bin/polaris doctor
 bin/polaris manifest   # validate packages/core/api/**/*.yaml, emit OpenAPI
+npm --prefix packages/client-ts run generate   # regenerate the TypeScript client from the manifest (checked in, drift-checked in CI)
 ```
 
 ## Namespaces you will see and must not confuse

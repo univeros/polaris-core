@@ -15,6 +15,7 @@ use Polaris\Http\Manifest\Manifest;
 use ReflectionClass;
 
 use function array_count_values;
+use function array_keys;
 use function array_map;
 use function array_unique;
 use function class_exists;
@@ -44,6 +45,19 @@ final class ManifestTest extends TestCase
     protected function setUp(): void
     {
         $this->manifest = (new Loader(Loader::defaultDirectory()))->load();
+    }
+
+    public function testEverySpecShowsItsSuccessBody(): void
+    {
+        foreach ($this->manifest->endpoints() as $spec) {
+            self::assertArrayHasKey('example', $spec->outputExamples, "$spec->file: output.example types the response for the clients");
+            foreach ($spec->outputExamples as $key => $example) {
+                self::assertNotSame([], $example, "$spec->file: $key");
+            }
+        }
+        $login = $this->manifest->find('POST', '/auth/login');
+        self::assertNotNull($login);
+        self::assertSame(['example', 'example_mfa_required'], array_keys($login->outputExamples));
     }
 
     public function testEverySpecRoutesToAnEndpointAndEveryEndpointIsSpecified(): void

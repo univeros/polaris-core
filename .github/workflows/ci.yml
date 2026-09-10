@@ -168,3 +168,41 @@ jobs:
         run: |
           bin/setup
           bin/walkthrough.sh
+
+  client-ts:
+    name: TypeScript client
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: openssl, sodium, gd, mbstring, pdo_sqlite, sqlite3
+          coverage: none
+
+      - name: Install the monorepo (bin/polaris renders the manifest)
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Install and set up the Slim demo (the smoke test runs against it)
+        working-directory: examples/slim
+        run: |
+          composer install --no-interaction --prefer-dist --no-progress
+          bin/setup
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: packages/client-ts/package-lock.json
+
+      - name: Generate, drift-check, typecheck and test the client
+        working-directory: packages/client-ts
+        run: |
+          npm ci
+          npm run generate
+          git diff --exit-code -- openapi.json src/schema.d.ts
+          npm run typecheck
+          npm test

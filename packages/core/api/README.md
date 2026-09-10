@@ -45,13 +45,23 @@ domain:
 
 output:
   status: 200
-  example: { data: { ... } }   # the implemented envelope
+  example: { data: { ... } }   # the implemented envelope; types the response in OpenAPI and the TypeScript client
+  # example_<variant>: { ... }  # a second shape the same endpoint answers (login's example_mfa_required)
 
 errors:                        # every non-2xx the domain returns
   - { status: 401, code: invalid_credentials }
 
 events: [user.logged_in]       # PSR-14 events emitted (docs/auth/events.md)
 ```
+
+## Response typing
+
+`polaris manifest --format=openapi` types each success response from the spec's `example` (JSON Schema
+by example, `Polaris\Http\Manifest\ExampleSchema`): every key shown is required, scalars take their JSON
+type, array items are merged (a key missing from some items is optional, one null in some is nullable),
+a value null everywhere is a nullable string, an empty array has untyped items, and `example_<variant>`
+keys become a `oneOf`. The generated TypeScript client (`packages/client-ts`) is typed from that, so keep
+the examples the shape the endpoint really answers.
 
 ## Tooling
 

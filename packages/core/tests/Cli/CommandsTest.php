@@ -13,6 +13,7 @@ use Polaris\Pdo\SqlSchema;
 use Polaris\Tests\Support\TestKeys;
 use Symfony\Component\Console\Tester\CommandTester;
 
+use function array_keys;
 use function json_decode;
 use function putenv;
 use function sys_get_temp_dir;
@@ -86,6 +87,14 @@ final class CommandsTest extends TestCase
         self::assertSame('email', $login['requestBody']['content']['application/json']['schema']['properties']['email']['format']);
         self::assertSame(320, $login['requestBody']['content']['application/json']['schema']['properties']['email']['maxLength']);
         self::assertSame('write', $login['x-polaris-effect']);
+        $success = $login['responses']['200']['content']['application/json'];
+        self::assertCount(2, $success['schema']['oneOf'], 'a full session or the mfa_required ticket');
+        self::assertSame(['type' => 'string'], $success['schema']['oneOf'][0]['properties']['data']['properties']['access_token']);
+        self::assertSame(['example', 'example_mfa_required'], array_keys($success['examples']));
+        $me = $openapi['paths']['/auth/me']['get']['responses']['200']['content']['application/json'];
+        self::assertSame(['id', 'email', 'email_verified', 'display_name', 'status', 'mfa_enforced', 'orgs', 'roles'], $me['schema']['properties']['data']['required']);
+        self::assertSame('ada@example.com', $me['example']['data']['email']);
+        self::assertSame(['$ref' => '#/components/schemas/Error'], $openapi['paths']['/auth/me']['get']['responses']['401']['content']['application/json']['schema']);
         self::assertSame([['bearerAuth' => []]], $openapi['paths']['/auth/me']['get']['security']);
         self::assertArrayHasKey('id', $openapi['paths']['/auth/sessions/{id}']['delete']['parameters'][0]['name'] === 'id' ? ['id' => true] : []);
     }
