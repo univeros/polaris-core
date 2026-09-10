@@ -3,6 +3,12 @@
     "description": "Symfony adapter for Polaris for PHP: bundle, routes, security authenticator, mail bridge, console commands",
     "type": "symfony-bundle",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
     "require": {
         "php": ">=8.3",
         "nyholm/psr7": "^1.8",

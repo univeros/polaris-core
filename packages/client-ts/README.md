@@ -47,4 +47,4 @@ server you started. Node 20 or later.
 
 ## License
 
-MIT.
+MIT. Polaris for PHP is created and maintained by [2am.tech](https://2am.tech).

@@ -30,3 +30,5 @@ shows the 52 routes; `php artisan polaris:manifest --format=openapi` renders the
 
 Swap the SQLite connection for PostgreSQL or MySQL, `mailer` for `mail` (Laravel's mailer with the
 `polaris::mail.*` views) or your own `OtpMailerInterface`, and the same application runs in production.
+
+Polaris for PHP is created and maintained by [2am.tech](https://2am.tech).

@@ -3,6 +3,12 @@
     "description": "Laravel adapter for Polaris for PHP: service provider, routes, guard, mail bridge, artisan commands",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
     "require": {
         "php": ">=8.3",
         "laravel/framework": "^13.0",

@@ -65,3 +65,5 @@ Every endpoint is declared in `../../packages/core/api/**/*.yaml`; `../../bin/po
 - `new Pipeline($polaris->graph(), $responseFactory)`: its `middleware()` goes on the Slim app (reversed, because Slim runs the last-added middleware first) and its `handler()` serves every route.
 
 Swap the SQLite DSN for PostgreSQL or MySQL, the file mailer for your transport, and the dispatcher for your own, and the same code runs in production.
+
+Polaris for PHP is created and maintained by [2am.tech](https://2am.tech).
