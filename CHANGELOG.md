@@ -22,8 +22,9 @@ from the 1.0 code through the PSR-15 pipeline. The extraction is documented in
   (`Polaris\Schema`); repositories run on a `DatabaseAdapter` (`polaris/pdo` for
   PostgreSQL, MySQL and SQLite; an in-memory adapter in `polaris/testing`). The
   18 Cycle migrations are replaced by `polaris schema:export`.
-- **Routing.** `api/**/*.yaml` is the router: 52 endpoints, each with `effect`
-  and `receipt`, loaded by `Polaris\Http\Manifest`; the CLI renders OpenAPI 3.1.
+- **Routing.** `packages/core/api/**/*.yaml`, shipped inside `polaris/core`, is
+  the router: 52 endpoints, each with `effect` and `receipt`, loaded by
+  `Polaris\Http\Manifest`; the CLI renders OpenAPI 3.1.
 - **Ports.** Repository, unit of work, tokens, identity provider, encrypter
   (`SodiumEncrypter` default, XChaCha20-Poly1305), rate store (PSR-16 default),
   metrics (PSR-3 default); PSR-14 listeners exposed through `Polaris::listeners()`.

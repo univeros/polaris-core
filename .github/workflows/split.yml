@@ -1,0 +1,47 @@
+name: Split packages
+
+# Mirrors every package under packages/ to its own read-only repository, so a consumer can
+# `composer require polaris/<package>` without the monorepo (docs/extraction/decisions.md, WP0
+# and the 2026-09-10 split entries). Dormant until the owner sets two things on this repository:
+#   - the variable SPLIT_ORG: the GitHub organisation (or user) holding the split repositories,
+#     which are named after the package directory: <SPLIT_ORG>/core, /psr15, /pdo, /testing, /cli;
+#   - the secret SPLIT_TOKEN: a token with contents:write on those repositories.
+# Every push to main force-updates each split's main; a v* tag is pushed to every split at the
+# split commit, so the packages share one version line.
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+jobs:
+  split:
+    name: ${{ matrix.package }}
+    if: ${{ vars.SPLIT_ORG != '' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [core, psr15, pdo, testing, cli]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Split packages/${{ matrix.package }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          echo "split=$(git subtree split --prefix="packages/${{ matrix.package }}" HEAD)" >> "$GITHUB_ENV"
+
+      - name: Push to ${{ vars.SPLIT_ORG }}/${{ matrix.package }}
+        env:
+          TARGET: https://x-access-token:${{ secrets.SPLIT_TOKEN }}@github.com/${{ vars.SPLIT_ORG }}/${{ matrix.package }}.git
+        run: |
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            git tag -f "${{ github.ref_name }}" "$split"
+            git push --force "$TARGET" "refs/tags/${{ github.ref_name }}"
+          else
+            git push --force "$TARGET" "$split:refs/heads/main"
+          fi

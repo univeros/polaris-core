@@ -61,7 +61,7 @@ final class ManifestTest extends TestCase
         }
 
         $endpoints = [];
-        foreach (glob(Loader::defaultDirectory() . '/../packages/core/src/Http/*/*Endpoint.php') ?: [] as $file) {
+        foreach (glob(Loader::defaultDirectory() . '/../src/Http/*/*Endpoint.php') ?: [] as $file) {
             $class = 'Polaris\\Http\\' . basename(dirname($file)) . '\\' . basename($file, '.php');
             if (class_exists($class) && !(new ReflectionClass($class))->isAbstract()) {
                 $endpoints[] = $class;
