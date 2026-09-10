@@ -19,6 +19,9 @@
         <testsuite name="laravel">
             <directory>packages/laravel/tests</directory>
         </testsuite>
+        <testsuite name="symfony">
+            <directory>packages/symfony/tests</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>
@@ -28,6 +31,7 @@
             <directory>packages/psr15/src</directory>
             <directory>packages/cli/src</directory>
             <directory>packages/laravel/src</directory>
+            <directory>packages/symfony/src</directory>
         </include>
     </source>
 </phpunit>

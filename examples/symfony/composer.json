@@ -1,0 +1,47 @@
+{
+    "name": "polaris/example-symfony",
+    "description": "Polaris for PHP demo: Symfony 7.4 + polaris/symfony on SQLite",
+    "type": "project",
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../packages/*",
+            "options": {
+                "symlink": true,
+                "versions": {
+                    "polaris/cli": "0.1.x-dev",
+                    "polaris/core": "0.1.x-dev",
+                    "polaris/laravel": "0.1.x-dev",
+                    "polaris/pdo": "0.1.x-dev",
+                    "polaris/psr15": "0.1.x-dev",
+                    "polaris/symfony": "0.1.x-dev",
+                    "polaris/testing": "0.1.x-dev"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "ext-pdo_sqlite": "*",
+        "polaris/cli": "0.1.x-dev",
+        "polaris/core": "0.1.x-dev",
+        "polaris/pdo": "0.1.x-dev",
+        "polaris/psr15": "0.1.x-dev",
+        "polaris/symfony": "0.1.x-dev",
+        "symfony/dotenv": "^7.4",
+        "symfony/framework-bundle": "^7.4",
+        "symfony/security-bundle": "^7.4",
+        "symfony/yaml": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "PolarisDemo\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

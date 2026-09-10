@@ -17,6 +17,17 @@ the project adheres to [Semantic Versioning](https://semver.org/).
   plain-text mail bridge (`mailer: mail`). The functional suite and the 184 contract
   fixtures replay through Laravel's HTTP kernel in CI; `examples/laravel` runs the shared
   walkthrough. Spec and decisions in `docs/adapters/`.
+- **`polaris/symfony`** (`Polaris\Symfony\`): a bundle whose `polaris:` configuration
+  becomes the `Polaris`, `Graph` and `Pipeline` services on the application's connection
+  (a DSN, a PDO, a Doctrine DBAL connection), cache, logger, dispatcher and mailer; the
+  `polaris` route loader mounts the 52 endpoints as named routes; the authenticator
+  (`custom_authenticators`) guards the application's firewalls with Polaris access
+  tokens; `polaris:schema:create`, `polaris:schema:drop` and the CLI commands as
+  `polaris:*`; a plain-text Symfony Mailer bridge (`mailer: mail`). The functional
+  suite and the 184 contract fixtures replay through Symfony's HTTP kernel in CI;
+  `examples/symfony` runs the shared walkthrough.
+- `polaris/pdo`: `SchemaInstaller` creates the tables and seeds the catalog on a
+  connection, or drops them; the adapters' migrations and commands call it.
 - `polaris/cli`: `schema:diff` and `doctor` accept a host's connection, secrets and auth
   settings; `symfony/*` constraints allow Symfony 8.
 

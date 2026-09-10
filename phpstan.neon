@@ -9,3 +9,5 @@ parameters:
         - packages/cli/src
         - packages/laravel/src
         - packages/laravel/tests
+        - packages/symfony/src
+        - packages/symfony/tests

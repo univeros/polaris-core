@@ -1,0 +1,8 @@
+# The 52 Polaris endpoints, under polaris.path_prefix ("/" by default).
+polaris:
+    resource: .
+    type: polaris
+
+controllers:
+    resource: ../src/Controller/
+    type: attribute

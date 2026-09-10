@@ -1,0 +1,35 @@
+{
+    "name": "polaris/symfony",
+    "description": "Symfony adapter for Polaris for PHP: bundle, routes, security authenticator, mail bridge, console commands",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.3",
+        "nyholm/psr7": "^1.8",
+        "polaris/cli": "^0.1",
+        "polaris/core": "^0.1",
+        "polaris/pdo": "^0.1",
+        "polaris/psr15": "^0.1",
+        "symfony/framework-bundle": "^7.4 || ^8.0",
+        "symfony/psr-http-message-bridge": "^7.4 || ^8.0",
+        "symfony/security-bundle": "^7.4 || ^8.0"
+    },
+    "suggest": {
+        "symfony/mailer": "Delivers the Polaris emails through Symfony Mailer (polaris.mailer: mail)"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\Symfony\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

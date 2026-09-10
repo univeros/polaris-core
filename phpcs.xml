@@ -10,12 +10,17 @@
     <file>packages/cli/src</file>
     <file>packages/laravel/src</file>
     <file>packages/laravel/tests</file>
+    <file>packages/symfony/src</file>
+    <file>packages/symfony/tests</file>
     <file>examples/slim/src</file>
     <file>examples/slim/public</file>
     <file>examples/laravel/src</file>
-    <file>examples/laravel/bootstrap</file>
+    <file>examples/laravel/bootstrap/app.php</file>
     <file>examples/laravel/config</file>
     <file>examples/laravel/public</file>
+    <file>examples/symfony/src</file>
+    <file>examples/symfony/config/bundles.php</file>
+    <file>examples/symfony/public</file>
 
     <arg name="colors"/>
     <arg name="warning-severity" value="0"/>

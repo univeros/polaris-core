@@ -20,6 +20,7 @@
                     "polaris/laravel": "0.1.x-dev",
                     "polaris/pdo": "0.1.x-dev",
                     "polaris/psr15": "0.1.x-dev",
+                    "polaris/symfony": "0.1.x-dev",
                     "polaris/testing": "0.1.x-dev"
                 }
             }
@@ -32,6 +33,7 @@
         "polaris/laravel": "0.1.x-dev",
         "polaris/pdo": "0.1.x-dev",
         "polaris/psr15": "0.1.x-dev",
+        "polaris/symfony": "0.1.x-dev",
         "polaris/testing": "0.1.x-dev"
     },
     "require-dev": {
@@ -39,12 +41,14 @@
         "orchestra/testbench-core": "^11.4",
         "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^12.5",
-        "squizlabs/php_codesniffer": "^3.13.6"
+        "squizlabs/php_codesniffer": "^3.13.6",
+        "symfony/mailer": "^7.4 || ^8.0"
     },
     "autoload-dev": {
         "psr-4": {
             "Polaris\\Tests\\": "packages/core/tests/",
-            "Polaris\\Laravel\\Tests\\": "packages/laravel/tests/"
+            "Polaris\\Laravel\\Tests\\": "packages/laravel/tests/",
+            "Polaris\\Symfony\\Tests\\": "packages/symfony/tests/"
         }
     },
     "scripts": {
@@ -57,12 +61,17 @@
             "@putenv POLARIS_HARNESS=Polaris\\Laravel\\Tests\\Harness",
             "phpunit --testsuite functional"
         ],
+        "test:symfony": [
+            "@putenv POLARIS_HARNESS=Polaris\\Symfony\\Tests\\Harness",
+            "phpunit --testsuite functional"
+        ],
         "qa": [
             "@cs",
             "@stan",
             "@imports",
             "@test",
-            "@test:laravel"
+            "@test:laravel",
+            "@test:symfony"
         ]
     },
     "config": {

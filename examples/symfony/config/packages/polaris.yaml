@@ -1,0 +1,13 @@
+# Everything else keeps core's default (vendor/polaris/symfony/src/PolarisBundle.php lists the keys).
+polaris:
+    secrets:
+        app_key: '%env(POLARIS_APP_KEY)%'
+        jwt_private_key_file: '%env(AUTH_JWT_PRIVATE_KEY_FILE)%'
+        jwt_public_key_file: '%env(AUTH_JWT_PUBLIC_KEY_FILE)%'
+        jwt_kid: '%env(AUTH_JWT_KID)%'
+    auth:
+        issuer: '%env(AUTH_ISSUER)%'
+    database:
+        dsn: 'sqlite:%kernel.project_dir%/var/polaris.sqlite'
+    # The demo mailbox (config/services.yaml); 'mail' would use Symfony Mailer.
+    mailer: PolarisDemo\FileMailer
