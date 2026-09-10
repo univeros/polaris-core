@@ -8,17 +8,22 @@ name: Split packages
 #   - the variable SPLIT_PREFIX (optional): prepended to the package directory name, because under
 #     `univeros` the bare names collide with the framework's own split (`univeros/cli`) and with this
 #     monorepo (`univeros/polaris-core`); the target is <SPLIT_ORG>/<SPLIT_PREFIX><package>;
-#   - the secret SPLIT_TOKEN: a token with contents:write on those repositories;
+#   - the secret POLARIS_SPLIT_TOKEN: a token with contents:write on those repositories;
 #   - the secret PACKAGIST_AUTH (optional): "username:apiToken", so Packagist is pinged after a push.
 # Every push to main force-updates each split's main; a v* tag is pushed to every split at the split
-# commit, so the packages share one version line. workflow_dispatch runs it on any branch or tag, for
-# the first split of an existing tag.
+# commit, so the packages share one version line. workflow_dispatch with `tag` pushes an existing tag
+# (the first split of a tag made before the secrets existed); without it, the chosen branch.
 
 on:
   push:
     branches: [main]
     tags: ['v*']
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'An existing v* tag to push to every split instead of the branch'
+        required: false
+        type: string
 
 jobs:
   split:
@@ -39,18 +44,21 @@ jobs:
           persist-credentials: false
 
       - name: Split packages/${{ matrix.package }}
+        env:
+          TAG: ${{ inputs.tag || (github.ref_type == 'tag' && github.ref_name) || '' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          echo "split=$(git subtree split --prefix="packages/${{ matrix.package }}" HEAD)" >> "$GITHUB_ENV"
+          echo "tag=$TAG" >> "$GITHUB_ENV"
+          echo "split=$(git subtree split --prefix="packages/${{ matrix.package }}" "${TAG:-HEAD}")" >> "$GITHUB_ENV"
 
       - name: Push to ${{ vars.SPLIT_ORG }}/${{ vars.SPLIT_PREFIX }}${{ matrix.package }}
         env:
-          TARGET: https://x-access-token:${{ secrets.SPLIT_TOKEN }}@github.com/${{ vars.SPLIT_ORG }}/${{ vars.SPLIT_PREFIX }}${{ matrix.package }}.git
+          TARGET: https://x-access-token:${{ secrets.POLARIS_SPLIT_TOKEN }}@github.com/${{ vars.SPLIT_ORG }}/${{ vars.SPLIT_PREFIX }}${{ matrix.package }}.git
         run: |
-          if [ "${{ github.ref_type }}" = "tag" ]; then
-            git tag -f "${{ github.ref_name }}" "$split"
-            git -c http.https://github.com/.extraheader= push --force "$TARGET" "refs/tags/${{ github.ref_name }}"
+          if [ -n "$tag" ]; then
+            git tag -f "$tag" "$split"
+            git -c http.https://github.com/.extraheader= push --force "$TARGET" "refs/tags/$tag"
           else
             git -c http.https://github.com/.extraheader= push --force "$TARGET" "$split:refs/heads/main"
           fi
