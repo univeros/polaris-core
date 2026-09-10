@@ -1,5 +1,5 @@
 import { spawn, type ChildProcess } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { existsSync, openSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createClient } from "../src/index.js";
@@ -13,20 +13,29 @@ const demo = fileURLToPath(new URL("../../../examples/slim/", import.meta.url));
 const baseUrl = process.env["POLARIS_URL"] ?? "http://127.0.0.1:8080";
 const email = `ada+${Date.now()}@example.com`;
 const password = "Sup3r-Secret-Passw0rd";
+const serverLog = `${demo}var/server.log`;
 let server: ChildProcess | undefined;
 
+/**
+ * Up means Polaris answered: `/auth/me` without a token is its 401. The path carries no file extension
+ * on purpose; PHP 8.3's built-in server answers a static 404 for `/auth/.well-known/jwks.json` itself.
+ */
 async function waitForServer(): Promise<void> {
+    let last = "no response";
     for (let attempt = 0; attempt < 100; attempt += 1) {
         try {
-            if ((await fetch(`${baseUrl}/auth/.well-known/jwks.json`)).ok) {
+            const response = await fetch(`${baseUrl}/auth/me`);
+            if (response.status === 401) {
                 return;
             }
-        } catch {
-            // not up yet
+            last = `${response.status} ${await response.text()}`;
+        } catch (error) {
+            last = String(error);
         }
         await new Promise((resolve) => setTimeout(resolve, 100));
     }
-    throw new Error(`no Polaris at ${baseUrl}; run composer install && bin/setup in examples/slim`);
+    const log = existsSync(serverLog) ? readFileSync(serverLog, "utf8").split("\n").slice(-10).join("\n") : "";
+    throw new Error(`no Polaris at ${baseUrl} (last: ${last}); run composer install && bin/setup in examples/slim\n${log}`);
 }
 
 function verificationToken(): string {
@@ -44,7 +53,8 @@ function verificationToken(): string {
 
 beforeAll(async () => {
     if (process.env["POLARIS_URL"] === undefined) {
-        server = spawn("php", ["-S", "127.0.0.1:8080", "-t", "public"], { cwd: demo, stdio: "ignore" });
+        const log = openSync(serverLog, "w");
+        server = spawn("php", ["-S", "127.0.0.1:8080", "-t", "public"], { cwd: demo, stdio: ["ignore", log, log] });
     }
     await waitForServer();
 }, 20_000);
