@@ -10,11 +10,15 @@ use Polaris\Cli\Command\SchemaCreateCommand;
 use Polaris\Cli\Command\SchemaDiffCommand;
 use Polaris\Cli\Command\SchemaDropCommand;
 use Polaris\Cli\Command\SchemaExportCommand;
+use Polaris\Polaris;
 use Symfony\Component\Console\Application as Console;
 
 final class Application extends Console
 {
-    public function __construct()
+    /**
+     * @param Polaris|null $polaris the application (from `Bootstrap::load()`), whose plugins may add commands
+     */
+    public function __construct(?Polaris $polaris = null)
     {
         parent::__construct('polaris', '0.1.1');
         $this->addCommands([
@@ -25,5 +29,12 @@ final class Application extends Console
             new ManifestCommand(),
             new DoctorCommand(),
         ]);
+        if ($polaris !== null) {
+            foreach ($polaris->graph()->plugins() as $plugin) {
+                if ($plugin instanceof CommandProvider) {
+                    $this->addCommands($plugin->commands($polaris->graph()));
+                }
+            }
+        }
     }
 }

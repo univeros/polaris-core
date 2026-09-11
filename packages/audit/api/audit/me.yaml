@@ -1,0 +1,37 @@
+# GET /audit/me: the caller's own audit trail.
+endpoint:
+  method: GET
+  path: /audit/me
+  summary: List the audit events where the caller is the actor or the subject
+  tags: [audit]
+  auth: bearer
+  effect: read
+  receipt: false
+
+input:
+  source: query
+  fields:
+    names: { type: string, rules: [optional] }
+    from: { type: string, rules: [optional] }
+    to: { type: string, rules: [optional] }
+    cursor: { type: string, rules: [optional] }
+    limit: { type: integer, rules: [optional] }
+
+domain:
+  class: Polaris\Audit\Http\MeEndpoint
+  description: >
+    Newest first, cursor-paginated (next_cursor is the last id of the page; pass it as cursor);
+    names is a comma-separated list of catalog names; from and to are ISO-8601 datetimes.
+
+output:
+  status: 200
+  example:
+    data:
+      - { id: "018f...", name: session.signed_in, occurred_at: "2026-09-11T10:00:00+00:00", actor_type: user, actor_id: "018f...", subject_id: "018f...", organization_id: null, session_id: "018f...", ip: "203.0.113.7", user_agent: "Mozilla/5.0", data: { amr: [pwd] }, request_id: null }
+    next_cursor: null
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 422, code: audit_invalid_query }
+
+events: []

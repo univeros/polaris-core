@@ -16,6 +16,13 @@ the project adheres to [Semantic Versioning](https://semver.org/).
   the adapters take `plugins` in their configuration. `docs/plugins/README.md` documents the contract.
 - Contract fixtures can be recorded (`POLARIS_RECORD_FIXTURES=1`) into a package's own directory, so
   a plugin proves its routes through every harness like core.
+- **`polaris/audit`** (`Polaris\Audit\`): a catalogued, redacted, append-only audit store built on the
+  plugin runtime: core's events recorded with actor, subject, organization and client context; `GET
+  /audit/me`, `/audit/organization/{id}` (with `audit.read`) and `/audit/types`, cursor-paginated;
+  sinks (database, PSR-3, JSON lines, signed webhooks) and per-organization drains; retention by
+  policy (`audit:prune`), an optional hash chain (`audit:verify`); `last_active_at` per user.
+- `polaris/cli`: `Polaris\Cli\CommandProvider`; `bin/polaris` adds a plugin's commands when
+  `POLARIS_BOOTSTRAP` names the application.
 
 ## [0.1.1] - 2026-09-11
 

@@ -10,4 +10,5 @@ foreach ([__DIR__ . '/../../../vendor/autoload.php', __DIR__ . '/../vendor/autol
     }
 }
 
-exit((new Polaris\Cli\Application())->run());
+// POLARIS_BOOTSTRAP names the application, so its plugins' commands are available too.
+exit((new Polaris\Cli\Application(Polaris\Cli\Bootstrap::load(null)))->run());

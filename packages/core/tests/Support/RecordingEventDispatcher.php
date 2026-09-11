@@ -19,12 +19,36 @@ final class RecordingEventDispatcher implements EventDispatcherInterface
     /** @var list<object> */
     public array $events = [];
 
+    /** @var list<callable(object): void> */
+    private array $listeners = [];
+
     #[Override]
     public function dispatch(object $event): object
     {
         $this->events[] = $event;
+        foreach ($this->listeners as $listener) {
+            $listener($event);
+        }
 
         return $event;
+    }
+
+    /**
+     * Listeners run on every dispatch, after the event is recorded: the functional base subscribes a
+     * package's plugin listeners here, so what its endpoints emit reaches the plugin as in a host.
+     *
+     * @param callable(object): void ...$listeners
+     */
+    public function listen(callable ...$listeners): void
+    {
+        foreach ($listeners as $listener) {
+            $this->listeners[] = $listener;
+        }
+    }
+
+    public function resetListeners(): void
+    {
+        $this->listeners = [];
     }
 
     /**

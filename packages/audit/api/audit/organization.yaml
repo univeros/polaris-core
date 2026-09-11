@@ -1,0 +1,39 @@
+# GET /audit/organization/{id}: an organization's audit trail, for a member with audit.read.
+endpoint:
+  method: GET
+  path: /audit/organization/{id}
+  summary: List an organization's audit events
+  tags: [audit]
+  auth: bearer
+  requires_permissions: [audit.read]
+  effect: read
+  receipt: false
+
+input:
+  source: query
+  fields:
+    names: { type: string, rules: [optional] }
+    from: { type: string, rules: [optional] }
+    to: { type: string, rules: [optional] }
+    cursor: { type: string, rules: [optional] }
+    limit: { type: integer, rules: [optional] }
+
+domain:
+  class: Polaris\Audit\Http\OrganizationEndpoint
+  description: >
+    The caller's active organization only; the same filters and cursor as /audit/me.
+
+output:
+  status: 200
+  example:
+    data:
+      - { id: "018f...", name: org.member_invited, occurred_at: "2026-09-11T10:00:00+00:00", actor_type: user, actor_id: "018f...", subject_id: "018f...", organization_id: "018f...", session_id: null, ip: null, user_agent: null, data: { email: "newhire@example.test" }, request_id: null }
+    next_cursor: null
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: audit_forbidden }
+  - { status: 422, code: audit_invalid_query }
+
+events: []

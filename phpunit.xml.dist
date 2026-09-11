@@ -15,6 +15,11 @@
         <testsuite name="functional">
             <directory>packages/core/tests/Functional</directory>
             <directory>packages/core/tests/Contract</directory>
+            <directory>packages/audit/tests/Functional</directory>
+        </testsuite>
+        <testsuite name="audit">
+            <directory>packages/audit/tests</directory>
+            <exclude>packages/audit/tests/Functional</exclude>
         </testsuite>
         <testsuite name="laravel">
             <directory>packages/laravel/tests</directory>
@@ -36,6 +41,7 @@
             <directory>packages/laravel/src</directory>
             <directory>packages/symfony/src</directory>
             <directory>packages/yii/src</directory>
+            <directory>packages/audit/src</directory>
         </include>
     </source>
 </phpunit>
