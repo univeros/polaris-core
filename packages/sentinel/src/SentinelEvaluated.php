@@ -17,7 +17,7 @@ use function hash;
  */
 final readonly class SentinelEvaluated implements Auditable
 {
-    public const string NAME = 'sentinel.evaluated';
+    public const string NAME = AuditNames::EVALUATED;
 
     public function __construct(public Attempt $attempt, public Decision $decision)
     {

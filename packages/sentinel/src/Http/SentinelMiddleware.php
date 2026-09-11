@@ -29,7 +29,8 @@ use const JSON_UNESCAPED_SLASHES;
 
 /**
  * On the guarded routes, judges the attempt before the endpoint runs: a block answers `sentinel/blocked`,
- * a challenge `sentinel/challenge_required` (the client retries with a `captcha_token`), anything else
+ * a challenge `sentinel/challenge_required` (the client retries with a `captcha_token`) when a captcha
+ * verifier is configured and the challenge band is recorded but let through when none is, anything else
  * goes through; in observe mode everything goes through. Sets the device cookie when the request has none.
  */
 final class SentinelMiddleware implements MiddlewareInterface
@@ -45,11 +46,13 @@ final class SentinelMiddleware implements MiddlewareInterface
     private const int COOKIE_TTL = 31536000;
 
     /**
+     * @param bool $challenges whether a challenge can be answered (a captcha verifier is configured)
      * @param array<string, string> $routes path => attempt kind
      */
     public function __construct(
         private readonly Engine $engine,
         private readonly ResponseFactoryInterface $responses,
+        private readonly bool $challenges = false,
         private readonly array $routes = self::ROUTES,
     ) {
     }
@@ -81,7 +84,7 @@ final class SentinelMiddleware implements MiddlewareInterface
         if ($decision->enforced && $decision->action === Decision::BLOCK) {
             return $this->problem(403, 'sentinel/blocked', 'Blocked', 'The request was refused.');
         }
-        if ($decision->enforced && $decision->action === Decision::CHALLENGE) {
+        if ($decision->enforced && $this->challenges && $decision->action === Decision::CHALLENGE) {
             return $this->problem(403, 'sentinel/challenge_required', 'Challenge required', 'Complete the challenge and try again.', ['challenge' => 'captcha']);
         }
         $response = $handler->handle($request);

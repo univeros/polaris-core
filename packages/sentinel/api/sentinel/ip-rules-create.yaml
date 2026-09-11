@@ -1,0 +1,42 @@
+# POST /admin/sentinel/ip-rules: add an allow or block rule.
+endpoint:
+  method: POST
+  path: /admin/sentinel/ip-rules
+  summary: Add an IP rule
+  tags: [admin, sentinel]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    cidr: { type: string, rules: [required] }
+    action: { type: string, rules: [required] }
+    note: { type: string, rules: [optional] }
+
+domain:
+  class: Polaris\Sentinel\Http\Admin\CreateIpRuleEndpoint
+  description: >
+    cidr is an address or a CIDR block (both families); action is allow or block. A block rule
+    refuses the address on every guarded route (in enforce mode), an allow rule clears it of every
+    other signal. Needs own on the instance; recorded as sentinel.ip_rule_created.
+
+output:
+  status: 201
+  example:
+    data:
+      id: "018f..."
+      cidr: "203.0.113.0/24"
+      action: "block"
+      note: "scanner"
+      created_by: "018f..."
+      created_at: "2026-09-11T10:00:00+00:00"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 422, code: admin_invalid_input }
+
+events: [sentinel.ip_rule_created]

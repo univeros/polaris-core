@@ -41,8 +41,10 @@ use function dirname;
  * and `AdminPlugin`. Its middleware judges sign-ups, sign-ins, password resets and code sends with the
  * local signals (velocity, credential stuffing, IP rules, devices, disposable domains, and, when a
  * provider is configured, captcha, impossible travel and breached passwords); the policy allows,
- * challenges or blocks; `observe` records without enforcing. Every decision where a signal spoke is a
- * `sentinel.evaluated` event and a row for `GET /admin/sentinel/decisions`.
+ * challenges or blocks; `observe` records without enforcing; a challenge is answered only when a captcha
+ * verifier can verify the retry. Every decision where a signal spoke is a `sentinel.evaluated` event and a
+ * row for `GET /admin/sentinel/decisions`; the operators manage IP rules and clear counters under
+ * `/admin/sentinel` with `polaris/admin`'s principals.
  */
 final class SentinelPlugin extends AbstractPlugin implements CommandProvider
 {
@@ -141,7 +143,7 @@ final class SentinelPlugin extends AbstractPlugin implements CommandProvider
     {
         self::catalog($graph);
 
-        return [new SentinelMiddleware($graph->get(Engine::class), $this->responses ?? ResponseFactories::discover(), $this->routes)];
+        return [new SentinelMiddleware($graph->get(Engine::class), $this->responses ?? ResponseFactories::discover(), $this->verifier !== null, $this->routes)];
     }
 
     #[Override]
@@ -156,13 +158,13 @@ final class SentinelPlugin extends AbstractPlugin implements CommandProvider
     }
 
     /**
-     * `sentinel.evaluated` joins the audit catalog: the audit plugin must be registered.
+     * The `sentinel.*` names join the audit catalog: the audit plugin must be registered.
      */
     public static function catalog(Graph $graph): Catalog
     {
         AuditPlugin::of($graph);
         $catalog = $graph->get(Catalog::class);
-        $catalog->extend([SentinelEvaluated::NAME => 'The sentinel judged an attempt (score, signals, action)']);
+        $catalog->extend(AuditNames::ALL);
 
         return $catalog;
     }

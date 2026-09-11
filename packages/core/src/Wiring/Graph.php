@@ -198,12 +198,14 @@ final class Graph
     /**
      * A port a plugin provides through `services()` keyed by the contract (`polaris/messaging` provides the
      * mailer and the SMS sender), used when the Config leaves the port unset; null when no plugin does.
+     * Public so a package can take another package's optional contribution the same way (`polaris/messaging`
+     * takes `polaris/sentinel`'s `Suppressor`).
      *
      * @template T of object
      * @param class-string<T> $contract
      * @return T|null
      */
-    private function port(string $contract): ?object
+    public function port(string $contract): ?object
     {
         if (!isset($this->pluginServices[$contract])) {
             return null;

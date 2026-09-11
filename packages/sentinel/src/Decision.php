@@ -6,7 +6,6 @@ namespace Polaris\Sentinel;
 
 use function array_map;
 use function array_merge;
-use function array_values;
 
 /**
  * The policy's outcome for an attempt: the action (allow, challenge, block), the summed score and the
@@ -30,7 +29,7 @@ final readonly class Decision
      */
     public function signals(): array
     {
-        return array_values(array_map(static fn(Verdict $verdict): string => $verdict->signal, $this->verdicts));
+        return array_map(static fn(Verdict $verdict): string => $verdict->signal, $this->verdicts);
     }
 
     /**
@@ -38,6 +37,6 @@ final readonly class Decision
      */
     public function reasons(): array
     {
-        return array_values(array_merge(...array_map(static fn(Verdict $verdict): array => $verdict->reasons, $this->verdicts)));
+        return array_merge(...array_map(static fn(Verdict $verdict): array => $verdict->reasons, $this->verdicts));
     }
 }

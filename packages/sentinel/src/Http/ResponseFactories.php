@@ -15,11 +15,11 @@ use function class_exists;
  */
 final class ResponseFactories
 {
+    /** @var list<class-string<ResponseFactoryInterface>> none is required; a host with another passes it */
     private const array KNOWN = [
         'HttpSoft\Message\ResponseFactory',
         'Laminas\Diactoros\ResponseFactory',
         'Nyholm\Psr7\Factory\Psr17Factory',
-        'Slim\Psr7\Factory\ResponseFactory',
         'GuzzleHttp\Psr7\HttpFactory',
     ];
 
@@ -27,10 +27,7 @@ final class ResponseFactories
     {
         foreach (self::KNOWN as $class) {
             if (class_exists($class)) {
-                $factory = new $class();
-                if ($factory instanceof ResponseFactoryInterface) {
-                    return $factory;
-                }
+                return new $class();
             }
         }
 
