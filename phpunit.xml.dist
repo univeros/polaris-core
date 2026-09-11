@@ -19,6 +19,11 @@
             <directory>packages/admin/tests/Functional</directory>
             <directory>packages/sentinel/tests/Functional</directory>
             <directory>packages/sso/tests/Functional</directory>
+            <directory>packages/scim/tests/Functional</directory>
+        </testsuite>
+        <testsuite name="scim">
+            <directory>packages/scim/tests</directory>
+            <exclude>packages/scim/tests/Functional</exclude>
         </testsuite>
         <testsuite name="sso">
             <directory>packages/sso/tests</directory>
@@ -64,6 +69,7 @@
             <directory>packages/messaging/src</directory>
             <directory>packages/sentinel/src</directory>
             <directory>packages/sso/src</directory>
+            <directory>packages/scim/src</directory>
         </include>
     </source>
 </phpunit>
