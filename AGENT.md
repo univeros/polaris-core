@@ -39,6 +39,7 @@ packages/pdo/src   packages/testing/src   packages/cli/src
 packages/laravel/src/{PolarisServiceProvider.php,PolarisFactory.php,Auth,Console,Events,Http,Mail,Schema}   the Laravel adapter (task 2 WP1)
 packages/symfony/src/{PolarisBundle.php,Factory.php,Event,Http,Mail,Routing,Security}                        the Symfony adapter (task 2 WP2)
 packages/yii/{config,src/{Factory.php,Auth,Event,Http,Mail}}                                                 the Yii 3 adapter (task 2 WP3)
+packages/audit/{api/audit,src/{AuditPlugin.php,Catalog.php,Recorder.php,Store.php,Sink,Drain,Query,Retention,Activity,Http,Console}}      the audit plugin (polaris/audit), the first package on the plugin runtime
 packages/client-ts/{src/{index.ts,schema.d.ts},test,openapi.json}                                           the TypeScript client (task 2 WP5), npm @polaris-auth/client, not a Composer package
 packages/core/api/         endpoint specs, the router (shipped inside polaris/core)
 docs/auth/                 identity design (unchanged)

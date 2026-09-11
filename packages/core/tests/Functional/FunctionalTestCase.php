@@ -8,6 +8,7 @@ use Laminas\Diactoros\ServerRequestFactory;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\Secrets;
 use Polaris\Contract\Plugin;
+use Polaris\Schema\Schema;
 use Polaris\Wiring\Config;
 use Polaris\Wiring\Graph;
 use Psr\Http\Message\ResponseInterface;
@@ -24,7 +25,11 @@ use function in_array;
 use function is_array;
 use function is_string;
 use function json_decode;
+use function parse_url;
+use function parse_str;
 use function putenv;
+
+use const PHP_URL_QUERY;
 
 /**
  * End-to-end tests through the PSR-15 pipeline on the database the environment selects, with
@@ -43,6 +48,10 @@ abstract class FunctionalTestCase extends DatabaseTestCase
 
     protected function setUp(): void
     {
+        // A package's plugins declare their tables before the database base builds the schema.
+        foreach (static::plugins() as $plugin) {
+            Schema::register(...$plugin->schema());
+        }
         parent::setUp();
 
         $keys = TestKeys::rsa();
@@ -91,6 +100,12 @@ abstract class FunctionalTestCase extends DatabaseTestCase
             plugins: static::plugins(),
         ));
         $this->graph = $this->harness->graph();
+        // A package's plugin listeners see the events the endpoints emit, as they do in a host; core's
+        // own listeners stay out, as in the recorded 1.0 runs.
+        $this->events->resetListeners();
+        foreach ($this->graph->plugins() as $plugin) {
+            $this->events->listen(...$plugin->listeners($this->graph));
+        }
         // One identity map for the test and the application, as the Cycle heap was shared in 1.0.
         $this->identities = $this->graph->identities();
         $this->unitOfWork = $this->graph->unitOfWork();
@@ -115,7 +130,7 @@ abstract class FunctionalTestCase extends DatabaseTestCase
 
     protected function get(string $path): ResponseInterface
     {
-        return $this->handle((new ServerRequestFactory())->createServerRequest('GET', $path));
+        return $this->handle(self::serverRequest('GET', $path));
     }
 
     /**
@@ -123,7 +138,7 @@ abstract class FunctionalTestCase extends DatabaseTestCase
      */
     protected function postJson(string $path, array $body): ResponseInterface
     {
-        $request = (new ServerRequestFactory())->createServerRequest('POST', $path)
+        $request = self::serverRequest('POST', $path)
             ->withHeader('Content-Type', 'application/json')
             ->withParsedBody($body);
 
@@ -132,7 +147,7 @@ abstract class FunctionalTestCase extends DatabaseTestCase
 
     protected function authedGet(string $path, string $accessToken): ResponseInterface
     {
-        return $this->handle($this->withToken((new ServerRequestFactory())->createServerRequest('GET', $path), $accessToken));
+        return $this->handle($this->withToken(self::serverRequest('GET', $path), $accessToken));
     }
 
     /**
@@ -140,7 +155,7 @@ abstract class FunctionalTestCase extends DatabaseTestCase
      */
     protected function authedPostJson(string $path, array $body, string $accessToken): ResponseInterface
     {
-        $request = (new ServerRequestFactory())->createServerRequest('POST', $path)
+        $request = self::serverRequest('POST', $path)
             ->withHeader('Content-Type', 'application/json')
             ->withParsedBody($body);
 
@@ -152,7 +167,7 @@ abstract class FunctionalTestCase extends DatabaseTestCase
      */
     protected function authedPatch(string $path, array $body, string $accessToken): ResponseInterface
     {
-        $request = (new ServerRequestFactory())->createServerRequest('PATCH', $path)
+        $request = self::serverRequest('PATCH', $path)
             ->withHeader('Content-Type', 'application/json')
             ->withParsedBody($body);
 
@@ -161,7 +176,22 @@ abstract class FunctionalTestCase extends DatabaseTestCase
 
     protected function authedDelete(string $path, string $accessToken): ResponseInterface
     {
-        return $this->handle($this->withToken((new ServerRequestFactory())->createServerRequest('DELETE', $path), $accessToken));
+        return $this->handle($this->withToken(self::serverRequest('DELETE', $path), $accessToken));
+    }
+
+    /**
+     * A request as a host's PSR-7 factory builds it: the query string parsed into the query params.
+     */
+    private static function serverRequest(string $method, string $path): ServerRequestInterface
+    {
+        $request = (new ServerRequestFactory())->createServerRequest($method, $path);
+        $query = parse_url($path, PHP_URL_QUERY);
+        if (is_string($query) && $query !== '') {
+            parse_str($query, $params);
+            $request = $request->withQueryParams($params);
+        }
+
+        return $request;
     }
 
     protected function withToken(ServerRequestInterface $request, string $accessToken): ServerRequestInterface

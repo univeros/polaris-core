@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "35552167022baa7b012dcc02387bddbe",
+    "content-hash": "401790cab90203ac2a15bccac0de17ba",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2943,12 +2943,59 @@
             "time": "2026-08-24T00:54:40+00:00"
         },
         {
+            "name": "polaris/audit",
+            "version": "0.2.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/audit",
+                "reference": "ca73a083e7d1d5c509abf85c4e37411019dc019e"
+            },
+            "require": {
+                "php": ">=8.3",
+                "polaris/cli": "^0.2",
+                "polaris/core": "^0.2",
+                "psr/clock": "^1.0",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0",
+                "psr/log": "^3.0",
+                "psr/simple-cache": "^3.0",
+                "symfony/console": "^7.0 || ^8.0",
+                "symfony/uid": "^7.0 || ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\Audit\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
+            "description": "Audit for Polaris for PHP: a catalogued, redacted, append-only audit store with sinks, per-organization drains, a query API, retention and an optional hash chain",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "polaris/cli",
             "version": "0.2.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/cli",
-                "reference": "0e7f3bf3a7a9eeb531a90fd9a31378c0760cdeee"
+                "reference": "e6f3304b688263e5ed8d22b4c1eaab3bfe7bea1e"
             },
             "require": {
                 "php": ">=8.3",
@@ -2992,7 +3039,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/core",
-                "reference": "f1d515625396bceb242c94e3277d998ec93f00a9"
+                "reference": "90617c5c32ad20a42805e5387c6475a434edcc07"
             },
             "require": {
                 "endroid/qr-code": "^6.0",
@@ -3062,7 +3109,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/laravel",
-                "reference": "bc869a521ab5b6b97fdf648b2f659f04f125c608"
+                "reference": "8f01b74166983f4914cbeef9637a4a03d17ec3f9"
             },
             "require": {
                 "laravel/framework": "^13.0",
@@ -3111,7 +3158,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/pdo",
-                "reference": "45cd8cf3bc1c2a21533633ab42750163e2e0eb9f"
+                "reference": "ade58102d7d110452c56d3e61cfb16d32e1c49bd"
             },
             "require": {
                 "ext-pdo": "*",
@@ -3150,7 +3197,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/psr15",
-                "reference": "2b36da9e65edf026a14e8cb1863fedda8dfc3234"
+                "reference": "f0d39cab0473e5cfebffdf7778ee9b174131cd68"
             },
             "require": {
                 "php": ">=8.3",
@@ -3193,7 +3240,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/symfony",
-                "reference": "24cadae156bb7a2f29e300687309fc059e85267b"
+                "reference": "f8d5e7f56b2d569a28fd8205af500d389fea9c82"
             },
             "require": {
                 "nyholm/psr7": "^1.8",
@@ -3241,7 +3288,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/testing",
-                "reference": "f502ea629a664c72722899bb88bb06ad2a472382"
+                "reference": "0fcc5db29bf7fb6ebc8a0fd9cc1c771f0881ad16"
             },
             "require": {
                 "php": ">=8.3",
@@ -3279,7 +3326,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/yii",
-                "reference": "dbcbbb6f762d3673df38669fb760d177605e0922"
+                "reference": "6bd37a1fdc1280b379b171af93037c2a0e42c489"
             },
             "require": {
                 "php": ">=8.3",
@@ -11993,6 +12040,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "polaris/audit": 20,
         "polaris/cli": 20,
         "polaris/core": 20,
         "polaris/laravel": 20,

@@ -34,6 +34,7 @@ navigates by.
 | `polaris/laravel` | `Polaris\Laravel\` | Laravel 13: service provider, the endpoints as routes, the `polaris` guard, mail bridge, `polaris:*` artisan commands. |
 | `polaris/symfony` | `Polaris\Symfony\` | Symfony 7.4 / 8: bundle, the endpoints as routes, a firewall authenticator, mail bridge, `polaris:*` console commands. |
 | `polaris/yii` | `Polaris\Yii\` | Yii 3: config plugin, the endpoints as routes, an authentication method, mail bridge, `polaris:*` console commands. |
+| `polaris/audit` | `Polaris\Audit\` | The first plugin: a catalogued, redacted, append-only audit store with per-user and per-organization query routes, sinks, per-organization drains, retention and an optional hash chain. |
 | `@polaris-auth/client` (npm) | `packages/client-ts` | The TypeScript client generated from the manifest: `openapi-fetch` typed by the 52 endpoints, request bodies, `data` and `error` checked at compile time. |
 
 This repository is the monorepo; each package is published to its own read-only

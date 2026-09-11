@@ -1,0 +1,28 @@
+# GET /audit/types: the catalog of event names.
+endpoint:
+  method: GET
+  path: /audit/types
+  summary: List the audit event names and their descriptions
+  tags: [audit]
+  auth: bearer
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Audit\Http\TypesEndpoint
+  description: >
+    Core's names plus what other packages registered.
+
+output:
+  status: 200
+  example:
+    data:
+      - { name: user.signed_up, description: A user registered }
+
+errors:
+  - { status: 401, code: unauthorized }
+
+events: []

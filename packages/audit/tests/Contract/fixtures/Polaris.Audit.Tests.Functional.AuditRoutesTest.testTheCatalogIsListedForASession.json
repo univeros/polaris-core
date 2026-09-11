@@ -1,0 +1,308 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789149600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "l0bnAOaMHZC635n_f9lV6HYt9d3m7gKRA-Df27IPMRs"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789149000"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789149000"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjUwOWI1YWQ1NTNmY2RlNzE3NDNlZjk5NGFlMTg5M2IyYjE5YzZiNjA1MmNlNjBiYjM2NDNiY2Y4ZWM3MjhkMWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTQ4ODA2LjE0MDczOSwibmJmIjoxNzg5MTQ4ODA2LjE0MDczOSwiZXhwIjoxNzg5MTQ5NzA2LjE0MDczOSwic3ViIjoiMDFhMDkxOTQtM2FhZC03OTgzLWIwYmItMWUyNWVkNWQxYmQ5IiwianRpIjoiMDFhMDkxOTQtM2JmYy03YjRkLWIxYmEtOTgwNTM5OTc4NWQ0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MTk0LTNiZmMtNzk0OS1iMWJhLTk4MDUzOGNlMThkMiIsImF1dGhfdGltZSI6MTc4OTE0ODgwNX0.K32Hjl3YUxf0WE9l-iJZCAX3rgpxp3Pj9klQq3_A1TIhb7u1YFNa2Eoj7Y8pBgS0UHmKuFK7GdJ8TOEPejLrNe_Idi6adz27ERMZs80ONca9xN1I49z0GCaZylP-Zhkv077stZ3oGA3ziISHv-JkXP6j-ierAoeX3Ge5iq3FZMxjyS2-TvAMci8fp-g-MbYq5zqpE4nUq3WblnaPXR392DGUqn-CrmOIbYZYRXl-UmnnGNUus-5q82ya-MghwFli0Avg7Ewhk7bf7cOAqq-0t4WHkmZNAGX91_4l0_GNm9m_ejIThyY2yWc4lHvIjOnrIPfBN6EeMEDMGkgxoy0OJQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "89ILaxMRLH1gY1QK75luplVVoTHayi92ypXyFevRoYw",
+                    "user": {
+                        "id": "01a09194-3aad-7983-b0bb-1e25ed5d1bd9",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/audit/types",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjUwOWI1YWQ1NTNmY2RlNzE3NDNlZjk5NGFlMTg5M2IyYjE5YzZiNjA1MmNlNjBiYjM2NDNiY2Y4ZWM3MjhkMWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTQ4ODA2LjE0MDczOSwibmJmIjoxNzg5MTQ4ODA2LjE0MDczOSwiZXhwIjoxNzg5MTQ5NzA2LjE0MDczOSwic3ViIjoiMDFhMDkxOTQtM2FhZC03OTgzLWIwYmItMWUyNWVkNWQxYmQ5IiwianRpIjoiMDFhMDkxOTQtM2JmYy03YjRkLWIxYmEtOTgwNTM5OTc4NWQ0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MTk0LTNiZmMtNzk0OS1iMWJhLTk4MDUzOGNlMThkMiIsImF1dGhfdGltZSI6MTc4OTE0ODgwNX0.K32Hjl3YUxf0WE9l-iJZCAX3rgpxp3Pj9klQq3_A1TIhb7u1YFNa2Eoj7Y8pBgS0UHmKuFK7GdJ8TOEPejLrNe_Idi6adz27ERMZs80ONca9xN1I49z0GCaZylP-Zhkv077stZ3oGA3ziISHv-JkXP6j-ierAoeX3Ge5iq3FZMxjyS2-TvAMci8fp-g-MbYq5zqpE4nUq3WblnaPXR392DGUqn-CrmOIbYZYRXl-UmnnGNUus-5q82ya-MghwFli0Avg7Ewhk7bf7cOAqq-0t4WHkmZNAGX91_4l0_GNm9m_ejIThyY2yWc4lHvIjOnrIPfBN6EeMEDMGkgxoy0OJQ"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789148820"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "name": "user.signed_up",
+                        "description": "A user registered"
+                    },
+                    {
+                        "name": "user.email_verified",
+                        "description": "A user verified their email address"
+                    },
+                    {
+                        "name": "user.locked",
+                        "description": "A user was locked after repeated failed sign-ins"
+                    },
+                    {
+                        "name": "user.disabled",
+                        "description": "An administrator disabled a user"
+                    },
+                    {
+                        "name": "user.enabled",
+                        "description": "An administrator enabled a user"
+                    },
+                    {
+                        "name": "user.deleted",
+                        "description": "An administrator deleted a user"
+                    },
+                    {
+                        "name": "session.signed_in",
+                        "description": "A user signed in"
+                    },
+                    {
+                        "name": "session.sign_in_failed",
+                        "description": "A sign-in failed"
+                    },
+                    {
+                        "name": "session.rotated",
+                        "description": "A session rotated its refresh token"
+                    },
+                    {
+                        "name": "session.reuse_detected",
+                        "description": "A refresh token was reused; the session family was revoked"
+                    },
+                    {
+                        "name": "session.revoked_all",
+                        "description": "Every session of a user was revoked"
+                    },
+                    {
+                        "name": "session.organization_switched",
+                        "description": "A session switched its active organization"
+                    },
+                    {
+                        "name": "password.changed",
+                        "description": "A password was changed"
+                    },
+                    {
+                        "name": "password.reset_requested",
+                        "description": "A password reset was requested"
+                    },
+                    {
+                        "name": "mfa.enabled",
+                        "description": "An MFA factor was enrolled"
+                    },
+                    {
+                        "name": "mfa.disabled",
+                        "description": "An MFA factor was removed"
+                    },
+                    {
+                        "name": "mfa.challenge_passed",
+                        "description": "An MFA challenge was passed"
+                    },
+                    {
+                        "name": "mfa.challenge_failed",
+                        "description": "An MFA challenge failed"
+                    },
+                    {
+                        "name": "mfa.step_up_completed",
+                        "description": "A step-up authentication completed"
+                    },
+                    {
+                        "name": "mfa.code_sent",
+                        "description": "A one-time code was sent"
+                    },
+                    {
+                        "name": "mfa.backup_codes_regenerated",
+                        "description": "The recovery codes were regenerated"
+                    },
+                    {
+                        "name": "mfa.backup_code_used",
+                        "description": "A recovery code was used"
+                    },
+                    {
+                        "name": "org.created",
+                        "description": "An organization was created"
+                    },
+                    {
+                        "name": "org.updated",
+                        "description": "An organization was updated"
+                    },
+                    {
+                        "name": "org.deleted",
+                        "description": "An organization was deleted"
+                    },
+                    {
+                        "name": "org.role_created",
+                        "description": "A role was created"
+                    },
+                    {
+                        "name": "org.role_updated",
+                        "description": "A role was updated"
+                    },
+                    {
+                        "name": "org.role_deleted",
+                        "description": "A role was deleted"
+                    },
+                    {
+                        "name": "org.member_invited",
+                        "description": "A member was invited"
+                    },
+                    {
+                        "name": "org.member_joined",
+                        "description": "A member joined"
+                    },
+                    {
+                        "name": "org.member_roles_changed",
+                        "description": "A member's roles changed"
+                    },
+                    {
+                        "name": "org.member_status_changed",
+                        "description": "A member's status changed"
+                    },
+                    {
+                        "name": "org.member_removed",
+                        "description": "A member was removed"
+                    },
+                    {
+                        "name": "audit.pruned",
+                        "description": "The retention policy pruned events (a hash-chain checkpoint)"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/audit/types",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer"
+                ]
+            },
+            "body": {
+                "error": "unauthorized",
+                "message": "Authentication is required."
+            }
+        }
+    }
+]
