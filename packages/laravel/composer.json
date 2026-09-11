@@ -13,10 +13,10 @@
         "php": ">=8.3",
         "laravel/framework": "^13.0",
         "nyholm/psr7": "^1.8",
-        "polaris/cli": "^0.1",
-        "polaris/core": "^0.1",
-        "polaris/pdo": "^0.1",
-        "polaris/psr15": "^0.1",
+        "polaris/cli": "^0.2",
+        "polaris/core": "^0.2",
+        "polaris/pdo": "^0.2",
+        "polaris/psr15": "^0.2",
         "symfony/psr-http-message-bridge": "^7.4 || ^8.0"
     },
     "autoload": {
@@ -26,7 +26,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.1.x-dev"
+            "dev-main": "0.2.x-dev"
         },
         "laravel": {
             "providers": [
