@@ -728,6 +728,438 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/audit/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List the audit events where the caller is the actor or the subject */
+        get: operations["get_audit_MeEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/audit/organization/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List an organization's audit events */
+        get: operations["get_audit_OrganizationEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/audit/types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List the audit event names and their descriptions */
+        get: operations["get_audit_TypesEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/audit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Query the audit trail */
+        get: operations["get_admin_QueryAuditEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/organizations/{id}/drains": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List an organization's audit drains */
+        get: operations["get_admin_ListDrainsEndpoint"];
+        put?: never;
+        /** Create an audit drain */
+        post: operations["post_admin_CreateDrainEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/organizations/{id}/drains/{drainId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete an audit drain */
+        delete: operations["delete_admin_DeleteDrainEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/organizations/{id}/drains/{drainId}/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Test an audit drain */
+        post: operations["post_admin_TestDrainEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/grants": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List the admin grants */
+        get: operations["get_admin_ListGrantsEndpoint"];
+        put?: never;
+        /** Grant an admin role */
+        post: operations["post_admin_CreateGrantEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/grants/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Revoke an admin grant */
+        delete: operations["delete_admin_DeleteGrantEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/keys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List the API keys */
+        get: operations["get_admin_ListKeysEndpoint"];
+        put?: never;
+        /** Create an API key */
+        post: operations["post_admin_CreateKeyEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/keys/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete an API key */
+        delete: operations["delete_admin_DeleteKeyEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users/{id}/mfa": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List a user's MFA factors */
+        get: operations["get_admin_ListFactorsEndpoint"];
+        put?: never;
+        post?: never;
+        /** Reset a user's MFA */
+        delete: operations["delete_admin_ResetMfaEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users/{id}/mfa/{factorId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove an MFA factor */
+        delete: operations["delete_admin_RemoveFactorEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/organizations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read an organization */
+        get: operations["get_admin_ReadOrganizationEndpoint"];
+        put?: never;
+        post?: never;
+        /** Delete an organization */
+        delete: operations["delete_admin_DeleteOrganizationEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/organizations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List the organizations */
+        get: operations["get_admin_ListOrganizationsEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/organizations/{id}/members/{userId}/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Set a member's roles */
+        patch: operations["patch_admin_UpdateMemberRolesEndpoint"];
+        trace?: never;
+    };
+    "/admin/users/{id}/sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List a user's sessions */
+        get: operations["get_admin_ListSessionsEndpoint"];
+        put?: never;
+        post?: never;
+        /** Revoke every session */
+        delete: operations["delete_admin_RevokeAllSessionsEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users/{id}/sessions/{sessionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Revoke a session */
+        delete: operations["delete_admin_RevokeSessionEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read the instance statistics */
+        get: operations["get_admin_StatsEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users/{id}/ban": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Ban a user */
+        post: operations["post_admin_BanUserEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read a user */
+        get: operations["get_admin_ReadUserEndpoint"];
+        put?: never;
+        post?: never;
+        /** Delete a user */
+        delete: operations["delete_admin_DeleteUserEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users/{id}/impersonate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Impersonate a user */
+        post: operations["post_admin_ImpersonateUserEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List the users */
+        get: operations["get_admin_ListUsersEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users/{id}/password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set a user's password */
+        post: operations["post_admin_SetPasswordEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users/{id}/unban": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Unban a user */
+        post: operations["post_admin_UnbanUserEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -737,6 +1169,17 @@ export interface components {
             message?: string;
         };
         ValidationError: {
+            errors?: string[];
+        };
+        /** @description An RFC 9457 problem document, the error shape of the plugins' routes; error and message repeat the core envelope. */
+        Problem: {
+            /** Format: uri */
+            type: string;
+            title: string;
+            status: number;
+            detail: string;
+            error: string;
+            message: string;
             errors?: string[];
         };
     };
@@ -3060,7 +3503,7 @@ export interface operations {
                 "application/json": {
                     /** Format: email */
                     email: string;
-                    role_slugs: string;
+                    role_slugs: string[];
                 };
             };
         };
@@ -3302,7 +3745,7 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
-                    role_slugs: string;
+                    role_slugs: string[];
                 };
             };
         };
@@ -3704,7 +4147,7 @@ export interface operations {
                     name: string;
                     slug: string;
                     description?: string;
-                    permission_keys: string;
+                    permission_keys: string[];
                 };
             };
         };
@@ -4177,6 +4620,2400 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    get_audit_MeEndpoint: {
+        parameters: {
+            query?: {
+                names?: string;
+                from?: string;
+                to?: string;
+                cursor?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "name": "session.signed_in",
+                     *           "occurred_at": "2026-09-11T10:00:00+00:00",
+                     *           "actor_type": "user",
+                     *           "actor_id": "018f...",
+                     *           "subject_id": "018f...",
+                     *           "organization_id": null,
+                     *           "session_id": "018f...",
+                     *           "ip": "203.0.113.7",
+                     *           "user_agent": "Mozilla/5.0",
+                     *           "data": {
+                     *             "amr": [
+                     *               "pwd"
+                     *             ]
+                     *           },
+                     *           "request_id": null
+                     *         }
+                     *       ],
+                     *       "next_cursor": null
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            occurred_at: string;
+                            actor_type: string;
+                            actor_id: string;
+                            subject_id: string;
+                            organization_id: string | null;
+                            session_id: string;
+                            ip: string;
+                            user_agent: string;
+                            data: {
+                                amr: string[];
+                            };
+                            request_id: string | null;
+                        }[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description audit_invalid_query */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_audit_OrganizationEndpoint: {
+        parameters: {
+            query?: {
+                names?: string;
+                from?: string;
+                to?: string;
+                cursor?: string;
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "name": "org.member_invited",
+                     *           "occurred_at": "2026-09-11T10:00:00+00:00",
+                     *           "actor_type": "user",
+                     *           "actor_id": "018f...",
+                     *           "subject_id": "018f...",
+                     *           "organization_id": "018f...",
+                     *           "session_id": null,
+                     *           "ip": null,
+                     *           "user_agent": null,
+                     *           "data": {
+                     *             "email": "newhire@example.test"
+                     *           },
+                     *           "request_id": null
+                     *         }
+                     *       ],
+                     *       "next_cursor": null
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            occurred_at: string;
+                            actor_type: string;
+                            actor_id: string;
+                            subject_id: string;
+                            organization_id: string;
+                            session_id: string | null;
+                            ip: string | null;
+                            user_agent: string | null;
+                            data: {
+                                email: string;
+                            };
+                            request_id: string | null;
+                        }[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | audit_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description audit_invalid_query */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_audit_TypesEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "name": "user.signed_up",
+                     *           "description": "A user registered"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            name: string;
+                            description: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_admin_QueryAuditEndpoint: {
+        parameters: {
+            query?: {
+                names?: string;
+                actor_id?: string;
+                subject_id?: string;
+                organization_id?: string;
+                from?: string;
+                to?: string;
+                cursor?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "name": "admin.user_banned",
+                     *           "occurred_at": "2026-09-11T10:00:00+00:00",
+                     *           "actor_type": "admin",
+                     *           "actor_id": "018f...",
+                     *           "subject_id": "018f...",
+                     *           "organization_id": null,
+                     *           "session_id": null,
+                     *           "ip": "203.0.113.7",
+                     *           "user_agent": "Mozilla/5.0",
+                     *           "data": {
+                     *             "actor_role": "admin",
+                     *             "actor_scope": "instance"
+                     *           },
+                     *           "request_id": null
+                     *         }
+                     *       ],
+                     *       "next_cursor": null
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            occurred_at: string;
+                            actor_type: string;
+                            actor_id: string;
+                            subject_id: string;
+                            organization_id: string | null;
+                            session_id: string | null;
+                            ip: string;
+                            user_agent: string;
+                            data: {
+                                actor_role: string;
+                                actor_scope: string;
+                            };
+                            request_id: string | null;
+                        }[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description audit_invalid_query */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_admin_ListDrainsEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "organization_id": "018f...",
+                     *           "type": "webhook",
+                     *           "endpoint": "https://hooks.example.test/audit",
+                     *           "filter": [
+                     *             "org.*"
+                     *           ],
+                     *           "status": "active",
+                     *           "last_delivery_at": null,
+                     *           "last_error": null,
+                     *           "created_at": "2026-09-11T10:00:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            organization_id: string;
+                            type: string;
+                            endpoint: string;
+                            filter: string[];
+                            status: string;
+                            last_delivery_at: string | null;
+                            last_error: string | null;
+                            created_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_admin_CreateDrainEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    endpoint: string;
+                    /** Format: password */
+                    secret: string;
+                    filter?: string[];
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "organization_id": "018f...",
+                     *         "type": "webhook",
+                     *         "endpoint": "https://hooks.example.test/audit",
+                     *         "filter": [
+                     *           "org.*"
+                     *         ],
+                     *         "status": "active",
+                     *         "last_delivery_at": null,
+                     *         "last_error": null,
+                     *         "created_at": "2026-09-11T10:00:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            organization_id: string;
+                            type: string;
+                            endpoint: string;
+                            filter: string[];
+                            status: string;
+                            last_delivery_at: string | null;
+                            last_error: string | null;
+                            created_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_admin_DeleteDrainEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                drainId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "deleted"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_admin_TestDrainEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                drainId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "organization_id": "018f...",
+                     *         "type": "webhook",
+                     *         "endpoint": "https://hooks.example.test/audit",
+                     *         "filter": [
+                     *           "org.*"
+                     *         ],
+                     *         "status": "active",
+                     *         "last_delivery_at": null,
+                     *         "last_error": null,
+                     *         "created_at": "2026-09-11T10:00:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            organization_id: string;
+                            type: string;
+                            endpoint: string;
+                            filter: string[];
+                            status: string;
+                            last_delivery_at: string | null;
+                            last_error: string | null;
+                            created_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_admin_ListGrantsEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "user_id": "018f...",
+                     *           "role": "support",
+                     *           "scope": "instance",
+                     *           "granted_by": "018f...",
+                     *           "expires_at": null,
+                     *           "created_at": "2026-09-11T10:00:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            user_id: string;
+                            role: string;
+                            scope: string;
+                            granted_by: string;
+                            expires_at: string | null;
+                            created_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_admin_CreateGrantEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    user_id: string;
+                    role: string;
+                    scope?: string;
+                    expires_at?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "user_id": "018f...",
+                     *         "role": "support",
+                     *         "scope": "instance",
+                     *         "granted_by": "018f...",
+                     *         "expires_at": null,
+                     *         "created_at": "2026-09-11T10:00:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            user_id: string;
+                            role: string;
+                            scope: string;
+                            granted_by: string;
+                            expires_at: string | null;
+                            created_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_admin_DeleteGrantEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "deleted"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_admin_ListKeysEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "name": "Dashboard",
+                     *           "role": "owner",
+                     *           "scope": "instance",
+                     *           "ip_allowlist": [],
+                     *           "expires_at": null,
+                     *           "last_used_at": null,
+                     *           "created_by": "018f...",
+                     *           "created_at": "2026-09-11T10:00:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            role: string;
+                            scope: string;
+                            ip_allowlist: [
+                            ];
+                            expires_at: string | null;
+                            last_used_at: string | null;
+                            created_by: string;
+                            created_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_admin_CreateKeyEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    role: string;
+                    scope?: string;
+                    ip_allowlist?: string[];
+                    expires_at?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "name": "Dashboard",
+                     *         "role": "owner",
+                     *         "scope": "instance",
+                     *         "ip_allowlist": [],
+                     *         "expires_at": null,
+                     *         "last_used_at": null,
+                     *         "created_by": "018f...",
+                     *         "created_at": "2026-09-11T10:00:00+00:00",
+                     *         "key": "pak_..."
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            role: string;
+                            scope: string;
+                            ip_allowlist: [
+                            ];
+                            expires_at: string | null;
+                            last_used_at: string | null;
+                            created_by: string;
+                            created_at: string;
+                            key: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_admin_DeleteKeyEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "deleted"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_admin_ListFactorsEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "type": "totp",
+                     *           "label": "Phone",
+                     *           "is_default": true,
+                     *           "confirmed_at": "2026-09-11T10:00:00+00:00",
+                     *           "last_used_at": null,
+                     *           "created_at": "2026-09-11T10:00:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            type: string;
+                            label: string;
+                            is_default: boolean;
+                            confirmed_at: string;
+                            last_used_at: string | null;
+                            created_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_admin_ResetMfaEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "reset",
+                     *         "factors": 1
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                            factors: number;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_admin_RemoveFactorEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                factorId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "removed"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_admin_ReadOrganizationEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "name": "Acme Rockets",
+                     *         "slug": "acme-rockets",
+                     *         "status": "active",
+                     *         "created_by": "018f...",
+                     *         "created_at": "2026-09-11T10:00:00+00:00",
+                     *         "updated_at": "2026-09-11T10:00:00+00:00",
+                     *         "members": [
+                     *           {
+                     *             "user_id": "018f...",
+                     *             "email": "ada@example.com",
+                     *             "display_name": "Ada",
+                     *             "status": "active",
+                     *             "roles": [
+                     *               "owner"
+                     *             ]
+                     *           }
+                     *         ]
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            slug: string;
+                            status: string;
+                            created_by: string;
+                            created_at: string;
+                            updated_at: string;
+                            members: {
+                                user_id: string;
+                                email: string;
+                                display_name: string;
+                                status: string;
+                                roles: string[];
+                            }[];
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_admin_DeleteOrganizationEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "suspended"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_admin_ListOrganizationsEndpoint: {
+        parameters: {
+            query?: {
+                status?: string;
+                cursor?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "name": "Acme Rockets",
+                     *           "slug": "acme-rockets",
+                     *           "status": "active",
+                     *           "created_by": "018f...",
+                     *           "created_at": "2026-09-11T10:00:00+00:00",
+                     *           "updated_at": "2026-09-11T10:00:00+00:00"
+                     *         }
+                     *       ],
+                     *       "next_cursor": null
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            slug: string;
+                            status: string;
+                            created_by: string;
+                            created_at: string;
+                            updated_at: string;
+                        }[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    patch_admin_UpdateMemberRolesEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    roles: string[];
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "roles": [
+                     *           "admin"
+                     *         ]
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            roles: string[];
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_admin_ListSessionsEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "current": false,
+                     *           "ip": "203.0.113.7",
+                     *           "user_agent": "Mozilla/5.0",
+                     *           "created_at": "2026-09-11T10:00:00+00:00",
+                     *           "last_used_at": "2026-09-11T10:05:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            current: boolean;
+                            ip: string;
+                            user_agent: string;
+                            created_at: string;
+                            last_used_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_admin_RevokeAllSessionsEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "revoked",
+                     *         "count": 2
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                            count: number;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_admin_RevokeSessionEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                sessionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "revoked"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_admin_StatsEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "generated_at": "2026-09-11T10:00:00+00:00",
+                     *         "totals": {
+                     *           "users": 120,
+                     *           "organizations": 8,
+                     *           "active_sessions": 41
+                     *         },
+                     *         "sign_ups": {
+                     *           "24h": 3,
+                     *           "7d": 12,
+                     *           "30d": 40
+                     *         },
+                     *         "sign_ins": {
+                     *           "24h": 50,
+                     *           "7d": 300,
+                     *           "30d": 1100
+                     *         },
+                     *         "active_users": {
+                     *           "24h": 30,
+                     *           "7d": 80,
+                     *           "30d": 110
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            generated_at: string;
+                            totals: {
+                                users: number;
+                                organizations: number;
+                                active_sessions: number;
+                            };
+                            sign_ups: {
+                                "24h": number;
+                                "7d": number;
+                                "30d": number;
+                            };
+                            sign_ins: {
+                                "24h": number;
+                                "7d": number;
+                                "30d": number;
+                            };
+                            active_users: {
+                                "24h": number;
+                                "7d": number;
+                                "30d": number;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_admin_BanUserEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "disabled"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_admin_ReadUserEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "email": "ada@example.com",
+                     *         "display_name": "Ada",
+                     *         "status": "active",
+                     *         "email_verified": true,
+                     *         "mfa_enforced": false,
+                     *         "locked_until": null,
+                     *         "created_at": "2026-09-11T10:00:00+00:00",
+                     *         "last_login_at": "2026-09-11T10:05:00+00:00",
+                     *         "last_active_at": "2026-09-11T10:05:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            email: string;
+                            display_name: string;
+                            status: string;
+                            email_verified: boolean;
+                            mfa_enforced: boolean;
+                            locked_until: string | null;
+                            created_at: string;
+                            last_login_at: string;
+                            last_active_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_admin_DeleteUserEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "deleted"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_admin_ImpersonateUserEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "eyJ...",
+                     *         "token_type": "Bearer",
+                     *         "expires_in": 900,
+                     *         "impersonated_by": "018f..."
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            token_type: string;
+                            expires_in: number;
+                            impersonated_by: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_admin_ListUsersEndpoint: {
+        parameters: {
+            query?: {
+                email?: string;
+                status?: string;
+                cursor?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "email": "ada@example.com",
+                     *           "display_name": "Ada",
+                     *           "status": "active",
+                     *           "email_verified": true,
+                     *           "mfa_enforced": false,
+                     *           "locked_until": null,
+                     *           "created_at": "2026-09-11T10:00:00+00:00",
+                     *           "last_login_at": "2026-09-11T10:05:00+00:00",
+                     *           "last_active_at": "2026-09-11T10:05:00+00:00"
+                     *         }
+                     *       ],
+                     *       "next_cursor": null
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            email: string;
+                            display_name: string;
+                            status: string;
+                            email_verified: boolean;
+                            mfa_enforced: boolean;
+                            locked_until: string | null;
+                            created_at: string;
+                            last_login_at: string;
+                            last_active_at: string;
+                        }[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_admin_SetPasswordEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: password */
+                    password: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "password_set"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_admin_UnbanUserEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "active"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
                 };
             };
         };

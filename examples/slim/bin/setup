@@ -4,15 +4,24 @@
 declare(strict_types=1);
 
 /**
- * One-time setup: .env from .env.example, an RS256 key pair, the SQLite schema, the permission
- * catalog and system roles. Safe to run again.
+ * One-time setup: .env from .env.example, an RS256 key pair, the SQLite schema (core, audit and admin),
+ * the permission catalog and system roles, and an owner API key for /admin in var/admin.key. Safe to
+ * run again.
  */
 
+use Polaris\Admin\AdminPlugin;
+use Polaris\Admin\Keys;
+use Polaris\Admin\Principal\Role;
+use Polaris\Audit\AuditPlugin;
 use Polaris\Authorization\PermissionCatalog;
 use Polaris\Authorization\PermissionCatalogSeeder;
+use Polaris\Config\EnvironmentConfig;
 use Polaris\Contract\Dialect;
 use Polaris\Pdo\PdoAdapter;
 use Polaris\Pdo\SqlSchema;
+use Polaris\Polaris;
+use Polaris\Schema\Schema;
+use Polaris\Wiring\Config;
 use PolarisDemo\Env;
 
 $root = dirname(__DIR__);
@@ -39,6 +48,10 @@ if (!is_file("$root/var/keys/private.pem")) {
 }
 
 Env::load($root);
+$plugins = [new AuditPlugin(), new AdminPlugin()];
+foreach ($plugins as $plugin) {
+    Schema::register(...$plugin->schema());
+}
 $dsn = Env::require('POLARIS_DSN');
 $path = Env::sqlitePath($root, $dsn);
 $fresh = !is_file($path);
@@ -53,4 +66,11 @@ if ($fresh) {
 }
 (new PermissionCatalogSeeder(new PermissionCatalog()))->seed($adapter, new DateTimeImmutable('now'));
 echo "seeded the permission catalog and system roles\n";
+if (!is_file("$root/var/admin.key")) {
+    $polaris = Polaris::create(new Config(secrets: EnvironmentConfig::secrets(), auth: EnvironmentConfig::auth(), database: $adapter, plugins: $plugins));
+    $issued = $polaris->graph()->get(Keys::class)->create('demo dashboard', Role::Owner, createdBy: 'setup');
+    file_put_contents("$root/var/admin.key", $issued->plaintext);
+    chmod("$root/var/admin.key", 0600);
+    echo "created var/admin.key, an owner API key for the /admin routes\n";
+}
 echo "\nNext: php -S 127.0.0.1:8080 -t public   then   bin/walkthrough.sh\n";

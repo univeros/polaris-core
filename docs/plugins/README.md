@@ -45,6 +45,13 @@ Laravel `config('polaris.plugins')` (class names, bindings or instances), Symfon
 (service ids), Yii `polaris.plugins` params (class names or definitions with `class`); their console
 commands and route tables include the plugins' tables and routes.
 
+## The TypeScript client
+
+`@polaris-auth/client` is generated for the application declared in `packages/client-ts/polaris.php`; a
+plugin listed there gets a namespace named after its id (`client.admin.listUsers()`), one typed method per
+endpoint class, from the `x-polaris-plugin` marker the OpenAPI document puts on its operations. Its errors
+type as `ProblemBody`.
+
 ## Proving a plugin
 
 A plugin's functional tests extend `Polaris\Tests\Functional\FunctionalTestCase` (shipped in `polaris/core`'s

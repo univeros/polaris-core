@@ -3685,7 +3685,10 @@
                                         "maxLength": 320
                                     },
                                     "role_slugs": {
-                                        "type": "string"
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
                                     }
                                 },
                                 "required": [
@@ -4208,7 +4211,10 @@
                                 "type": "object",
                                 "properties": {
                                     "role_slugs": {
-                                        "type": "string"
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
                                     }
                                 },
                                 "required": [
@@ -4751,7 +4757,10 @@
                                         "type": "string"
                                     },
                                     "permission_keys": {
-                                        "type": "string"
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
                                     }
                                 },
                                 "required": [
@@ -5613,6 +5622,4119 @@
                     }
                 }
             }
+        },
+        "/audit/me": {
+            "get": {
+                "operationId": "get_audit_MeEndpoint",
+                "summary": "List the audit events where the caller is the actor or the subject",
+                "tags": [
+                    "audit"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "audit",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "names",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "occurred_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "actor_type": {
+                                                        "type": "string"
+                                                    },
+                                                    "actor_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "subject_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "organization_id": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "session_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "ip": {
+                                                        "type": "string"
+                                                    },
+                                                    "user_agent": {
+                                                        "type": "string"
+                                                    },
+                                                    "data": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "amr": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "amr"
+                                                        ]
+                                                    },
+                                                    "request_id": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "name",
+                                                    "occurred_at",
+                                                    "actor_type",
+                                                    "actor_id",
+                                                    "subject_id",
+                                                    "organization_id",
+                                                    "session_id",
+                                                    "ip",
+                                                    "user_agent",
+                                                    "data",
+                                                    "request_id"
+                                                ]
+                                            }
+                                        },
+                                        "next_cursor": {
+                                            "type": [
+                                                "string",
+                                                "null"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data",
+                                        "next_cursor"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "name": "session.signed_in",
+                                            "occurred_at": "2026-09-11T10:00:00+00:00",
+                                            "actor_type": "user",
+                                            "actor_id": "018f...",
+                                            "subject_id": "018f...",
+                                            "organization_id": null,
+                                            "session_id": "018f...",
+                                            "ip": "203.0.113.7",
+                                            "user_agent": "Mozilla/5.0",
+                                            "data": {
+                                                "amr": [
+                                                    "pwd"
+                                                ]
+                                            },
+                                            "request_id": null
+                                        }
+                                    ],
+                                    "next_cursor": null
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "audit_invalid_query",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/audit/organization/{id}": {
+            "get": {
+                "operationId": "get_audit_OrganizationEndpoint",
+                "summary": "List an organization's audit events",
+                "tags": [
+                    "audit"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "audit",
+                "x-polaris-requires-permissions": [
+                    "audit.read"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "names",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "occurred_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "actor_type": {
+                                                        "type": "string"
+                                                    },
+                                                    "actor_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "subject_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "organization_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "session_id": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "ip": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "user_agent": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "data": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "email": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "email"
+                                                        ]
+                                                    },
+                                                    "request_id": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "name",
+                                                    "occurred_at",
+                                                    "actor_type",
+                                                    "actor_id",
+                                                    "subject_id",
+                                                    "organization_id",
+                                                    "session_id",
+                                                    "ip",
+                                                    "user_agent",
+                                                    "data",
+                                                    "request_id"
+                                                ]
+                                            }
+                                        },
+                                        "next_cursor": {
+                                            "type": [
+                                                "string",
+                                                "null"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data",
+                                        "next_cursor"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "name": "org.member_invited",
+                                            "occurred_at": "2026-09-11T10:00:00+00:00",
+                                            "actor_type": "user",
+                                            "actor_id": "018f...",
+                                            "subject_id": "018f...",
+                                            "organization_id": "018f...",
+                                            "session_id": null,
+                                            "ip": null,
+                                            "user_agent": null,
+                                            "data": {
+                                                "email": "newhire@example.test"
+                                            },
+                                            "request_id": null
+                                        }
+                                    ],
+                                    "next_cursor": null
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "forbidden | audit_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "audit_invalid_query",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/audit/types": {
+            "get": {
+                "operationId": "get_audit_TypesEndpoint",
+                "summary": "List the audit event names and their descriptions",
+                "tags": [
+                    "audit"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "audit",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "name",
+                                                    "description"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "name": "user.signed_up",
+                                            "description": "A user registered"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/audit": {
+            "get": {
+                "operationId": "get_admin_QueryAuditEndpoint",
+                "summary": "Query the audit trail",
+                "tags": [
+                    "admin",
+                    "audit"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "names",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "actor_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "subject_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "organization_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "occurred_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "actor_type": {
+                                                        "type": "string"
+                                                    },
+                                                    "actor_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "subject_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "organization_id": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "session_id": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "ip": {
+                                                        "type": "string"
+                                                    },
+                                                    "user_agent": {
+                                                        "type": "string"
+                                                    },
+                                                    "data": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "actor_role": {
+                                                                "type": "string"
+                                                            },
+                                                            "actor_scope": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "actor_role",
+                                                            "actor_scope"
+                                                        ]
+                                                    },
+                                                    "request_id": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "name",
+                                                    "occurred_at",
+                                                    "actor_type",
+                                                    "actor_id",
+                                                    "subject_id",
+                                                    "organization_id",
+                                                    "session_id",
+                                                    "ip",
+                                                    "user_agent",
+                                                    "data",
+                                                    "request_id"
+                                                ]
+                                            }
+                                        },
+                                        "next_cursor": {
+                                            "type": [
+                                                "string",
+                                                "null"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data",
+                                        "next_cursor"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "name": "admin.user_banned",
+                                            "occurred_at": "2026-09-11T10:00:00+00:00",
+                                            "actor_type": "admin",
+                                            "actor_id": "018f...",
+                                            "subject_id": "018f...",
+                                            "organization_id": null,
+                                            "session_id": null,
+                                            "ip": "203.0.113.7",
+                                            "user_agent": "Mozilla/5.0",
+                                            "data": {
+                                                "actor_role": "admin",
+                                                "actor_scope": "instance"
+                                            },
+                                            "request_id": null
+                                        }
+                                    ],
+                                    "next_cursor": null
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "audit_invalid_query",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/organizations/{id}/drains": {
+            "post": {
+                "operationId": "post_admin_CreateDrainEndpoint",
+                "summary": "Create an audit drain",
+                "tags": [
+                    "admin",
+                    "audit"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "endpoint": {
+                                        "type": "string"
+                                    },
+                                    "secret": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    },
+                                    "filter": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "endpoint",
+                                    "secret"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "organization_id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                },
+                                                "endpoint": {
+                                                    "type": "string"
+                                                },
+                                                "filter": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "last_delivery_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "last_error": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "organization_id",
+                                                "type",
+                                                "endpoint",
+                                                "filter",
+                                                "status",
+                                                "last_delivery_at",
+                                                "last_error",
+                                                "created_at"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "organization_id": "018f...",
+                                        "type": "webhook",
+                                        "endpoint": "https://hooks.example.test/audit",
+                                        "filter": [
+                                            "org.*"
+                                        ],
+                                        "status": "active",
+                                        "last_delivery_at": null,
+                                        "last_error": null,
+                                        "created_at": "2026-09-11T10:00:00+00:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "admin_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "get_admin_ListDrainsEndpoint",
+                "summary": "List an organization's audit drains",
+                "tags": [
+                    "admin",
+                    "audit"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "organization_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    },
+                                                    "endpoint": {
+                                                        "type": "string"
+                                                    },
+                                                    "filter": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "status": {
+                                                        "type": "string"
+                                                    },
+                                                    "last_delivery_at": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "last_error": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "organization_id",
+                                                    "type",
+                                                    "endpoint",
+                                                    "filter",
+                                                    "status",
+                                                    "last_delivery_at",
+                                                    "last_error",
+                                                    "created_at"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "organization_id": "018f...",
+                                            "type": "webhook",
+                                            "endpoint": "https://hooks.example.test/audit",
+                                            "filter": [
+                                                "org.*"
+                                            ],
+                                            "status": "active",
+                                            "last_delivery_at": null,
+                                            "last_error": null,
+                                            "created_at": "2026-09-11T10:00:00+00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/organizations/{id}/drains/{drainId}": {
+            "delete": {
+                "operationId": "delete_admin_DeleteDrainEndpoint",
+                "summary": "Delete an audit drain",
+                "tags": [
+                    "admin",
+                    "audit"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "drainId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "deleted"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/organizations/{id}/drains/{drainId}/test": {
+            "post": {
+                "operationId": "post_admin_TestDrainEndpoint",
+                "summary": "Test an audit drain",
+                "tags": [
+                    "admin",
+                    "audit"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "drainId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "organization_id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                },
+                                                "endpoint": {
+                                                    "type": "string"
+                                                },
+                                                "filter": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "last_delivery_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "last_error": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "organization_id",
+                                                "type",
+                                                "endpoint",
+                                                "filter",
+                                                "status",
+                                                "last_delivery_at",
+                                                "last_error",
+                                                "created_at"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "organization_id": "018f...",
+                                        "type": "webhook",
+                                        "endpoint": "https://hooks.example.test/audit",
+                                        "filter": [
+                                            "org.*"
+                                        ],
+                                        "status": "active",
+                                        "last_delivery_at": null,
+                                        "last_error": null,
+                                        "created_at": "2026-09-11T10:00:00+00:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/grants": {
+            "post": {
+                "operationId": "post_admin_CreateGrantEndpoint",
+                "summary": "Grant an admin role",
+                "tags": [
+                    "admin",
+                    "grants"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "user_id": {
+                                        "type": "string"
+                                    },
+                                    "role": {
+                                        "type": "string"
+                                    },
+                                    "scope": {
+                                        "type": "string"
+                                    },
+                                    "expires_at": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "user_id",
+                                    "role"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "user_id": {
+                                                    "type": "string"
+                                                },
+                                                "role": {
+                                                    "type": "string"
+                                                },
+                                                "scope": {
+                                                    "type": "string"
+                                                },
+                                                "granted_by": {
+                                                    "type": "string"
+                                                },
+                                                "expires_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "user_id",
+                                                "role",
+                                                "scope",
+                                                "granted_by",
+                                                "expires_at",
+                                                "created_at"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "user_id": "018f...",
+                                        "role": "support",
+                                        "scope": "instance",
+                                        "granted_by": "018f...",
+                                        "expires_at": null,
+                                        "created_at": "2026-09-11T10:00:00+00:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "admin_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "get_admin_ListGrantsEndpoint",
+                "summary": "List the admin grants",
+                "tags": [
+                    "admin",
+                    "grants"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "admin",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "user_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "role": {
+                                                        "type": "string"
+                                                    },
+                                                    "scope": {
+                                                        "type": "string"
+                                                    },
+                                                    "granted_by": {
+                                                        "type": "string"
+                                                    },
+                                                    "expires_at": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "user_id",
+                                                    "role",
+                                                    "scope",
+                                                    "granted_by",
+                                                    "expires_at",
+                                                    "created_at"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "user_id": "018f...",
+                                            "role": "support",
+                                            "scope": "instance",
+                                            "granted_by": "018f...",
+                                            "expires_at": null,
+                                            "created_at": "2026-09-11T10:00:00+00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/grants/{id}": {
+            "delete": {
+                "operationId": "delete_admin_DeleteGrantEndpoint",
+                "summary": "Revoke an admin grant",
+                "tags": [
+                    "admin",
+                    "grants"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "deleted"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/keys": {
+            "post": {
+                "operationId": "post_admin_CreateKeyEndpoint",
+                "summary": "Create an API key",
+                "tags": [
+                    "admin",
+                    "keys"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "role": {
+                                        "type": "string"
+                                    },
+                                    "scope": {
+                                        "type": "string"
+                                    },
+                                    "ip_allowlist": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "expires_at": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "role"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "role": {
+                                                    "type": "string"
+                                                },
+                                                "scope": {
+                                                    "type": "string"
+                                                },
+                                                "ip_allowlist": {
+                                                    "type": "array",
+                                                    "items": []
+                                                },
+                                                "expires_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "last_used_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "created_by": {
+                                                    "type": "string"
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "key": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "name",
+                                                "role",
+                                                "scope",
+                                                "ip_allowlist",
+                                                "expires_at",
+                                                "last_used_at",
+                                                "created_by",
+                                                "created_at",
+                                                "key"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "name": "Dashboard",
+                                        "role": "owner",
+                                        "scope": "instance",
+                                        "ip_allowlist": [],
+                                        "expires_at": null,
+                                        "last_used_at": null,
+                                        "created_by": "018f...",
+                                        "created_at": "2026-09-11T10:00:00+00:00",
+                                        "key": "pak_..."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "admin_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "get_admin_ListKeysEndpoint",
+                "summary": "List the API keys",
+                "tags": [
+                    "admin",
+                    "keys"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "admin",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "role": {
+                                                        "type": "string"
+                                                    },
+                                                    "scope": {
+                                                        "type": "string"
+                                                    },
+                                                    "ip_allowlist": {
+                                                        "type": "array",
+                                                        "items": []
+                                                    },
+                                                    "expires_at": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "last_used_at": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "created_by": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "name",
+                                                    "role",
+                                                    "scope",
+                                                    "ip_allowlist",
+                                                    "expires_at",
+                                                    "last_used_at",
+                                                    "created_by",
+                                                    "created_at"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "name": "Dashboard",
+                                            "role": "owner",
+                                            "scope": "instance",
+                                            "ip_allowlist": [],
+                                            "expires_at": null,
+                                            "last_used_at": null,
+                                            "created_by": "018f...",
+                                            "created_at": "2026-09-11T10:00:00+00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/keys/{id}": {
+            "delete": {
+                "operationId": "delete_admin_DeleteKeyEndpoint",
+                "summary": "Delete an API key",
+                "tags": [
+                    "admin",
+                    "keys"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "deleted"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users/{id}/mfa": {
+            "get": {
+                "operationId": "get_admin_ListFactorsEndpoint",
+                "summary": "List a user's MFA factors",
+                "tags": [
+                    "admin",
+                    "mfa"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    },
+                                                    "label": {
+                                                        "type": "string"
+                                                    },
+                                                    "is_default": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "confirmed_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "last_used_at": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "type",
+                                                    "label",
+                                                    "is_default",
+                                                    "confirmed_at",
+                                                    "last_used_at",
+                                                    "created_at"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "type": "totp",
+                                            "label": "Phone",
+                                            "is_default": true,
+                                            "confirmed_at": "2026-09-11T10:00:00+00:00",
+                                            "last_used_at": null,
+                                            "created_at": "2026-09-11T10:00:00+00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete_admin_ResetMfaEndpoint",
+                "summary": "Reset a user's MFA",
+                "tags": [
+                    "admin",
+                    "mfa"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "factors": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "status",
+                                                "factors"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "reset",
+                                        "factors": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users/{id}/mfa/{factorId}": {
+            "delete": {
+                "operationId": "delete_admin_RemoveFactorEndpoint",
+                "summary": "Remove an MFA factor",
+                "tags": [
+                    "admin",
+                    "mfa"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "factorId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "removed"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "admin_conflict",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/organizations/{id}": {
+            "delete": {
+                "operationId": "delete_admin_DeleteOrganizationEndpoint",
+                "summary": "Delete an organization",
+                "tags": [
+                    "admin",
+                    "organizations"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "suspended"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "get_admin_ReadOrganizationEndpoint",
+                "summary": "Read an organization",
+                "tags": [
+                    "admin",
+                    "organizations"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "slug": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "created_by": {
+                                                    "type": "string"
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string"
+                                                },
+                                                "members": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "user_id": {
+                                                                "type": "string"
+                                                            },
+                                                            "email": {
+                                                                "type": "string"
+                                                            },
+                                                            "display_name": {
+                                                                "type": "string"
+                                                            },
+                                                            "status": {
+                                                                "type": "string"
+                                                            },
+                                                            "roles": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "user_id",
+                                                            "email",
+                                                            "display_name",
+                                                            "status",
+                                                            "roles"
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "name",
+                                                "slug",
+                                                "status",
+                                                "created_by",
+                                                "created_at",
+                                                "updated_at",
+                                                "members"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "name": "Acme Rockets",
+                                        "slug": "acme-rockets",
+                                        "status": "active",
+                                        "created_by": "018f...",
+                                        "created_at": "2026-09-11T10:00:00+00:00",
+                                        "updated_at": "2026-09-11T10:00:00+00:00",
+                                        "members": [
+                                            {
+                                                "user_id": "018f...",
+                                                "email": "ada@example.com",
+                                                "display_name": "Ada",
+                                                "status": "active",
+                                                "roles": [
+                                                    "owner"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/organizations": {
+            "get": {
+                "operationId": "get_admin_ListOrganizationsEndpoint",
+                "summary": "List the organizations",
+                "tags": [
+                    "admin",
+                    "organizations"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "slug": {
+                                                        "type": "string"
+                                                    },
+                                                    "status": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_by": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "name",
+                                                    "slug",
+                                                    "status",
+                                                    "created_by",
+                                                    "created_at",
+                                                    "updated_at"
+                                                ]
+                                            }
+                                        },
+                                        "next_cursor": {
+                                            "type": [
+                                                "string",
+                                                "null"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data",
+                                        "next_cursor"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "name": "Acme Rockets",
+                                            "slug": "acme-rockets",
+                                            "status": "active",
+                                            "created_by": "018f...",
+                                            "created_at": "2026-09-11T10:00:00+00:00",
+                                            "updated_at": "2026-09-11T10:00:00+00:00"
+                                        }
+                                    ],
+                                    "next_cursor": null
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "admin_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/organizations/{id}/members/{userId}/roles": {
+            "patch": {
+                "operationId": "patch_admin_UpdateMemberRolesEndpoint",
+                "summary": "Set a member's roles",
+                "tags": [
+                    "admin",
+                    "organizations"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "roles": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "roles"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "roles": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "roles"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "roles": [
+                                            "admin"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "admin_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "admin_conflict",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users/{id}/sessions": {
+            "get": {
+                "operationId": "get_admin_ListSessionsEndpoint",
+                "summary": "List a user's sessions",
+                "tags": [
+                    "admin",
+                    "sessions"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "current": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "ip": {
+                                                        "type": "string"
+                                                    },
+                                                    "user_agent": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "last_used_at": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "current",
+                                                    "ip",
+                                                    "user_agent",
+                                                    "created_at",
+                                                    "last_used_at"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "current": false,
+                                            "ip": "203.0.113.7",
+                                            "user_agent": "Mozilla/5.0",
+                                            "created_at": "2026-09-11T10:00:00+00:00",
+                                            "last_used_at": "2026-09-11T10:05:00+00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete_admin_RevokeAllSessionsEndpoint",
+                "summary": "Revoke every session",
+                "tags": [
+                    "admin",
+                    "sessions"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "count": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "status",
+                                                "count"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "revoked",
+                                        "count": 2
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users/{id}/sessions/{sessionId}": {
+            "delete": {
+                "operationId": "delete_admin_RevokeSessionEndpoint",
+                "summary": "Revoke a session",
+                "tags": [
+                    "admin",
+                    "sessions"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sessionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "revoked"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/stats": {
+            "get": {
+                "operationId": "get_admin_StatsEndpoint",
+                "summary": "Read the instance statistics",
+                "tags": [
+                    "admin",
+                    "stats"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "admin",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "generated_at": {
+                                                    "type": "string"
+                                                },
+                                                "totals": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "users": {
+                                                            "type": "integer"
+                                                        },
+                                                        "organizations": {
+                                                            "type": "integer"
+                                                        },
+                                                        "active_sessions": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "users",
+                                                        "organizations",
+                                                        "active_sessions"
+                                                    ]
+                                                },
+                                                "sign_ups": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "24h": {
+                                                            "type": "integer"
+                                                        },
+                                                        "7d": {
+                                                            "type": "integer"
+                                                        },
+                                                        "30d": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "24h",
+                                                        "7d",
+                                                        "30d"
+                                                    ]
+                                                },
+                                                "sign_ins": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "24h": {
+                                                            "type": "integer"
+                                                        },
+                                                        "7d": {
+                                                            "type": "integer"
+                                                        },
+                                                        "30d": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "24h",
+                                                        "7d",
+                                                        "30d"
+                                                    ]
+                                                },
+                                                "active_users": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "24h": {
+                                                            "type": "integer"
+                                                        },
+                                                        "7d": {
+                                                            "type": "integer"
+                                                        },
+                                                        "30d": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "24h",
+                                                        "7d",
+                                                        "30d"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "generated_at",
+                                                "totals",
+                                                "sign_ups",
+                                                "sign_ins",
+                                                "active_users"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "generated_at": "2026-09-11T10:00:00+00:00",
+                                        "totals": {
+                                            "users": 120,
+                                            "organizations": 8,
+                                            "active_sessions": 41
+                                        },
+                                        "sign_ups": {
+                                            "24h": 3,
+                                            "7d": 12,
+                                            "30d": 40
+                                        },
+                                        "sign_ins": {
+                                            "24h": 50,
+                                            "7d": 300,
+                                            "30d": 1100
+                                        },
+                                        "active_users": {
+                                            "24h": 30,
+                                            "7d": 80,
+                                            "30d": 110
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users/{id}/ban": {
+            "post": {
+                "operationId": "post_admin_BanUserEndpoint",
+                "summary": "Ban a user",
+                "tags": [
+                    "admin",
+                    "users"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "disabled"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "admin_conflict",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users/{id}": {
+            "delete": {
+                "operationId": "delete_admin_DeleteUserEndpoint",
+                "summary": "Delete a user",
+                "tags": [
+                    "admin",
+                    "users"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "deleted"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "admin_conflict",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "get_admin_ReadUserEndpoint",
+                "summary": "Read a user",
+                "tags": [
+                    "admin",
+                    "users"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "display_name": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "email_verified": {
+                                                    "type": "boolean"
+                                                },
+                                                "mfa_enforced": {
+                                                    "type": "boolean"
+                                                },
+                                                "locked_until": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "last_login_at": {
+                                                    "type": "string"
+                                                },
+                                                "last_active_at": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "email",
+                                                "display_name",
+                                                "status",
+                                                "email_verified",
+                                                "mfa_enforced",
+                                                "locked_until",
+                                                "created_at",
+                                                "last_login_at",
+                                                "last_active_at"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "email": "ada@example.com",
+                                        "display_name": "Ada",
+                                        "status": "active",
+                                        "email_verified": true,
+                                        "mfa_enforced": false,
+                                        "locked_until": null,
+                                        "created_at": "2026-09-11T10:00:00+00:00",
+                                        "last_login_at": "2026-09-11T10:05:00+00:00",
+                                        "last_active_at": "2026-09-11T10:05:00+00:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users/{id}/impersonate": {
+            "post": {
+                "operationId": "post_admin_ImpersonateUserEndpoint",
+                "summary": "Impersonate a user",
+                "tags": [
+                    "admin",
+                    "users"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "impersonated_by": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "token_type",
+                                                "expires_in",
+                                                "impersonated_by"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "eyJ...",
+                                        "token_type": "Bearer",
+                                        "expires_in": 900,
+                                        "impersonated_by": "018f..."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "admin_conflict",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users": {
+            "get": {
+                "operationId": "get_admin_ListUsersEndpoint",
+                "summary": "List the users",
+                "tags": [
+                    "admin",
+                    "users"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "email": {
+                                                        "type": "string"
+                                                    },
+                                                    "display_name": {
+                                                        "type": "string"
+                                                    },
+                                                    "status": {
+                                                        "type": "string"
+                                                    },
+                                                    "email_verified": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "mfa_enforced": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "locked_until": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "last_login_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "last_active_at": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "email",
+                                                    "display_name",
+                                                    "status",
+                                                    "email_verified",
+                                                    "mfa_enforced",
+                                                    "locked_until",
+                                                    "created_at",
+                                                    "last_login_at",
+                                                    "last_active_at"
+                                                ]
+                                            }
+                                        },
+                                        "next_cursor": {
+                                            "type": [
+                                                "string",
+                                                "null"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data",
+                                        "next_cursor"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "email": "ada@example.com",
+                                            "display_name": "Ada",
+                                            "status": "active",
+                                            "email_verified": true,
+                                            "mfa_enforced": false,
+                                            "locked_until": null,
+                                            "created_at": "2026-09-11T10:00:00+00:00",
+                                            "last_login_at": "2026-09-11T10:05:00+00:00",
+                                            "last_active_at": "2026-09-11T10:05:00+00:00"
+                                        }
+                                    ],
+                                    "next_cursor": null
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "admin_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users/{id}/password": {
+            "post": {
+                "operationId": "post_admin_SetPasswordEndpoint",
+                "summary": "Set a user's password",
+                "tags": [
+                    "admin",
+                    "users"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    }
+                                },
+                                "required": [
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "password_set"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "admin_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users/{id}/unban": {
+            "post": {
+                "operationId": "post_admin_UnbanUserEndpoint",
+                "summary": "Unban a user",
+                "tags": [
+                    "admin",
+                    "users"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "admin",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "active"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "admin_conflict",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -5651,6 +9773,45 @@
                         }
                     }
                 }
+            },
+            "Problem": {
+                "type": "object",
+                "description": "An RFC 9457 problem document, the error shape of the plugins' routes; error and message repeat the core envelope.",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "integer"
+                    },
+                    "detail": {
+                        "type": "string"
+                    },
+                    "error": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "errors": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail",
+                    "error",
+                    "message"
+                ]
             }
         }
     }

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Polaris\Admin\AdminPlugin;
+use Polaris\Audit\AuditPlugin;
 use Polaris\Config\EnvironmentConfig;
 use Polaris\Pdo\PdoAdapter;
 use Polaris\Polaris;
@@ -31,6 +33,7 @@ $polaris = Polaris::create(new Config(
     database: new PdoAdapter($pdo),
     mailer: new FileMailer($root . '/var/mail.log'),
     dispatcher: $dispatcher,
+    plugins: [new AuditPlugin(), new AdminPlugin()],
 ));
 foreach ($polaris->listeners() as $listener) {
     $dispatcher->listen($listener);

@@ -137,6 +137,7 @@ final class Loader
             outputExamples: $this->examples($output),
             errors: $this->errors($document['errors'] ?? [], $name),
             events: $this->strings($document['events'] ?? []),
+            plugin: $directory === $this->directories[0] ? null : explode('/', $name)[0],
         );
     }
 

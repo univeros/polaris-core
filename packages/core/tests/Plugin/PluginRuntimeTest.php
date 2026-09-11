@@ -16,6 +16,7 @@ use Polaris\Config\Secrets;
 use Polaris\Contract\Dialect;
 use Polaris\Event\UserRegistered;
 use Polaris\Http\Manifest\Loader;
+use Polaris\Http\Manifest\OpenApi;
 use Polaris\Pdo\SqlSchema;
 use Polaris\Plugin\AbstractPlugin;
 use Polaris\Polaris;
@@ -79,7 +80,17 @@ final class PluginRuntimeTest extends TestCase
         $polaris = self::polaris(new SamplePlugin());
 
         self::assertCount(53, $polaris->manifest()->endpoints());
-        self::assertSame('sample/notes.yaml', $polaris->manifest()->find('GET', '/sample/notes')?->file);
+        $spec = $polaris->manifest()->find('GET', '/sample/notes');
+        self::assertNotNull($spec);
+        self::assertSame('sample/notes.yaml', $spec->file);
+        self::assertSame('sample', $spec->plugin, 'the plugin id is the spec directory');
+        $core = $polaris->manifest()->find('GET', '/auth/me');
+        self::assertNotNull($core);
+        self::assertNull($core->plugin);
+        $operation = OpenApi::document($polaris->manifest())['paths']['/sample/notes']['get'];
+        self::assertSame('sample', $operation['x-polaris-plugin']);
+        self::assertSame(['$ref' => '#/components/schemas/Problem'], $operation['responses']['403']['content']['application/problem+json']['schema'], 'a plugin route answers problem documents');
+        self::assertArrayNotHasKey('x-polaris-plugin', OpenApi::document($polaris->manifest())['paths']['/auth/me']['get']);
 
         $directory = sys_get_temp_dir() . '/polaris-plugin-' . uniqid();
         mkdir($directory . '/dup', 0777, true);

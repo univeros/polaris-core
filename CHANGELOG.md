@@ -4,6 +4,17 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- `@polaris-auth/client`: the plugins' routes as namespaces, `client.audit.*` and `client.admin.*`, one
+  typed method per endpoint, generated from the OpenAPI document (`x-polaris-plugin`); `ProblemBody`
+  types their RFC 9457 errors. The OpenAPI document marks a plugin's operations, answers their errors as
+  `application/problem+json` (`Problem` schema), keeps operation ids unique across plugins and types
+  `list<x>` fields as arrays. `EndpointSpec::$plugin` names the plugin a route belongs to.
+- The Slim demo registers the audit and admin plugins; `bin/setup` writes an owner API key to
+  `var/admin.key`, which the client's smoke test uses.
+
 ## [0.2.0] - 2026-09-11
 
 The plugin runtime and the first two packages on it: `polaris/audit` and `polaris/admin`. One version

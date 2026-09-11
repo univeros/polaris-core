@@ -10,6 +10,8 @@
             "options": {
                 "symlink": true,
                 "versions": {
+                    "polaris/admin": "0.2.x-dev",
+                    "polaris/audit": "0.2.x-dev",
                     "polaris/cli": "0.2.x-dev",
                     "polaris/core": "0.2.x-dev",
                     "polaris/pdo": "0.2.x-dev",
@@ -22,6 +24,8 @@
     "require": {
         "php": ">=8.3",
         "ext-pdo_sqlite": "*",
+        "polaris/admin": "0.2.x-dev",
+        "polaris/audit": "0.2.x-dev",
         "polaris/cli": "0.2.x-dev",
         "polaris/core": "0.2.x-dev",
         "polaris/pdo": "0.2.x-dev",

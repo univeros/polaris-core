@@ -66,4 +66,8 @@ Every endpoint is declared in `../../packages/core/api/**/*.yaml`; `../../bin/po
 
 Swap the SQLite DSN for PostgreSQL or MySQL, the file mailer for your transport, and the dispatcher for your own, and the same code runs in production.
 
+The demo registers the `polaris/audit` and `polaris/admin` plugins: `bin/setup` also creates their tables
+and writes an owner API key to `var/admin.key`, so `curl -H "Authorization: Bearer $(cat var/admin.key)"
+http://127.0.0.1:8080/admin/users` lists the users and the TypeScript client's test exercises `client.admin`.
+
 Polaris for PHP is created and maintained by [2am.tech](https://2am.tech).
