@@ -6,6 +6,13 @@ the project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-11
+
+### Added
+- A `LICENSE` file (MIT, copyright 2am.tech) in every package and at the root; `authors`
+  (2am.tech) in every `composer.json` and in the client's `package.json`; every README ends
+  with the 2am.tech attribution.
+
 ### Removed
 - Six local artefacts of an earlier demo run committed by mistake under `examples/univeros`
   (a demo key pair, `.env`, the mailbox, a SQLite file, a server log); they carried no real
@@ -171,6 +178,7 @@ endpoints).
   configuration, the token model, the permission catalog, and the tenant
   invariants.
 
-[Unreleased]: https://github.com/univeros/polaris-core/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/univeros/polaris-core/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/univeros/polaris-core/releases/tag/v0.1.1
 [0.1.0]: https://github.com/univeros/polaris-core/releases/tag/v0.1.0
 [1.0.0]: https://github.com/univeros/polaris/releases/tag/v1.0.0
