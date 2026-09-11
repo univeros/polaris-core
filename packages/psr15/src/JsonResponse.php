@@ -13,8 +13,8 @@ use function json_encode;
 use const JSON_THROW_ON_ERROR;
 
 /**
- * Renders a {@see Result} or an error envelope as a JSON response. An empty body stays empty,
- * as the 1.0 responder did.
+ * Renders a {@see Result} or an error envelope as a JSON response (a raw body as is). An empty body
+ * stays empty, as the 1.0 responder did.
  */
 final class JsonResponse
 {
@@ -28,7 +28,9 @@ final class JsonResponse
         foreach ($result->headers as $name => $value) {
             $response = $response->withHeader($name, $value);
         }
-        if ($result->body !== []) {
+        if ($result->raw !== null) {
+            $response->getBody()->write($result->raw);
+        } elseif ($result->body !== []) {
             $response->getBody()->write(json_encode($result->body, JSON_THROW_ON_ERROR));
         }
 
