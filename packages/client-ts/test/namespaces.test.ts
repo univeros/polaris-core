@@ -18,7 +18,7 @@ function recording(status: number, body: unknown) {
     return { requests, fetch };
 }
 
-describe("client.admin and client.audit", () => {
+describe("client.admin, client.audit and client.sentinel", () => {
     it("maps the admin methods onto their routes with the API key as bearer", async () => {
         const { requests, fetch } = recording(200, { data: [], next_cursor: null });
         const client = createClient({ baseUrl: "https://polaris.example/api", token: "pak_secret", fetch });
@@ -62,6 +62,26 @@ describe("client.admin and client.audit", () => {
         expect(denied.error?.type).toBe(problem.type);
 
         expect(requests.map((request) => `${request.method} ${new URL(request.url).pathname}`)).toEqual(["GET /audit/me", "DELETE /admin/users/u1"]);
+    });
+
+    it("maps the sentinel methods onto the operator routes", async () => {
+        const { requests, fetch } = recording(200, { data: [], next_cursor: null });
+        const client = createClient({ baseUrl: "https://polaris.example", token: "pak_owner", fetch });
+
+        await client.sentinel.listDecisions({ params: { query: { action: "block", limit: 5 } } });
+        await client.sentinel.createIpRule({ body: { cidr: "198.51.100.0/24", action: "block", note: "scanner" } });
+        await client.sentinel.deleteIpRule({ params: { path: { id: "r1" } } });
+        await client.sentinel.unblock({ body: { identifier: "ada@example.com" } });
+        await client.sentinel.listIpRules();
+
+        expect(requests.map((request) => `${request.method} ${new URL(request.url).pathname}${new URL(request.url).search}`)).toEqual([
+            "GET /admin/sentinel/decisions?action=block&limit=5",
+            "POST /admin/sentinel/ip-rules",
+            "DELETE /admin/sentinel/ip-rules/r1",
+            "POST /admin/sentinel/unblock",
+            "GET /admin/sentinel/ip-rules",
+        ]);
+        expect(await requests[3]?.json()).toEqual({ identifier: "ada@example.com" });
     });
 
     it("binds the namespaces to the token of each client", async () => {

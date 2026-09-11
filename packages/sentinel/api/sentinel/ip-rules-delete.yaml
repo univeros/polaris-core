@@ -1,0 +1,33 @@
+# DELETE /admin/sentinel/ip-rules/{id}: remove a rule.
+endpoint:
+  method: DELETE
+  path: /admin/sentinel/ip-rules/{id}
+  summary: Remove an IP rule
+  tags: [admin, sentinel]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Sentinel\Http\Admin\DeleteIpRuleEndpoint
+  description: >
+    Needs own on the instance; recorded as sentinel.ip_rule_deleted.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "deleted"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+
+events: [sentinel.ip_rule_deleted]

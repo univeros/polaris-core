@@ -41,9 +41,10 @@ await operator.admin.banUser({ params: { path: { id: users.data!.data[0]!.id } }
 const trail = await polaris.withToken(accessToken).audit.me();
 ```
 
-`client.audit` (`me`, `organization`, `types`) and `client.admin` (users, sessions, MFA, organizations,
-audit, drains, stats, keys, grants; see the package README) are generated into `src/audit.ts` and
-`src/admin.ts` by `scripts/generate-namespaces.mjs` from the `x-polaris-plugin` marker of the OpenAPI
+`client.audit` (`me`, `organization`, `types`), `client.admin` (users, sessions, MFA, organizations,
+audit, drains, stats, keys, grants; see the package README) and `client.sentinel` (`listDecisions`,
+`listIpRules`, `createIpRule`, `deleteIpRule`, `unblock`) are generated into `src/audit.ts`, `src/admin.ts`
+and `src/sentinel.ts` by `scripts/generate-namespaces.mjs` from the `x-polaris-plugin` marker of the OpenAPI
 document; a later plugin gets its namespace the same way. Their errors are RFC 9457 problem documents,
 `ProblemBody` (`{ type, title, status, detail, error, message, errors? }`), served as
 `application/problem+json`.

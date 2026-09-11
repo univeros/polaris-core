@@ -20,3 +20,5 @@ parameters:
         - packages/admin/tests
         - packages/messaging/src
         - packages/messaging/tests
+        - packages/sentinel/src
+        - packages/sentinel/tests

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a03d628f6feb8410ba76f18be376991",
+    "content-hash": "ce374fa3eeda788602b6cea9a18922a0",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2948,7 +2948,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/admin",
-                "reference": "d9205525112b5a571b1a3b9391c725f150c66714"
+                "reference": "988bd6181f3a2343e4dea55c3c184008005f6a01"
             },
             "require": {
                 "php": ">=8.3",
@@ -2994,7 +2994,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/audit",
-                "reference": "e054b830056f952fa74e4c0a939aecb00e32a82d"
+                "reference": "c8e58af14a5a1634e661d0b914657ea63b5f23df"
             },
             "require": {
                 "php": ">=8.3",
@@ -3041,7 +3041,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/cli",
-                "reference": "bb9c948ee94ffc0e903ece46791c7a44708e2a80"
+                "reference": "8c0e3905600da4183942c6d446ea4363a2b7a242"
             },
             "require": {
                 "php": ">=8.3",
@@ -3085,7 +3085,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/core",
-                "reference": "600c520a742b773e56ea017a5b0a409ea8b1077d"
+                "reference": "0991c0c8ca7f8470b2bd0f3818b9e2a7b32a2fde"
             },
             "require": {
                 "endroid/qr-code": "^6.0",
@@ -3156,7 +3156,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/laravel",
-                "reference": "1aacd3bb98c5ea11a0c021cc5647e29f5f3bb9f1"
+                "reference": "65f806133844f15df0dede097e5ac04be6e9f03a"
             },
             "require": {
                 "laravel/framework": "^13.0",
@@ -3205,7 +3205,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/messaging",
-                "reference": "68d77d10dc3f0381d787caa82242bef2021f93b6"
+                "reference": "e191049606727c529fff7de106c263d1ed744d0c"
             },
             "require": {
                 "php": ">=8.3",
@@ -3256,7 +3256,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/pdo",
-                "reference": "2af7cfe8956bf62e3b0b4316617c57e01189fb57"
+                "reference": "5dd4a43b6a059aa9db34612ec05a2b4e0af4b221"
             },
             "require": {
                 "ext-pdo": "*",
@@ -3295,7 +3295,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/psr15",
-                "reference": "6d3bf311162dd4a8a5cd022513ac5ef15a09c1b5"
+                "reference": "7ae3199dac5c8ebadc2c7096fd68d0dd37f3c346"
             },
             "require": {
                 "php": ">=8.3",
@@ -3333,12 +3333,68 @@
             }
         },
         {
+            "name": "polaris/sentinel",
+            "version": "0.3.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/sentinel",
+                "reference": "860d0919717d828a582b33c9c03f42f1cba1cf8c"
+            },
+            "require": {
+                "php": ">=8.3",
+                "polaris/admin": "^0.3",
+                "polaris/audit": "^0.3",
+                "polaris/cli": "^0.3",
+                "polaris/core": "^0.3",
+                "polaris/messaging": "^0.3",
+                "psr/clock": "^1.0",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0",
+                "psr/log": "^3.0",
+                "psr/simple-cache": "^3.0",
+                "symfony/console": "^7.0 || ^8.0",
+                "symfony/uid": "^7.0 || ^8.0"
+            },
+            "suggest": {
+                "httpsoft/http-message": "A PSR-17 response factory the middleware can discover when the host passes none",
+                "maxmind-db/reader": "For MaxMindGeoResolver (the impossible-travel signal)"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\Sentinel\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
+            "description": "Sentinel for Polaris for PHP: a local risk engine on sign-up, sign-in, password reset and code sends (velocity, credential stuffing, bots, disposable domains, impossible travel, IP rules, devices, breached passwords) that observes, challenges or blocks",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "polaris/symfony",
             "version": "0.3.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/symfony",
-                "reference": "e02f8ebaeff9aad70089a265a75d0585528893a3"
+                "reference": "82f7bca7ec6a9ca24befd80a5ed1c63e02ee81b2"
             },
             "require": {
                 "nyholm/psr7": "^1.8",
@@ -3386,7 +3442,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/testing",
-                "reference": "238cee2971394469c61a65177a611e660a9652d9"
+                "reference": "8daba2e14d6bdadb994866a2590b427cd874a4e9"
             },
             "require": {
                 "php": ">=8.3",
@@ -3424,7 +3480,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/yii",
-                "reference": "1850a5c979509f089358eecec29fcbf08f39a94a"
+                "reference": "6d8719a136471f90f3124dd3c544431d285f5e23"
             },
             "require": {
                 "php": ">=8.3",
@@ -9599,6 +9655,71 @@
             "time": "2025-10-12T15:31:36+00:00"
         },
         {
+            "name": "maxmind-db/reader",
+            "version": "v1.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maxmind/MaxMind-DB-Reader-php.git",
+                "reference": "f3c92f68b3bec42a9aa780368399e03dc6b91e89"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maxmind/MaxMind-DB-Reader-php/zipball/f3c92f68b3bec42a9aa780368399e03dc6b91e89",
+                "reference": "f3c92f68b3bec42a9aa780368399e03dc6b91e89",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "conflict": {
+                "ext-maxminddb": "<1.14.0 || >=2.0.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "3.*",
+                "phpstan/phpstan": "*",
+                "phpunit/phpunit": ">=8.0.0,<10.0.0",
+                "squizlabs/php_codesniffer": "4.*",
+                "symfony/polyfill-php80": "^1.33"
+            },
+            "suggest": {
+                "ext-bcmath": "bcmath or gmp is required for decoding larger integers with the pure PHP decoder",
+                "ext-gmp": "bcmath or gmp is required for decoding larger integers with the pure PHP decoder",
+                "ext-maxminddb": "A C-based database decoder that provides significantly faster lookups",
+                "maxmind-db/reader-ext": "C extension for significantly faster IP lookups (install via PIE: pie install maxmind-db/reader-ext)"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MaxMind\\Db\\": "src/MaxMind/Db"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Gregory J. Oschwald",
+                    "email": "goschwald@maxmind.com",
+                    "homepage": "https://www.maxmind.com/en/home"
+                }
+            ],
+            "description": "MaxMind DB Reader API",
+            "homepage": "https://github.com/maxmind/MaxMind-DB-Reader-php",
+            "keywords": [
+                "database",
+                "geoip",
+                "geoip2",
+                "geolocation",
+                "maxmind"
+            ],
+            "support": {
+                "issues": "https://github.com/maxmind/MaxMind-DB-Reader-php/issues",
+                "source": "https://github.com/maxmind/MaxMind-DB-Reader-php/tree/v1.14.0"
+            },
+            "time": "2026-09-10T22:02:38+00:00"
+        },
+        {
             "name": "myclabs/deep-copy",
             "version": "1.14.0",
             "source": {
@@ -12227,6 +12348,7 @@
         "polaris/messaging": 20,
         "polaris/pdo": 20,
         "polaris/psr15": 20,
+        "polaris/sentinel": 20,
         "polaris/symfony": 20,
         "polaris/testing": 20,
         "polaris/yii": 20

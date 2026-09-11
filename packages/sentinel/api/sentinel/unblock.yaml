@@ -1,0 +1,36 @@
+# POST /admin/sentinel/unblock: clear the counters of an email or an address.
+endpoint:
+  method: POST
+  path: /admin/sentinel/unblock
+  summary: Clear the counters of an identifier
+  tags: [admin, sentinel]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    identifier: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Sentinel\Http\Admin\UnblockEndpoint
+  description: >
+    Forgets what the velocity and credential-stuffing signals counted for an email or an IP address,
+    so a locked-out person can try again; an IP rule is removed with its own route. Needs support on
+    the instance; recorded as sentinel.unblocked.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "unblocked"
+      identifier: "ada@example.com"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 422, code: admin_invalid_input }
+
+events: [sentinel.unblocked]

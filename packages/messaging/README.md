@@ -61,8 +61,8 @@ takes the host's additions (`strings:`), or the host plugs its own.
 
 `MessagePolicy`: a cap per recipient and template (or kind, or `*`) through core's rate store; a fallback
 kind (`sms` → `email`) used when no channel of the first kind delivered and the send named an alternative
-recipient; quiet mode through a `Suppressor` (`polaris/sentinel` implements it) that drops non-essential
-messages. Channels are tried in order for the message's kind; a channel throws `DeliveryException` and the
+recipient; quiet mode through a `Suppressor` (the one passed to the plugin, or the one another package provides
+through its services, as `polaris/sentinel` does) that drops non-essential messages. Channels are tried in order for the message's kind; a channel throws `DeliveryException` and the
 next is tried; a refused or undelivered message is logged and never breaks the operation that asked for
 it. `Outbox` is the queue seam (`SyncOutbox` by default; a host's queue driver takes sends off the request
 path). `polaris messaging:send <to> <template> --vars='{"code":"123456"}'` checks a channel from the console.

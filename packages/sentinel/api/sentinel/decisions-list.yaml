@@ -1,0 +1,48 @@
+# GET /admin/sentinel/decisions: the sentinel's recent decisions.
+endpoint:
+  method: GET
+  path: /admin/sentinel/decisions
+  summary: List the sentinel's decisions
+  tags: [admin, sentinel]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: read
+  receipt: false
+
+input:
+  source: query
+  fields:
+    email: { type: string, rules: [optional] }
+    ip: { type: string, rules: [optional] }
+    action: { type: string, rules: [optional] }
+    cursor: { type: string, rules: [optional] }
+    limit: { type: integer, rules: [optional] }
+
+domain:
+  class: Polaris\Sentinel\Http\Admin\ListDecisionsEndpoint
+  description: >
+    The decisions where a signal spoke, newest first, with the signals that fired and their reasons;
+    filtered by exact email, address or action (allow, challenge, block). Needs read on the instance.
+
+output:
+  status: 200
+  example:
+    data:
+      - id: "018f..."
+        kind: "sign_in"
+        email: "ada@example.com"
+        ip: "203.0.113.7"
+        score: 50
+        action: "challenge"
+        enforced: false
+        signals: ["velocity"]
+        reasons: ["email: 11 attempts in 600 s (limit 10)"]
+        created_at: "2026-09-11T10:00:00+00:00"
+    next_cursor: null
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 422, code: admin_invalid_input }
+
+events: []

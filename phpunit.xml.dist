@@ -17,6 +17,11 @@
             <directory>packages/core/tests/Contract</directory>
             <directory>packages/audit/tests/Functional</directory>
             <directory>packages/admin/tests/Functional</directory>
+            <directory>packages/sentinel/tests/Functional</directory>
+        </testsuite>
+        <testsuite name="sentinel">
+            <directory>packages/sentinel/tests</directory>
+            <exclude>packages/sentinel/tests/Functional</exclude>
         </testsuite>
         <testsuite name="messaging">
             <directory>packages/messaging/tests</directory>
@@ -52,6 +57,7 @@
             <directory>packages/audit/src</directory>
             <directory>packages/admin/src</directory>
             <directory>packages/messaging/src</directory>
+            <directory>packages/sentinel/src</directory>
         </include>
     </source>
 </phpunit>

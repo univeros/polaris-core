@@ -83,7 +83,7 @@ final class MessagingPlugin extends AbstractPlugin implements CommandProvider
             Translator::class => fn(): Translator => $this->translator ?? new ArrayTranslator($this->strings),
             Templates::class => fn(Graph $graph): Templates => new Templates($graph->database(), $graph->clock(), $this->templates),
             TemplateRenderer::class => fn(Graph $graph): TemplateRenderer => new PhpTemplateRenderer($graph->get(Translator::class), $graph->get(Templates::class), $this->locale),
-            MessagePolicy::class => fn(Graph $graph): MessagePolicy => new MessagePolicy($graph->rateStore(), $this->caps, $this->fallback, $this->suppressor),
+            MessagePolicy::class => fn(Graph $graph): MessagePolicy => new MessagePolicy($graph->rateStore(), $this->caps, $this->fallback, $this->suppressor ?? $graph->port(Suppressor::class)),
             Outbox::class => fn(): Outbox => $this->outbox ?? new SyncOutbox(),
             Sender::class => fn(Graph $graph): Sender => new Sender(
                 $this->channels === [] ? [new LogChannel($graph->logger(), $graph->clock())] : $this->channels,
