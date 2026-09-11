@@ -1,0 +1,35 @@
+# PUT /scim/v2/{connectionId}/Users/{id}: Replace a SCIM user.
+endpoint:
+  method: PUT
+  path: /scim/v2/{connectionId}/Users/{id}
+  summary: Replace a SCIM user
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    userName: { type: string, rules: [required] }
+    externalId: { type: "?string", rules: [optional] }
+    displayName: { type: "?string", rules: [optional] }
+    name: { type: "?object", rules: [optional] }
+    emails: { type: "?array", rules: [optional] }
+    active: { type: "?boolean", rules: [optional] }
+
+domain:
+  class: Polaris\Scim\Http\Resources\ReplaceUserEndpoint
+  description: >
+    The mapped attributes replaced: the email, the display name, the external id, active (a deactivation ends every session; a reactivation enables the account). Recorded as scim.user_updated, scim.user_deactivated or scim.user_reactivated.
+
+output:
+  status: 200
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+  - { status: 400, code: scim_invalidValue }
+  - { status: 409, code: scim_uniqueness }
+events: [scim.user_updated, scim.user_deactivated, scim.user_reactivated]

@@ -1,0 +1,29 @@
+# GET /scim/v2/{connectionId}/Users/{id}: Read a SCIM user.
+endpoint:
+  method: GET
+  path: /scim/v2/{connectionId}/Users/{id}
+  summary: Read a SCIM user
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: read
+  receipt: false
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Scim\Http\Resources\ReadUserEndpoint
+  description: >
+    One member.
+
+output:
+  status: 200
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+
+events: []

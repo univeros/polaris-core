@@ -1,0 +1,31 @@
+# GET /scim/v2/{connectionId}/Groups: List SCIM groups.
+endpoint:
+  method: GET
+  path: /scim/v2/{connectionId}/Groups
+  summary: List SCIM groups
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: read
+  receipt: false
+
+input:
+  source: query
+  fields:
+    filter: { type: "?string", rules: [optional] }
+    startIndex: { type: "?integer", rules: [optional] }
+    count: { type: "?integer", rules: [optional] }
+
+domain:
+  class: Polaris\Scim\Http\Resources\ListGroupsEndpoint
+  description: >
+    The organization's roles as SCIM Groups: displayName the role name, members the memberships holding it. filter as for Users (displayName, externalId).
+
+output:
+  status: 200
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+  - { status: 400, code: scim_invalidFilter }
+events: []

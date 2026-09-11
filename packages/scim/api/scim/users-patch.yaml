@@ -1,0 +1,33 @@
+# PATCH /scim/v2/{connectionId}/Users/{id}: Patch a SCIM user.
+endpoint:
+  method: PATCH
+  path: /scim/v2/{connectionId}/Users/{id}
+  summary: Patch a SCIM user
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    schemas: { type: "list<string>", rules: [required] }
+    Operations: { type: array, rules: [required] }
+
+domain:
+  class: Polaris\Scim\Http\Resources\PatchUserEndpoint
+  description: >
+    PatchOp operations (add, replace, remove) on active, userName, displayName, name.formatted, name.givenName, name.familyName and externalId, with a path or as keys of a path-less value. Recorded as the replace.
+
+output:
+  status: 200
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+  - { status: 400, code: scim_invalidSyntax }
+  - { status: 400, code: scim_invalidPath }
+  - { status: 400, code: scim_invalidValue }
+  - { status: 409, code: scim_uniqueness }
+events: [scim.user_updated, scim.user_deactivated, scim.user_reactivated]

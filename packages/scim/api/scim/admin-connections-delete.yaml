@@ -1,0 +1,34 @@
+# DELETE /admin/scim/connections/{id}: an operator removes a connection.
+endpoint:
+  method: DELETE
+  path: /admin/scim/connections/{id}
+  summary: Remove a SCIM connection (operator)
+  tags: [admin, scim-admin]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Scim\Http\Admin\AdminDeleteConnectionEndpoint
+  description: >
+    The connection, its external ids and its provenance; the provisioned users stay. Needs own on the
+    instance or on the connection's organization; recorded as scim.connection_decommissioned.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "deleted"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+
+events: [scim.connection_decommissioned]

@@ -1,0 +1,40 @@
+# GET /admin/scim/connections: every organization's connections, for the operators.
+endpoint:
+  method: GET
+  path: /admin/scim/connections
+  summary: List the SCIM connections of every organization
+  tags: [admin, scim-admin]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: read
+  receipt: false
+
+input:
+  source: query
+  fields:
+    organization_id: { type: "?string", rules: [optional] }
+    cursor: { type: "?string", rules: [optional] }
+    limit: { type: integer, rules: [optional] }
+
+domain:
+  class: Polaris\Scim\Http\Admin\AdminListConnectionsEndpoint
+  description: >
+    Oldest first, cursor-paginated, never the tokens; an organization-scoped operator sees their
+    organization's. Needs read.
+
+output:
+  status: 200
+  example:
+    data:
+      - id: "018f..."
+        organization_id: "018f..."
+        name: "Okta"
+        status: "active"
+    next_cursor: null
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 422, code: admin_invalid_input }
+
+events: []

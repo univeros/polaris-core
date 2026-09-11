@@ -1,0 +1,29 @@
+# DELETE /scim/v2/{connectionId}/Users/{id}: Delete a SCIM user.
+endpoint:
+  method: DELETE
+  path: /scim/v2/{connectionId}/Users/{id}
+  summary: Delete a SCIM user
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: destructive
+  receipt: false
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Scim\Http\Resources\DeleteUserEndpoint
+  description: >
+    Deprovisions the member as the connection says: deactivated (the account banned, every session ended, a membership the connection created removed) or, with deprovision delete, anonymised. 204. Recorded as scim.user_deactivated or scim.user_deleted.
+
+output:
+  status: 204
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+
+events: [scim.user_deactivated, scim.user_deleted]

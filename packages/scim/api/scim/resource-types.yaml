@@ -1,0 +1,27 @@
+# GET /scim/v2/{connectionId}/ResourceTypes: SCIM resource types.
+endpoint:
+  method: GET
+  path: /scim/v2/{connectionId}/ResourceTypes
+  summary: SCIM resource types
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Scim\Http\Resources\ResourceTypesEndpoint
+  description: >
+    Users and Groups.
+
+output:
+  status: 200
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+
+events: []

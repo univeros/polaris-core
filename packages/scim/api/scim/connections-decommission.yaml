@@ -1,0 +1,37 @@
+# DELETE /orgs/{id}/scim/connections/{connectionId}: decommission a connection.
+endpoint:
+  method: DELETE
+  path: /orgs/{id}/scim/connections/{connectionId}
+  summary: Decommission a SCIM connection
+  tags: [scim-admin, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    connectionId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Scim\Http\Organization\DecommissionConnectionEndpoint
+  description: >
+    The token stops; the provisioned users and their memberships stay. The connection remains listed
+    as decommissioned. Recorded as scim.connection_decommissioned.
+
+output:
+  status: 200
+  example:
+    data:
+      id: "018f..."
+      status: "decommissioned"
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: scim_forbidden }
+  - { status: 404, code: scim_not_found }
+
+events: [scim.connection_decommissioned]

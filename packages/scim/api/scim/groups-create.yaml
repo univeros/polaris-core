@@ -1,0 +1,32 @@
+# POST /scim/v2/{connectionId}/Groups: Create a SCIM group.
+endpoint:
+  method: POST
+  path: /scim/v2/{connectionId}/Groups
+  summary: Create a SCIM group
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    displayName: { type: string, rules: [required] }
+    externalId: { type: "?string", rules: [optional] }
+    members: { type: "?array", rules: [optional] }
+
+domain:
+  class: Polaris\Scim\Http\Resources\CreateGroupEndpoint
+  description: >
+    A custom role of the organization (an empty permission set until an organization admin fills it) with its members (ids of members). Recorded as scim.group_created.
+
+output:
+  status: 201
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+  - { status: 400, code: scim_invalidValue }
+  - { status: 409, code: scim_uniqueness }
+events: [scim.group_created]

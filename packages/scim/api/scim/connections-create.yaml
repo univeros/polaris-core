@@ -1,0 +1,44 @@
+# POST /orgs/{id}/scim/connections: a connection and its token.
+endpoint:
+  method: POST
+  path: /orgs/{id}/scim/connections
+  summary: Create a SCIM connection
+  tags: [scim-admin, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    name: { type: string, rules: [required] }
+    deprovision: { type: "?string", rules: [optional] }
+    sso_provider_id: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\Scim\Http\Organization\CreateConnectionEndpoint
+  description: >
+    The token (pst_ and 256 random bits, stored as a keyed hash) is in this response only, with the
+    base URL the directory is configured with. deprovision is deactivate (the default) or delete (an
+    anonymisation); sso_provider_id pairs the connection with one of the organization's SSO providers.
+    Recorded as scim.connection_created.
+
+output:
+  status: 201
+  example:
+    data:
+      id: "018f..."
+      name: "Okta"
+      status: "active"
+      deprovision: "deactivate"
+      token: "pst_..."
+      scim_base_url: "https://app.example.com/auth/scim/v2/018f..."
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: scim_forbidden }
+  - { status: 422, code: scim_invalid_input }
+
+events: [scim.connection_created]
