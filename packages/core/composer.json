@@ -36,10 +36,10 @@
         "symfony/yaml": "^7.0 || ^8.0"
     },
     "require-dev": {
-        "polaris/cli": "^0.3",
-        "polaris/pdo": "^0.3",
-        "polaris/psr15": "^0.3",
-        "polaris/testing": "^0.3"
+        "polaris/cli": "^0.4",
+        "polaris/pdo": "^0.4",
+        "polaris/psr15": "^0.4",
+        "polaris/testing": "^0.4"
     },
     "autoload": {
         "psr-4": {
@@ -53,7 +53,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.3.x-dev"
+            "dev-main": "0.4.x-dev"
         }
     },
     "config": {

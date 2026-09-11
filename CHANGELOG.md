@@ -4,7 +4,9 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.4.0] - 2026-09-11
+
+`polaris/sentinel`, the risk engine in front of the guarded auth routes.
 
 ### Added
 - **`polaris/sentinel`** (`Polaris\Sentinel\`): a local risk engine on sign-up, sign-in, password reset and
@@ -25,6 +27,8 @@ the project adheres to [Semantic Versioning](https://semver.org/).
 - `Graph::port()` is public: a package takes another package's optional contribution the way the graph
   takes a plugin-provided port (`polaris/messaging` takes a `Suppressor` from the graph when the host passes
   none).
+- The packages' version line is 0.4: `^0.4` between siblings, `0.4.x-dev` on the path repository and
+  in the demos.
 
 ## [0.3.0] - 2026-09-11
 

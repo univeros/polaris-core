@@ -21,36 +21,36 @@
             "options": {
                 "symlink": true,
                 "versions": {
-                    "polaris/admin": "0.3.x-dev",
-                    "polaris/audit": "0.3.x-dev",
-                    "polaris/cli": "0.3.x-dev",
-                    "polaris/core": "0.3.x-dev",
-                    "polaris/laravel": "0.3.x-dev",
-                    "polaris/messaging": "0.3.x-dev",
-                    "polaris/pdo": "0.3.x-dev",
-                    "polaris/psr15": "0.3.x-dev",
-                    "polaris/sentinel": "0.3.x-dev",
-                    "polaris/symfony": "0.3.x-dev",
-                    "polaris/testing": "0.3.x-dev",
-                    "polaris/yii": "0.3.x-dev"
+                    "polaris/admin": "0.4.x-dev",
+                    "polaris/audit": "0.4.x-dev",
+                    "polaris/cli": "0.4.x-dev",
+                    "polaris/core": "0.4.x-dev",
+                    "polaris/laravel": "0.4.x-dev",
+                    "polaris/messaging": "0.4.x-dev",
+                    "polaris/pdo": "0.4.x-dev",
+                    "polaris/psr15": "0.4.x-dev",
+                    "polaris/sentinel": "0.4.x-dev",
+                    "polaris/symfony": "0.4.x-dev",
+                    "polaris/testing": "0.4.x-dev",
+                    "polaris/yii": "0.4.x-dev"
                 }
             }
         }
     ],
     "require": {
         "php": ">=8.3",
-        "polaris/admin": "0.3.x-dev",
-        "polaris/audit": "0.3.x-dev",
-        "polaris/cli": "0.3.x-dev",
-        "polaris/core": "0.3.x-dev",
-        "polaris/laravel": "0.3.x-dev",
-        "polaris/messaging": "0.3.x-dev",
-        "polaris/pdo": "0.3.x-dev",
-        "polaris/psr15": "0.3.x-dev",
-        "polaris/sentinel": "0.3.x-dev",
-        "polaris/symfony": "0.3.x-dev",
-        "polaris/testing": "0.3.x-dev",
-        "polaris/yii": "0.3.x-dev"
+        "polaris/admin": "0.4.x-dev",
+        "polaris/audit": "0.4.x-dev",
+        "polaris/cli": "0.4.x-dev",
+        "polaris/core": "0.4.x-dev",
+        "polaris/laravel": "0.4.x-dev",
+        "polaris/messaging": "0.4.x-dev",
+        "polaris/pdo": "0.4.x-dev",
+        "polaris/psr15": "0.4.x-dev",
+        "polaris/sentinel": "0.4.x-dev",
+        "polaris/symfony": "0.4.x-dev",
+        "polaris/testing": "0.4.x-dev",
+        "polaris/yii": "0.4.x-dev"
     },
     "require-dev": {
         "httpsoft/http-message": "^1.1",
