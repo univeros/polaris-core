@@ -4,6 +4,27 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- **`polaris/sso`** (`Polaris\Sso\`): per-organization SAML 2.0 (onelogin/php-saml, strict: signatures,
+  one assertion, audience, destination, drift, `InResponseTo`, replay) and OpenID Connect (discovery, PKCE,
+  nonce, the id_token against the JWKS through firebase/php-jwt) providers; verified domains (a DNS TXT
+  record or a well-known file) route an email to its provider; just-in-time users and memberships with the
+  provider's default roles; the sign-in ends on the application's `redirect_uri` with a one-time code that
+  `POST /sso/exchange` turns into the login envelope, the session scoped to the organization (`amr: sso`);
+  single logout both ways (signed IdP logout requests, `POST /sso/logout` for the application); the SP
+  metadata; the organization's self-service routes under `/orgs/{id}/sso` (`org.update`), the operators'
+  under `/admin/sso`; every action and rejection an `sso.*` audit event.
+- `@polaris-auth/client`: `client.sso.*`.
+
+### Changed
+- `Result::$raw`: an endpoint may answer a body as is with its own Content-Type (the SAML metadata XML);
+  the JSON responder writes it unchanged.
+- The OpenAPI document types a nullable field (`?integer`, `?boolean`, `?list<string>`) as its type and an
+  `object` field as an object, so the generated client checks the bodies of the plugin routes; core's
+  `permission_keys` is typed as an array now.
+
 ## [0.4.0] - 2026-09-11
 
 `polaris/sentinel`, the risk engine in front of the guarded auth routes.

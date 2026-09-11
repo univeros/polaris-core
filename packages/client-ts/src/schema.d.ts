@@ -1229,6 +1229,250 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/admin/sso/providers/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove an SSO provider (operator) */
+        delete: operations["delete_sso_AdminDeleteProviderEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/sso/providers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List the SSO providers of every organization */
+        get: operations["get_sso_AdminListProvidersEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sso/callback/{providerId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** OIDC callback */
+        get: operations["get_sso_OidcCallbackEndpoint"];
+        put?: never;
+        /** SAML assertion consumer */
+        post: operations["post_sso_SamlCallbackEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orgs/{id}/sso/domains": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List the organization's SSO domains */
+        get: operations["get_sso_ListDomainsEndpoint"];
+        put?: never;
+        /** Add an SSO domain */
+        post: operations["post_sso_AddDomainEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orgs/{id}/sso/domains/{domainId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove an SSO domain */
+        delete: operations["delete_sso_DeleteDomainEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orgs/{id}/sso/domains/{domainId}/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify an SSO domain */
+        post: operations["post_sso_VerifyDomainEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sso/exchange": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Exchange the sign-on code for the session */
+        post: operations["post_sso_ExchangeEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sso/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Single logout from the application */
+        post: operations["post_sso_LogoutEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sso/metadata/{providerId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** SAML service provider metadata */
+        get: operations["get_sso_MetadataEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orgs/{id}/sso/providers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List the organization's SSO providers */
+        get: operations["get_sso_ListProvidersEndpoint"];
+        put?: never;
+        /** Add an SSO provider */
+        post: operations["post_sso_CreateProviderEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orgs/{id}/sso/providers/{providerId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read an SSO provider */
+        get: operations["get_sso_ReadProviderEndpoint"];
+        put?: never;
+        post?: never;
+        /** Remove an SSO provider */
+        delete: operations["delete_sso_DeleteProviderEndpoint"];
+        options?: never;
+        head?: never;
+        /** Update an SSO provider */
+        patch: operations["patch_sso_UpdateProviderEndpoint"];
+        trace?: never;
+    };
+    "/orgs/{id}/sso/providers/{providerId}/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Test an SSO provider's configuration */
+        post: operations["post_sso_TestProviderEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sso/sign-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start a single sign-on */
+        post: operations["post_sso_SignInEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sso/slo/{providerId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** SAML single logout (redirect binding) */
+        get: operations["get_sso_SloRedirectEndpoint"];
+        put?: never;
+        /** SAML single logout (POST binding) */
+        post: operations["post_sso_SloPostEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -4039,7 +4283,7 @@ export interface operations {
                 "application/json": {
                     name?: string;
                     description?: string;
-                    permission_keys?: string;
+                    permission_keys?: string[];
                 };
             };
         };
@@ -7430,6 +7674,1412 @@ export interface operations {
                 };
             };
             /** @description admin_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_sso_AdminDeleteProviderEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "deleted"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_sso_AdminListProvidersEndpoint: {
+        parameters: {
+            query?: {
+                organization_id?: string;
+                cursor?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "organization_id": "018f...",
+                     *           "type": "oidc",
+                     *           "name": "Okta",
+                     *           "enabled": true
+                     *         }
+                     *       ],
+                     *       "next_cursor": null
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            organization_id: string;
+                            type: string;
+                            name: string;
+                            enabled: boolean;
+                        }[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden | admin_impersonation_denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_sso_OidcCallbackEndpoint: {
+        parameters: {
+            query?: {
+                code?: string;
+                state?: string;
+                error?: string;
+            };
+            header?: never;
+            path: {
+                providerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example [] */
+                    "application/json": [
+                    ];
+                };
+            };
+            /** @description sso_assertion_invalid | sso_user_unknown | sso_account_disabled | sso_membership_suspended | sso_provider_disabled */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_provider_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_sso_SamlCallbackEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                providerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    SAMLResponse?: string;
+                    RelayState?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example [] */
+                    "application/json": [
+                    ];
+                };
+            };
+            /** @description sso_assertion_invalid | sso_user_unknown | sso_account_disabled | sso_membership_suspended | sso_provider_disabled */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_provider_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_sso_ListDomainsEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "organization_id": "018f...",
+                     *           "provider_id": "018f...",
+                     *           "domain": "acme.example",
+                     *           "verification": {
+                     *             "token": "polaris-sso-...",
+                     *             "dns": {
+                     *               "record": "_polaris.acme.example",
+                     *               "type": "TXT",
+                     *               "value": "polaris-sso-..."
+                     *             },
+                     *             "https": {
+                     *               "url": "https://acme.example/.well-known/polaris-sso.txt",
+                     *               "body": "polaris-sso-..."
+                     *             }
+                     *           },
+                     *           "verified": false,
+                     *           "verified_at": null,
+                     *           "created_at": "2026-09-11T10:00:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            organization_id: string;
+                            provider_id: string;
+                            domain: string;
+                            verification: {
+                                token: string;
+                                dns: {
+                                    record: string;
+                                    type: string;
+                                    value: string;
+                                };
+                                https: {
+                                    url: string;
+                                    body: string;
+                                };
+                            };
+                            verified: boolean;
+                            verified_at: string | null;
+                            created_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | sso_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_sso_AddDomainEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    domain: string;
+                    provider_id: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "domain": "acme.example",
+                     *         "verified": false
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            domain: string;
+                            verified: boolean;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | sso_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_sso_DeleteDomainEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                domainId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "deleted"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | sso_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_sso_VerifyDomainEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                domainId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "domain": "acme.example",
+                     *         "verified": true,
+                     *         "verified_at": "2026-09-11T10:00:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            domain: string;
+                            verified: boolean;
+                            verified_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | sso_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_domain_unverified */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_sso_ExchangeEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    code: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "<jwt>",
+                     *         "token_type": "Bearer",
+                     *         "expires_in": 900,
+                     *         "refresh_token": "<opaque>",
+                     *         "user": {
+                     *           "id": "018f...",
+                     *           "email": "ada@example.com",
+                     *           "email_verified": true
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            token_type: string;
+                            expires_in: number;
+                            refresh_token: string;
+                            user: {
+                                id: string;
+                                email: string;
+                                email_verified: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description sso_invalid_input | sso_code_invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_sso_LogoutEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    organization_id?: string;
+                    provider_id?: string;
+                    post_logout_uri?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "logged_out",
+                     *         "url": "https://idp.example.com/slo?SAMLRequest=..."
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                            url: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_provider_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_sso_MetadataEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                providerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example [] */
+                    "application/json": [
+                    ];
+                };
+            };
+            /** @description sso_provider_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_sso_ListProvidersEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "organization_id": "018f...",
+                     *           "type": "oidc",
+                     *           "name": "Okta",
+                     *           "issuer": "https://acme.okta.com",
+                     *           "config": {
+                     *             "client_id": "0oa...",
+                     *             "scopes": "openid email profile",
+                     *             "client_secret_set": true
+                     *           },
+                     *           "attributes": {
+                     *             "email": "email",
+                     *             "name": "name"
+                     *           },
+                     *           "jit": {
+                     *             "enabled": true,
+                     *             "roles": [
+                     *               "member"
+                     *             ]
+                     *           },
+                     *           "redirect_uris": [
+                     *             "https://app.example.com/sso/done"
+                     *           ],
+                     *           "enabled": true,
+                     *           "created_by": "018f...",
+                     *           "created_at": "2026-09-11T10:00:00+00:00",
+                     *           "updated_at": "2026-09-11T10:00:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            organization_id: string;
+                            type: string;
+                            name: string;
+                            issuer: string;
+                            config: {
+                                client_id: string;
+                                scopes: string;
+                                client_secret_set: boolean;
+                            };
+                            attributes: {
+                                email: string;
+                                name: string;
+                            };
+                            jit: {
+                                enabled: boolean;
+                                roles: string[];
+                            };
+                            redirect_uris: string[];
+                            enabled: boolean;
+                            created_by: string;
+                            created_at: string;
+                            updated_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | sso_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_sso_CreateProviderEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    type: string;
+                    name: string;
+                    issuer: string;
+                    config: {
+                        [key: string]: unknown;
+                    };
+                    attributes?: {
+                        [key: string]: unknown;
+                    };
+                    jit?: {
+                        [key: string]: unknown;
+                    };
+                    redirect_uris: string[];
+                    enabled?: boolean;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "organization_id": "018f...",
+                     *         "type": "saml",
+                     *         "name": "Acme IdP",
+                     *         "issuer": "https://idp.acme.example/metadata",
+                     *         "config": {
+                     *           "sso_url": "https://idp.acme.example/sso",
+                     *           "certificate": "MIIC...",
+                     *           "idp_initiated": false
+                     *         },
+                     *         "attributes": {
+                     *           "email": "email",
+                     *           "name": "displayName"
+                     *         },
+                     *         "jit": {
+                     *           "enabled": false,
+                     *           "roles": []
+                     *         },
+                     *         "redirect_uris": [
+                     *           "https://app.example.com/sso/done"
+                     *         ],
+                     *         "enabled": true,
+                     *         "created_by": "018f...",
+                     *         "created_at": "2026-09-11T10:00:00+00:00",
+                     *         "updated_at": "2026-09-11T10:00:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            organization_id: string;
+                            type: string;
+                            name: string;
+                            issuer: string;
+                            config: {
+                                sso_url: string;
+                                certificate: string;
+                                idp_initiated: boolean;
+                            };
+                            attributes: {
+                                email: string;
+                                name: string;
+                            };
+                            jit: {
+                                enabled: boolean;
+                                roles: [
+                                ];
+                            };
+                            redirect_uris: string[];
+                            enabled: boolean;
+                            created_by: string;
+                            created_at: string;
+                            updated_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | sso_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_sso_ReadProviderEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                providerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "type": "saml",
+                     *         "name": "Acme IdP",
+                     *         "sp": {
+                     *           "entity_id": "https://app.example.com/auth/sso/metadata/018f...",
+                     *           "acs_url": "https://app.example.com/auth/sso/callback/018f...",
+                     *           "slo_url": "https://app.example.com/auth/sso/slo/018f...",
+                     *           "metadata_url": "https://app.example.com/auth/sso/metadata/018f..."
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            type: string;
+                            name: string;
+                            sp: {
+                                entity_id: string;
+                                acs_url: string;
+                                slo_url: string;
+                                metadata_url: string;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | sso_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_sso_DeleteProviderEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                providerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "deleted"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | sso_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    patch_sso_UpdateProviderEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                providerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    issuer?: string;
+                    config?: {
+                        [key: string]: unknown;
+                    };
+                    attributes?: {
+                        [key: string]: unknown;
+                    };
+                    jit?: {
+                        [key: string]: unknown;
+                    };
+                    redirect_uris?: string[];
+                    enabled?: boolean;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "enabled": false
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            enabled: boolean;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | sso_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_sso_TestProviderEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                providerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "ok": false,
+                     *         "problems": [
+                     *           "discovery unreachable: Could not resolve host"
+                     *         ]
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            ok: boolean;
+                            problems: string[];
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | sso_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_sso_SignInEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    email?: string;
+                    provider_id?: string;
+                    redirect_uri?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "url": "https://idp.example.com/authorize?response_type=code&client_id=...",
+                     *         "provider_id": "018f...",
+                     *         "type": "oidc"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            url: string;
+                            provider_id: string;
+                            type: string;
+                        };
+                    };
+                };
+            };
+            /** @description sso_provider_disabled */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_provider_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_sso_SloRedirectEndpoint: {
+        parameters: {
+            query?: {
+                SAMLRequest?: string;
+                SAMLResponse?: string;
+                RelayState?: string;
+                SigAlg?: string;
+                Signature?: string;
+            };
+            header?: never;
+            path: {
+                providerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example [] */
+                    "application/json": [
+                    ];
+                };
+            };
+            /** @description sso_assertion_invalid | sso_provider_disabled */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_provider_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_sso_SloPostEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                providerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    SAMLRequest?: string;
+                    SAMLResponse?: string;
+                    RelayState?: string;
+                    SigAlg?: string;
+                    Signature?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example [] */
+                    "application/json": [
+                    ];
+                };
+            };
+            /** @description sso_assertion_invalid | sso_provider_disabled */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_provider_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description sso_invalid_input */
             422: {
                 headers: {
                     [name: string]: unknown;

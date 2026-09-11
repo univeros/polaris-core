@@ -43,6 +43,7 @@ packages/audit/{api/audit,src/{AuditPlugin.php,Catalog.php,Recorder.php,Store.ph
 packages/messaging/{src/{MessagingPlugin.php,Sender.php,MessagePolicy.php,Channel,Template,Bridge,Console},resources/translations}   the messaging plugin (polaris/messaging), core's mail and SMS ports over channels and templates
 packages/admin/{api/admin,src/{AdminPlugin.php,Principal,Grants.php,Keys.php,Users.php,Impersonation.php,Organizations.php,Stats.php,AdminAudit.php,Http,Console}}   the admin plugin (polaris/admin), the operator API over the audit plugin
 packages/sentinel/{api/sentinel,src/{SentinelPlugin.php,Engine.php,Policy.php,Signal,Provider,Http,Console},resources/disposable-domains.txt}   the sentinel plugin (polaris/sentinel), the risk engine in front of the guarded auth routes
+packages/sso/{api/sso,src/{SsoPlugin.php,SsoService.php,Provisioner.php,Providers.php,Domains.php,Sp.php,Oidc,Saml,Domain,Http/{Flow,Organization,Admin}}}   the sso plugin (polaris/sso), per-organization SAML and OIDC providers, verified domains, single logout
 packages/client-ts/{src/{index.ts,schema.d.ts},test,openapi.json}                                           the TypeScript client (task 2 WP5), npm @polaris-auth/client, not a Composer package
 packages/core/api/         endpoint specs, the router (shipped inside polaris/core)
 docs/auth/                 identity design (unchanged)

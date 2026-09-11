@@ -42,10 +42,11 @@ const trail = await polaris.withToken(accessToken).audit.me();
 ```
 
 `client.audit` (`me`, `organization`, `types`), `client.admin` (users, sessions, MFA, organizations,
-audit, drains, stats, keys, grants; see the package README) and `client.sentinel` (`listDecisions`,
-`listIpRules`, `createIpRule`, `deleteIpRule`, `unblock`) are generated into `src/audit.ts`, `src/admin.ts`
-and `src/sentinel.ts` by `scripts/generate-namespaces.mjs` from the `x-polaris-plugin` marker of the OpenAPI
-document; a later plugin gets its namespace the same way. Their errors are RFC 9457 problem documents,
+audit, drains, stats, keys, grants; see the package README), `client.sentinel` (`listDecisions`,
+`listIpRules`, `createIpRule`, `deleteIpRule`, `unblock`) and `client.sso` (`signIn`, `exchange`, `logout`,
+the organization's providers and domains, the operators' list) are generated into `src/audit.ts`,
+`src/admin.ts`, `src/sentinel.ts` and `src/sso.ts` by `scripts/generate-namespaces.mjs` from the
+`x-polaris-plugin` marker of the OpenAPI document; a later plugin gets its namespace the same way. Their errors are RFC 9457 problem documents,
 `ProblemBody` (`{ type, title, status, detail, error, message, errors? }`), served as
 `application/problem+json`.
 

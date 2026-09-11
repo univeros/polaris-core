@@ -2,18 +2,20 @@ import createOpenApiClient, { type Client, type ClientOptions } from "openapi-fe
 import { admin, type AdminApi } from "./admin.js";
 import { audit, type AuditApi } from "./audit.js";
 import { sentinel, type SentinelApi } from "./sentinel.js";
+import { sso, type SsoApi } from "./sso.js";
 import type { components, paths } from "./schema.js";
 
 export type { components, operations, paths } from "./schema.js";
 export { admin, type AdminApi } from "./admin.js";
 export { audit, type AuditApi } from "./audit.js";
 export { sentinel, type SentinelApi } from "./sentinel.js";
+export { sso, type SsoApi } from "./sso.js";
 
 /** The `{ error, message }` envelope every non-2xx response of a core route carries. */
 export type ErrorBody = components["schemas"]["Error"];
 /** The `{ errors: [...] }` envelope of a core route's 422. */
 export type ValidationErrorBody = components["schemas"]["ValidationError"];
-/** The RFC 9457 problem document every non-2xx response of a plugin route (`audit`, `admin`, `sentinel`) carries. */
+/** The RFC 9457 problem document every non-2xx response of a plugin route (`audit`, `admin`, `sentinel`, `sso`) carries. */
 export type ProblemBody = components["schemas"]["Problem"];
 
 export interface PolarisClientOptions extends ClientOptions {
@@ -32,6 +34,8 @@ export interface PolarisClient extends Client<paths> {
     readonly admin: AdminApi;
     /** The `polaris/sentinel` operator routes: `client.sentinel.listDecisions()`, `listIpRules()`, `createIpRule()`, `deleteIpRule()`, `unblock()`. */
     readonly sentinel: SentinelApi;
+    /** The `polaris/sso` routes: `client.sso.signIn()`, `exchange()`, the organization's providers and domains, the operators' list. */
+    readonly sso: SsoApi;
     /** A new client on the same options bound to another token (null for anonymous); this one is unchanged. */
     withToken(token: string | null): PolarisClient;
 }
@@ -39,7 +43,7 @@ export interface PolarisClient extends Client<paths> {
 /**
  * An `openapi-fetch` client typed by `paths` (generated from `polaris manifest --format=openapi`), so
  * `client.POST("/auth/login", { body })` checks the body and types `data` and `error`; the plugins' routes
- * are also methods of `client.audit`, `client.admin` and `client.sentinel`. No refresh loop and no storage: when to refresh
+ * are also methods of `client.audit`, `client.admin`, `client.sentinel` and `client.sso`. No refresh loop and no storage: when to refresh
  * and where to keep tokens is the application's policy.
  */
 export function createClient(options: PolarisClientOptions): PolarisClient {
@@ -60,6 +64,7 @@ export function createClient(options: PolarisClientOptions): PolarisClient {
         audit: audit(client),
         admin: admin(client),
         sentinel: sentinel(client),
+        sso: sso(client),
         withToken: (next: string | null) => createClient({ ...options, token: next }),
     };
 }
