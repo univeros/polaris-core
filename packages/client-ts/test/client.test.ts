@@ -91,6 +91,33 @@ describe("@polaris-auth/client against the Slim demo", () => {
         expect(anonymous.token).toBeNull();
     });
 
+    it("reaches the admin and audit routes through the namespaces", async () => {
+        const key = readFileSync(`${demo}var/admin.key`, "utf8").trim();
+        const operator = createClient({ baseUrl, token: key });
+
+        const users = await operator.admin.listUsers({ params: { query: { email } } });
+        expect(users.response.status).toBe(200);
+        expect(users.data?.data.map((user) => user.email)).toEqual([email]);
+        const userId = users.data?.data[0]?.id ?? "";
+
+        const sessions = await operator.admin.listSessions({ params: { path: { id: userId } } });
+        expect(sessions.response.status).toBe(200);
+        expect(sessions.data?.data.length).toBeGreaterThan(0);
+
+        const login = await anonymous.POST("/auth/login", { body: { email, password } });
+        if (login.data === undefined || !("access_token" in login.data.data)) {
+            throw new Error("expected a session");
+        }
+        const trail = await anonymous.withToken(login.data.data.access_token).audit.me();
+        expect(trail.response.status).toBe(200);
+        expect(trail.data?.data.map((event) => event.name)).toContain("session.signed_in");
+
+        const denied = await anonymous.admin.stats();
+        expect(denied.response.status).toBe(401);
+        expect(denied.error?.error).toBe("admin_unauthorized");
+        expect(denied.response.headers.get("Content-Type")).toBe("application/problem+json");
+    });
+
     it("types the error envelope of an anonymous request", async () => {
         const me = await anonymous.GET("/auth/me");
 

@@ -11,10 +11,9 @@ endpoint:
 input:
   source: body
   fields:
-    id: { type: string, rules: [required] }
     endpoint: { type: string, rules: [required] }
     secret: { type: string, rules: [required], sensitive: true }
-    filter: { type: array, rules: [optional] }
+    filter: { type: "list<string>", rules: [optional] }
 
 domain:
   class: Polaris\Admin\Http\Audit\CreateDrainEndpoint

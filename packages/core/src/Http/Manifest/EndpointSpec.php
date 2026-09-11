@@ -21,6 +21,7 @@ final readonly class EndpointSpec
      * @param array<string, array<string, mixed>> $outputExamples the `output.example` and `output.example_*` bodies, by key
      * @param list<array{status: int, code: string|null}> $errors
      * @param list<string> $events
+     * @param string|null $plugin the id of the plugin that declares the route (`admin`), null for core's
      */
     public function __construct(
         public string $file,
@@ -41,6 +42,7 @@ final readonly class EndpointSpec
         public array $outputExamples,
         public array $errors,
         public array $events,
+        public ?string $plugin = null,
     ) {
     }
 

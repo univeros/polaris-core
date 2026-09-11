@@ -11,8 +11,11 @@ use function array_values;
 use function count;
 use function explode;
 use function preg_match_all;
+use function in_array;
 use function sprintf;
+use function str_starts_with;
 use function strtolower;
+use function substr;
 use function trim;
 
 /**
@@ -24,6 +27,7 @@ use function trim;
 final class OpenApi
 {
     private const string ERROR_SCHEMA = '#/components/schemas/Error';
+    private const string PROBLEM_SCHEMA = '#/components/schemas/Problem';
 
     /**
      * @return array<string, mixed>
@@ -53,6 +57,20 @@ final class OpenApi
                         'type' => 'object',
                         'properties' => ['errors' => ['type' => 'array', 'items' => ['type' => 'string']]],
                     ],
+                    'Problem' => [
+                        'type' => 'object',
+                        'description' => 'An RFC 9457 problem document, the error shape of the plugins\' routes; error and message repeat the core envelope.',
+                        'properties' => [
+                            'type' => ['type' => 'string', 'format' => 'uri'],
+                            'title' => ['type' => 'string'],
+                            'status' => ['type' => 'integer'],
+                            'detail' => ['type' => 'string'],
+                            'error' => ['type' => 'string'],
+                            'message' => ['type' => 'string'],
+                            'errors' => ['type' => 'array', 'items' => ['type' => 'string']],
+                        ],
+                        'required' => ['type', 'title', 'status', 'detail', 'error', 'message'],
+                    ],
                 ],
             ],
         ];
@@ -70,6 +88,9 @@ final class OpenApi
             'x-polaris-effect' => $spec->effect,
             'x-polaris-receipt' => $spec->receipt,
         ];
+        if ($spec->plugin !== null) {
+            $operation['x-polaris-plugin'] = $spec->plugin;
+        }
         if ($spec->rateLimit !== null) {
             $operation['x-polaris-rate-limit'] = $spec->rateLimit;
         }
@@ -133,10 +154,9 @@ final class OpenApi
                 $responses[$code]['description'] .= ' | ' . $description;
                 continue;
             }
-            $responses[$code] = [
-                'description' => $description,
-                'content' => ['application/json' => ['schema' => ['$ref' => $error['status'] === 422 ? '#/components/schemas/ValidationError' : self::ERROR_SCHEMA]]],
-            ];
+            $responses[$code] = $spec->plugin !== null
+                ? ['description' => $description, 'content' => ['application/problem+json' => ['schema' => ['$ref' => self::PROBLEM_SCHEMA]]]]
+                : ['description' => $description, 'content' => ['application/json' => ['schema' => ['$ref' => $error['status'] === 422 ? '#/components/schemas/ValidationError' : self::ERROR_SCHEMA]]]];
         }
         $operation['responses'] = $responses;
 
@@ -159,7 +179,12 @@ final class OpenApi
      */
     private static function schema(FieldSpec $field): array
     {
-        $schema = ['type' => $field->type === 'integer' ? 'integer' : ($field->type === 'boolean' ? 'boolean' : ($field->type === 'array' ? 'array' : 'string'))];
+        $schema = match (true) {
+            $field->type === 'integer', $field->type === 'boolean' => ['type' => $field->type],
+            $field->type === 'array' => ['type' => 'array'],
+            str_starts_with($field->type, 'list<') => ['type' => 'array', 'items' => ['type' => in_array($inner = substr($field->type, 5, -1), ['integer', 'boolean'], true) ? $inner : 'string']],
+            default => ['type' => 'string'],
+        };
         foreach ($field->rules as $rule) {
             self::applyRule($schema, $rule);
         }
@@ -203,6 +228,7 @@ final class OpenApi
         $parts = explode('\\', $spec->class);
         $short = $parts[count($parts) - 1];
 
-        return sprintf('%s_%s', strtolower($spec->method), $short);
+        // A plugin's endpoint may share its short name with a core one (`MeEndpoint`): the plugin id keeps the ids unique.
+        return $spec->plugin === null ? sprintf('%s_%s', strtolower($spec->method), $short) : sprintf('%s_%s_%s', strtolower($spec->method), $spec->plugin, $short);
     }
 }

@@ -14,7 +14,7 @@ input:
     name: { type: string, rules: [required] }
     role: { type: string, rules: [required] }
     scope: { type: string, rules: [optional] }
-    ip_allowlist: { type: array, rules: [optional] }
+    ip_allowlist: { type: "list<string>", rules: [optional] }
     expires_at: { type: string, rules: [optional] }
 
 domain:

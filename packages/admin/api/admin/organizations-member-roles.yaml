@@ -11,9 +11,7 @@ endpoint:
 input:
   source: body
   fields:
-    id: { type: string, rules: [required] }
-    userId: { type: string, rules: [required] }
-    roles: { type: array, rules: [required] }
+    roles: { type: "list<string>", rules: [required] }
 
 domain:
   class: Polaris\Admin\Http\Organizations\UpdateMemberRolesEndpoint
