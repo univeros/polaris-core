@@ -1,0 +1,45 @@
+# POST /admin/grants: grant an admin role.
+endpoint:
+  method: POST
+  path: /admin/grants
+  summary: Grant an admin role
+  tags: [admin, grants]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    user_id: { type: string, rules: [required] }
+    role: { type: string, rules: [required] }
+    scope: { type: string, rules: [optional] }
+    expires_at: { type: string, rules: [optional] }
+
+domain:
+  class: Polaris\Admin\Http\Grants\CreateGrantEndpoint
+  description: >
+    One grant per user: a new grant replaces the previous one. scope is instance or an
+    organization id (an organization-scoped owner grants on their organization only). Needs own;
+    recorded as admin.grant_created.
+
+output:
+  status: 201
+  example:
+    data:
+      id: "018f..."
+      user_id: "018f..."
+      role: "support"
+      scope: "instance"
+      granted_by: "018f..."
+      expires_at: null
+      created_at: "2026-09-11T10:00:00+00:00"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+  - { status: 422, code: admin_invalid_input }
+
+events: [admin.grant_created]

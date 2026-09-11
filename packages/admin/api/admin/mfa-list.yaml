@@ -1,0 +1,39 @@
+# GET /admin/users/{id}/mfa: list a user's mfa factors.
+endpoint:
+  method: GET
+  path: /admin/users/{id}/mfa
+  summary: List a user's MFA factors
+  tags: [admin, mfa]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: read
+  receipt: false
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Admin\Http\Mfa\ListFactorsEndpoint
+  description: >
+    The factors without their secrets or destinations. Needs read.
+
+output:
+  status: 200
+  example:
+    data:
+      - id: "018f..."
+        type: "totp"
+        label: "Phone"
+        is_default: true
+        confirmed_at: "2026-09-11T10:00:00+00:00"
+        last_used_at: null
+        created_at: "2026-09-11T10:00:00+00:00"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+
+events: []

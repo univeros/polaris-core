@@ -1,0 +1,34 @@
+# DELETE /admin/organizations/{id}/drains/{drainId}: delete an audit drain.
+endpoint:
+  method: DELETE
+  path: /admin/organizations/{id}/drains/{drainId}
+  summary: Delete an audit drain
+  tags: [admin, audit]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    drainId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Admin\Http\Audit\DeleteDrainEndpoint
+  description: >
+    Needs own; recorded as admin.drain_deleted.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "deleted"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+
+events: [admin.drain_deleted]

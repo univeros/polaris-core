@@ -1,0 +1,42 @@
+# GET /admin/users/{id}: read a user.
+endpoint:
+  method: GET
+  path: /admin/users/{id}
+  summary: Read a user
+  tags: [admin, users]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: read
+  receipt: false
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Admin\Http\Users\ReadUserEndpoint
+  description: >
+    The user with their last activity. Needs read on the instance.
+
+output:
+  status: 200
+  example:
+    data:
+      id: "018f..."
+      email: "ada@example.com"
+      display_name: "Ada"
+      status: "active"
+      email_verified: true
+      mfa_enforced: false
+      locked_until: null
+      created_at: "2026-09-11T10:00:00+00:00"
+      last_login_at: "2026-09-11T10:05:00+00:00"
+      last_active_at: "2026-09-11T10:05:00+00:00"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+
+events: []

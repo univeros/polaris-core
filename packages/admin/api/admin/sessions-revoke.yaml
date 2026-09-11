@@ -1,0 +1,35 @@
+# DELETE /admin/users/{id}/sessions/{sessionId}: revoke a session.
+endpoint:
+  method: DELETE
+  path: /admin/users/{id}/sessions/{sessionId}
+  summary: Revoke a session
+  tags: [admin, sessions]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    sessionId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Admin\Http\Sessions\RevokeSessionEndpoint
+  description: >
+    Ends one session of the user; a session of another user is 404. Needs support; recorded as
+    admin.session_revoked.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "revoked"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+
+events: [admin.session_revoked]

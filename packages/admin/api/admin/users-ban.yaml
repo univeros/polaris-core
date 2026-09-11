@@ -1,0 +1,35 @@
+# POST /admin/users/{id}/ban: ban a user.
+endpoint:
+  method: POST
+  path: /admin/users/{id}/ban
+  summary: Ban a user
+  tags: [admin, users]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Admin\Http\Users\BanUserEndpoint
+  description: >
+    Disables the account and ends every session (core's disable); banning yourself is refused.
+    Needs manage; recorded as admin.user_banned.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "disabled"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+  - { status: 409, code: admin_conflict }
+
+events: [user.disabled, admin.user_banned]

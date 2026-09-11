@@ -24,6 +24,7 @@ final readonly class AccessTokenClaims
      * @param list<string>     $roles    role slugs in the active org
      * @param list<string>     $scope    flattened permission keys (off by default)
      * @param list<string>     $amr      authentication methods, e.g. `["pwd","otp"]`
+     * @param array<string, mixed> $extra claims a package adds (`impersonated_by`); a standard claim wins over an extra of the same name
      */
     public function __construct(
         public string $subject,
@@ -36,6 +37,7 @@ final readonly class AccessTokenClaims
         public bool $mfa = false,
         public array $amr = [],
         public ?int $authTime = null,
+        public array $extra = [],
     ) {
         if ($subject === '') {
             throw new InvalidArgumentException('Access-token subject (sub) must not be empty.');
@@ -49,13 +51,15 @@ final readonly class AccessTokenClaims
     /**
      * The claims as a flat map for the generator. `org` is always present (nullable by
      * design) so resource servers can distinguish "no active org" from a missing claim;
-     * `sid`, `scope`, and `auth_time` are emitted only when set.
+     * `sid`, `scope`, and `auth_time` are emitted only when set; `extra` claims come first, so a
+     * standard claim of the same name overrides them.
      *
      * @return array<string, mixed>
      */
     public function toClaims(): array
     {
         $claims = [
+            ...$this->extra,
             'sub' => $this->subject,
             'jti' => $this->jwtId,
             'org' => $this->organizationId,

@@ -1,0 +1,650 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789153200"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "XBv6XUiubg4ZtTa80zLz4vW70BqO1yn-6OS-MtkxTyE"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImY0ZDVhNjYyMTZjNmQxYWMzNTRjYzc1YzI0YmMyMDBmNjdlZTI1Y2EzMjM0Y2M0YTg5NjgyMDc4NjA0N2E2NWQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUwOTk4LjQ4MzcyMSwibmJmIjoxNzg5MTUwOTk4LjQ4MzcyMSwiZXhwIjoxNzg5MTUxODk4LjQ4MzcyMSwic3ViIjoiMDFhMDkxYjUtYWVhYS03ZjY3LWEyMzAtY2YzZTVmYzllM2EzIiwianRpIjoiMDFhMDkxYjUtYWZkMy03YjFjLTgzMjAtNGFhZTc5YTRlNTE2Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI1LWFmZDMtNzk2Yy04MzIwLTRhYWU3ODQzYjYxOSIsImF1dGhfdGltZSI6MTc4OTE1MDk5OH0.IGbUIdYU4V67oxzb-TXUZiTGGoMjNK1ZxfMk8-O5qoJKoy-sATFaAUtijN4Tgd2zudFQhqoNE5EdMVNI6PnSG86H-dcczsbIp_F5EM_IreVw85WV0ahdKpazxhfw2qhkCWJXKrnJ93cVjhcN74Rn4zrQ6DWLYxWM_qsP4V1W45KpoIEHBEvVPCM3akEv2GPt-wSb95145aXJ79-kYOzaPLpgpwJpLCLQ_04VpDkzxQYh9mLuWTos0q0rUZADI4Y-V1UYgH-GBGOvfNNXJKR9D-ZEBdgf7SArdW1wBtaYkfU_gMNdeWs9vpNGxszkb3foiYfGXoRWmJ58Ck1YIW18VQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "KyarmqMBMcnmgsNc3acsU17INxcgIRwjT3kI-FfZQss",
+                    "user": {
+                        "id": "01a091b5-aeaa-7f67-a230-cf3e5fc9e3a3",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImY0ZDVhNjYyMTZjNmQxYWMzNTRjYzc1YzI0YmMyMDBmNjdlZTI1Y2EzMjM0Y2M0YTg5NjgyMDc4NjA0N2E2NWQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUwOTk4LjQ4MzcyMSwibmJmIjoxNzg5MTUwOTk4LjQ4MzcyMSwiZXhwIjoxNzg5MTUxODk4LjQ4MzcyMSwic3ViIjoiMDFhMDkxYjUtYWVhYS03ZjY3LWEyMzAtY2YzZTVmYzllM2EzIiwianRpIjoiMDFhMDkxYjUtYWZkMy03YjFjLTgzMjAtNGFhZTc5YTRlNTE2Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI1LWFmZDMtNzk2Yy04MzIwLTRhYWU3ODQzYjYxOSIsImF1dGhfdGltZSI6MTc4OTE1MDk5OH0.IGbUIdYU4V67oxzb-TXUZiTGGoMjNK1ZxfMk8-O5qoJKoy-sATFaAUtijN4Tgd2zudFQhqoNE5EdMVNI6PnSG86H-dcczsbIp_F5EM_IreVw85WV0ahdKpazxhfw2qhkCWJXKrnJ93cVjhcN74Rn4zrQ6DWLYxWM_qsP4V1W45KpoIEHBEvVPCM3akEv2GPt-wSb95145aXJ79-kYOzaPLpgpwJpLCLQ_04VpDkzxQYh9mLuWTos0q0rUZADI4Y-V1UYgH-GBGOvfNNXJKR9D-ZEBdgf7SArdW1wBtaYkfU_gMNdeWs9vpNGxszkb3foiYfGXoRWmJ58Ck1YIW18VQ"
+                ]
+            },
+            "body": {
+                "name": "Acme Rockets"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151040"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a091b5-afd5-71e6-b738-ce4a766f1bd9",
+                    "name": "Acme Rockets",
+                    "slug": "acme-rockets",
+                    "role": "owner"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "operator@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789153200"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "zzqh-XvgpD-DCnRpBHQWNLCTkK-PoDnEnOouBxd9BKU"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "operator@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImY0ZDVhNjYyMTZjNmQxYWMzNTRjYzc1YzI0YmMyMDBmNjdlZTI1Y2EzMjM0Y2M0YTg5NjgyMDc4NjA0N2E2NWQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUwOTk4Ljc5Mzc4OCwibmJmIjoxNzg5MTUwOTk4Ljc5Mzc4OCwiZXhwIjoxNzg5MTUxODk4Ljc5Mzc4OCwic3ViIjoiMDFhMDkxYjUtYWZkNS03NmM2LWI3MzgtY2U0YTdhZjgyMWU2IiwianRpIjoiMDFhMDkxYjUtYjEwOS03YzI5LWFjYzYtOGI3NGQ5Zjg3MjhiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI1LWIxMDktN2E2NS1hY2M2LThiNzRkODk0NjFiZSIsImF1dGhfdGltZSI6MTc4OTE1MDk5OH0.MTuaP9XRrLn1xIOe0oPXK79rRLZAqApf3fMNc_HHbsE4emLZLjGn7ooG6epROZqzYQZFevbYlu6mp54wD4eEimielJII5IjeeGYOz8u5GzzIqRTDHRxzHYN1eL9My9md30ZilxrWVq0nWIaF7Bap8nIVxRts3x89R3l3tQLkK9k0c0E413btDo_iQT-7ME4J11_n7g0sEO9CHjpRWMsa89JrlKLrKxl8uQPPDcZlOi7kSg6RhXDvjrhr4PjWi_LRmB5mAw_1RSN7hsvGOJbHHYElnLbyESe_JUY4zvjwDde93fEtQqG8rBCc3XA-D9yuXLBfyDSScyVhSNj3-KQvDQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "UhWmGmhvTj0LoWtjHaIwfti8x6ZlXvW4BfvCOLYguRE",
+                    "user": {
+                        "id": "01a091b5-afd5-76c6-b738-ce4a7af821e6",
+                        "email": "operator@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/admin/organizations/01a091b5-afd5-71e6-b738-ce4a766f1bd9/drains",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer pak_JeMjqSXu4qumdpF5oz59juQWQG7WpIV2tMd1eXQ4wHw"
+                ]
+            },
+            "body": {
+                "endpoint": "https://hooks.example.test/audit",
+                "secret": "a-secret-of-sixteen-chars"
+            }
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/forbidden",
+                "title": "Forbidden",
+                "status": 403,
+                "detail": "The admin role does not allow this action.",
+                "error": "admin_forbidden",
+                "message": "The admin role does not allow this action."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/admin/organizations/01a091b5-afd5-71e6-b738-ce4a766f1bd9/drains",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImY0ZDVhNjYyMTZjNmQxYWMzNTRjYzc1YzI0YmMyMDBmNjdlZTI1Y2EzMjM0Y2M0YTg5NjgyMDc4NjA0N2E2NWQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUwOTk4Ljc5Mzc4OCwibmJmIjoxNzg5MTUwOTk4Ljc5Mzc4OCwiZXhwIjoxNzg5MTUxODk4Ljc5Mzc4OCwic3ViIjoiMDFhMDkxYjUtYWZkNS03NmM2LWI3MzgtY2U0YTdhZjgyMWU2IiwianRpIjoiMDFhMDkxYjUtYjEwOS03YzI5LWFjYzYtOGI3NGQ5Zjg3MjhiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI1LWIxMDktN2E2NS1hY2M2LThiNzRkODk0NjFiZSIsImF1dGhfdGltZSI6MTc4OTE1MDk5OH0.MTuaP9XRrLn1xIOe0oPXK79rRLZAqApf3fMNc_HHbsE4emLZLjGn7ooG6epROZqzYQZFevbYlu6mp54wD4eEimielJII5IjeeGYOz8u5GzzIqRTDHRxzHYN1eL9My9md30ZilxrWVq0nWIaF7Bap8nIVxRts3x89R3l3tQLkK9k0c0E413btDo_iQT-7ME4J11_n7g0sEO9CHjpRWMsa89JrlKLrKxl8uQPPDcZlOi7kSg6RhXDvjrhr4PjWi_LRmB5mAw_1RSN7hsvGOJbHHYElnLbyESe_JUY4zvjwDde93fEtQqG8rBCc3XA-D9yuXLBfyDSScyVhSNj3-KQvDQ"
+                ]
+            },
+            "body": {
+                "endpoint": "http://hooks.example.test/audit",
+                "secret": "a-secret-of-sixteen-chars"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "endpoint must be an https URL.",
+                "error": "admin_invalid_input",
+                "message": "endpoint must be an https URL."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/admin/organizations/01a091b5-afd5-71e6-b738-ce4a766f1bd9/drains",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImY0ZDVhNjYyMTZjNmQxYWMzNTRjYzc1YzI0YmMyMDBmNjdlZTI1Y2EzMjM0Y2M0YTg5NjgyMDc4NjA0N2E2NWQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUwOTk4Ljc5Mzc4OCwibmJmIjoxNzg5MTUwOTk4Ljc5Mzc4OCwiZXhwIjoxNzg5MTUxODk4Ljc5Mzc4OCwic3ViIjoiMDFhMDkxYjUtYWZkNS03NmM2LWI3MzgtY2U0YTdhZjgyMWU2IiwianRpIjoiMDFhMDkxYjUtYjEwOS03YzI5LWFjYzYtOGI3NGQ5Zjg3MjhiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI1LWIxMDktN2E2NS1hY2M2LThiNzRkODk0NjFiZSIsImF1dGhfdGltZSI6MTc4OTE1MDk5OH0.MTuaP9XRrLn1xIOe0oPXK79rRLZAqApf3fMNc_HHbsE4emLZLjGn7ooG6epROZqzYQZFevbYlu6mp54wD4eEimielJII5IjeeGYOz8u5GzzIqRTDHRxzHYN1eL9My9md30ZilxrWVq0nWIaF7Bap8nIVxRts3x89R3l3tQLkK9k0c0E413btDo_iQT-7ME4J11_n7g0sEO9CHjpRWMsa89JrlKLrKxl8uQPPDcZlOi7kSg6RhXDvjrhr4PjWi_LRmB5mAw_1RSN7hsvGOJbHHYElnLbyESe_JUY4zvjwDde93fEtQqG8rBCc3XA-D9yuXLBfyDSScyVhSNj3-KQvDQ"
+                ]
+            },
+            "body": {
+                "endpoint": "https://hooks.example.test/audit",
+                "secret": "short"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "secret must be at least 16 characters.",
+                "error": "admin_invalid_input",
+                "message": "secret must be at least 16 characters."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/admin/organizations/nope/drains",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImY0ZDVhNjYyMTZjNmQxYWMzNTRjYzc1YzI0YmMyMDBmNjdlZTI1Y2EzMjM0Y2M0YTg5NjgyMDc4NjA0N2E2NWQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUwOTk4Ljc5Mzc4OCwibmJmIjoxNzg5MTUwOTk4Ljc5Mzc4OCwiZXhwIjoxNzg5MTUxODk4Ljc5Mzc4OCwic3ViIjoiMDFhMDkxYjUtYWZkNS03NmM2LWI3MzgtY2U0YTdhZjgyMWU2IiwianRpIjoiMDFhMDkxYjUtYjEwOS03YzI5LWFjYzYtOGI3NGQ5Zjg3MjhiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI1LWIxMDktN2E2NS1hY2M2LThiNzRkODk0NjFiZSIsImF1dGhfdGltZSI6MTc4OTE1MDk5OH0.MTuaP9XRrLn1xIOe0oPXK79rRLZAqApf3fMNc_HHbsE4emLZLjGn7ooG6epROZqzYQZFevbYlu6mp54wD4eEimielJII5IjeeGYOz8u5GzzIqRTDHRxzHYN1eL9My9md30ZilxrWVq0nWIaF7Bap8nIVxRts3x89R3l3tQLkK9k0c0E413btDo_iQT-7ME4J11_n7g0sEO9CHjpRWMsa89JrlKLrKxl8uQPPDcZlOi7kSg6RhXDvjrhr4PjWi_LRmB5mAw_1RSN7hsvGOJbHHYElnLbyESe_JUY4zvjwDde93fEtQqG8rBCc3XA-D9yuXLBfyDSScyVhSNj3-KQvDQ"
+                ]
+            },
+            "body": {
+                "endpoint": "https://hooks.example.test/audit",
+                "secret": "a-secret-of-sixteen-chars"
+            }
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/not_found",
+                "title": "Not found",
+                "status": 404,
+                "detail": "The organization does not exist.",
+                "error": "admin_not_found",
+                "message": "The organization does not exist."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/admin/organizations/01a091b5-afd5-71e6-b738-ce4a766f1bd9/drains",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImY0ZDVhNjYyMTZjNmQxYWMzNTRjYzc1YzI0YmMyMDBmNjdlZTI1Y2EzMjM0Y2M0YTg5NjgyMDc4NjA0N2E2NWQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUwOTk4Ljc5Mzc4OCwibmJmIjoxNzg5MTUwOTk4Ljc5Mzc4OCwiZXhwIjoxNzg5MTUxODk4Ljc5Mzc4OCwic3ViIjoiMDFhMDkxYjUtYWZkNS03NmM2LWI3MzgtY2U0YTdhZjgyMWU2IiwianRpIjoiMDFhMDkxYjUtYjEwOS03YzI5LWFjYzYtOGI3NGQ5Zjg3MjhiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI1LWIxMDktN2E2NS1hY2M2LThiNzRkODk0NjFiZSIsImF1dGhfdGltZSI6MTc4OTE1MDk5OH0.MTuaP9XRrLn1xIOe0oPXK79rRLZAqApf3fMNc_HHbsE4emLZLjGn7ooG6epROZqzYQZFevbYlu6mp54wD4eEimielJII5IjeeGYOz8u5GzzIqRTDHRxzHYN1eL9My9md30ZilxrWVq0nWIaF7Bap8nIVxRts3x89R3l3tQLkK9k0c0E413btDo_iQT-7ME4J11_n7g0sEO9CHjpRWMsa89JrlKLrKxl8uQPPDcZlOi7kSg6RhXDvjrhr4PjWi_LRmB5mAw_1RSN7hsvGOJbHHYElnLbyESe_JUY4zvjwDde93fEtQqG8rBCc3XA-D9yuXLBfyDSScyVhSNj3-KQvDQ"
+                ]
+            },
+            "body": {
+                "endpoint": "https://hooks.example.test/audit",
+                "secret": "a-secret-of-sixteen-chars",
+                "filter": [
+                    "org.*",
+                    "admin.drain_tested"
+                ]
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a091b5-b10d-765a-b6bc-78839857f64d",
+                    "organization_id": "01a091b5-afd5-71e6-b738-ce4a766f1bd9",
+                    "type": "webhook",
+                    "endpoint": "https://hooks.example.test/audit",
+                    "filter": [
+                        "org.*",
+                        "admin.drain_tested"
+                    ],
+                    "status": "active",
+                    "last_delivery_at": null,
+                    "last_error": null,
+                    "created_at": "2026-09-11T18:23:18+00:00"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/organizations/01a091b5-afd5-71e6-b738-ce4a766f1bd9/drains",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_JeMjqSXu4qumdpF5oz59juQWQG7WpIV2tMd1eXQ4wHw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a091b5-b10d-765a-b6bc-78839857f64d",
+                        "organization_id": "01a091b5-afd5-71e6-b738-ce4a766f1bd9",
+                        "type": "webhook",
+                        "endpoint": "https://hooks.example.test/audit",
+                        "filter": [
+                            "org.*",
+                            "admin.drain_tested"
+                        ],
+                        "status": "active",
+                        "last_delivery_at": null,
+                        "last_error": null,
+                        "created_at": "2026-09-11T18:23:18+00:00"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/admin/organizations/01a091b5-afd5-71e6-b738-ce4a766f1bd9/drains/01a091b5-b10d-765a-b6bc-78839857f64d/test",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImY0ZDVhNjYyMTZjNmQxYWMzNTRjYzc1YzI0YmMyMDBmNjdlZTI1Y2EzMjM0Y2M0YTg5NjgyMDc4NjA0N2E2NWQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUwOTk4Ljc5Mzc4OCwibmJmIjoxNzg5MTUwOTk4Ljc5Mzc4OCwiZXhwIjoxNzg5MTUxODk4Ljc5Mzc4OCwic3ViIjoiMDFhMDkxYjUtYWZkNS03NmM2LWI3MzgtY2U0YTdhZjgyMWU2IiwianRpIjoiMDFhMDkxYjUtYjEwOS03YzI5LWFjYzYtOGI3NGQ5Zjg3MjhiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI1LWIxMDktN2E2NS1hY2M2LThiNzRkODk0NjFiZSIsImF1dGhfdGltZSI6MTc4OTE1MDk5OH0.MTuaP9XRrLn1xIOe0oPXK79rRLZAqApf3fMNc_HHbsE4emLZLjGn7ooG6epROZqzYQZFevbYlu6mp54wD4eEimielJII5IjeeGYOz8u5GzzIqRTDHRxzHYN1eL9My9md30ZilxrWVq0nWIaF7Bap8nIVxRts3x89R3l3tQLkK9k0c0E413btDo_iQT-7ME4J11_n7g0sEO9CHjpRWMsa89JrlKLrKxl8uQPPDcZlOi7kSg6RhXDvjrhr4PjWi_LRmB5mAw_1RSN7hsvGOJbHHYElnLbyESe_JUY4zvjwDde93fEtQqG8rBCc3XA-D9yuXLBfyDSScyVhSNj3-KQvDQ"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a091b5-b10d-765a-b6bc-78839857f64d",
+                    "organization_id": "01a091b5-afd5-71e6-b738-ce4a766f1bd9",
+                    "type": "webhook",
+                    "endpoint": "https://hooks.example.test/audit",
+                    "filter": [
+                        "org.*",
+                        "admin.drain_tested"
+                    ],
+                    "status": "active",
+                    "last_delivery_at": null,
+                    "last_error": null,
+                    "created_at": "2026-09-11T18:23:18+00:00"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/audit?names=admin.drain_tested",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImY0ZDVhNjYyMTZjNmQxYWMzNTRjYzc1YzI0YmMyMDBmNjdlZTI1Y2EzMjM0Y2M0YTg5NjgyMDc4NjA0N2E2NWQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUwOTk4Ljc5Mzc4OCwibmJmIjoxNzg5MTUwOTk4Ljc5Mzc4OCwiZXhwIjoxNzg5MTUxODk4Ljc5Mzc4OCwic3ViIjoiMDFhMDkxYjUtYWZkNS03NmM2LWI3MzgtY2U0YTdhZjgyMWU2IiwianRpIjoiMDFhMDkxYjUtYjEwOS03YzI5LWFjYzYtOGI3NGQ5Zjg3MjhiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI1LWIxMDktN2E2NS1hY2M2LThiNzRkODk0NjFiZSIsImF1dGhfdGltZSI6MTc4OTE1MDk5OH0.MTuaP9XRrLn1xIOe0oPXK79rRLZAqApf3fMNc_HHbsE4emLZLjGn7ooG6epROZqzYQZFevbYlu6mp54wD4eEimielJII5IjeeGYOz8u5GzzIqRTDHRxzHYN1eL9My9md30ZilxrWVq0nWIaF7Bap8nIVxRts3x89R3l3tQLkK9k0c0E413btDo_iQT-7ME4J11_n7g0sEO9CHjpRWMsa89JrlKLrKxl8uQPPDcZlOi7kSg6RhXDvjrhr4PjWi_LRmB5mAw_1RSN7hsvGOJbHHYElnLbyESe_JUY4zvjwDde93fEtQqG8rBCc3XA-D9yuXLBfyDSScyVhSNj3-KQvDQ"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a091b5-b10e-725d-a5fa-c936292a4aed",
+                        "name": "admin.drain_tested",
+                        "occurred_at": "2026-09-11T18:23:18+00:00",
+                        "actor_type": "admin",
+                        "actor_id": "01a091b5-afd5-76c6-b738-ce4a7af821e6",
+                        "subject_id": null,
+                        "organization_id": "01a091b5-afd5-71e6-b738-ce4a766f1bd9",
+                        "session_id": null,
+                        "ip": null,
+                        "user_agent": null,
+                        "data": {
+                            "drain_id": "01a091b5-b10d-765a-b6bc-78839857f64d",
+                            "actor_role": "owner",
+                            "actor_scope": "instance"
+                        },
+                        "request_id": null
+                    }
+                ],
+                "next_cursor": null
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/admin/organizations/01a091b5-afd5-71e6-b738-ce4a766f1bd9/drains/01a091b5-b10d-765a-b6bc-78839857f64d",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImY0ZDVhNjYyMTZjNmQxYWMzNTRjYzc1YzI0YmMyMDBmNjdlZTI1Y2EzMjM0Y2M0YTg5NjgyMDc4NjA0N2E2NWQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUwOTk4Ljc5Mzc4OCwibmJmIjoxNzg5MTUwOTk4Ljc5Mzc4OCwiZXhwIjoxNzg5MTUxODk4Ljc5Mzc4OCwic3ViIjoiMDFhMDkxYjUtYWZkNS03NmM2LWI3MzgtY2U0YTdhZjgyMWU2IiwianRpIjoiMDFhMDkxYjUtYjEwOS03YzI5LWFjYzYtOGI3NGQ5Zjg3MjhiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI1LWIxMDktN2E2NS1hY2M2LThiNzRkODk0NjFiZSIsImF1dGhfdGltZSI6MTc4OTE1MDk5OH0.MTuaP9XRrLn1xIOe0oPXK79rRLZAqApf3fMNc_HHbsE4emLZLjGn7ooG6epROZqzYQZFevbYlu6mp54wD4eEimielJII5IjeeGYOz8u5GzzIqRTDHRxzHYN1eL9My9md30ZilxrWVq0nWIaF7Bap8nIVxRts3x89R3l3tQLkK9k0c0E413btDo_iQT-7ME4J11_n7g0sEO9CHjpRWMsa89JrlKLrKxl8uQPPDcZlOi7kSg6RhXDvjrhr4PjWi_LRmB5mAw_1RSN7hsvGOJbHHYElnLbyESe_JUY4zvjwDde93fEtQqG8rBCc3XA-D9yuXLBfyDSScyVhSNj3-KQvDQ"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "deleted"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/admin/organizations/01a091b5-afd5-71e6-b738-ce4a766f1bd9/drains/01a091b5-b10d-765a-b6bc-78839857f64d",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImY0ZDVhNjYyMTZjNmQxYWMzNTRjYzc1YzI0YmMyMDBmNjdlZTI1Y2EzMjM0Y2M0YTg5NjgyMDc4NjA0N2E2NWQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUwOTk4Ljc5Mzc4OCwibmJmIjoxNzg5MTUwOTk4Ljc5Mzc4OCwiZXhwIjoxNzg5MTUxODk4Ljc5Mzc4OCwic3ViIjoiMDFhMDkxYjUtYWZkNS03NmM2LWI3MzgtY2U0YTdhZjgyMWU2IiwianRpIjoiMDFhMDkxYjUtYjEwOS03YzI5LWFjYzYtOGI3NGQ5Zjg3MjhiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI1LWIxMDktN2E2NS1hY2M2LThiNzRkODk0NjFiZSIsImF1dGhfdGltZSI6MTc4OTE1MDk5OH0.MTuaP9XRrLn1xIOe0oPXK79rRLZAqApf3fMNc_HHbsE4emLZLjGn7ooG6epROZqzYQZFevbYlu6mp54wD4eEimielJII5IjeeGYOz8u5GzzIqRTDHRxzHYN1eL9My9md30ZilxrWVq0nWIaF7Bap8nIVxRts3x89R3l3tQLkK9k0c0E413btDo_iQT-7ME4J11_n7g0sEO9CHjpRWMsa89JrlKLrKxl8uQPPDcZlOi7kSg6RhXDvjrhr4PjWi_LRmB5mAw_1RSN7hsvGOJbHHYElnLbyESe_JUY4zvjwDde93fEtQqG8rBCc3XA-D9yuXLBfyDSScyVhSNj3-KQvDQ"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/not_found",
+                "title": "Not found",
+                "status": 404,
+                "detail": "The drain does not exist for this organization.",
+                "error": "admin_not_found",
+                "message": "The drain does not exist for this organization."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/organizations/01a091b5-afd5-71e6-b738-ce4a766f1bd9/drains",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImY0ZDVhNjYyMTZjNmQxYWMzNTRjYzc1YzI0YmMyMDBmNjdlZTI1Y2EzMjM0Y2M0YTg5NjgyMDc4NjA0N2E2NWQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUwOTk4Ljc5Mzc4OCwibmJmIjoxNzg5MTUwOTk4Ljc5Mzc4OCwiZXhwIjoxNzg5MTUxODk4Ljc5Mzc4OCwic3ViIjoiMDFhMDkxYjUtYWZkNS03NmM2LWI3MzgtY2U0YTdhZjgyMWU2IiwianRpIjoiMDFhMDkxYjUtYjEwOS03YzI5LWFjYzYtOGI3NGQ5Zjg3MjhiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI1LWIxMDktN2E2NS1hY2M2LThiNzRkODk0NjFiZSIsImF1dGhfdGltZSI6MTc4OTE1MDk5OH0.MTuaP9XRrLn1xIOe0oPXK79rRLZAqApf3fMNc_HHbsE4emLZLjGn7ooG6epROZqzYQZFevbYlu6mp54wD4eEimielJII5IjeeGYOz8u5GzzIqRTDHRxzHYN1eL9My9md30ZilxrWVq0nWIaF7Bap8nIVxRts3x89R3l3tQLkK9k0c0E413btDo_iQT-7ME4J11_n7g0sEO9CHjpRWMsa89JrlKLrKxl8uQPPDcZlOi7kSg6RhXDvjrhr4PjWi_LRmB5mAw_1RSN7hsvGOJbHHYElnLbyESe_JUY4zvjwDde93fEtQqG8rBCc3XA-D9yuXLBfyDSScyVhSNj3-KQvDQ"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": []
+            }
+        }
+    }
+]

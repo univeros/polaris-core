@@ -1,0 +1,39 @@
+# PATCH /admin/organizations/{id}/members/{userId}/roles: set a member's roles.
+endpoint:
+  method: PATCH
+  path: /admin/organizations/{id}/members/{userId}/roles
+  summary: Set a member's roles
+  tags: [admin, organizations]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    id: { type: string, rules: [required] }
+    userId: { type: string, rules: [required] }
+    roles: { type: array, rules: [required] }
+
+domain:
+  class: Polaris\Admin\Http\Organizations\UpdateMemberRolesEndpoint
+  description: >
+    Replaces the member's roles with the given slugs of the organization; the last owner cannot
+    be demoted (409). Needs manage on the instance or on this organization; recorded as
+    admin.member_roles_changed.
+
+output:
+  status: 200
+  example:
+    data:
+      roles: ["admin"]
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+  - { status: 422, code: admin_invalid_input }
+  - { status: 409, code: admin_conflict }
+
+events: [org.member_roles_changed, admin.member_roles_changed]

@@ -1,0 +1,56 @@
+# GET /admin/audit: query the audit trail.
+endpoint:
+  method: GET
+  path: /admin/audit
+  summary: Query the audit trail
+  tags: [admin, audit]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: read
+  receipt: false
+
+input:
+  source: query
+  fields:
+    names: { type: string, rules: [optional] }
+    actor_id: { type: string, rules: [optional] }
+    subject_id: { type: string, rules: [optional] }
+    organization_id: { type: string, rules: [optional] }
+    from: { type: string, rules: [optional] }
+    to: { type: string, rules: [optional] }
+    cursor: { type: string, rules: [optional] }
+    limit: { type: integer, rules: [optional] }
+
+domain:
+  class: Polaris\Admin\Http\Audit\QueryAuditEndpoint
+  description: >
+    The instance-wide trail, newest first, with the filters of /audit/me plus actor_id,
+    subject_id and organization_id. An organization-scoped operator reads their organization
+    only. Needs read.
+
+output:
+  status: 200
+  example:
+    data:
+      - id: "018f..."
+        name: "admin.user_banned"
+        occurred_at: "2026-09-11T10:00:00+00:00"
+        actor_type: "admin"
+        actor_id: "018f..."
+        subject_id: "018f..."
+        organization_id: null
+        session_id: null
+        ip: "203.0.113.7"
+        user_agent: "Mozilla/5.0"
+        data:
+          actor_role: "admin"
+          actor_scope: "instance"
+        request_id: null
+    next_cursor: null
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 422, code: audit_invalid_query }
+
+events: []

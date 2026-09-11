@@ -1,0 +1,47 @@
+# GET /admin/stats: read the instance statistics.
+endpoint:
+  method: GET
+  path: /admin/stats
+  summary: Read the instance statistics
+  tags: [admin, stats]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Admin\Http\StatsEndpoint
+  description: >
+    Totals and the last day, week and month from the audit tables (sign-ups and sign-ins from
+    polaris_audit_event, active users from polaris_audit_activity). Needs read on the instance.
+
+output:
+  status: 200
+  example:
+    data:
+      generated_at: "2026-09-11T10:00:00+00:00"
+      totals:
+        users: 120
+        organizations: 8
+        active_sessions: 41
+      sign_ups:
+        24h: 3
+        7d: 12
+        30d: 40
+      sign_ins:
+        24h: 50
+        7d: 300
+        30d: 1100
+      active_users:
+        24h: 30
+        7d: 80
+        30d: 110
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+
+events: []

@@ -1,0 +1,635 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789153200"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "SynR89bNqicsZZkgHpgVs2V9lMGfYyjg01og-nz8pyY"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjE1YWU5M2QyMGQzOWFjNmJhZjdhMjliMmQ2Zjc5NTFiZmMwYzRkMTE5YmM1NzJkODQ5OGQ0NTkyNjFhMDMwZjAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUxMDI1LjcxMjI5NywibmJmIjoxNzg5MTUxMDI1LjcxMjI5NywiZXhwIjoxNzg5MTUxOTI1LjcxMjI5Nywic3ViIjoiMDFhMDkxYjYtMThmOC03MmNjLWE1ZGItZTJkZDYyOGFmNzk4IiwianRpIjoiMDFhMDkxYjYtMWEzMC03NDdkLTkyOTAtMWUzNjFlMDM4Yzg1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI2LTFhMzAtNzI5OS05MjkwLTFlMzYxY2M5YWM4OCIsImF1dGhfdGltZSI6MTc4OTE1MTAyNX0.de6MiusJWP0oAHeRvPyvdne6MUbZURwFdZobZnxXG-j7_8_uHxnypB9AD10BE18JBg_qb0a2sOUl7f3PFhEnxOpR2oFP3PMbjRuZlA8HOFgZJkBObqjiUvlI9gJMlZNjKq-f_0ctI6vdJ3P74dW7nYPKCVfVCpDy469YNcxCIAmMnzPGh0FSbiK85vlxSDuANttHV0TG7yOuqUzpi_wv5Oh31iPXRSQ0OVMKxssAR11UJzNmTrtb-SiasWPhB7BH5js0iRg48pnSuJmubk6lP617_V0rqdALHMIkGvyfCV6ynPzybnACZ-oUAMFwpZ6KgCoJHs2xvhUjZwbGIvkxZQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "nLY-jdCqPy9YgeFi77u3mBYVEWZrd_3i-moKEizb0gM",
+                    "user": {
+                        "id": "01a091b6-18f8-72cc-a5db-e2dd628af798",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjE1YWU5M2QyMGQzOWFjNmJhZjdhMjliMmQ2Zjc5NTFiZmMwYzRkMTE5YmM1NzJkODQ5OGQ0NTkyNjFhMDMwZjAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUxMDI1LjcxMjI5NywibmJmIjoxNzg5MTUxMDI1LjcxMjI5NywiZXhwIjoxNzg5MTUxOTI1LjcxMjI5Nywic3ViIjoiMDFhMDkxYjYtMThmOC03MmNjLWE1ZGItZTJkZDYyOGFmNzk4IiwianRpIjoiMDFhMDkxYjYtMWEzMC03NDdkLTkyOTAtMWUzNjFlMDM4Yzg1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI2LTFhMzAtNzI5OS05MjkwLTFlMzYxY2M5YWM4OCIsImF1dGhfdGltZSI6MTc4OTE1MTAyNX0.de6MiusJWP0oAHeRvPyvdne6MUbZURwFdZobZnxXG-j7_8_uHxnypB9AD10BE18JBg_qb0a2sOUl7f3PFhEnxOpR2oFP3PMbjRuZlA8HOFgZJkBObqjiUvlI9gJMlZNjKq-f_0ctI6vdJ3P74dW7nYPKCVfVCpDy469YNcxCIAmMnzPGh0FSbiK85vlxSDuANttHV0TG7yOuqUzpi_wv5Oh31iPXRSQ0OVMKxssAR11UJzNmTrtb-SiasWPhB7BH5js0iRg48pnSuJmubk6lP617_V0rqdALHMIkGvyfCV6ynPzybnACZ-oUAMFwpZ6KgCoJHs2xvhUjZwbGIvkxZQ"
+                ]
+            },
+            "body": {
+                "name": "Acme Rockets"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151040"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a091b6-1a31-7aef-9181-bd230d9b847c",
+                    "name": "Acme Rockets",
+                    "slug": "acme-rockets",
+                    "role": "owner"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjE1YWU5M2QyMGQzOWFjNmJhZjdhMjliMmQ2Zjc5NTFiZmMwYzRkMTE5YmM1NzJkODQ5OGQ0NTkyNjFhMDMwZjAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUxMDI1LjcxMjI5NywibmJmIjoxNzg5MTUxMDI1LjcxMjI5NywiZXhwIjoxNzg5MTUxOTI1LjcxMjI5Nywic3ViIjoiMDFhMDkxYjYtMThmOC03MmNjLWE1ZGItZTJkZDYyOGFmNzk4IiwianRpIjoiMDFhMDkxYjYtMWEzMC03NDdkLTkyOTAtMWUzNjFlMDM4Yzg1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI2LTFhMzAtNzI5OS05MjkwLTFlMzYxY2M5YWM4OCIsImF1dGhfdGltZSI6MTc4OTE1MTAyNX0.de6MiusJWP0oAHeRvPyvdne6MUbZURwFdZobZnxXG-j7_8_uHxnypB9AD10BE18JBg_qb0a2sOUl7f3PFhEnxOpR2oFP3PMbjRuZlA8HOFgZJkBObqjiUvlI9gJMlZNjKq-f_0ctI6vdJ3P74dW7nYPKCVfVCpDy469YNcxCIAmMnzPGh0FSbiK85vlxSDuANttHV0TG7yOuqUzpi_wv5Oh31iPXRSQ0OVMKxssAR11UJzNmTrtb-SiasWPhB7BH5js0iRg48pnSuJmubk6lP617_V0rqdALHMIkGvyfCV6ynPzybnACZ-oUAMFwpZ6KgCoJHs2xvhUjZwbGIvkxZQ"
+                ]
+            },
+            "body": {
+                "name": "Globex"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151040"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a091b6-1a32-71ca-9bee-8ef8d72cb391",
+                    "name": "Globex",
+                    "slug": "globex",
+                    "role": "owner"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/organizations/01a091b6-1a31-7aef-9181-bd230d9b847c",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak__dyAcMB7FDacAhNa3sDQvo6h2uHDh_hbd1AEOfjdnaI"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a091b6-1a31-7aef-9181-bd230d9b847c",
+                    "name": "Acme Rockets",
+                    "slug": "acme-rockets",
+                    "status": "active",
+                    "created_by": "01a091b6-18f8-72cc-a5db-e2dd628af798",
+                    "created_at": "2026-09-11T18:23:45+00:00",
+                    "updated_at": "2026-09-11T18:23:45+00:00",
+                    "members": [
+                        {
+                            "user_id": "01a091b6-18f8-72cc-a5db-e2dd628af798",
+                            "email": "ada@example.com",
+                            "display_name": null,
+                            "status": "active",
+                            "roles": [
+                                "owner"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/organizations/01a091b6-1a32-71ca-9bee-8ef8d72cb391",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak__dyAcMB7FDacAhNa3sDQvo6h2uHDh_hbd1AEOfjdnaI"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/forbidden",
+                "title": "Forbidden",
+                "status": 403,
+                "detail": "This action is outside the scope of your admin role.",
+                "error": "admin_forbidden",
+                "message": "This action is outside the scope of your admin role."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/organizations",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak__dyAcMB7FDacAhNa3sDQvo6h2uHDh_hbd1AEOfjdnaI"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/forbidden",
+                "title": "Forbidden",
+                "status": 403,
+                "detail": "This action is outside the scope of your admin role.",
+                "error": "admin_forbidden",
+                "message": "This action is outside the scope of your admin role."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/users",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak__dyAcMB7FDacAhNa3sDQvo6h2uHDh_hbd1AEOfjdnaI"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/forbidden",
+                "title": "Forbidden",
+                "status": 403,
+                "detail": "This action is outside the scope of your admin role.",
+                "error": "admin_forbidden",
+                "message": "This action is outside the scope of your admin role."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/stats",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak__dyAcMB7FDacAhNa3sDQvo6h2uHDh_hbd1AEOfjdnaI"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/forbidden",
+                "title": "Forbidden",
+                "status": 403,
+                "detail": "This action is outside the scope of your admin role.",
+                "error": "admin_forbidden",
+                "message": "This action is outside the scope of your admin role."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/keys",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak__dyAcMB7FDacAhNa3sDQvo6h2uHDh_hbd1AEOfjdnaI"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/forbidden",
+                "title": "Forbidden",
+                "status": 403,
+                "detail": "The admin role does not allow this action.",
+                "error": "admin_forbidden",
+                "message": "The admin role does not allow this action."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/audit",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak__dyAcMB7FDacAhNa3sDQvo6h2uHDh_hbd1AEOfjdnaI"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a091b6-1a31-7e57-9181-bd23102020c8",
+                        "name": "org.created",
+                        "occurred_at": "2026-09-11T18:23:45+00:00",
+                        "actor_type": "user",
+                        "actor_id": "01a091b6-18f8-72cc-a5db-e2dd628af798",
+                        "subject_id": "01a091b6-18f8-72cc-a5db-e2dd628af798",
+                        "organization_id": "01a091b6-1a31-7aef-9181-bd230d9b847c",
+                        "session_id": null,
+                        "ip": null,
+                        "user_agent": null,
+                        "data": {
+                            "slug": "acme-rockets"
+                        },
+                        "request_id": null
+                    }
+                ],
+                "next_cursor": null
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/audit?organization_id=01a091b6-1a32-71ca-9bee-8ef8d72cb391",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak__dyAcMB7FDacAhNa3sDQvo6h2uHDh_hbd1AEOfjdnaI"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/forbidden",
+                "title": "Forbidden",
+                "status": 403,
+                "detail": "This action is outside the scope of your admin role.",
+                "error": "admin_forbidden",
+                "message": "This action is outside the scope of your admin role."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "operator@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789153200"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "wLWyu97PH3W8oYx1YfHiuJI41CULNIKCqELVJ7OlsC8"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "operator@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjE1YWU5M2QyMGQzOWFjNmJhZjdhMjliMmQ2Zjc5NTFiZmMwYzRkMTE5YmM1NzJkODQ5OGQ0NTkyNjFhMDMwZjAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUxMDI2LjAzNzEzNywibmJmIjoxNzg5MTUxMDI2LjAzNzEzNywiZXhwIjoxNzg5MTUxOTI2LjAzNzEzNywic3ViIjoiMDFhMDkxYjYtMWEzMy03MWIxLWJjMTQtNDE0NDRjMGZmNmUwIiwianRpIjoiMDFhMDkxYjYtMWI3NS03MWY0LTk5ZTMtNjNiNjQ4NjkxZTYwIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI2LTFiNzUtNzAwYy05OWUzLTYzYjY0NzVkOWI5YiIsImF1dGhfdGltZSI6MTc4OTE1MTAyNX0.w5-22kV-6CMSgjNRJ4I6I39Pc9Z5j92V9G8irk7FPkHChScBFkKsl4N3PAjeDHJMVZWQa5MyQHv66e4clar1rFUARImw-vop-_kCY_8MXZ3cF5H79FdCUNLrw2P-xnliuVbxfDh3hKp1PFO2JN7a7rhf8Afbe2Cxcq9wGhEC4BfMZ2AiS9g5EfNhu52CcxlsLxvaT6xQFlAfBUelJbVv06l9R4GfBPGhXGFtR5zbLF3_Ush06U5ogM_PPkka5OCurUgyoCxqwCM8Q_g2TNngVk8MS0qrQ1Kp7OzSNqdRmjN6lRpPNtswYpJf-38GBI_H_AM6Gua6RGMwY8_DauHLiQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "gtvVzXejgxO6MbKFWCdNa58kTohvvxONfupXaisriwM",
+                    "user": {
+                        "id": "01a091b6-1a33-71b1-bc14-41444c0ff6e0",
+                        "email": "operator@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/organizations/01a091b6-1a32-71ca-9bee-8ef8d72cb391",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjE1YWU5M2QyMGQzOWFjNmJhZjdhMjliMmQ2Zjc5NTFiZmMwYzRkMTE5YmM1NzJkODQ5OGQ0NTkyNjFhMDMwZjAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUxMDI2LjAzNzEzNywibmJmIjoxNzg5MTUxMDI2LjAzNzEzNywiZXhwIjoxNzg5MTUxOTI2LjAzNzEzNywic3ViIjoiMDFhMDkxYjYtMWEzMy03MWIxLWJjMTQtNDE0NDRjMGZmNmUwIiwianRpIjoiMDFhMDkxYjYtMWI3NS03MWY0LTk5ZTMtNjNiNjQ4NjkxZTYwIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI2LTFiNzUtNzAwYy05OWUzLTYzYjY0NzVkOWI5YiIsImF1dGhfdGltZSI6MTc4OTE1MTAyNX0.w5-22kV-6CMSgjNRJ4I6I39Pc9Z5j92V9G8irk7FPkHChScBFkKsl4N3PAjeDHJMVZWQa5MyQHv66e4clar1rFUARImw-vop-_kCY_8MXZ3cF5H79FdCUNLrw2P-xnliuVbxfDh3hKp1PFO2JN7a7rhf8Afbe2Cxcq9wGhEC4BfMZ2AiS9g5EfNhu52CcxlsLxvaT6xQFlAfBUelJbVv06l9R4GfBPGhXGFtR5zbLF3_Ush06U5ogM_PPkka5OCurUgyoCxqwCM8Q_g2TNngVk8MS0qrQ1Kp7OzSNqdRmjN6lRpPNtswYpJf-38GBI_H_AM6Gua6RGMwY8_DauHLiQ"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a091b6-1a32-71ca-9bee-8ef8d72cb391",
+                    "name": "Globex",
+                    "slug": "globex",
+                    "status": "active",
+                    "created_by": "01a091b6-18f8-72cc-a5db-e2dd628af798",
+                    "created_at": "2026-09-11T18:23:45+00:00",
+                    "updated_at": "2026-09-11T18:23:45+00:00",
+                    "members": [
+                        {
+                            "user_id": "01a091b6-18f8-72cc-a5db-e2dd628af798",
+                            "email": "ada@example.com",
+                            "display_name": null,
+                            "status": "active",
+                            "roles": [
+                                "owner"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/organizations/01a091b6-1a31-7aef-9181-bd230d9b847c",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjE1YWU5M2QyMGQzOWFjNmJhZjdhMjliMmQ2Zjc5NTFiZmMwYzRkMTE5YmM1NzJkODQ5OGQ0NTkyNjFhMDMwZjAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUxMDI2LjAzNzEzNywibmJmIjoxNzg5MTUxMDI2LjAzNzEzNywiZXhwIjoxNzg5MTUxOTI2LjAzNzEzNywic3ViIjoiMDFhMDkxYjYtMWEzMy03MWIxLWJjMTQtNDE0NDRjMGZmNmUwIiwianRpIjoiMDFhMDkxYjYtMWI3NS03MWY0LTk5ZTMtNjNiNjQ4NjkxZTYwIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI2LTFiNzUtNzAwYy05OWUzLTYzYjY0NzVkOWI5YiIsImF1dGhfdGltZSI6MTc4OTE1MTAyNX0.w5-22kV-6CMSgjNRJ4I6I39Pc9Z5j92V9G8irk7FPkHChScBFkKsl4N3PAjeDHJMVZWQa5MyQHv66e4clar1rFUARImw-vop-_kCY_8MXZ3cF5H79FdCUNLrw2P-xnliuVbxfDh3hKp1PFO2JN7a7rhf8Afbe2Cxcq9wGhEC4BfMZ2AiS9g5EfNhu52CcxlsLxvaT6xQFlAfBUelJbVv06l9R4GfBPGhXGFtR5zbLF3_Ush06U5ogM_PPkka5OCurUgyoCxqwCM8Q_g2TNngVk8MS0qrQ1Kp7OzSNqdRmjN6lRpPNtswYpJf-38GBI_H_AM6Gua6RGMwY8_DauHLiQ"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/forbidden",
+                "title": "Forbidden",
+                "status": 403,
+                "detail": "This action is outside the scope of your admin role.",
+                "error": "admin_forbidden",
+                "message": "This action is outside the scope of your admin role."
+            }
+        }
+    }
+]

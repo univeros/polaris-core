@@ -29,6 +29,7 @@ What happens at `Polaris::create()`:
 | `services()` | Factories keyed by class; an endpoint constructor typed with that class gets the service, built once per graph (`Graph::get()` returns the same instance). Core services resolve as before. |
 | `listeners()` | Appended to `Polaris::listeners()`, so the host subscribes them with core's three. |
 | `permissions()` | Merged into the permission catalog and seeded by `schema:create` and the adapters' install commands. |
+| `middleware(Graph)` | PSR-15 middleware run on every Polaris route right after the bearer token was parsed, before step-up, denylist and authorization; where a plugin resolves its own principals (`polaris/admin`) or adds a header. The adapters run the pipeline, so it runs in every host. |
 
 Plugin endpoints extend `Polaris\Http\Endpoint` like core's and read the same `Input`. Their errors are RFC
 9457 problem documents through `Endpoint::problem()`: `application/problem+json` with `type`

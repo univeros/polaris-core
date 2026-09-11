@@ -1,0 +1,36 @@
+# DELETE /admin/users/{id}/mfa/{factorId}: remove an mfa factor.
+endpoint:
+  method: DELETE
+  path: /admin/users/{id}/mfa/{factorId}
+  summary: Remove an MFA factor
+  tags: [admin, mfa]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    factorId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Admin\Http\Mfa\RemoveFactorEndpoint
+  description: >
+    Removes one factor as the user could; the last confirmed factor under enforced MFA is 409
+    (reset the MFA instead). Needs manage; recorded as admin.mfa_factor_removed.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "removed"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+  - { status: 409, code: admin_conflict }
+
+events: [mfa.factor_removed, admin.mfa_factor_removed]

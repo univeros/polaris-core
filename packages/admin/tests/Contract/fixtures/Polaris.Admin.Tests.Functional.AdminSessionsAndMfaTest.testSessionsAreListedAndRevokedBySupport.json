@@ -1,0 +1,574 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789153200"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "vhuxnFbq1Up_rRNww7uIup2P-l_D2dW9SFbjLWytHqk"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjMwOTQ3ZTdlOTBjNDEyMTNmNDE2MjFkYmE2MDI1MTY5NThhZDA1ZGFhOTRkZGU4YjZiZTFkZDkyODkxNzVjMTIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUxMDUyLjExMTAwMiwibmJmIjoxNzg5MTUxMDUyLjExMTAwMiwiZXhwIjoxNzg5MTUxOTUyLjExMTAwMiwic3ViIjoiMDFhMDkxYjYtODAwYy03YzQwLThkODMtODY5YWFkOWU1ZGM1IiwianRpIjoiMDFhMDkxYjYtODE0ZC03MGNkLTlkYmQtMTE1NDIwNDljODg4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI2LTgxNGMtNzIwNi04MGI0LWMyOWE3NjVjYWJjOSIsImF1dGhfdGltZSI6MTc4OTE1MTA1MX0.mdv7FliyQsbSiArYXwT2uH7MGTj0-xetkTLwK5Hc_jlDnkJXXOs8GMxn67j3e6AFlLkZ1e7TjHbGddtQp-iTmge32SErlHaboBg3znVO799JK7kl-G3HoQSrYUKbLabmtoJf4ibSUbe9-L-r3xMJwrasjVRp9kSMDSbM0J1NmkHvfX3ajQQCfPCES1RjQvXk7B9CbBzMlEYFPSj_depAowPFWE3GEIcrUZIoV-7JLohNLKGMeHKod7jTn1hy9ZemrP-hF_axUmhX93NYNkiDE92DghqCF-pcNBH27fsWYfQNusNRZ7ujIiosb6nskQC3YUWMkt58bvh-ikCtMTji0A",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "8Dc21cqLtieRLUM9-DZEdN3UHMa98ArWkaWgf7IQMDc",
+                    "user": {
+                        "id": "01a091b6-800c-7c40-8d83-869aad9e5dc5",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789153200"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "vhuxnFbq1Up_rRNww7uIup2P-l_D2dW9SFbjLWytHqk"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjMwOTQ3ZTdlOTBjNDEyMTNmNDE2MjFkYmE2MDI1MTY5NThhZDA1ZGFhOTRkZGU4YjZiZTFkZDkyODkxNzVjMTIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUxMDUyLjQxNzA5OSwibmJmIjoxNzg5MTUxMDUyLjQxNzA5OSwiZXhwIjoxNzg5MTUxOTUyLjQxNzA5OSwic3ViIjoiMDFhMDkxYjYtODAwYy03YzQwLThkODMtODY5YWFkOWU1ZGM1IiwianRpIjoiMDFhMDkxYjYtODI4MS03MTYzLTg3MDYtZTUxOTVjMDI1MmI4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI2LTgyODAtN2YxNC1hNmNkLTEyNmZlOWRiZWE5YSIsImF1dGhfdGltZSI6MTc4OTE1MTA1Mn0.vCtWTxwRaxkdpjjhOV-WdekoGydQ0i5CsQb0eAwnthHbfFi86c5v_SzRFm9sJiTW0FfpBf7xvUdGaaCnRAkVYdwaZx2dgI09Y3Zcodko6meNO_07I9Es0FWZ6qr3Q23SHd0-diG_Xogc2ykChMa-KCTnKCcxOKtM2JY-1jz1LFYLgp8COwmLL187B-GYn-y4PbUx_1lhJWoef45XNW3rsQE3toCoTApZlJuK8URl_BqGTWXqRSiuO8l92v5o--TOTIMvTBZDgKdiarNgPNzTaqIhvvbroMi5sbeIuMXTzG6pyzFkUPCqDddgUp-siMz5JEePMDCIFycVDzY8EIw8rg",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "a6-owRg45B5AGu3pGcMt40GsncfKSezI7MeCynej-tE",
+                    "user": {
+                        "id": "01a091b6-800c-7c40-8d83-869aad9e5dc5",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/users/01a091b6-800c-7c40-8d83-869aad9e5dc5/sessions",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_tvzT4Mm2K0-Vk9c8LvR3-iGSndmDHYBNPoifsYFm19k"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a091b6-814c-7206-80b4-c29a765cabc9",
+                        "current": false,
+                        "ip": null,
+                        "user_agent": null,
+                        "created_at": "2026-09-11T18:24:12+00:00",
+                        "last_used_at": "2026-09-11T18:24:12+00:00"
+                    },
+                    {
+                        "id": "01a091b6-8280-7f14-a6cd-126fe9dbea9a",
+                        "current": false,
+                        "ip": null,
+                        "user_agent": null,
+                        "created_at": "2026-09-11T18:24:12+00:00",
+                        "last_used_at": "2026-09-11T18:24:12+00:00"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/admin/users/01a091b6-800c-7c40-8d83-869aad9e5dc5/sessions/01a091b6-814c-7206-80b4-c29a765cabc9",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_tvzT4Mm2K0-Vk9c8LvR3-iGSndmDHYBNPoifsYFm19k"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/forbidden",
+                "title": "Forbidden",
+                "status": 403,
+                "detail": "The viewer role does not allow this action.",
+                "error": "admin_forbidden",
+                "message": "The viewer role does not allow this action."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/admin/users/01a091b6-800c-7c40-8d83-869aad9e5dc5/sessions/01a091b6-814c-7206-80b4-c29a765cabc9",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_l4q8852N94fxe-uvy0m2t6JqXwLHnBnvdC-tAhLO7B4"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "revoked"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/admin/users/01a091b6-800c-7c40-8d83-869aad9e5dc5/sessions/no-such-session",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_l4q8852N94fxe-uvy0m2t6JqXwLHnBnvdC-tAhLO7B4"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/not_found",
+                "title": "Not found",
+                "status": 404,
+                "detail": "The session does not exist for this user.",
+                "error": "admin_not_found",
+                "message": "The session does not exist for this user."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/users/01a091b6-800c-7c40-8d83-869aad9e5dc5/sessions",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_l4q8852N94fxe-uvy0m2t6JqXwLHnBnvdC-tAhLO7B4"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a091b6-8280-7f14-a6cd-126fe9dbea9a",
+                        "current": false,
+                        "ip": null,
+                        "user_agent": null,
+                        "created_at": "2026-09-11T18:24:12+00:00",
+                        "last_used_at": "2026-09-11T18:24:12+00:00"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "2"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789153200"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "vhuxnFbq1Up_rRNww7uIup2P-l_D2dW9SFbjLWytHqk"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "7"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "7"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789151100"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjMwOTQ3ZTdlOTBjNDEyMTNmNDE2MjFkYmE2MDI1MTY5NThhZDA1ZGFhOTRkZGU4YjZiZTFkZDkyODkxNzVjMTIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTUxMDUyLjc0MjQ2NCwibmJmIjoxNzg5MTUxMDUyLjc0MjQ2NCwiZXhwIjoxNzg5MTUxOTUyLjc0MjQ2NCwic3ViIjoiMDFhMDkxYjYtODAwYy03YzQwLThkODMtODY5YWFkOWU1ZGM1IiwianRpIjoiMDFhMDkxYjYtODNjNi03NzE3LTgwODMtYWUyM2RhZjc0YjIwIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MWI2LTgzYzYtNzQyYi04MDgzLWFlMjNkOTMwMzA4OSIsImF1dGhfdGltZSI6MTc4OTE1MTA1Mn0.lJnbMyZxN0cXvXQ4Eppoz15pQkKmoYxRy-KGsXpoeLqkTbmwagkHbrut28ivYxEUqyf7HEIwAsDeTfiSOF_a-U4r9wTbPm2Iimknwq3JdzSjaA0Xlcwiqb8ECOkiF2fr1MJ1xAJOfKhCLyHgzUkThUfHmMHOqNlsJlRD6iKcbi8sIFriLMmj9W1uUZs_GIKSh1cdBbaxJLBHbrUoMOH2g4zijQVLjd2s_41unYtti_cUtpYgL-34W-_WltrgveDdHUrwRGLthxoDExEnx7J0bsVko7480XT4_EZPX6neAifRevagiQ4G3OKmhebuAv9qeJZ9HXNf7R0TyJ2fKrBwyA",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "Hh6YiocuDRExw5qb8-cQdfzKzeY5mzIBIxR5FoLkX7Y",
+                    "user": {
+                        "id": "01a091b6-800c-7c40-8d83-869aad9e5dc5",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/admin/users/01a091b6-800c-7c40-8d83-869aad9e5dc5/sessions",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_l4q8852N94fxe-uvy0m2t6JqXwLHnBnvdC-tAhLO7B4"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "revoked",
+                    "count": 3
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/users/01a091b6-800c-7c40-8d83-869aad9e5dc5/sessions",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_l4q8852N94fxe-uvy0m2t6JqXwLHnBnvdC-tAhLO7B4"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": []
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/users/nobody/sessions",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_l4q8852N94fxe-uvy0m2t6JqXwLHnBnvdC-tAhLO7B4"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/not_found",
+                "title": "Not found",
+                "status": 404,
+                "detail": "The user does not exist.",
+                "error": "admin_not_found",
+                "message": "The user does not exist."
+            }
+        }
+    }
+]

@@ -6,6 +6,7 @@ namespace Polaris\Contract;
 
 use Polaris\Schema\Model;
 use Polaris\Wiring\Graph;
+use Psr\Http\Server\MiddlewareInterface;
 
 /**
  * A package that extends Polaris from the outside: its own tables, endpoints, services, listeners and
@@ -51,4 +52,13 @@ interface Plugin extends PermissionContributorInterface
      * @return list<callable(object): void>
      */
     public function listeners(Graph $graph): array;
+
+    /**
+     * PSR-15 middleware for the Polaris pipeline, run on every Polaris route right after the bearer
+     * token was parsed and before step-up, denylist and authorization: where a plugin resolves its
+     * own principals or adds a header. Core's own middleware stays as it is.
+     *
+     * @return list<MiddlewareInterface>
+     */
+    public function middleware(Graph $graph): array;
 }

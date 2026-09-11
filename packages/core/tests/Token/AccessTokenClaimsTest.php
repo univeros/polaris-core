@@ -50,6 +50,14 @@ final class AccessTokenClaimsTest extends TestCase
         self::assertNull($claims['org']);
     }
 
+    public function testExtraClaimsRideAlongAndNeverOverrideAStandardOne(): void
+    {
+        $claims = (new AccessTokenClaims(subject: 'user-1', jwtId: 'jti-1', extra: ['impersonated_by' => 'op-1', 'sub' => 'someone-else']))->toClaims();
+
+        self::assertSame('op-1', $claims['impersonated_by']);
+        self::assertSame('user-1', $claims['sub'], 'a standard claim wins over an extra of the same name');
+    }
+
     public function testRejectsAnEmptySubject(): void
     {
         $this->expectException(InvalidArgumentException::class);

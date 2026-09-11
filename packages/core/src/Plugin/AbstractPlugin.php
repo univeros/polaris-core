@@ -38,6 +38,12 @@ abstract class AbstractPlugin implements Plugin
     }
 
     #[Override]
+    public function middleware(Graph $graph): array
+    {
+        return [];
+    }
+
+    #[Override]
     public function permissions(): array
     {
         return [];

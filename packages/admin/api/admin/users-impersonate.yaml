@@ -1,0 +1,41 @@
+# POST /admin/users/{id}/impersonate: impersonate a user.
+endpoint:
+  method: POST
+  path: /admin/users/{id}/impersonate
+  summary: Impersonate a user
+  tags: [admin, users]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: write
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Admin\Http\Users\ImpersonateUserEndpoint
+  description: >
+    An access token acting as the user for one access-token lifetime: no session behind it (no
+    refresh, step-up, switch or logout), amr ["impersonation"], mfa false, and the
+    impersonated_by claim, which the admin routes refuse. A disabled account is 409; a
+    superadmin cannot be impersonated (403 admin_impersonation_denied). Needs impersonate;
+    recorded as admin.user_impersonated.
+
+output:
+  status: 201
+  example:
+    data:
+      access_token: "eyJ..."
+      token_type: "Bearer"
+      expires_in: 900
+      impersonated_by: "018f..."
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+  - { status: 409, code: admin_conflict }
+
+events: [admin.user_impersonated]

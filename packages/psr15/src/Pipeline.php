@@ -47,8 +47,8 @@ final class Pipeline
 
     /**
      * Routing first, then the order the 1.0 module registered (by priority): ClientContext,
-     * AuthRateLimit, MfaToken, TokenAuthentication, StepUp, Denylist, AuthenticatedRateLimit,
-     * Authorization. The per-user limiter wraps authorization, so a 403 carries the rate-limit
+     * AuthRateLimit, MfaToken, TokenAuthentication, the plugins' middleware, StepUp, Denylist,
+     * AuthenticatedRateLimit, Authorization. The per-user limiter wraps authorization, so a 403 carries the rate-limit
      * headers, as in 1.0.
      *
      * @return list<MiddlewareInterface>
@@ -57,12 +57,20 @@ final class Pipeline
     {
         $auth = $this->graph->config()->auth;
 
+        $plugins = [];
+        foreach ($this->graph->plugins() as $plugin) {
+            foreach ($plugin->middleware($this->graph) as $middleware) {
+                $plugins[] = $middleware;
+            }
+        }
+
         return [
             new RouteMiddleware($this->router, $this->json),
             new ClientContextMiddleware(),
             new AuthRateLimitMiddleware($this->graph->rateLimits(), $this->limiter),
             new MfaTokenMiddleware($this->graph->mfaLoginTokens(), $this->unauthorized),
             new TokenAuthenticationMiddleware($this->graph->tokenFactory(), $this->unauthorized),
+            ...$plugins,
             new StepUpMiddleware($this->graph->mfaVerifier(), $auth, $this->graph->clock(), $this->unauthorized, $this->json),
             new DenylistMiddleware($this->graph->denylist(), $auth, $this->json),
             new AuthenticatedRateLimitMiddleware($this->graph->rateLimits(), $this->limiter),

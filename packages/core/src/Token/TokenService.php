@@ -342,6 +342,18 @@ final class TokenService
 
     private function mintAccess(SessionPrincipal $principal, string $sessionId): string
     {
+        return $this->mint($principal, $sessionId);
+    }
+
+    /**
+     * Mint an access token for a principal outside the session flows: with no session (`sid`) it
+     * cannot be refreshed, stepped up, switched or logged out, so it lives exactly the access-token
+     * TTL. A package's extra claims (`impersonated_by`) ride along; the standard claims win.
+     *
+     * @param array<string, mixed> $extra
+     */
+    public function mint(SessionPrincipal $principal, ?string $sessionId = null, array $extra = []): string
+    {
         $claims = new AccessTokenClaims(
             subject: $principal->userId,
             jwtId: $this->uuid(),
@@ -355,6 +367,7 @@ final class TokenService
             // auth_time is the last *full* authentication time; it is not re-stamped on
             // refresh (a refresh is not a re-authentication). Omitted when unknown.
             authTime: $principal->authTime,
+            extra: $extra,
         );
 
         return $this->accessTokens->generate($claims->toClaims());

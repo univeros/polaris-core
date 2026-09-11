@@ -1,0 +1,49 @@
+# POST /admin/keys: create an api key.
+endpoint:
+  method: POST
+  path: /admin/keys
+  summary: Create an API key
+  tags: [admin, keys]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    name: { type: string, rules: [required] }
+    role: { type: string, rules: [required] }
+    scope: { type: string, rules: [optional] }
+    ip_allowlist: { type: array, rules: [optional] }
+    expires_at: { type: string, rules: [optional] }
+
+domain:
+  class: Polaris\Admin\Http\Keys\CreateKeyEndpoint
+  description: >
+    The key (pak_ and 256 random bits) is in this response only; stored as a keyed hash. scope
+    is instance or an organization id (an organization-scoped owner creates keys for their
+    organization only); ip_allowlist holds addresses or CIDR blocks. Needs own; recorded as
+    admin.key_created.
+
+output:
+  status: 201
+  example:
+    data:
+      id: "018f..."
+      name: "Dashboard"
+      role: "owner"
+      scope: "instance"
+      ip_allowlist: []
+      expires_at: null
+      last_used_at: null
+      created_by: "018f..."
+      created_at: "2026-09-11T10:00:00+00:00"
+      key: "pak_..."
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 422, code: admin_invalid_input }
+
+events: [admin.key_created]
