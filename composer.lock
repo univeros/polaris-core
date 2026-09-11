@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71e7ead3c0cf637db81f3d08eba25738",
+    "content-hash": "35552167022baa7b012dcc02387bddbe",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2944,17 +2944,17 @@
         },
         {
             "name": "polaris/cli",
-            "version": "0.1.x-dev",
+            "version": "0.2.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/cli",
-                "reference": "9d84660b323218b791a7fae6a2ed5ae0d0c1f721"
+                "reference": "0e7f3bf3a7a9eeb531a90fd9a31378c0760cdeee"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/core": "^0.1",
-                "polaris/pdo": "^0.1",
-                "polaris/psr15": "^0.1",
+                "polaris/core": "^0.2",
+                "polaris/pdo": "^0.2",
+                "polaris/psr15": "^0.2",
                 "symfony/console": "^7.0 || ^8.0"
             },
             "bin": [
@@ -2963,7 +2963,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.1.x-dev"
+                    "dev-main": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -2974,6 +2974,12 @@
             "license": [
                 "MIT"
             ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
             "description": "Command-line tools for Polaris for PHP: schema export and diff, manifest, doctor",
             "transport-options": {
                 "symlink": true,
@@ -2982,11 +2988,11 @@
         },
         {
             "name": "polaris/core",
-            "version": "0.1.x-dev",
+            "version": "0.2.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/core",
-                "reference": "b2617f1c03c37472d443559dc6300090f2d5d7c0"
+                "reference": "f1d515625396bceb242c94e3277d998ec93f00a9"
             },
             "require": {
                 "endroid/qr-code": "^6.0",
@@ -3004,15 +3010,15 @@
                 "symfony/yaml": "^7.0 || ^8.0"
             },
             "require-dev": {
-                "polaris/cli": "^0.1",
-                "polaris/pdo": "^0.1",
-                "polaris/psr15": "^0.1",
-                "polaris/testing": "^0.1"
+                "polaris/cli": "^0.2",
+                "polaris/pdo": "^0.2",
+                "polaris/psr15": "^0.2",
+                "polaris/testing": "^0.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.1.x-dev"
+                    "dev-main": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -3027,6 +3033,12 @@
             },
             "license": [
                 "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
             ],
             "description": "Polaris for PHP core: authentication, MFA/OTP, sessions, multi-tenant organizations and RBAC, framework-free",
             "keywords": [
@@ -3046,26 +3058,26 @@
         },
         {
             "name": "polaris/laravel",
-            "version": "0.1.x-dev",
+            "version": "0.2.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/laravel",
-                "reference": "3ca121f2b3fc9567a98df570a15cd513f57857a2"
+                "reference": "bc869a521ab5b6b97fdf648b2f659f04f125c608"
             },
             "require": {
                 "laravel/framework": "^13.0",
                 "nyholm/psr7": "^1.8",
                 "php": ">=8.3",
-                "polaris/cli": "^0.1",
-                "polaris/core": "^0.1",
-                "polaris/pdo": "^0.1",
-                "polaris/psr15": "^0.1",
+                "polaris/cli": "^0.2",
+                "polaris/core": "^0.2",
+                "polaris/pdo": "^0.2",
+                "polaris/psr15": "^0.2",
                 "symfony/psr-http-message-bridge": "^7.4 || ^8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.1.x-dev"
+                    "dev-main": "0.2.x-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -3081,6 +3093,12 @@
             "license": [
                 "MIT"
             ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
             "description": "Laravel adapter for Polaris for PHP: service provider, routes, guard, mail bridge, artisan commands",
             "transport-options": {
                 "symlink": true,
@@ -3089,21 +3107,21 @@
         },
         {
             "name": "polaris/pdo",
-            "version": "0.1.x-dev",
+            "version": "0.2.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/pdo",
-                "reference": "320e7b5724c936771efd79147b90de38d8620311"
+                "reference": "45cd8cf3bc1c2a21533633ab42750163e2e0eb9f"
             },
             "require": {
                 "ext-pdo": "*",
                 "php": ">=8.3",
-                "polaris/core": "^0.1"
+                "polaris/core": "^0.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.1.x-dev"
+                    "dev-main": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -3114,6 +3132,12 @@
             "license": [
                 "MIT"
             ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
             "description": "PDO database adapter (SQLite, MySQL, PostgreSQL) for Polaris for PHP",
             "transport-options": {
                 "symlink": true,
@@ -3122,15 +3146,15 @@
         },
         {
             "name": "polaris/psr15",
-            "version": "0.1.x-dev",
+            "version": "0.2.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/psr15",
-                "reference": "91e61cea60f93ddcec845dfcfe1b08c426efc1e0"
+                "reference": "2b36da9e65edf026a14e8cb1863fedda8dfc3234"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/core": "^0.1",
+                "polaris/core": "^0.2",
                 "psr/clock": "^1.0",
                 "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.1 || ^2.0",
@@ -3140,7 +3164,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.1.x-dev"
+                    "dev-main": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -3151,6 +3175,12 @@
             "license": [
                 "MIT"
             ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
             "description": "PSR-15 request handler and middleware for Polaris for PHP",
             "transport-options": {
                 "symlink": true,
@@ -3159,19 +3189,19 @@
         },
         {
             "name": "polaris/symfony",
-            "version": "0.1.x-dev",
+            "version": "0.2.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/symfony",
-                "reference": "230d8b4d95c7a27c3a138851fdfca489ea23e456"
+                "reference": "24cadae156bb7a2f29e300687309fc059e85267b"
             },
             "require": {
                 "nyholm/psr7": "^1.8",
                 "php": ">=8.3",
-                "polaris/cli": "^0.1",
-                "polaris/core": "^0.1",
-                "polaris/pdo": "^0.1",
-                "polaris/psr15": "^0.1",
+                "polaris/cli": "^0.2",
+                "polaris/core": "^0.2",
+                "polaris/pdo": "^0.2",
+                "polaris/psr15": "^0.2",
                 "symfony/framework-bundle": "^7.4 || ^8.0",
                 "symfony/psr-http-message-bridge": "^7.4 || ^8.0",
                 "symfony/security-bundle": "^7.4 || ^8.0"
@@ -3182,7 +3212,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.1.x-dev"
+                    "dev-main": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -3193,6 +3223,12 @@
             "license": [
                 "MIT"
             ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
             "description": "Symfony adapter for Polaris for PHP: bundle, routes, security authenticator, mail bridge, console commands",
             "transport-options": {
                 "symlink": true,
@@ -3201,20 +3237,20 @@
         },
         {
             "name": "polaris/testing",
-            "version": "0.1.x-dev",
+            "version": "0.2.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/testing",
-                "reference": "b0d7ed88ee38ad7fc66b3ac5bb6e77ac6ad10bff"
+                "reference": "f502ea629a664c72722899bb88bb06ad2a472382"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/core": "^0.1"
+                "polaris/core": "^0.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.1.x-dev"
+                    "dev-main": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -3225,6 +3261,12 @@
             "license": [
                 "MIT"
             ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
             "description": "In-memory adapter, fakes and fixtures for testing applications built on Polaris for PHP",
             "transport-options": {
                 "symlink": true,
@@ -3233,18 +3275,18 @@
         },
         {
             "name": "polaris/yii",
-            "version": "0.1.x-dev",
+            "version": "0.2.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/yii",
-                "reference": "b8db9d7715d1c1d2c67ee90237ca90a738a80323"
+                "reference": "dbcbbb6f762d3673df38669fb760d177605e0922"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/cli": "^0.1",
-                "polaris/core": "^0.1",
-                "polaris/pdo": "^0.1",
-                "polaris/psr15": "^0.1",
+                "polaris/cli": "^0.2",
+                "polaris/core": "^0.2",
+                "polaris/pdo": "^0.2",
+                "polaris/psr15": "^0.2",
                 "psr/container": "^1.1 || ^2.0",
                 "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.1 || ^2.0",
@@ -3261,7 +3303,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.1.x-dev"
+                    "dev-main": "0.2.x-dev"
                 },
                 "config-plugin-options": {
                     "source-directory": "config"
@@ -3282,6 +3324,12 @@
             },
             "license": [
                 "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
             ],
             "description": "Yii 3 adapter for Polaris for PHP: config plugin, routes, authentication method, mail bridge, console commands",
             "transport-options": {
