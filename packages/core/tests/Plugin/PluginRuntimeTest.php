@@ -98,6 +98,7 @@ final class PluginRuntimeTest extends TestCase
         $response = $pipeline->handle((new ServerRequestFactory())->createServerRequest('GET', '/sample/notes'));
         self::assertSame(200, $response->getStatusCode());
         self::assertSame('application/json', $response->getHeaderLine('Content-Type'));
+        self::assertSame('seen', $response->getHeaderLine('X-Sample'), 'the plugin middleware ran in the pipeline');
         $body = json_decode((string) $response->getBody(), true);
         self::assertSame('hello', $body['data'][0]['text']);
         self::assertSame('repository: Polaris\\Repository\\UserRepository', $body['data'][1]['text'], 'the plugin service took a core service from the graph');

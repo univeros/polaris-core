@@ -9,6 +9,10 @@ use Polaris\Plugin\AbstractPlugin;
 use Polaris\Schema\Field;
 use Polaris\Schema\Model;
 use Polaris\Wiring\Graph;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Everything a plugin can contribute, once each: a model, a route, a service, a listener, a permission.
@@ -53,6 +57,19 @@ final class SamplePlugin extends AbstractPlugin
     {
         return [function (object $event): void {
             $this->seen[] = $event;
+        }];
+    }
+
+    #[Override]
+    public function middleware(Graph $graph): array
+    {
+        return [new class implements MiddlewareInterface {
+            public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+            {
+                $response = $handler->handle($request);
+
+                return $request->getUri()->getPath() === '/sample/notes' ? $response->withHeader('X-Sample', 'seen') : $response;
+            }
         }];
     }
 
