@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=8.3",
-        "polaris/core": "^0.2"
+        "polaris/core": "^0.3"
     },
     "autoload": {
         "psr-4": {
@@ -20,7 +20,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.2.x-dev"
+            "dev-main": "0.3.x-dev"
         }
     },
     "config": {

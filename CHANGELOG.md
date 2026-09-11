@@ -4,7 +4,14 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.3.0] - 2026-09-11
+
+`polaris/messaging`, the client namespaces for the plugins, and the port rule that lets a plugin serve
+core.
+
+### Changed
+- The packages' version line is 0.3: `^0.3` between siblings, `0.3.x-dev` on the path repository and
+  in the demos (a package at 0.3.0 requires its siblings at 0.3.0).
 
 ### Added
 - `@polaris-auth/client`: the plugins' routes as namespaces, `client.audit.*` and `client.admin.*`, one
