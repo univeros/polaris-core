@@ -24,7 +24,7 @@ final class JsonResponse
 
     public function result(Result $result): ResponseInterface
     {
-        $response = $this->factory->createResponse($result->status)->withHeader('Content-Type', 'application/json');
+        $response = $this->factory->createResponse($result->status)->withHeader('Content-Type', $result->problem ? 'application/problem+json' : 'application/json');
         foreach ($result->headers as $name => $value) {
             $response = $response->withHeader($name, $value);
         }

@@ -49,6 +49,7 @@ final class Harness implements HarnessContract
             'dispatcher' => $config->dispatcher,
             'cache' => 'array',
             'manifest_directory' => $config->manifestDirectory,
+            'plugins' => $config->plugins,
         ]));
     }
 

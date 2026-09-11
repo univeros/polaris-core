@@ -12,6 +12,8 @@ use SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 
 use function array_map;
+use function array_values;
+use function implode;
 use function dirname;
 use function in_array;
 use function is_array;
@@ -35,8 +37,15 @@ final class Loader
     /** @var array<string, Manifest> */
     private static array $cache = [];
 
-    public function __construct(private readonly string $directory)
+    /** @var list<string> */
+    private readonly array $directories;
+
+    /**
+     * Core's `api/` and, after it, each plugin's directory; routes must be unique across all of them.
+     */
+    public function __construct(string $directory, string ...$more)
     {
+        $this->directories = [$directory, ...array_values($more)];
     }
 
     public static function defaultDirectory(): string
@@ -46,7 +55,7 @@ final class Loader
 
     public function load(): Manifest
     {
-        return self::$cache[$this->directory] ??= new Manifest($this->read());
+        return self::$cache[implode("\n", $this->directories)] ??= new Manifest($this->read());
     }
 
     /**
@@ -54,31 +63,32 @@ final class Loader
      */
     private function read(): array
     {
-        $files = [];
-        foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->directory)) as $file) {
-            if ($file instanceof SplFileInfo && str_ends_with($file->getFilename(), '.yaml')) {
-                $files[] = $file->getPathname();
-            }
-        }
-        sort($files);
-
         $endpoints = [];
         $routes = [];
-        foreach ($files as $file) {
-            $spec = $this->parse($file);
-            if (isset($routes[$spec->route()])) {
-                throw new InvalidArgumentException(sprintf('%s declares route %s already declared by %s.', $spec->file, $spec->route(), $routes[$spec->route()]));
+        foreach ($this->directories as $directory) {
+            $files = [];
+            foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory)) as $file) {
+                if ($file instanceof SplFileInfo && str_ends_with($file->getFilename(), '.yaml')) {
+                    $files[] = $file->getPathname();
+                }
             }
-            $routes[$spec->route()] = $spec->file;
-            $endpoints[] = $spec;
+            sort($files);
+            foreach ($files as $file) {
+                $spec = $this->parse($directory, $file);
+                if (isset($routes[$spec->route()])) {
+                    throw new InvalidArgumentException(sprintf('%s declares route %s already declared by %s.', $spec->file, $spec->route(), $routes[$spec->route()]));
+                }
+                $routes[$spec->route()] = $spec->file;
+                $endpoints[] = $spec;
+            }
         }
 
         return $endpoints;
     }
 
-    private function parse(string $file): EndpointSpec
+    private function parse(string $directory, string $file): EndpointSpec
     {
-        $name = substr($file, strlen($this->directory) + 1);
+        $name = substr($file, strlen($directory) + 1);
         $document = Yaml::parseFile($file);
         if (!is_array($document)) {
             throw new InvalidArgumentException(sprintf('%s is not a spec document.', $name));

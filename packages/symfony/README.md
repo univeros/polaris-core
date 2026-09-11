@@ -55,6 +55,7 @@ bin/console debug:router            # polaris.auth.login, ... under path_prefix
 | `mailer`, `mail_from` | `log` (codes go to the log), `mail` (Symfony Mailer, plain text), or an `OtpMailerInterface` service |
 | `sms` | `log`, or an `SmsSenderInterface` service |
 | `breach_check`, `clock`, `encrypter`, `metrics`, `totp`, `qr_codes`, `rate_store` | Optional port services |
+| `plugins` | Service ids of `Polaris\Contract\Plugin` instances; their tables, routes, services, listeners and permissions join core's |
 
 ## Use
 

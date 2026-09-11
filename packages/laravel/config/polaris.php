@@ -61,4 +61,7 @@ return [
     'dispatcher' => null,
     // The api/**/*.yaml directory; null for the one shipped with polaris/core.
     'manifest_directory' => null,
+    // Plugins (Polaris\Contract\Plugin): class names, container bindings or instances; their tables,
+    // routes, services, listeners and permissions join core's (docs/plugins/README.md).
+    'plugins' => [],
 ];

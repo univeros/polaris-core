@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Polaris\Symfony\Routing;
 
 use Override;
+use Polaris\Contract\Plugin;
 use Polaris\Http\Manifest\Loader as ManifestLoader;
 use Polaris\Symfony\Http\PolarisController;
 use Symfony\Component\Config\Loader\Loader;
@@ -17,11 +18,14 @@ use function substr;
 
 /**
  * The `polaris` route type (`polaris: { resource: ., type: polaris }` in routes.yaml): one named route
- * per manifest endpoint (`polaris.auth.login`, ...) under `polaris.path_prefix`, all to the controller.
+ * per manifest endpoint, plugins' included (`polaris.auth.login`, ...) under `polaris.path_prefix`, all to the controller.
  */
 final class PolarisRouteLoader extends Loader
 {
-    public function __construct(private readonly ?string $manifestDirectory, private readonly string $pathPrefix)
+    /**
+     * @param iterable<Plugin> $plugins the configured plugins; their manifest directories join core's
+     */
+    public function __construct(private readonly ?string $manifestDirectory, private readonly string $pathPrefix, private readonly iterable $plugins = [])
     {
         parent::__construct();
     }
@@ -31,7 +35,14 @@ final class PolarisRouteLoader extends Loader
     {
         $routes = new RouteCollection();
         $prefix = rtrim($this->pathPrefix, '/');
-        $manifest = (new ManifestLoader($this->manifestDirectory ?? ManifestLoader::defaultDirectory()))->load();
+        $directories = [$this->manifestDirectory ?? ManifestLoader::defaultDirectory()];
+        foreach ($this->plugins as $plugin) {
+            $directory = $plugin::manifestDirectory();
+            if ($directory !== null) {
+                $directories[] = $directory;
+            }
+        }
+        $manifest = (new ManifestLoader(...$directories))->load();
         foreach ($manifest->endpoints() as $spec) {
             $routes->add(
                 'polaris.' . str_replace('/', '.', substr($spec->file, 0, -5)),

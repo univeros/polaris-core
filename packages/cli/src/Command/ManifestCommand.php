@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Polaris\Cli\Command;
 
+use Polaris\Cli\Bootstrap;
 use Polaris\Http\Manifest\EndpointSpec;
 use Polaris\Http\Manifest\FieldSpec;
 use Polaris\Http\Manifest\Loader;
@@ -31,13 +32,15 @@ final class ManifestCommand extends Command
             ->setName('manifest')
             ->setDescription('Validates api/**/*.yaml and prints the manifest as JSON or OpenAPI 3.1.')
             ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'json | openapi', 'json')
-            ->addOption('dir', null, InputOption::VALUE_REQUIRED, 'Spec directory', Loader::defaultDirectory());
+            ->addOption('dir', null, InputOption::VALUE_REQUIRED, 'Spec directory', Loader::defaultDirectory())
+            ->addOption('bootstrap', 'b', InputOption::VALUE_REQUIRED, 'A PHP file returning the application\'s Polaris instance or Config, so the plugins\' tables and routes are included (or POLARIS_BOOTSTRAP)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            $manifest = (new Loader((string) $input->getOption('dir')))->load();
+            $polaris = Bootstrap::load($input->getOption('bootstrap'));
+            $manifest = $polaris?->manifest() ?? (new Loader((string) $input->getOption('dir')))->load();
         } catch (Throwable $exception) {
             $output->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
 

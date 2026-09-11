@@ -50,6 +50,10 @@ return [
         'totp' => null,
         'qr_codes' => null,
         'rate_store' => null,
+        // Plugins (Polaris\Contract\Plugin): class names or container ids; their tables, routes,
+        // services, listeners and permissions join core's (docs/plugins/README.md). For the route
+        // table, an entry must be a class name (or an instance): routes are built from the params.
+        'plugins' => [],
     ],
     'yiisoft/yii-console' => [
         'commands' => [

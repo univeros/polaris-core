@@ -21,6 +21,7 @@ use Polaris\Schema\Definitions\RoleSchema;
 use Polaris\Schema\Definitions\RolePermissionSchema;
 use Polaris\Schema\Definitions\UserSchema;
 
+use function array_values;
 use function sprintf;
 
 /**
@@ -30,17 +31,47 @@ use function sprintf;
 final class Schema
 {
     /** @var list<Model>|null */
-    private static ?array $all = null;
+    private static ?array $core = null;
+
+    /** @var array<class-string, Model> models registered by plugins, by class */
+    private static array $registered = [];
 
     /** @var array<class-string, Model> */
     private static array $byClass = [];
 
     /**
+     * Core's models followed by the plugins' ({@see register()}).
+     *
      * @return list<Model>
      */
     public static function all(): array
     {
-        return self::$all ??= [
+        return [...self::core(), ...array_values(self::$registered)];
+    }
+
+    /**
+     * Registers a plugin's models, once per class; `Polaris::create()` does it for `Config::$plugins`.
+     * A model registered for a class core already defines is rejected: plugins own their tables only.
+     */
+    public static function register(Model ...$models): void
+    {
+        foreach ($models as $model) {
+            foreach (self::core() as $core) {
+                if ($core->class === $model->class || $core->table === $model->table) {
+                    throw new InvalidArgumentException(sprintf('%s (%s) is a core model; a plugin cannot redefine it.', $model->class, $model->table));
+                }
+            }
+            self::$registered[$model->class] = $model;
+            self::$byClass[$model->class] = $model;
+        }
+    }
+
+    /**
+     * @return list<Model>
+     */
+    private static function core(): array
+    {
+        return self::$core ??= [
             AuditLogEntrySchema::define(),
             EmailVerificationSchema::define(),
             InvitationSchema::define(),
@@ -64,7 +95,7 @@ final class Schema
      */
     public static function for(string $class): Model
     {
-        if (self::$byClass === []) {
+        if (!isset(self::$byClass[$class])) {
             foreach (self::all() as $model) {
                 self::$byClass[$model->class] = $model;
             }

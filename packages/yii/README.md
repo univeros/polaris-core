@@ -51,6 +51,7 @@ The application provides what every Yii application has: PSR-17 factories, `Psr\
 | `mailer`, `mail_from` | `log` (codes go to the log), `mail` (the Yii mailer, plain text), or an `OtpMailerInterface` id |
 | `sms` | `log`, or an `SmsSenderInterface` id |
 | `breach_check`, `clock`, `encrypter`, `metrics`, `totp`, `qr_codes`, `rate_store` | Optional port ids |
+| `plugins` | `Polaris\Contract\Plugin` class names (the route table is built from the params) or container ids; their tables, routes, services, listeners and permissions join core's |
 
 ## Use
 

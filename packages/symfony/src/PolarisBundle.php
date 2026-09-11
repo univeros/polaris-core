@@ -41,6 +41,7 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service_closure;
 use function is_array;
+use function array_map;
 use function is_string;
 
 /**
@@ -61,6 +62,7 @@ final class PolarisBundle extends AbstractBundle
         $children = $root->children();
         $children->scalarNode('path_prefix')->defaultValue('/')->info('Where the endpoints are mounted (also the prefix of the routes the "polaris" loader yields)');
         $children->scalarNode('manifest_directory')->defaultNull()->info('The api/**/*.yaml directory; null for the one shipped with polaris/core');
+        $children->arrayNode('plugins')->scalarPrototype()->end()->info('Service ids of Polaris\\Contract\\Plugin instances; their tables, routes, services, listeners and permissions join core\'s');
         $secrets = $children->arrayNode('secrets')->addDefaultsIfNotSet()->children();
         $secrets->scalarNode('service')->defaultNull()->info('A Polaris\Config\Secrets service; the other keys are ignored then');
         foreach (self::SECRET_KEYS as $key) {
@@ -121,6 +123,7 @@ final class PolarisBundle extends AbstractBundle
             $services->set('polaris.mail', OtpMailer::class)->args([service('mailer.mailer'), $config['mail_from']]);
         }
 
+        $plugins = array_map(static fn(string $id): ReferenceConfigurator => service($id), $config['plugins']);
         $ports = [];
         foreach (self::PORTS as $port) {
             $ports[$port] = is_string($config[$port]) ? service($config[$port]) : null;
@@ -144,6 +147,7 @@ final class PolarisBundle extends AbstractBundle
             '$qrCodes' => $ports['qr_codes'],
             '$manifestDirectory' => $config['manifest_directory'],
             '$pathPrefix' => $prefix,
+            '$plugins' => $plugins,
         ]);
         $services->set(Polaris::class)->factory([Polaris::class, 'create'])->args([service(Config::class)])->public();
         $services->set(Graph::class)->factory([service(Polaris::class), 'graph'])->public();
@@ -155,7 +159,7 @@ final class PolarisBundle extends AbstractBundle
             ->args([service(Pipeline::class), service(PsrHttpFactory::class), service(HttpFoundationFactory::class)])
             ->tag('controller.service_arguments')
             ->public();
-        $services->set(PolarisRouteLoader::class)->args([$config['manifest_directory'], $prefix])->tag('routing.loader');
+        $services->set(PolarisRouteLoader::class)->args([$config['manifest_directory'], $prefix, $plugins])->tag('routing.loader');
         $services->set(PolarisEventSubscriber::class)->args([service(Polaris::class)])->tag('kernel.event_subscriber');
         $services->set(PolarisAuthenticator::class)->args([service(Graph::class)]);
 

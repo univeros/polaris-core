@@ -11,6 +11,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use Polaris\Laravel\Http\PolarisController;
 use Polaris\Laravel\PolarisServiceProvider;
 use Polaris\Testing\InMemoryAdapter;
+use Polaris\Tests\Support\Plugin\SamplePlugin;
+use Polaris\Polaris;
 use Polaris\Tests\Support\TestKeys;
 
 use function array_filter;
@@ -35,6 +37,24 @@ final class RoutesTest extends LaravelTestCase
         self::assertSame(PolarisController::class, $login->getActionName());
         self::assertSame('api/auth/orgs/{id}/members/{userId}', $routes->getByName('polaris.orgs.member-remove')?->uri());
         self::assertCount(52, array_filter(array_keys($routes->getRoutesByName()), static fn (string $name): bool => str_starts_with($name, 'polaris.')));
+    }
+
+    public function testAPluginsRoutesAreRegisteredAndServed(): void
+    {
+        $keys = TestKeys::rsa();
+        $app = LaravelApp::create([
+            'secrets' => ['app_key' => str_repeat('k', 32), 'jwt_private_key' => $keys['private'], 'jwt_public_key' => $keys['public'], 'jwt_kid' => 'kid-1'],
+            'auth' => ['issuer' => 'https://issuer.test'],
+            'database' => new InMemoryAdapter(),
+            'plugins' => [SamplePlugin::class],
+        ]);
+
+        self::assertSame('sample/notes', $app->make(Router::class)->getRoutes()->getByName('polaris.sample.notes')?->uri());
+        $response = $app->make(Kernel::class)->handle(Request::create('/sample/notes'));
+        self::assertSame(200, $response->getStatusCode());
+        self::assertSame('hello', json_decode((string) $response->getContent(), true)['data'][0]['text'] ?? null);
+        self::assertSame(403, $app->make(Kernel::class)->handle(Request::create('/sample/notes?fail=1'))->getStatusCode());
+        self::assertInstanceOf(SamplePlugin::class, $app->make(Polaris::class)->plugin('sample'));
     }
 
     public function testTheKernelServesAManifestRouteThroughThePipeline(): void

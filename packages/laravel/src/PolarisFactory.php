@@ -19,6 +19,8 @@ use Polaris\Contract\DatabaseAdapter;
 use Polaris\Contract\EncrypterInterface;
 use Polaris\Contract\MetricsInterface;
 use Polaris\Contract\OtpMailerInterface;
+use Polaris\Http\Manifest\Loader;
+use Polaris\Contract\Plugin;
 use Polaris\Contract\QrCodeRendererInterface;
 use Polaris\Contract\RateStore;
 use Polaris\Contract\SmsSenderInterface;
@@ -89,7 +91,49 @@ final readonly class PolarisFactory
             qrCodes: $this->port($config['qr_codes'] ?? null, QrCodeRendererInterface::class, 'qr_codes'),
             manifestDirectory: self::string($config['manifest_directory'] ?? null),
             pathPrefix: self::string($config['path_prefix'] ?? null) ?? '/',
+            plugins: $this->plugins($config['plugins'] ?? []),
         ));
+    }
+
+    /**
+     * Core's manifest directory and every plugin's, for the route table, without building Polaris:
+     * a class name answers statically, a binding or an instance through the container.
+     *
+     * @param array<string, mixed> $config
+     * @return list<string>
+     */
+    public static function manifestDirectories(array $config, Application $app): array
+    {
+        $directory = self::string($config['manifest_directory'] ?? null);
+        $directories = [$directory ?? Loader::defaultDirectory()];
+        foreach ((new self($app))->plugins($config['plugins'] ?? []) as $plugin) {
+            $manifest = $plugin::manifestDirectory();
+            if ($manifest !== null) {
+                $directories[] = $manifest;
+            }
+        }
+
+        return $directories;
+    }
+
+    /**
+     * @return list<Plugin>
+     */
+    private function plugins(mixed $plugins): array
+    {
+        if (!is_array($plugins)) {
+            throw new InvalidConfigException('polaris.plugins must be a list of plugin class names, bindings or instances.');
+        }
+        $instances = [];
+        foreach ($plugins as $plugin) {
+            $instance = is_string($plugin) ? $this->app->make($plugin) : $plugin;
+            if (!$instance instanceof Plugin) {
+                throw new InvalidConfigException(sprintf('polaris.plugins entries must be Polaris\\Contract\\Plugin instances, got %s.', get_debug_type($instance)));
+            }
+            $instances[] = $instance;
+        }
+
+        return $instances;
     }
 
     private function secrets(mixed $secrets): Secrets

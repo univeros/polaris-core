@@ -11,6 +11,8 @@ use Polaris\Event\UserLoggedIn;
 use Polaris\Mfa\LogOtpMailer;
 use Polaris\Mfa\LogSmsSender;
 use Polaris\Pdo\PdoAdapter;
+use Polaris\Tests\Support\Plugin\SamplePlugin;
+use Polaris\Polaris;
 use Polaris\Symfony\Event\PolarisEventSubscriber;
 use Polaris\Symfony\Factory;
 use Polaris\Symfony\PolarisBundle;
@@ -78,6 +80,28 @@ final class BundleTest extends TestCase
         // What HttpFoundation adds to every response, and what the contract harness ignores.
         self::assertSame('no-cache, private', $response->headers->get('Cache-Control'));
         self::assertSame(405, $kernel->handle(Request::create('/api/auth/auth/login', 'GET'))->getStatusCode());
+        $kernel->shutdown();
+    }
+
+    public function testAPluginsRoutesAndServicesJoinTheBundle(): void
+    {
+        $kernel = new TestKernel([
+            'secrets' => Fixtures::secretsArray(),
+            'auth' => ['issuer' => 'https://issuer.test'],
+            'database' => ['dsn' => 'sqlite::memory:'],
+            'plugins' => ['polaris.test.plugin'],
+        ], synthetic: ['polaris.test.plugin']);
+        $kernel->boot();
+        $kernel->getContainer()->set('polaris.test.plugin', new SamplePlugin());
+
+        self::assertSame('/sample/notes', $kernel->getContainer()->get('router')->getRouteCollection()->get('polaris.sample.notes')?->getPath());
+        $response = $kernel->handle(Request::create('/sample/notes'));
+        self::assertSame(200, $response->getStatusCode());
+        self::assertSame('hello', json_decode((string) $response->getContent(), true)['data'][0]['text'] ?? null);
+        $problem = $kernel->handle(Request::create('/sample/notes?fail=1'));
+        self::assertSame(403, $problem->getStatusCode());
+        self::assertSame('application/problem+json', $problem->headers->get('Content-Type'));
+        self::assertInstanceOf(SamplePlugin::class, $kernel->getContainer()->get(Polaris::class)->plugin('sample'));
         $kernel->shutdown();
     }
 

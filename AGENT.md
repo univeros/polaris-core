@@ -10,11 +10,11 @@ This repository (`github.com/univeros/polaris-core`) publishes the `polaris/*` C
 - **Extraction (task 1) is complete.** The monorepo holds `packages/core` (`Polaris\`, framework-free), `packages/psr15`, `packages/pdo`, `packages/testing`, `packages/cli`; nothing imports `Altair\`, `Cycle\` or `Univeros\` any more (`bin/check-imports` blocks it). The spec was `docs/extraction/spec.md`; the decisions taken along the way are in `docs/extraction/decisions.md`, the one behaviour change in `behaviour-changes.md`; the Slim demo is `examples/slim`.
 - **Framework adapters and the TypeScript client (task 2) are complete.** The spec is `docs/adapters/spec.md` (Laravel, Symfony, Yii, the TypeScript client; the Univeros module is `univeros/polaris` 2.0 in its own repository, prepared as `docs/adapters/univeros-polaris-2.0.md`); decisions are in `docs/adapters/decisions.md`. Every adapter is proven by the functional suite and the contract fixtures replayed through its own HTTP kernel; the client is generated from the manifest and smoke-tested against the Slim demo.
 
-Entry points: `Polaris::create(new Polaris\Wiring\Config(...))` builds the service graph without a container; `Polaris\Psr15\Pipeline` wraps it as PSR-15 middleware plus handler; `bin/polaris` offers `schema:export`, `schema:diff`, `manifest` and `doctor`. The functional suite replays 184 recorded 1.0 fixtures through the pipeline (`packages/core/tests/Contract`), so every response is contract-frozen. Check `docs/extraction/decisions.md` for what has been decided since this file was written.
+Entry points: `Polaris::create(new Polaris\Wiring\Config(...))` builds the service graph without a container (plugins included, `docs/plugins/README.md`); `Polaris\Psr15\Pipeline` wraps it as PSR-15 middleware plus handler; `bin/polaris` offers `schema:export`, `schema:diff`, `manifest` and `doctor`. The functional suite replays 184 recorded 1.0 fixtures through the pipeline (`packages/core/tests/Contract`), so every response is contract-frozen. Check `docs/extraction/decisions.md` for what has been decided since this file was written.
 
 ## The rules
 
-1. **No feature work on core.** Only what the current task's spec describes (`docs/adapters/spec.md`). If a behaviour must change, log it in `docs/extraction/behaviour-changes.md` first.
+1. **No feature work on core outside a task's spec.** Task 2 (`docs/adapters/spec.md`) is complete; the plugin runtime (`docs/plugins/README.md`) is the seam the packages built on it use, and those packages add nothing to core beyond what `docs/plugins/decisions.md` logs. If a behaviour of the 52 routes must change, log it in `docs/extraction/behaviour-changes.md` first.
 2. **`composer qa` (phpcs, phpstan, phpunit) must pass** before any commit is proposed. Do not weaken phpstan level or skip tests to get green.
 3. **Nothing in this repository may import** `Altair\`, `Cycle\` or `Univeros\`; framework namespaces (`Illuminate\`, `Symfony\Bundle\`, `Yiisoft\`, ...) only inside their adapter package. Allowed dependencies are listed in each spec's §2.
 4. **Public HTTP contract is frozen.** Every request/response shape in `api/**/*.yaml` and `docs/auth/api-reference.md` stays identical. The contract-freeze fixtures (WP6) enforce it.
@@ -44,6 +44,7 @@ packages/core/api/         endpoint specs, the router (shipped inside polaris/co
 docs/auth/                 identity design (unchanged)
 docs/extraction/           task 1 (complete)
 docs/adapters/             task 2 (complete)
+docs/plugins/              the plugin contract (Polaris\Contract\Plugin) and the decisions of the packages built on it
 examples/                  walkthrough.sh (shared), slim/, laravel/, symfony/, yii/; one demo per adapter
 ```
 

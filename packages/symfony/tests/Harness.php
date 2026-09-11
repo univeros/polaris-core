@@ -47,6 +47,10 @@ final class Harness implements HarnessContract
         foreach (self::SERVICES as $service) {
             $ids[$service] = 'polaris.test.' . $service;
         }
+        $pluginIds = [];
+        foreach ($config->plugins as $index => $plugin) {
+            $pluginIds[$index] = 'polaris.test.plugin.' . $index;
+        }
         $kernel = new TestKernel([
             'path_prefix' => $config->pathPrefix,
             'manifest_directory' => $config->manifestDirectory,
@@ -59,11 +63,15 @@ final class Harness implements HarnessContract
             'mailer' => $ids['mailer'],
             'sms' => $ids['sms'],
             'dispatcher' => $ids['dispatcher'],
-        ], synthetic: array_values($ids));
+            'plugins' => array_values($pluginIds),
+        ], synthetic: [...array_values($ids), ...array_values($pluginIds)]);
         $kernel->boot();
         $container = $kernel->getContainer();
         foreach (self::SERVICES as $service) {
             $container->set($ids[$service], $config->{$service} ?? ($service === 'cache' ? new InMemoryCache() : null));
+        }
+        foreach ($pluginIds as $index => $id) {
+            $container->set($id, $config->plugins[$index]);
         }
         self::$previous = $kernel;
 

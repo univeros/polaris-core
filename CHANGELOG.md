@@ -6,6 +6,17 @@ the project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- The plugin runtime: `Polaris\Contract\Plugin` and `Polaris\Plugin\AbstractPlugin`, `Config::$plugins`;
+  a plugin's models join the schema (export, create, diff, install), its `api/<id>/**/*.yaml` specs
+  join the manifest and the router, its services resolve endpoint constructors, its listeners join
+  `Polaris::listeners()`, its permissions the catalog; `Polaris::plugin()`, `Graph::get()`.
+  `Endpoint::problem()` answers RFC 9457 problem documents (`application/problem+json`) for plugin
+  routes. The CLI commands take `--bootstrap` (`POLARIS_BOOTSTRAP`) to see an application's plugins;
+  the adapters take `plugins` in their configuration. `docs/plugins/README.md` documents the contract.
+- Contract fixtures can be recorded (`POLARIS_RECORD_FIXTURES=1`) into a package's own directory, so
+  a plugin proves its routes through every harness like core.
+
 ## [0.1.1] - 2026-09-11
 
 ### Added

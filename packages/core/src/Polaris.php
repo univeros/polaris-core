@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Polaris;
 
+use Polaris\Contract\Plugin;
 use Polaris\Http\Manifest\Manifest;
 use Polaris\Schema\Model;
 use Polaris\Schema\Schema;
@@ -12,7 +13,7 @@ use Polaris\Wiring\Graph;
 
 /**
  * The entry point: `Polaris::create(new Config(...))` builds the whole object graph without a
- * container. HTTP wiring lives in the adapter packages (`polaris/psr15` and later framework
+ * container, plugins included (`Config::$plugins`: their tables, routes, services and listeners). HTTP wiring lives in the adapter packages (`polaris/psr15` and later framework
  * adapters), which take the {@see Graph} this facade exposes.
  */
 final class Polaris
@@ -45,6 +46,11 @@ final class Polaris
     public function manifest(): Manifest
     {
         return $this->graph->manifest();
+    }
+
+    public function plugin(string $id): Plugin
+    {
+        return $this->graph->plugin($id);
     }
 
     /**

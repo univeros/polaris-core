@@ -13,6 +13,8 @@ use Polaris\Event\UserLoggedIn;
 use Polaris\Mfa\LogOtpMailer;
 use Polaris\Mfa\LogSmsSender;
 use Polaris\Pdo\PdoAdapter;
+use Polaris\Tests\Support\Plugin\SamplePlugin;
+use Polaris\Polaris;
 use Polaris\Pdo\SchemaInstaller;
 use Polaris\Testing\InMemoryAdapter;
 use Polaris\Contract\DatabaseAdapter;
@@ -69,6 +71,25 @@ final class ContainerTest extends TestCase
         self::assertSame('test', json_decode((string) $response->getBody(), true)['keys'][0]['kid'] ?? null);
         self::assertSame(405, YiiApp::handle($container, (new ServerRequestFactory())->createServerRequest('GET', '/api/auth/auth/login'))->getStatusCode());
         self::assertSame(404, YiiApp::handle($container, (new ServerRequestFactory())->createServerRequest('GET', '/nope'))->getStatusCode());
+    }
+
+    public function testAPluginsRoutesAndServicesJoinTheContainer(): void
+    {
+        $container = YiiApp::container([
+            'secrets' => Fixtures::secretsArray(),
+            'auth' => ['issuer' => 'https://issuer.test'],
+            'database' => ['dsn' => 'sqlite::memory:'],
+            'plugins' => [SamplePlugin::class],
+        ]);
+
+        self::assertSame('/sample/notes', $container->get(RouteCollectionInterface::class)->getRoutes()['polaris.sample.notes']->getData('pattern'));
+        $response = YiiApp::handle($container, (new ServerRequestFactory())->createServerRequest('GET', '/sample/notes'));
+        self::assertSame(200, $response->getStatusCode());
+        self::assertSame('hello', json_decode((string) $response->getBody(), true)['data'][0]['text'] ?? null);
+        $problem = YiiApp::handle($container, (new ServerRequestFactory())->createServerRequest('GET', '/sample/notes?fail=1')->withQueryParams(['fail' => '1']));
+        self::assertSame(403, $problem->getStatusCode());
+        self::assertSame('application/problem+json', $problem->getHeaderLine('Content-Type'));
+        self::assertInstanceOf(SamplePlugin::class, $container->get(Polaris::class)->plugin('sample'));
     }
 
     public function testThePolarisListenersRunThroughYiisDispatcher(): void
