@@ -23,6 +23,8 @@ use Polaris\Contract\EncrypterInterface;
 use Polaris\Contract\IdentityProviderInterface;
 use Polaris\Contract\MetricsInterface;
 use Polaris\Contract\OtpMailerInterface;
+use Polaris\Schema\Schema;
+use Polaris\Contract\Plugin;
 use Polaris\Contract\PasswordHasherInterface;
 use Polaris\Contract\QrCodeRendererInterface;
 use Polaris\Contract\RateStore;
@@ -113,6 +115,7 @@ use ReflectionClass;
 use ReflectionNamedType;
 
 use function array_key_exists;
+use function array_values;
 use function sprintf;
 
 /**
@@ -127,9 +130,57 @@ final class Graph
 
     private readonly Manifest $manifest;
 
+    /** @var array<string, Plugin> by id */
+    private readonly array $plugins;
+
+    /** @var array<class-string, callable(Graph): object> */
+    private readonly array $pluginServices;
+
     public function __construct(private readonly Config $config)
     {
-        $this->manifest = (new Loader($config->manifestDirectory()))->load();
+        $plugins = [];
+        $services = [];
+        foreach ($config->plugins as $plugin) {
+            if (isset($plugins[$plugin->id()])) {
+                throw new LogicException(sprintf('Two plugins declare the id "%s".', $plugin->id()));
+            }
+            $plugins[$plugin->id()] = $plugin;
+            Schema::register(...$plugin->schema());
+            foreach ($plugin->services() as $class => $factory) {
+                $services[$class] = $factory;
+            }
+        }
+        $this->plugins = $plugins;
+        $this->pluginServices = $services;
+        $this->manifest = (new Loader(...$config->manifestDirectories()))->load();
+    }
+
+    /**
+     * @return array<string, Plugin> by id, in registration order
+     */
+    public function plugins(): array
+    {
+        return $this->plugins;
+    }
+
+    public function plugin(string $id): Plugin
+    {
+        return $this->plugins[$id] ?? throw new LogicException(sprintf('No plugin "%s" is registered.', $id));
+    }
+
+    /**
+     * A plugin-provided service (or any service an endpoint may ask for), built once.
+     *
+     * @template T of object
+     * @param class-string<T> $class
+     * @return T
+     */
+    public function get(string $class): object
+    {
+        /** @var T $service */
+        $service = $this->service($class, $class);
+
+        return $service;
     }
 
     public function manifest(): Manifest
@@ -311,7 +362,7 @@ final class Graph
 
     public function permissionCatalog(): PermissionCatalog
     {
-        return $this->once(PermissionCatalog::class, static fn(): PermissionCatalog => new PermissionCatalog());
+        return $this->once(PermissionCatalog::class, fn(): PermissionCatalog => new PermissionCatalog(array_values($this->plugins)));
     }
 
     public function permissionResolver(): PermissionResolver
@@ -612,11 +663,18 @@ final class Graph
      */
     public function listeners(): array
     {
-        return [
+        $listeners = [
             $this->once(AuditLogListener::class, fn(): AuditLogListener => new AuditLogListener($this->unitOfWork(), $this->clock(), $this->logger())),
             $this->once(NotificationListener::class, fn(): NotificationListener => new NotificationListener($this->mailer(), $this->users(), $this->logger())),
             $this->once(MetricsListener::class, fn(): MetricsListener => new MetricsListener($this->metrics(), $this->logger())),
         ];
+        foreach ($this->plugins as $plugin) {
+            foreach ($plugin->listeners($this) as $listener) {
+                $listeners[] = $listener;
+            }
+        }
+
+        return $listeners;
     }
 
     public function prune(): PruneExpiredService
@@ -700,7 +758,9 @@ final class Graph
             MembershipService::class => $this->memberships(),
             InvitationService::class => $this->invitations(),
             RoleService::class => $this->roles(),
-            default => throw new LogicException(sprintf('%s: no Polaris service provides %s.', $for, $type)),
+            default => isset($this->pluginServices[$type])
+                ? $this->once($type, fn(): object => ($this->pluginServices[$type])($this))
+                : throw new LogicException(sprintf('%s: no Polaris service or plugin provides %s.', $for, $type)),
         };
     }
 

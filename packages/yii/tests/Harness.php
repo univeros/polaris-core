@@ -48,6 +48,7 @@ final class Harness implements HarnessContract
                 'manifest_directory' => $config->manifestDirectory,
                 'mailer' => OtpMailerInterface::class,
                 'sms' => SmsSenderInterface::class,
+                'plugins' => $config->plugins,
             ],
             definitions: [
                 Secrets::class => $config->secrets,

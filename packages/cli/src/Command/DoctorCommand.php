@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Polaris\Cli\Command;
 
+use Polaris\Cli\Bootstrap;
 use Closure;
 use PDO;
 use Polaris\Cli\Database;
@@ -59,11 +60,13 @@ final class DoctorCommand extends Command
             ->setDescription('Checks configuration, keys, database and manifest.')
             ->addOption('dsn', null, InputOption::VALUE_REQUIRED, 'PDO DSN (or POLARIS_DSN); the database check is skipped without one')
             ->addOption('user', null, InputOption::VALUE_REQUIRED, 'Database user (or POLARIS_DB_USER)')
-            ->addOption('password', null, InputOption::VALUE_REQUIRED, 'Database password (or POLARIS_DB_PASSWORD)');
+            ->addOption('password', null, InputOption::VALUE_REQUIRED, 'Database password (or POLARIS_DB_PASSWORD)')
+            ->addOption('bootstrap', 'b', InputOption::VALUE_REQUIRED, 'A PHP file returning the application\'s Polaris instance or Config, so the plugins\' tables and routes are included (or POLARIS_BOOTSTRAP)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $polaris = Bootstrap::load($input->getOption('bootstrap'));
         $this->healthy = true;
 
         try {
@@ -87,7 +90,7 @@ final class DoctorCommand extends Command
         }
 
         try {
-            $manifest = (new Loader(Loader::defaultDirectory()))->load();
+            $manifest = $polaris?->manifest() ?? (new Loader(Loader::defaultDirectory()))->load();
             new Router($manifest);
             $this->report($output, true, sprintf('manifest: %d endpoints load and route', count($manifest->endpoints())));
         } catch (Throwable $exception) {

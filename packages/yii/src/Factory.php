@@ -13,6 +13,8 @@ use Polaris\Contract\DatabaseAdapter;
 use Polaris\Contract\EncrypterInterface;
 use Polaris\Contract\MetricsInterface;
 use Polaris\Contract\OtpMailerInterface;
+use Polaris\Http\Manifest\Loader;
+use Polaris\Contract\Plugin;
 use Polaris\Contract\QrCodeRendererInterface;
 use Polaris\Contract\RateStore;
 use Polaris\Contract\SmsSenderInterface;
@@ -30,6 +32,8 @@ use Psr\SimpleCache\CacheInterface;
 use function file_get_contents;
 use function get_debug_type;
 use function getcwd;
+use function is_array;
+use function is_subclass_of;
 use function is_file;
 use function is_string;
 use function method_exists;
@@ -144,7 +148,50 @@ final class Factory
             qrCodes: self::port($container, $polaris['qr_codes'] ?? null, QrCodeRendererInterface::class, 'qr_codes'),
             manifestDirectory: self::string($polaris['manifest_directory'] ?? null),
             pathPrefix: self::string($polaris['path_prefix'] ?? null) ?? '/',
+            plugins: self::plugins($container, $polaris['plugins'] ?? []),
         );
+    }
+
+    /**
+     * Core's manifest directory and every plugin's, for config/routes.php, which only has the params:
+     * a plugin entry is a class name or an instance there (a container id has no static answer).
+     *
+     * @param array<string, mixed> $polaris the `polaris` params
+     * @return list<string>
+     */
+    public static function manifestDirectories(array $polaris): array
+    {
+        $directories = [self::string($polaris['manifest_directory'] ?? null) ?? Loader::defaultDirectory()];
+        foreach (is_array($polaris['plugins'] ?? null) ? $polaris['plugins'] : [] as $plugin) {
+            if ($plugin instanceof Plugin || (is_string($plugin) && is_subclass_of($plugin, Plugin::class))) {
+                $directory = $plugin::manifestDirectory();
+                if ($directory !== null) {
+                    $directories[] = $directory;
+                }
+            }
+        }
+
+        return $directories;
+    }
+
+    /**
+     * @return list<Plugin>
+     */
+    private static function plugins(ContainerInterface $container, mixed $plugins): array
+    {
+        if (!is_array($plugins)) {
+            throw new InvalidConfigException('polaris.plugins must be a list of plugin class names, container ids or instances.');
+        }
+        $instances = [];
+        foreach ($plugins as $plugin) {
+            $instance = is_string($plugin) ? $container->get($plugin) : $plugin;
+            if (!$instance instanceof Plugin) {
+                throw new InvalidConfigException(sprintf('polaris.plugins entries must be Polaris\\Contract\\Plugin instances, got %s.', get_debug_type($instance)));
+            }
+            $instances[] = $instance;
+        }
+
+        return $instances;
     }
 
     private static function mailer(ContainerInterface $container, mixed $mailer): ?OtpMailerInterface

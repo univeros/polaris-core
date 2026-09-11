@@ -17,6 +17,8 @@ final class Result
         public readonly int $status,
         public readonly array $body = [],
         public readonly array $headers = [],
+        /** An RFC 9457 problem document (`application/problem+json`) rather than a plain JSON body. */
+        public readonly bool $problem = false,
     ) {
     }
 }

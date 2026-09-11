@@ -70,7 +70,9 @@ $pipeline->handler();      // the PSR-15 handler serving every route in packages
 ```
 
 Every port has a working default (in-memory cache, log mailer and SMS sender, system
-clock, libsodium encrypter, PSR-3 metrics); pass your own to replace it.
+clock, libsodium encrypter, PSR-3 metrics); pass your own to replace it. `plugins: [...]`
+adds packages built on the plugin contract ([`docs/plugins`](docs/plugins/README.md)): their
+tables, routes, services, listeners and permissions join core's, in every host.
 
 In Laravel the same graph comes from `config/polaris.php` and Laravel's own services:
 

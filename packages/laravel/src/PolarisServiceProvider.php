@@ -60,16 +60,15 @@ final class PolarisServiceProvider extends ServiceProvider
     }
 
     /**
-     * One Laravel route per manifest endpoint (`route:list` shows them, `route('polaris.auth.login')`
-     * resolves), all served by the pipeline. No catch-all: at `path_prefix: /` a catch-all would shadow
+     * One Laravel route per manifest endpoint, plugins' included (`route:list` shows them,
+     * `route('polaris.auth.login')` resolves), all served by the pipeline. No catch-all: at `path_prefix: /` a catch-all would shadow
      * the application's own routes, and an unknown path is then the application's 404.
      */
     private function registerRoutes(Router $router, Repository $config): void
     {
-        $directory = $config->get('polaris.manifest_directory');
         $prefix = rtrim((string) $config->get('polaris.path_prefix', '/'), '/');
         $middleware = (array) $config->get('polaris.middleware', []);
-        $manifest = (new Loader(is_string($directory) && $directory !== '' ? $directory : Loader::defaultDirectory()))->load();
+        $manifest = (new Loader(...PolarisFactory::manifestDirectories((array) $config->get('polaris', []), $this->app)))->load();
         foreach ($manifest->endpoints() as $spec) {
             $router->match([$spec->method], $prefix . $spec->path, PolarisController::class)
                 ->middleware($middleware)

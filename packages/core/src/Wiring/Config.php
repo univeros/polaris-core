@@ -12,6 +12,7 @@ use Polaris\Contract\DatabaseAdapter;
 use Polaris\Contract\EncrypterInterface;
 use Polaris\Contract\MetricsInterface;
 use Polaris\Contract\OtpMailerInterface;
+use Polaris\Contract\Plugin;
 use Polaris\Contract\QrCodeRendererInterface;
 use Polaris\Contract\RateStore;
 use Polaris\Contract\SmsSenderInterface;
@@ -29,6 +30,9 @@ use Psr\SimpleCache\CacheInterface;
  */
 final readonly class Config
 {
+    /**
+     * @param list<Plugin> $plugins
+     */
     public function __construct(
         public Secrets $secrets,
         public AuthConfig $auth,
@@ -49,11 +53,30 @@ final readonly class Config
         public ?ResponseFactoryInterface $responseFactory = null,
         public ?string $manifestDirectory = null,
         public string $pathPrefix = '/',
+        public array $plugins = [],
     ) {
     }
 
     public function manifestDirectory(): string
     {
         return $this->manifestDirectory ?? Loader::defaultDirectory();
+    }
+
+    /**
+     * Core's manifest directory followed by every plugin's, in registration order.
+     *
+     * @return list<string>
+     */
+    public function manifestDirectories(): array
+    {
+        $directories = [$this->manifestDirectory()];
+        foreach ($this->plugins as $plugin) {
+            $directory = $plugin::manifestDirectory();
+            if ($directory !== null) {
+                $directories[] = $directory;
+            }
+        }
+
+        return $directories;
     }
 }

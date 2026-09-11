@@ -7,6 +7,7 @@ namespace Polaris\Tests\Functional;
 use Laminas\Diactoros\ServerRequestFactory;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\Secrets;
+use Polaris\Contract\Plugin;
 use Polaris\Wiring\Config;
 use Polaris\Wiring\Graph;
 use Psr\Http\Message\ResponseInterface;
@@ -54,7 +55,25 @@ abstract class FunctionalTestCase extends DatabaseTestCase
         $this->sms = new RecordingSmsSender();
         $this->mailer = new RecordingOtpMailer();
         $this->boot();
-        $this->fixture = Fixture::for(static::class . '::' . $this->name(), $this->harness::transportHeaders());
+        $this->fixture = Fixture::for(static::class . '::' . $this->name(), $this->harness::transportHeaders(), static::fixtureDirectory());
+    }
+
+    /**
+     * The plugins the tests of a package run with; core's suite runs none.
+     *
+     * @return list<Plugin>
+     */
+    protected static function plugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * Where this suite's contract fixtures live; a package's functional tests point at their own.
+     */
+    protected static function fixtureDirectory(): string
+    {
+        return Fixture::directory();
     }
 
     /**
@@ -69,6 +88,7 @@ abstract class FunctionalTestCase extends DatabaseTestCase
             mailer: $this->mailer,
             sms: $this->sms,
             dispatcher: $this->events,
+            plugins: static::plugins(),
         ));
         $this->graph = $this->harness->graph();
         // One identity map for the test and the application, as the Cycle heap was shared in 1.0.

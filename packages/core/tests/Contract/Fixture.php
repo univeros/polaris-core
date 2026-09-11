@@ -9,14 +9,23 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function count;
+use function dirname;
 use function file_get_contents;
+use function file_put_contents;
+use function getenv;
+use function is_dir;
 use function is_file;
+use function json_decode;
+use function json_encode;
+use function mkdir;
 use function parse_url;
 use function preg_replace;
-use function json_decode;
 use function sprintf;
 use function str_replace;
 
+use const JSON_PRETTY_PRINT;
+use const JSON_THROW_ON_ERROR;
+use const JSON_UNESCAPED_SLASHES;
 use const PHP_URL_PATH;
 
 /**
@@ -39,19 +48,33 @@ final class Fixture
         $this->steps = $steps;
     }
 
+    /** The file being recorded, when `POLARIS_RECORD_FIXTURES` is set and no fixture exists yet. */
+    private ?string $recording = null;
+
     public static function directory(): string
     {
         return __DIR__ . '/fixtures';
     }
 
     /**
+     * The fixture of a test: replayed when its file exists; recorded (raw request and response steps
+     * written by {@see assertConsumed()}) when `POLARIS_RECORD_FIXTURES` is set and it does not, which
+     * is how a plugin's functional tests get their fixtures from the PSR-15 harness; otherwise none.
+     *
      * @param list<string> $transportHeaders
+     * @param string|null $directory the fixtures directory, core's by default; a plugin passes its own
      */
-    public static function for(string $test, array $transportHeaders = []): ?self
+    public static function for(string $test, array $transportHeaders = [], ?string $directory = null): ?self
     {
-        $file = self::directory() . '/' . str_replace(['\\', '::'], '.', $test) . '.json';
+        $file = ($directory ?? self::directory()) . '/' . str_replace(['\\', '::'], '.', $test) . '.json';
         if (!is_file($file)) {
-            return null;
+            if (getenv('POLARIS_RECORD_FIXTURES') === false) {
+                return null;
+            }
+            $fixture = new self($test, [], $transportHeaders);
+            $fixture->recording = $file;
+
+            return $fixture;
         }
         /** @var list<array{request: array<string, mixed>, response: array<string, mixed>}> $steps */
         $steps = json_decode((string) file_get_contents($file), true);
@@ -61,6 +84,11 @@ final class Fixture
 
     public function compare(ServerRequestInterface $request, ResponseInterface $response): void
     {
+        if ($this->recording !== null) {
+            $this->record($request, $response);
+
+            return;
+        }
         $step = $this->steps[$this->cursor] ?? null;
         Assert::assertNotNull($step, sprintf('%s: step %d was not recorded from 1.0 (the test issues more requests than before)', $this->test, $this->cursor + 1));
         $recorded = $step['request'];
@@ -95,6 +123,38 @@ final class Fixture
 
     public function assertConsumed(): void
     {
+        if ($this->recording !== null) {
+            if (!is_dir(dirname($this->recording))) {
+                mkdir(dirname($this->recording), 0777, true);
+            }
+            file_put_contents($this->recording, json_encode($this->steps, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR) . "\n");
+
+            return;
+        }
         Assert::assertSame(count($this->steps), $this->cursor, sprintf('%s: 1.0 recorded %d requests, the replay issued %d', $this->test, count($this->steps), $this->cursor));
+    }
+
+    /**
+     * One raw step, in the shape the 1.0 recordings have: the request's method, URI, headers and
+     * parsed body; the response's status, headers and decoded body.
+     */
+    private function record(ServerRequestInterface $request, ResponseInterface $response): void
+    {
+        $body = (string) $response->getBody();
+        $response->getBody()->rewind();
+        $parsed = $request->getParsedBody();
+        $this->steps[] = [
+            'request' => [
+                'method' => $request->getMethod(),
+                'uri' => (string) $request->getUri(),
+                'headers' => $request->getHeaders(),
+                'body' => $parsed === null || $parsed === [] ? (string) $request->getBody() : $parsed,
+            ],
+            'response' => [
+                'status' => $response->getStatusCode(),
+                'headers' => $response->getHeaders(),
+                'body' => json_decode($body, true) ?? $body,
+            ],
+        ];
     }
 }

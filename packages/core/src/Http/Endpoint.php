@@ -14,6 +14,7 @@ use function filter_var;
 use function in_array;
 use function is_array;
 use function is_string;
+use function str_replace;
 use function strlen;
 
 use const FILTER_VALIDATE_EMAIL;
@@ -24,6 +25,9 @@ use const FILTER_VALIDATE_EMAIL;
  */
 abstract class Endpoint
 {
+    /** The base URL of the problem types {@see problem()} answers. */
+    public const string PROBLEM_TYPES = 'https://polaris.univeros.io/problems/';
+
     abstract public function __invoke(Input $input): Result;
 
     /**
@@ -55,6 +59,28 @@ abstract class Endpoint
     protected function notFound(string $message): Result
     {
         return $this->respond(404, ['error' => 'not_found', 'message' => $message]);
+    }
+
+    /**
+     * An RFC 9457 problem document for the routes plugins add: `type` is the problem's URL under
+     * {@see self::PROBLEM_TYPES}, `title` its short name, `detail` the message; `error` and `message`
+     * repeat the core envelope so a client reading one shape reads both. Core's own 52 routes keep
+     * their plain envelope.
+     *
+     * @param string $type the problem type, `<plugin>/<name>` (`audit/forbidden`)
+     * @param array<string, mixed> $extensions other members (`errors`, `retry_after`, ...)
+     */
+    protected function problem(int $status, string $type, string $title, string $detail, array $extensions = []): Result
+    {
+        return new Result($status, [
+            'type' => self::PROBLEM_TYPES . $type,
+            'title' => $title,
+            'status' => $status,
+            'detail' => $detail,
+            'error' => str_replace(['/', '-'], '_', $type),
+            'message' => $detail,
+            ...$extensions,
+        ], problem: true);
     }
 
     protected function client(Input $input): ClientContext

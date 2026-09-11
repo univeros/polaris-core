@@ -41,7 +41,17 @@ final class LaravelApp
     public static function create(array $polaris = [], array $env = [], ?callable $resolving = null): Application
     {
         self::reset();
-        $app = Testbench::create(resolvingCallback: $resolving, options: [
+        // The overrides land in a `booting` callback: after the configuration loaded, before the provider
+        // boots, so the route table sees the test's prefix and plugins as a real config file would give them.
+        $app = Testbench::create(resolvingCallback: static function (Application $app) use ($polaris, $resolving): void {
+            $app->booting(static function () use ($app, $polaris): void {
+                $config = $app->make(Repository::class);
+                $config->set('polaris', array_replace((array) $config->get('polaris', []), $polaris));
+            });
+            if ($resolving !== null) {
+                $resolving($app);
+            }
+        }, options: [
             'load_environment_variables' => false,
             'extra' => ['providers' => [PolarisServiceProvider::class], 'env' => $env],
         ]);
@@ -57,7 +67,6 @@ final class LaravelApp
         $config = $app->make(Repository::class);
         $config->set('cache.default', 'array');
         $config->set('logging.default', 'null');
-        $config->set('polaris', array_replace((array) $config->get('polaris', []), $polaris));
 
         return $app;
     }

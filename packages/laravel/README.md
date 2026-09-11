@@ -42,6 +42,7 @@ default), a class name or container binding, or an object:
 | `mailer` | `log` (codes go to the log), `mail` (Laravel's mailer with the `polaris::mail.*` views, `--tag=polaris-views` to publish), or an `OtpMailerInterface` |
 | `sms` | `log`, or an `SmsSenderInterface` |
 | `breach_check`, `clock`, `encrypter`, `metrics`, `totp`, `qr_codes`, `rate_store`, `dispatcher` | Optional ports |
+| `plugins` | `Polaris\Contract\Plugin` class names, bindings or instances; their tables, routes, services, listeners and permissions join core's |
 
 ## Use
 

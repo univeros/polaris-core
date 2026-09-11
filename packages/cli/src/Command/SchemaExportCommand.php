@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Polaris\Cli\Command;
 
+use Polaris\Cli\Bootstrap;
 use Polaris\Contract\Dialect;
 use Polaris\Pdo\SqlSchema;
 use Symfony\Component\Console\Command\Command;
@@ -24,7 +25,8 @@ final class SchemaExportCommand extends Command
             ->setName('schema:export')
             ->setDescription('Prints the Polaris schema as DDL for a database dialect.')
             ->addOption('target', 't', InputOption::VALUE_REQUIRED, 'sql:postgres | sql:mysql | sql:sqlite', 'sql:postgres')
-            ->addOption('drop', null, InputOption::VALUE_NONE, 'Emit DROP TABLE statements instead');
+            ->addOption('drop', null, InputOption::VALUE_NONE, 'Emit DROP TABLE statements instead')
+            ->addOption('bootstrap', 'b', InputOption::VALUE_REQUIRED, 'A PHP file returning the application\'s Polaris instance or Config, so the plugins\' tables and routes are included (or POLARIS_BOOTSTRAP)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -36,6 +38,7 @@ final class SchemaExportCommand extends Command
 
             return Command::INVALID;
         }
+        Bootstrap::load($input->getOption('bootstrap'));
         $statements = $input->getOption('drop') === true ? SqlSchema::dropAll($dialect) : SqlSchema::createAll($dialect);
         $output->writeln(implode(";\n\n", $statements) . ";");
 

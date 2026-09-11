@@ -1,0 +1,30 @@
+# GET /sample/notes: the sample plugin's route, served by the core pipeline.
+endpoint:
+  method: GET
+  path: /sample/notes
+  summary: List the sample notes
+  tags: [sample]
+  auth: public
+  effect: read
+  receipt: false
+
+input:
+  source: query
+  fields:
+    fail: { type: string, rules: [optional] }
+
+domain:
+  class: Polaris\Tests\Support\Plugin\SampleNotesEndpoint
+  description: >
+    Returns the notes from the plugin's own service; `?fail=1` answers a problem document.
+
+output:
+  status: 200
+  example:
+    data:
+      - { id: n1, text: hello }
+
+errors:
+  - { status: 403, code: sample_forbidden }
+
+events: []
