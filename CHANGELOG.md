@@ -4,7 +4,10 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.2.0] - 2026-09-11
+
+The plugin runtime and the first two packages on it: `polaris/audit` and `polaris/admin`. One version
+line for every package.
 
 ### Added
 - The plugin runtime: `Polaris\Contract\Plugin` and `Polaris\Plugin\AbstractPlugin`, `Config::$plugins`;
