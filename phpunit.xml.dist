@@ -16,6 +16,11 @@
             <directory>packages/core/tests/Functional</directory>
             <directory>packages/core/tests/Contract</directory>
             <directory>packages/audit/tests/Functional</directory>
+            <directory>packages/admin/tests/Functional</directory>
+        </testsuite>
+        <testsuite name="admin">
+            <directory>packages/admin/tests</directory>
+            <exclude>packages/admin/tests/Functional</exclude>
         </testsuite>
         <testsuite name="audit">
             <directory>packages/audit/tests</directory>
@@ -42,6 +47,7 @@
             <directory>packages/symfony/src</directory>
             <directory>packages/yii/src</directory>
             <directory>packages/audit/src</directory>
+            <directory>packages/admin/src</directory>
         </include>
     </source>
 </phpunit>

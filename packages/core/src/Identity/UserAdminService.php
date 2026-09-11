@@ -183,6 +183,17 @@ final class UserAdminService
     public function erase(string $actorUserId, ?string $actorOrganizationId, string $userId): void
     {
         $this->assertSelfOrPermission($actorUserId, $actorOrganizationId, $userId, PermissionCatalog::USERS_MANAGE);
+        $this->anonymize($actorUserId, $userId);
+    }
+
+    /**
+     * The anonymisation itself, for a caller that already established its authority (an operator
+     * of `polaris/admin`); {@see erase()} is the self-or-permission path.
+     *
+     * @throws UserNotFoundException
+     */
+    public function anonymize(string $actorUserId, string $userId): void
+    {
         $user = $this->userOrFail($userId);
 
         $user->email = $this->pepper->hash(self::ERASURE_PEPPER_CONTEXT, $user->email) . self::TOMBSTONE_EMAIL_SUFFIX;

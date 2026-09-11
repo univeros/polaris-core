@@ -1,0 +1,48 @@
+# GET /admin/users: list the users.
+endpoint:
+  method: GET
+  path: /admin/users
+  summary: List the users
+  tags: [admin, users]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: read
+  receipt: false
+
+input:
+  source: query
+  fields:
+    email: { type: string, rules: [optional] }
+    status: { type: string, rules: [optional] }
+    cursor: { type: string, rules: [optional] }
+    limit: { type: integer, rules: [optional] }
+
+domain:
+  class: Polaris\Admin\Http\Users\ListUsersEndpoint
+  description: >
+    Oldest first (ids are UUID v7); email is an exact match; status is active, disabled or
+    locked; cursor is the next_cursor of the previous page; limit 50 by default, 200 at most.
+    Needs read on the instance.
+
+output:
+  status: 200
+  example:
+    data:
+      - id: "018f..."
+        email: "ada@example.com"
+        display_name: "Ada"
+        status: "active"
+        email_verified: true
+        mfa_enforced: false
+        locked_until: null
+        created_at: "2026-09-11T10:00:00+00:00"
+        last_login_at: "2026-09-11T10:05:00+00:00"
+        last_active_at: "2026-09-11T10:05:00+00:00"
+    next_cursor: null
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 422, code: admin_invalid_input }
+
+events: []

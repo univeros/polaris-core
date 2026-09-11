@@ -1,0 +1,47 @@
+# POST /admin/organizations/{id}/drains: create an audit drain.
+endpoint:
+  method: POST
+  path: /admin/organizations/{id}/drains
+  summary: Create an audit drain
+  tags: [admin, audit]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    id: { type: string, rules: [required] }
+    endpoint: { type: string, rules: [required] }
+    secret: { type: string, rules: [required], sensitive: true }
+    filter: { type: array, rules: [optional] }
+
+domain:
+  class: Polaris\Admin\Http\Audit\CreateDrainEndpoint
+  description: >
+    A signed webhook drain: an https endpoint, a secret of at least 16 characters (encrypted at
+    rest, never returned), an optional filter of names or prefix.* patterns. Delivered when the
+    audit plugin has an HTTP client. Needs own; recorded as admin.drain_created.
+
+output:
+  status: 201
+  example:
+    data:
+      id: "018f..."
+      organization_id: "018f..."
+      type: "webhook"
+      endpoint: "https://hooks.example.test/audit"
+      filter: ["org.*"]
+      status: "active"
+      last_delivery_at: null
+      last_error: null
+      created_at: "2026-09-11T10:00:00+00:00"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+  - { status: 422, code: admin_invalid_input }
+
+events: [admin.drain_created]

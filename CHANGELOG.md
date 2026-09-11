@@ -23,6 +23,17 @@ the project adheres to [Semantic Versioning](https://semver.org/).
   policy (`audit:prune`), an optional hash chain (`audit:verify`); `last_active_at` per user.
 - `polaris/cli`: `Polaris\Cli\CommandProvider`; `bin/polaris` adds a plugin's commands when
   `POLARIS_BOOTSTRAP` names the application.
+- **`polaris/admin`** (`Polaris\Admin\`): the operator API under `/admin` for admin users (a grant, or the
+  superadmin role) and API keys (`pak_...`, hashed, with IP allowlist and expiry), with the
+  viewer/support/admin/owner role matrix and instance or organization scopes: users (list, read, ban,
+  unban, set password, delete, impersonate), sessions, MFA factors (remove, reset), organizations (list,
+  read with members, member roles, delete), the instance-wide audit trail and the organizations' drains,
+  statistics, keys and grants; `admin:key` and `admin:grant`; every action recorded as `admin.*` through
+  `polaris/audit`.
+- `Polaris\Contract\Plugin::middleware(Graph)`: PSR-15 middleware a plugin adds to the pipeline, right
+  after the bearer token is parsed. `AccessTokenClaims::$extra` and `TokenService::mint()` mint an access
+  token with a package's claims and no session; `UserAdminService::anonymize()` is the erasure without
+  the self-or-permission check, for an operator whose authority is established.
 
 ## [0.1.1] - 2026-09-11
 

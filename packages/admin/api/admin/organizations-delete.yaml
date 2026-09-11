@@ -1,0 +1,35 @@
+# DELETE /admin/organizations/{id}: delete an organization.
+endpoint:
+  method: DELETE
+  path: /admin/organizations/{id}
+  summary: Delete an organization
+  tags: [admin, organizations]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Admin\Http\Organizations\DeleteOrganizationEndpoint
+  description: >
+    Soft-deletes the organization as core does (status suspended, members' sessions on it
+    ended). Needs manage on the instance or on this organization; recorded as
+    admin.organization_deleted.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "suspended"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+
+events: [org.deleted, admin.organization_deleted]

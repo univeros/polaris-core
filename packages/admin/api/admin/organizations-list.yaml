@@ -1,0 +1,43 @@
+# GET /admin/organizations: list the organizations.
+endpoint:
+  method: GET
+  path: /admin/organizations
+  summary: List the organizations
+  tags: [admin, organizations]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: read
+  receipt: false
+
+input:
+  source: query
+  fields:
+    status: { type: string, rules: [optional] }
+    cursor: { type: string, rules: [optional] }
+    limit: { type: integer, rules: [optional] }
+
+domain:
+  class: Polaris\Admin\Http\Organizations\ListOrganizationsEndpoint
+  description: >
+    Oldest first; status is active or suspended; cursor and limit as /admin/users. Needs read on
+    the instance.
+
+output:
+  status: 200
+  example:
+    data:
+      - id: "018f..."
+        name: "Acme Rockets"
+        slug: "acme-rockets"
+        status: "active"
+        created_by: "018f..."
+        created_at: "2026-09-11T10:00:00+00:00"
+        updated_at: "2026-09-11T10:00:00+00:00"
+    next_cursor: null
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 422, code: admin_invalid_input }
+
+events: []

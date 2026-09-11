@@ -16,3 +16,5 @@ parameters:
         - packages/yii/tests
         - packages/audit/src
         - packages/audit/tests
+        - packages/admin/src
+        - packages/admin/tests

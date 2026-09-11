@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: [core, psr15, pdo, testing, cli, laravel, symfony, yii, audit]
+        package: [core, psr15, pdo, testing, cli, laravel, symfony, yii, audit, admin]
 
     steps:
       - uses: actions/checkout@v4

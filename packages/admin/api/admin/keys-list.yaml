@@ -1,0 +1,38 @@
+# GET /admin/keys: list the api keys.
+endpoint:
+  method: GET
+  path: /admin/keys
+  summary: List the API keys
+  tags: [admin, keys]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Admin\Http\Keys\ListKeysEndpoint
+  description: >
+    Every key, never the secrets. Needs own on the instance.
+
+output:
+  status: 200
+  example:
+    data:
+      - id: "018f..."
+        name: "Dashboard"
+        role: "owner"
+        scope: "instance"
+        ip_allowlist: []
+        expires_at: null
+        last_used_at: null
+        created_by: "018f..."
+        created_at: "2026-09-11T10:00:00+00:00"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+
+events: []

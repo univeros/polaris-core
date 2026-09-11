@@ -1,0 +1,35 @@
+# DELETE /admin/users/{id}/mfa: reset a user's mfa.
+endpoint:
+  method: DELETE
+  path: /admin/users/{id}/mfa
+  summary: Reset a user's MFA
+  tags: [admin, mfa]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Admin\Http\Mfa\ResetMfaEndpoint
+  description: >
+    Removes every factor and recovery code, enforced MFA or not, so the user enrols again at
+    their next sign-in. Needs manage; recorded as admin.mfa_reset.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "reset"
+      factors: 1
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+
+events: [mfa.factor_removed, admin.mfa_reset]

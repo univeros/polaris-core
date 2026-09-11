@@ -21,6 +21,7 @@
             "options": {
                 "symlink": true,
                 "versions": {
+                    "polaris/admin": "0.2.x-dev",
                     "polaris/audit": "0.2.x-dev",
                     "polaris/cli": "0.2.x-dev",
                     "polaris/core": "0.2.x-dev",
@@ -36,6 +37,7 @@
     ],
     "require": {
         "php": ">=8.3",
+        "polaris/admin": "0.2.x-dev",
         "polaris/audit": "0.2.x-dev",
         "polaris/cli": "0.2.x-dev",
         "polaris/core": "0.2.x-dev",
@@ -64,6 +66,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Polaris\\Admin\\Tests\\": "packages/admin/tests/",
             "Polaris\\Audit\\Tests\\": "packages/audit/tests/",
             "Polaris\\Laravel\\Tests\\": "packages/laravel/tests/",
             "Polaris\\Symfony\\Tests\\": "packages/symfony/tests/",

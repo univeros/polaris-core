@@ -1,0 +1,35 @@
+# POST /admin/users/{id}/unban: unban a user.
+endpoint:
+  method: POST
+  path: /admin/users/{id}/unban
+  summary: Unban a user
+  tags: [admin, users]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: write
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Admin\Http\Users\UnbanUserEndpoint
+  description: >
+    Re-enables the account and clears its lockout (core's enable); an anonymised account is
+    refused. Needs manage; recorded as admin.user_unbanned.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "active"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+  - { status: 409, code: admin_conflict }
+
+events: [user.enabled, admin.user_unbanned]
