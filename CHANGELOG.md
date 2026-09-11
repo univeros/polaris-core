@@ -14,6 +14,13 @@ the project adheres to [Semantic Versioning](https://semver.org/).
   `list<x>` fields as arrays. `EndpointSpec::$plugin` names the plugin a route belongs to.
 - The Slim demo registers the audit and admin plugins; `bin/setup` writes an owner API key to
   `var/admin.key`, which the client's smoke test uses.
+- **`polaris/messaging`** (`Polaris\Messaging\`): templated, translated (en, es, de, fr, pt), rate-limited
+  email and SMS through pluggable channels (Symfony Mailer, PHPMailer, Twilio, Vonage, log, array), with
+  instance and per-organization template overrides (`polaris_messaging_template`), a fallback kind, quiet
+  mode through a `Suppressor`, an `Outbox` queue seam, `messaging:send`; it becomes core's mailer and SMS
+  sender when the configuration leaves them unset, and every delivery is `messaging.sent` in the audit store.
+- A plugin may provide a core port (the mailer, the SMS sender, the breach check, the metrics) through
+  `services()` keyed by the contract; the graph takes it when the configuration leaves the port unset.
 
 ## [0.2.0] - 2026-09-11
 
