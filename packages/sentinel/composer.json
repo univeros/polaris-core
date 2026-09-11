@@ -1,0 +1,49 @@
+{
+    "name": "polaris/sentinel",
+    "description": "Sentinel for Polaris for PHP: a local risk engine on sign-up, sign-in, password reset and code sends (velocity, credential stuffing, bots, disposable domains, impossible travel, IP rules, devices, breached passwords) that observes, challenges or blocks",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "polaris/admin": "^0.3",
+        "polaris/audit": "^0.3",
+        "polaris/cli": "^0.3",
+        "polaris/core": "^0.3",
+        "polaris/messaging": "^0.3",
+        "psr/clock": "^1.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.1 || ^2.0",
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0",
+        "psr/log": "^3.0",
+        "psr/simple-cache": "^3.0",
+        "symfony/console": "^7.0 || ^8.0",
+        "symfony/uid": "^7.0 || ^8.0"
+    },
+    "suggest": {
+        "maxmind-db/reader": "For MaxMindGeoResolver (the impossible-travel signal)",
+        "httpsoft/http-message": "A PSR-17 response factory the middleware can discover when the host passes none"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\Sentinel\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.3.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

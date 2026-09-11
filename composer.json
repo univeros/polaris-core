@@ -29,6 +29,7 @@
                     "polaris/messaging": "0.3.x-dev",
                     "polaris/pdo": "0.3.x-dev",
                     "polaris/psr15": "0.3.x-dev",
+                    "polaris/sentinel": "0.3.x-dev",
                     "polaris/symfony": "0.3.x-dev",
                     "polaris/testing": "0.3.x-dev",
                     "polaris/yii": "0.3.x-dev"
@@ -46,6 +47,7 @@
         "polaris/messaging": "0.3.x-dev",
         "polaris/pdo": "0.3.x-dev",
         "polaris/psr15": "0.3.x-dev",
+        "polaris/sentinel": "0.3.x-dev",
         "polaris/symfony": "0.3.x-dev",
         "polaris/testing": "0.3.x-dev",
         "polaris/yii": "0.3.x-dev"
@@ -53,6 +55,7 @@
     "require-dev": {
         "httpsoft/http-message": "^1.1",
         "laminas/laminas-diactoros": "^3.0",
+        "maxmind-db/reader": "^1.12",
         "orchestra/testbench-core": "^11.4",
         "phpmailer/phpmailer": "^6.9",
         "phpstan/phpstan": "^2.1",
@@ -73,6 +76,7 @@
             "Polaris\\Audit\\Tests\\": "packages/audit/tests/",
             "Polaris\\Laravel\\Tests\\": "packages/laravel/tests/",
             "Polaris\\Messaging\\Tests\\": "packages/messaging/tests/",
+            "Polaris\\Sentinel\\Tests\\": "packages/sentinel/tests/",
             "Polaris\\Symfony\\Tests\\": "packages/symfony/tests/",
             "Polaris\\Tests\\": "packages/core/tests/",
             "Polaris\\Yii\\Tests\\": "packages/yii/tests/"
