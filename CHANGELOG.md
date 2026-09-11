@@ -4,7 +4,9 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.5.0] - 2026-09-12
+
+`polaris/sso`, per-organization SAML and OIDC providers with verified domains and single logout.
 
 ### Added
 - **`polaris/sso`** (`Polaris\Sso\`): per-organization SAML 2.0 (onelogin/php-saml, strict: signatures,
@@ -24,6 +26,8 @@ the project adheres to [Semantic Versioning](https://semver.org/).
 - The OpenAPI document types a nullable field (`?integer`, `?boolean`, `?list<string>`) as its type and an
   `object` field as an object, so the generated client checks the bodies of the plugin routes; core's
   `permission_keys` is typed as an array now.
+- The packages' version line is 0.5: `^0.5` between siblings, `0.5.x-dev` on the path repository and
+  in the demos.
 
 ## [0.4.0] - 2026-09-11
 
