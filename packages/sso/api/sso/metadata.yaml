@@ -1,0 +1,27 @@
+# GET /sso/metadata/{providerId}: the SP metadata.
+endpoint:
+  method: GET
+  path: /sso/metadata/{providerId}
+  summary: SAML service provider metadata
+  tags: [sso]
+  auth: public
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Sso\Http\Flow\MetadataEndpoint
+  description: >
+    The SP metadata XML (application/samlmetadata+xml) the organization's IdP is configured with:
+    entity id, assertion consumer and single-logout URLs, the SP certificate when one is configured.
+
+output:
+  status: 200
+  example: {}
+
+errors:
+  - { status: 404, code: sso_provider_not_found }
+
+events: []

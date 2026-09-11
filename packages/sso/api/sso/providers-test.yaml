@@ -1,0 +1,37 @@
+# POST /orgs/{id}/sso/providers/{providerId}/test: check the provider.
+endpoint:
+  method: POST
+  path: /orgs/{id}/sso/providers/{providerId}/test
+  summary: Test an SSO provider's configuration
+  tags: [sso, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: read
+  receipt: false
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    providerId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Sso\Http\Organization\TestProviderEndpoint
+  description: >
+    OIDC: the discovery document and the JWKS are fetched afresh; SAML: the certificate parses and the
+    URLs are present. ok with an empty problems list when everything is in order.
+
+output:
+  status: 200
+  example:
+    data:
+      ok: false
+      problems: ["discovery unreachable: Could not resolve host"]
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: sso_forbidden }
+  - { status: 404, code: sso_not_found }
+
+events: []

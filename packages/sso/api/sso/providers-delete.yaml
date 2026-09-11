@@ -1,0 +1,36 @@
+# DELETE /orgs/{id}/sso/providers/{providerId}: remove a provider and its domains.
+endpoint:
+  method: DELETE
+  path: /orgs/{id}/sso/providers/{providerId}
+  summary: Remove an SSO provider
+  tags: [sso, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    providerId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Sso\Http\Organization\DeleteProviderEndpoint
+  description: >
+    Sign-ins through the provider stop at once; its domains are removed with it. Recorded as
+    sso.provider_deleted.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "deleted"
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: sso_forbidden }
+  - { status: 404, code: sso_not_found }
+
+events: [sso.provider_deleted]

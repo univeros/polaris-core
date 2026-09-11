@@ -1,0 +1,57 @@
+# POST /orgs/{id}/sso/providers: add a provider.
+endpoint:
+  method: POST
+  path: /orgs/{id}/sso/providers
+  summary: Add an SSO provider
+  tags: [sso, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    type: { type: string, rules: [required] }
+    name: { type: string, rules: [required] }
+    issuer: { type: string, rules: [required] }
+    config: { type: object, rules: [required] }
+    attributes: { type: "?object", rules: [optional] }
+    jit: { type: "?object", rules: [optional] }
+    redirect_uris: { type: "list<string>", rules: [required] }
+    enabled: { type: "?boolean", rules: [optional] }
+
+domain:
+  class: Polaris\Sso\Http\Organization\CreateProviderEndpoint
+  description: >
+    type is saml (config: sso_url, certificate, optional slo_url, slo_response_url, idp_initiated) or
+    oidc (config: client_id, optional client_secret, scopes, issuer; the secret is encrypted at rest and
+    never returned). attributes maps email and name onto the provider's claim or attribute names; jit
+    (enabled, roles) creates unknown users and their membership on first sign-in; redirect_uris are
+    the application URLs a sign-in may end on. Recorded as sso.provider_created.
+
+output:
+  status: 201
+  example:
+    data:
+      id: "018f..."
+      organization_id: "018f..."
+      type: "saml"
+      name: "Acme IdP"
+      issuer: "https://idp.acme.example/metadata"
+      config: { sso_url: "https://idp.acme.example/sso", certificate: "MIIC...", idp_initiated: false }
+      attributes: { email: "email", name: "displayName" }
+      jit: { enabled: false, roles: [] }
+      redirect_uris: ["https://app.example.com/sso/done"]
+      enabled: true
+      created_by: "018f..."
+      created_at: "2026-09-11T10:00:00+00:00"
+      updated_at: "2026-09-11T10:00:00+00:00"
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: sso_forbidden }
+  - { status: 422, code: sso_invalid_input }
+
+events: [sso.provider_created]

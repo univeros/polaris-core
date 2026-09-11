@@ -1,0 +1,38 @@
+# POST /sso/sign-in: where the browser goes to sign in through an organization's provider.
+endpoint:
+  method: POST
+  path: /sso/sign-in
+  summary: Start a single sign-on
+  tags: [sso]
+  auth: public
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    email: { type: "?string", rules: [optional] }
+    provider_id: { type: "?string", rules: [optional] }
+    redirect_uri: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\Sso\Http\Flow\SignInEndpoint
+  description: >
+    The provider of provider_id, or the one a verified domain routes the email to. The application
+    sends the browser to url; the sign-in ends on redirect_uri (one of the provider's, the first by
+    default) with a one-time sso_code for POST /sso/exchange.
+
+output:
+  status: 200
+  example:
+    data:
+      url: "https://idp.example.com/authorize?response_type=code&client_id=..."
+      provider_id: "018f..."
+      type: "oidc"
+
+errors:
+  - { status: 403, code: sso_provider_disabled }
+  - { status: 404, code: sso_provider_not_found }
+  - { status: 422, code: sso_invalid_input }
+
+events: []

@@ -1,0 +1,43 @@
+# GET /orgs/{id}/sso/providers/{providerId}: one provider with the SP side.
+endpoint:
+  method: GET
+  path: /orgs/{id}/sso/providers/{providerId}
+  summary: Read an SSO provider
+  tags: [sso, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: read
+  receipt: false
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    providerId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Sso\Http\Organization\ReadProviderEndpoint
+  description: >
+    The provider and the service-provider URLs its IdP is configured with (entity id, assertion consumer,
+    single logout, metadata).
+
+output:
+  status: 200
+  example:
+    data:
+      id: "018f..."
+      type: "saml"
+      name: "Acme IdP"
+      sp:
+        entity_id: "https://app.example.com/auth/sso/metadata/018f..."
+        acs_url: "https://app.example.com/auth/sso/callback/018f..."
+        slo_url: "https://app.example.com/auth/sso/slo/018f..."
+        metadata_url: "https://app.example.com/auth/sso/metadata/018f..."
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: sso_forbidden }
+  - { status: 404, code: sso_not_found }
+
+events: []

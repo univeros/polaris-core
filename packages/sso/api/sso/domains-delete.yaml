@@ -1,0 +1,35 @@
+# DELETE /orgs/{id}/sso/domains/{domainId}: remove a domain.
+endpoint:
+  method: DELETE
+  path: /orgs/{id}/sso/domains/{domainId}
+  summary: Remove an SSO domain
+  tags: [sso, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    domainId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Sso\Http\Organization\DeleteDomainEndpoint
+  description: >
+    Sign-ins with the domain's emails stop routing to the provider. Recorded as sso.domain_deleted.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "deleted"
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: sso_forbidden }
+  - { status: 404, code: sso_not_found }
+
+events: [sso.domain_deleted]

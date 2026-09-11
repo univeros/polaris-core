@@ -1,0 +1,34 @@
+# GET /sso/slo/{providerId}: single logout, redirect binding.
+endpoint:
+  method: GET
+  path: /sso/slo/{providerId}
+  summary: SAML single logout (redirect binding)
+  tags: [sso]
+  auth: public
+  effect: write
+  receipt: false
+
+input:
+  source: query
+  fields:
+    SAMLRequest: { type: "?string", rules: [optional] }
+    SAMLResponse: { type: "?string", rules: [optional] }
+    RelayState: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\Sso\Http\Flow\SloRedirectEndpoint
+  description: >
+    An IdP's LogoutRequest ends every session of the named user and is answered with the LogoutResponse
+    (302 to the IdP); an IdP's LogoutResponse ends an application-initiated logout.
+
+output:
+  status: 302
+  example: {}
+
+errors:
+  - { status: 403, code: sso_assertion_invalid }
+  - { status: 403, code: sso_provider_disabled }
+  - { status: 404, code: sso_provider_not_found }
+  - { status: 422, code: sso_invalid_input }
+
+events: [sso.slo_completed]

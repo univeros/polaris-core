@@ -1,0 +1,39 @@
+# POST /orgs/{id}/sso/domains: claim a domain for a provider.
+endpoint:
+  method: POST
+  path: /orgs/{id}/sso/domains
+  summary: Add an SSO domain
+  tags: [sso, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    domain: { type: string, rules: [required] }
+    provider_id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Sso\Http\Organization\AddDomainEndpoint
+  description: >
+    A domain belongs to one organization across the instance (409 when claimed). Once verified, a
+    sign-in with an email of the domain goes to provider_id. Recorded as sso.domain_added.
+
+output:
+  status: 201
+  example:
+    data:
+      id: "018f..."
+      domain: "acme.example"
+      verified: false
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: sso_forbidden }
+  - { status: 409, code: sso_conflict }
+  - { status: 422, code: sso_invalid_input }
+
+events: [sso.domain_added]

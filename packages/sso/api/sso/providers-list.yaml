@@ -1,0 +1,44 @@
+# GET /orgs/{id}/sso/providers: the organization's providers.
+endpoint:
+  method: GET
+  path: /orgs/{id}/sso/providers
+  summary: List the organization's SSO providers
+  tags: [sso, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Sso\Http\Organization\ListProvidersEndpoint
+  description: >
+    The providers of the caller's active organization (the path id must match, a superadmin excepted),
+    never the client secrets.
+
+output:
+  status: 200
+  example:
+    data:
+      - id: "018f..."
+        organization_id: "018f..."
+        type: "oidc"
+        name: "Okta"
+        issuer: "https://acme.okta.com"
+        config: { client_id: "0oa...", scopes: "openid email profile", client_secret_set: true }
+        attributes: { email: "email", name: "name" }
+        jit: { enabled: true, roles: ["member"] }
+        redirect_uris: ["https://app.example.com/sso/done"]
+        enabled: true
+        created_by: "018f..."
+        created_at: "2026-09-11T10:00:00+00:00"
+        updated_at: "2026-09-11T10:00:00+00:00"
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: sso_forbidden }
+
+events: []
