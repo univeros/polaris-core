@@ -9,6 +9,10 @@ the project adheres to [Semantic Versioning](https://semver.org/).
 `polaris/messaging`, the client namespaces for the plugins, and the port rule that lets a plugin serve
 core.
 
+### Changed
+- The packages' version line is 0.3: `^0.3` between siblings, `0.3.x-dev` on the path repository and
+  in the demos (a package at 0.3.0 requires its siblings at 0.3.0).
+
 ### Added
 - `@polaris-auth/client`: the plugins' routes as namespaces, `client.audit.*` and `client.admin.*`, one
   typed method per endpoint, generated from the OpenAPI document (`x-polaris-plugin`); `ProblemBody`
