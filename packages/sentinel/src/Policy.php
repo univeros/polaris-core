@@ -10,7 +10,7 @@ use function min;
 /**
  * Sums the verdicts (capped at 100, floored at 0 after an allow rule) and maps the score to an action:
  * below `challengeAt` allow, from it challenge, from `blockAt` block. A verdict that proves a passed
- * challenge turns a challenge into an allow.
+ * challenge turns a challenge into an allow and is listed with the signals that spoke.
  */
 final readonly class Policy
 {
@@ -27,7 +27,7 @@ final readonly class Policy
         $fired = [];
         $passed = false;
         foreach ($verdicts as $verdict) {
-            if ($verdict->score !== 0) {
+            if ($verdict->score !== 0 || $verdict->passedChallenge) {
                 $fired[] = $verdict;
             }
             $score += $verdict->score;

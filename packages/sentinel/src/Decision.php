@@ -18,7 +18,7 @@ final readonly class Decision
     public const string BLOCK = 'block';
 
     /**
-     * @param list<Verdict> $verdicts the signals that scored (positive or negative)
+     * @param list<Verdict> $verdicts the signals that scored (positive or negative) or proved a passed challenge
      */
     public function __construct(public string $action, public int $score, public array $verdicts, public bool $enforced)
     {

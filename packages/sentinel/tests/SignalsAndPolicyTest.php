@@ -162,7 +162,7 @@ final class SignalsAndPolicyTest extends TestCase
         self::assertSame([Decision::ALLOW, 0, ['ip_list', 'a']], [$cleared->action, $cleared->score, $cleared->signals()]);
 
         $passed = $policy->decide([new Verdict('a', 60), new Verdict('bot', 0, ['captcha passed'], passedChallenge: true)], true);
-        self::assertSame([Decision::ALLOW, 60, ['a']], [$passed->action, $passed->score, $passed->signals()], 'a passed challenge turns a challenge into an allow, a block stays a block');
+        self::assertSame([Decision::ALLOW, 60, ['a', 'bot'], ['captcha passed']], [$passed->action, $passed->score, $passed->signals(), $passed->reasons()], 'a passed challenge turns a challenge into an allow and is listed; a block stays a block');
         self::assertSame(Decision::BLOCK, $policy->decide([new Verdict('a', 90), new Verdict('bot', 0, [], passedChallenge: true)], true)->action);
 
         $custom = new Policy(challengeAt: 20, blockAt: 50);

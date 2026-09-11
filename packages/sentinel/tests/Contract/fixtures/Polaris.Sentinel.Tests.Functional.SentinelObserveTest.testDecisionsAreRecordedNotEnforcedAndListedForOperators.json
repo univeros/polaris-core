@@ -1,0 +1,673 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@mailinator.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789164000"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "xsNyqBAy2INlNtySXy9nr8QSIOc48EV0JXmn4bLvy4A"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789163400"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@mailinator.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789163400"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImMyODhhMzRkYTkyZjczZjhjOTE2MjYwZTI3MTY2NGNjYWVlY2NkYmM1NzZkYjJkNGRmNmMxMWZiMThmNTYxNzAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTYzMTUzLjc2OTg1LCJuYmYiOjE3ODkxNjMxNTMuNzY5ODUsImV4cCI6MTc4OTE2NDA1My43Njk4NSwic3ViIjoiMDFhMDkyNmYtMjgwMS03YzJmLTljNzQtNTNjMjBhMGQ3YWI4IiwianRpIjoiMDFhMDkyNmYtMjk2OS03ZDFhLTkxM2QtOGY2NTY3MzBmODcwIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MjZmLTI5NjktN2FiZS05MTNkLThmNjU2NWJkNGExYSIsImF1dGhfdGltZSI6MTc4OTE2MzE1M30.GygOsxd92CkCzEPo6BMqYGBeqIfqdUul2GP1q5wwk2AjAei-K4EqoCaKTHOIu8GzM9VkyrH4YOAuZcCSiVEnQI1IC9gZhzEUefCvd8oJcfgVNHSg8mL4UEJ0YiUATRhO2dEhFLbB4yPQ8NTbYciEVli4uR9_TvAh_fq8L8Fq3k_X6Ye08MYeng2KJOPQCYeQmT8oPJHGXRRQe_xCuKIfgAKdQ-CBV3Whqa4d-6_fnQUSS3V5wpsiDnsbIUn2wEIKoyI5kJsCZUDiafifDVWdRemtQn3GZ0e5tR0lgAASwTSowNo0RTjrdmggXoNhoc1y9vGmRbSXxlhiruuUGVMzcQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "GTQIo_pRTKSIjNUeBc4F0uEchCtmjJdj720HjVrJTRM",
+                    "user": {
+                        "id": "01a0926f-2801-7c2f-9c74-53c20a0d7ab8",
+                        "email": "ada@mailinator.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/password/forgot",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@mailinator.com"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789164000"
+                ]
+            },
+            "body": {
+                "message": "If an account exists for that address, a password reset link has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "operator@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789164000"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "KItMhh8mjFse1gQCebD4R38gE5NNW410id7Ltt0AAyg"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789163400"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "operator@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789163400"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImMyODhhMzRkYTkyZjczZjhjOTE2MjYwZTI3MTY2NGNjYWVlY2NkYmM1NzZkYjJkNGRmNmMxMWZiMThmNTYxNzAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTYzMTU0LjEzNDY3NywibmJmIjoxNzg5MTYzMTU0LjEzNDY3NywiZXhwIjoxNzg5MTY0MDU0LjEzNDY3Nywic3ViIjoiMDFhMDkyNmYtMjk2ZC03ZGM2LTk0NjgtOWQwODllNmE3ZWNmIiwianRpIjoiMDFhMDkyNmYtMmFkNi03YTU4LWI3OWUtYTYwYmUwYTRmMjBkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MjZmLTJhZDYtNzg0NC1iNzllLWE2MGJkZjE3MGY0ZCIsImF1dGhfdGltZSI6MTc4OTE2MzE1M30.XT-kVsAwBvzmQ3UC7bsrdCcOOd7glLX8RkSL3NQpV6kqx_5_cYvXmEepABgcxggkn8mkYGyDGTU_ROinjqjJlrtuawdDvjcbrWMmL2F9I-ykfutaOFLwVKqqh2Am2BOFiSqOb05K8J6CDm4gKkMl3m5D8eAsCPWYR_TjJSJj5P1BXGpPH0aO8gF-3ou4BRiqyWC5T3aB2E4kL8aq71zSHAtBVEyorkJnFuzrfvxa7mbVXjnK7ImoL91vX5BesgL_Y0Np-ekLyd-xWH2y1Tg90KH5_CyKalZaQ8Ahto9o6wTQE8xY778bNh8kYwnIAmK-QMtA33wJd3R0tU_-9XHE0g",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "-CQbQlBO2vqiV66y8v7-ISPlgKTDbUU0EyfCP4SbXpE",
+                    "user": {
+                        "id": "01a0926f-296d-7dc6-9468-9d089e6a7ecf",
+                        "email": "operator@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/sentinel/decisions",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/unauthorized",
+                "title": "Unauthorized",
+                "status": 401,
+                "detail": "An admin user or an API key is required.",
+                "error": "admin_unauthorized",
+                "message": "An admin user or an API key is required."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/sentinel/decisions?action=nope",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImMyODhhMzRkYTkyZjczZjhjOTE2MjYwZTI3MTY2NGNjYWVlY2NkYmM1NzZkYjJkNGRmNmMxMWZiMThmNTYxNzAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTYzMTU0LjEzNDY3NywibmJmIjoxNzg5MTYzMTU0LjEzNDY3NywiZXhwIjoxNzg5MTY0MDU0LjEzNDY3Nywic3ViIjoiMDFhMDkyNmYtMjk2ZC03ZGM2LTk0NjgtOWQwODllNmE3ZWNmIiwianRpIjoiMDFhMDkyNmYtMmFkNi03YTU4LWI3OWUtYTYwYmUwYTRmMjBkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MjZmLTJhZDYtNzg0NC1iNzllLWE2MGJkZjE3MGY0ZCIsImF1dGhfdGltZSI6MTc4OTE2MzE1M30.XT-kVsAwBvzmQ3UC7bsrdCcOOd7glLX8RkSL3NQpV6kqx_5_cYvXmEepABgcxggkn8mkYGyDGTU_ROinjqjJlrtuawdDvjcbrWMmL2F9I-ykfutaOFLwVKqqh2Am2BOFiSqOb05K8J6CDm4gKkMl3m5D8eAsCPWYR_TjJSJj5P1BXGpPH0aO8gF-3ou4BRiqyWC5T3aB2E4kL8aq71zSHAtBVEyorkJnFuzrfvxa7mbVXjnK7ImoL91vX5BesgL_Y0Np-ekLyd-xWH2y1Tg90KH5_CyKalZaQ8Ahto9o6wTQE8xY778bNh8kYwnIAmK-QMtA33wJd3R0tU_-9XHE0g"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "action must be allow, challenge or block.",
+                "error": "admin_invalid_input",
+                "message": "action must be allow, challenge or block."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/sentinel/decisions?limit=0",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImMyODhhMzRkYTkyZjczZjhjOTE2MjYwZTI3MTY2NGNjYWVlY2NkYmM1NzZkYjJkNGRmNmMxMWZiMThmNTYxNzAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTYzMTU0LjEzNDY3NywibmJmIjoxNzg5MTYzMTU0LjEzNDY3NywiZXhwIjoxNzg5MTY0MDU0LjEzNDY3Nywic3ViIjoiMDFhMDkyNmYtMjk2ZC03ZGM2LTk0NjgtOWQwODllNmE3ZWNmIiwianRpIjoiMDFhMDkyNmYtMmFkNi03YTU4LWI3OWUtYTYwYmUwYTRmMjBkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MjZmLTJhZDYtNzg0NC1iNzllLWE2MGJkZjE3MGY0ZCIsImF1dGhfdGltZSI6MTc4OTE2MzE1M30.XT-kVsAwBvzmQ3UC7bsrdCcOOd7glLX8RkSL3NQpV6kqx_5_cYvXmEepABgcxggkn8mkYGyDGTU_ROinjqjJlrtuawdDvjcbrWMmL2F9I-ykfutaOFLwVKqqh2Am2BOFiSqOb05K8J6CDm4gKkMl3m5D8eAsCPWYR_TjJSJj5P1BXGpPH0aO8gF-3ou4BRiqyWC5T3aB2E4kL8aq71zSHAtBVEyorkJnFuzrfvxa7mbVXjnK7ImoL91vX5BesgL_Y0Np-ekLyd-xWH2y1Tg90KH5_CyKalZaQ8Ahto9o6wTQE8xY778bNh8kYwnIAmK-QMtA33wJd3R0tU_-9XHE0g"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "limit must be a positive integer.",
+                "error": "admin_invalid_input",
+                "message": "limit must be a positive integer."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/sentinel/decisions",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImMyODhhMzRkYTkyZjczZjhjOTE2MjYwZTI3MTY2NGNjYWVlY2NkYmM1NzZkYjJkNGRmNmMxMWZiMThmNTYxNzAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTYzMTU0LjEzNDY3NywibmJmIjoxNzg5MTYzMTU0LjEzNDY3NywiZXhwIjoxNzg5MTY0MDU0LjEzNDY3Nywic3ViIjoiMDFhMDkyNmYtMjk2ZC03ZGM2LTk0NjgtOWQwODllNmE3ZWNmIiwianRpIjoiMDFhMDkyNmYtMmFkNi03YTU4LWI3OWUtYTYwYmUwYTRmMjBkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MjZmLTJhZDYtNzg0NC1iNzllLWE2MGJkZjE3MGY0ZCIsImF1dGhfdGltZSI6MTc4OTE2MzE1M30.XT-kVsAwBvzmQ3UC7bsrdCcOOd7glLX8RkSL3NQpV6kqx_5_cYvXmEepABgcxggkn8mkYGyDGTU_ROinjqjJlrtuawdDvjcbrWMmL2F9I-ykfutaOFLwVKqqh2Am2BOFiSqOb05K8J6CDm4gKkMl3m5D8eAsCPWYR_TjJSJj5P1BXGpPH0aO8gF-3ou4BRiqyWC5T3aB2E4kL8aq71zSHAtBVEyorkJnFuzrfvxa7mbVXjnK7ImoL91vX5BesgL_Y0Np-ekLyd-xWH2y1Tg90KH5_CyKalZaQ8Ahto9o6wTQE8xY778bNh8kYwnIAmK-QMtA33wJd3R0tU_-9XHE0g"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a0926f-296b-76ac-8f31-55c557b96c16",
+                        "kind": "password_reset",
+                        "email": "ada@mailinator.com",
+                        "ip": "203.0.113.7",
+                        "score": 50,
+                        "action": "challenge",
+                        "enforced": false,
+                        "signals": [
+                            "velocity"
+                        ],
+                        "reasons": [
+                            "email: 3 attempts in 600 s (limit 2)"
+                        ],
+                        "created_at": "2026-09-11T21:45:53+00:00"
+                    },
+                    {
+                        "id": "01a0926f-2801-79d7-9c74-53c208a8ded9",
+                        "kind": "sign_up",
+                        "email": "ada@mailinator.com",
+                        "ip": "203.0.113.7",
+                        "score": 60,
+                        "action": "challenge",
+                        "enforced": false,
+                        "signals": [
+                            "disposable_email"
+                        ],
+                        "reasons": [
+                            "disposable domain mailinator.com"
+                        ],
+                        "created_at": "2026-09-11T21:45:53+00:00"
+                    }
+                ],
+                "next_cursor": null
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/sentinel/decisions?action=challenge&limit=1",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImMyODhhMzRkYTkyZjczZjhjOTE2MjYwZTI3MTY2NGNjYWVlY2NkYmM1NzZkYjJkNGRmNmMxMWZiMThmNTYxNzAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTYzMTU0LjEzNDY3NywibmJmIjoxNzg5MTYzMTU0LjEzNDY3NywiZXhwIjoxNzg5MTY0MDU0LjEzNDY3Nywic3ViIjoiMDFhMDkyNmYtMjk2ZC03ZGM2LTk0NjgtOWQwODllNmE3ZWNmIiwianRpIjoiMDFhMDkyNmYtMmFkNi03YTU4LWI3OWUtYTYwYmUwYTRmMjBkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MjZmLTJhZDYtNzg0NC1iNzllLWE2MGJkZjE3MGY0ZCIsImF1dGhfdGltZSI6MTc4OTE2MzE1M30.XT-kVsAwBvzmQ3UC7bsrdCcOOd7glLX8RkSL3NQpV6kqx_5_cYvXmEepABgcxggkn8mkYGyDGTU_ROinjqjJlrtuawdDvjcbrWMmL2F9I-ykfutaOFLwVKqqh2Am2BOFiSqOb05K8J6CDm4gKkMl3m5D8eAsCPWYR_TjJSJj5P1BXGpPH0aO8gF-3ou4BRiqyWC5T3aB2E4kL8aq71zSHAtBVEyorkJnFuzrfvxa7mbVXjnK7ImoL91vX5BesgL_Y0Np-ekLyd-xWH2y1Tg90KH5_CyKalZaQ8Ahto9o6wTQE8xY778bNh8kYwnIAmK-QMtA33wJd3R0tU_-9XHE0g"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a0926f-296b-76ac-8f31-55c557b96c16",
+                        "kind": "password_reset",
+                        "email": "ada@mailinator.com",
+                        "ip": "203.0.113.7",
+                        "score": 50,
+                        "action": "challenge",
+                        "enforced": false,
+                        "signals": [
+                            "velocity"
+                        ],
+                        "reasons": [
+                            "email: 3 attempts in 600 s (limit 2)"
+                        ],
+                        "created_at": "2026-09-11T21:45:53+00:00"
+                    }
+                ],
+                "next_cursor": "01a0926f-296b-76ac-8f31-55c557b96c16"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/sentinel/decisions?action=block",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImMyODhhMzRkYTkyZjczZjhjOTE2MjYwZTI3MTY2NGNjYWVlY2NkYmM1NzZkYjJkNGRmNmMxMWZiMThmNTYxNzAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTYzMTU0LjEzNDY3NywibmJmIjoxNzg5MTYzMTU0LjEzNDY3NywiZXhwIjoxNzg5MTY0MDU0LjEzNDY3Nywic3ViIjoiMDFhMDkyNmYtMjk2ZC03ZGM2LTk0NjgtOWQwODllNmE3ZWNmIiwianRpIjoiMDFhMDkyNmYtMmFkNi03YTU4LWI3OWUtYTYwYmUwYTRmMjBkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MjZmLTJhZDYtNzg0NC1iNzllLWE2MGJkZjE3MGY0ZCIsImF1dGhfdGltZSI6MTc4OTE2MzE1M30.XT-kVsAwBvzmQ3UC7bsrdCcOOd7glLX8RkSL3NQpV6kqx_5_cYvXmEepABgcxggkn8mkYGyDGTU_ROinjqjJlrtuawdDvjcbrWMmL2F9I-ykfutaOFLwVKqqh2Am2BOFiSqOb05K8J6CDm4gKkMl3m5D8eAsCPWYR_TjJSJj5P1BXGpPH0aO8gF-3ou4BRiqyWC5T3aB2E4kL8aq71zSHAtBVEyorkJnFuzrfvxa7mbVXjnK7ImoL91vX5BesgL_Y0Np-ekLyd-xWH2y1Tg90KH5_CyKalZaQ8Ahto9o6wTQE8xY778bNh8kYwnIAmK-QMtA33wJd3R0tU_-9XHE0g"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [],
+                "next_cursor": null
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/sentinel/decisions?email=bob@example.com",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImMyODhhMzRkYTkyZjczZjhjOTE2MjYwZTI3MTY2NGNjYWVlY2NkYmM1NzZkYjJkNGRmNmMxMWZiMThmNTYxNzAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTYzMTU0LjEzNDY3NywibmJmIjoxNzg5MTYzMTU0LjEzNDY3NywiZXhwIjoxNzg5MTY0MDU0LjEzNDY3Nywic3ViIjoiMDFhMDkyNmYtMjk2ZC03ZGM2LTk0NjgtOWQwODllNmE3ZWNmIiwianRpIjoiMDFhMDkyNmYtMmFkNi03YTU4LWI3OWUtYTYwYmUwYTRmMjBkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MjZmLTJhZDYtNzg0NC1iNzllLWE2MGJkZjE3MGY0ZCIsImF1dGhfdGltZSI6MTc4OTE2MzE1M30.XT-kVsAwBvzmQ3UC7bsrdCcOOd7glLX8RkSL3NQpV6kqx_5_cYvXmEepABgcxggkn8mkYGyDGTU_ROinjqjJlrtuawdDvjcbrWMmL2F9I-ykfutaOFLwVKqqh2Am2BOFiSqOb05K8J6CDm4gKkMl3m5D8eAsCPWYR_TjJSJj5P1BXGpPH0aO8gF-3ou4BRiqyWC5T3aB2E4kL8aq71zSHAtBVEyorkJnFuzrfvxa7mbVXjnK7ImoL91vX5BesgL_Y0Np-ekLyd-xWH2y1Tg90KH5_CyKalZaQ8Ahto9o6wTQE8xY778bNh8kYwnIAmK-QMtA33wJd3R0tU_-9XHE0g"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [],
+                "next_cursor": null
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/sentinel/decisions?email=Ada@mailinator.com&ip=203.0.113.7",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImMyODhhMzRkYTkyZjczZjhjOTE2MjYwZTI3MTY2NGNjYWVlY2NkYmM1NzZkYjJkNGRmNmMxMWZiMThmNTYxNzAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTYzMTU0LjEzNDY3NywibmJmIjoxNzg5MTYzMTU0LjEzNDY3NywiZXhwIjoxNzg5MTY0MDU0LjEzNDY3Nywic3ViIjoiMDFhMDkyNmYtMjk2ZC03ZGM2LTk0NjgtOWQwODllNmE3ZWNmIiwianRpIjoiMDFhMDkyNmYtMmFkNi03YTU4LWI3OWUtYTYwYmUwYTRmMjBkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MjZmLTJhZDYtNzg0NC1iNzllLWE2MGJkZjE3MGY0ZCIsImF1dGhfdGltZSI6MTc4OTE2MzE1M30.XT-kVsAwBvzmQ3UC7bsrdCcOOd7glLX8RkSL3NQpV6kqx_5_cYvXmEepABgcxggkn8mkYGyDGTU_ROinjqjJlrtuawdDvjcbrWMmL2F9I-ykfutaOFLwVKqqh2Am2BOFiSqOb05K8J6CDm4gKkMl3m5D8eAsCPWYR_TjJSJj5P1BXGpPH0aO8gF-3ou4BRiqyWC5T3aB2E4kL8aq71zSHAtBVEyorkJnFuzrfvxa7mbVXjnK7ImoL91vX5BesgL_Y0Np-ekLyd-xWH2y1Tg90KH5_CyKalZaQ8Ahto9o6wTQE8xY778bNh8kYwnIAmK-QMtA33wJd3R0tU_-9XHE0g"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a0926f-296b-76ac-8f31-55c557b96c16",
+                        "kind": "password_reset",
+                        "email": "ada@mailinator.com",
+                        "ip": "203.0.113.7",
+                        "score": 50,
+                        "action": "challenge",
+                        "enforced": false,
+                        "signals": [
+                            "velocity"
+                        ],
+                        "reasons": [
+                            "email: 3 attempts in 600 s (limit 2)"
+                        ],
+                        "created_at": "2026-09-11T21:45:53+00:00"
+                    },
+                    {
+                        "id": "01a0926f-2801-79d7-9c74-53c208a8ded9",
+                        "kind": "sign_up",
+                        "email": "ada@mailinator.com",
+                        "ip": "203.0.113.7",
+                        "score": 60,
+                        "action": "challenge",
+                        "enforced": false,
+                        "signals": [
+                            "disposable_email"
+                        ],
+                        "reasons": [
+                            "disposable domain mailinator.com"
+                        ],
+                        "created_at": "2026-09-11T21:45:53+00:00"
+                    }
+                ],
+                "next_cursor": null
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/audit?names=sentinel.evaluated",
+            "headers": {
+                "Cookie": [
+                    "polaris_device=device-of-the-fixtures"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImMyODhhMzRkYTkyZjczZjhjOTE2MjYwZTI3MTY2NGNjYWVlY2NkYmM1NzZkYjJkNGRmNmMxMWZiMThmNTYxNzAifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTYzMTU0LjEzNDY3NywibmJmIjoxNzg5MTYzMTU0LjEzNDY3NywiZXhwIjoxNzg5MTY0MDU0LjEzNDY3Nywic3ViIjoiMDFhMDkyNmYtMjk2ZC03ZGM2LTk0NjgtOWQwODllNmE3ZWNmIiwianRpIjoiMDFhMDkyNmYtMmFkNi03YTU4LWI3OWUtYTYwYmUwYTRmMjBkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MjZmLTJhZDYtNzg0NC1iNzllLWE2MGJkZjE3MGY0ZCIsImF1dGhfdGltZSI6MTc4OTE2MzE1M30.XT-kVsAwBvzmQ3UC7bsrdCcOOd7glLX8RkSL3NQpV6kqx_5_cYvXmEepABgcxggkn8mkYGyDGTU_ROinjqjJlrtuawdDvjcbrWMmL2F9I-ykfutaOFLwVKqqh2Am2BOFiSqOb05K8J6CDm4gKkMl3m5D8eAsCPWYR_TjJSJj5P1BXGpPH0aO8gF-3ou4BRiqyWC5T3aB2E4kL8aq71zSHAtBVEyorkJnFuzrfvxa7mbVXjnK7ImoL91vX5BesgL_Y0Np-ekLyd-xWH2y1Tg90KH5_CyKalZaQ8Ahto9o6wTQE8xY778bNh8kYwnIAmK-QMtA33wJd3R0tU_-9XHE0g"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a0926f-296b-774c-8f31-55c558b45f80",
+                        "name": "sentinel.evaluated",
+                        "occurred_at": "2026-09-11T21:45:53+00:00",
+                        "actor_type": "system",
+                        "actor_id": null,
+                        "subject_id": null,
+                        "organization_id": null,
+                        "session_id": null,
+                        "ip": "203.0.113.7",
+                        "user_agent": null,
+                        "data": {
+                            "kind": "password_reset",
+                            "email_hash": "61070179538757f684bd6e24c01c01eaedba4252a309ea001668d10c7a5ffe2c",
+                            "score": 50,
+                            "action": "challenge",
+                            "enforced": false,
+                            "signals": [
+                                "velocity"
+                            ],
+                            "reasons": [
+                                "email: 3 attempts in 600 s (limit 2)"
+                            ]
+                        },
+                        "request_id": null
+                    },
+                    {
+                        "id": "01a0926f-2801-7aab-9c74-53c20926ed3b",
+                        "name": "sentinel.evaluated",
+                        "occurred_at": "2026-09-11T21:45:53+00:00",
+                        "actor_type": "system",
+                        "actor_id": null,
+                        "subject_id": null,
+                        "organization_id": null,
+                        "session_id": null,
+                        "ip": "203.0.113.7",
+                        "user_agent": null,
+                        "data": {
+                            "kind": "sign_up",
+                            "email_hash": "61070179538757f684bd6e24c01c01eaedba4252a309ea001668d10c7a5ffe2c",
+                            "score": 60,
+                            "action": "challenge",
+                            "enforced": false,
+                            "signals": [
+                                "disposable_email"
+                            ],
+                            "reasons": [
+                                "disposable domain mailinator.com"
+                            ]
+                        },
+                        "request_id": null
+                    }
+                ],
+                "next_cursor": null
+            }
+        }
+    }
+]
