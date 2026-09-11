@@ -83,14 +83,16 @@ final readonly class ProviderInput
             $roles[] = $slug;
         }
         $redirectUris = [];
+        $redirectUrisValid = true;
         foreach (is_array($body['redirect_uris'] ?? null) ? $body['redirect_uris'] : ($existing !== null && !isset($body['redirect_uris']) ? $existing->redirectUris() : []) as $uri) {
             if (!is_string($uri) || filter_var($uri, FILTER_VALIDATE_URL) === false || preg_match('#^https?://#', $uri) !== 1) {
                 $errors[] = 'redirect_uris must be a list of http(s) URLs.';
+                $redirectUrisValid = false;
                 break;
             }
             $redirectUris[] = $uri;
         }
-        if ($redirectUris === [] && $errors === []) {
+        if ($redirectUris === [] && $redirectUrisValid) {
             $errors[] = 'redirect_uris needs at least one URL the sign-in may end on.';
         }
         $enabled = $body['enabled'] ?? ($existing !== null ? $existing->enabled : true);

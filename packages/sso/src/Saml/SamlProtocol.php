@@ -34,10 +34,14 @@ interface SamlProtocol
     public function logoutUrl(Provider $provider, Sp $sp, string $nameId, ?string $sessionIndex, string $relayState): ?string;
 
     /**
+     * An IdP's LogoutRequest, signed: by the query signature of the redirect binding (`SigAlg`,
+     * `Signature` over `SAMLRequest`, `RelayState`) or by the enveloped XML signature of the POST binding.
+     *
+     * @param array<string, string> $message `SAMLRequest` and, when present, `RelayState`, `SigAlg`, `Signature`
      * @return array{id: string, name_id: string, session_indexes: list<string>}
      * @throws SsoException when the request is not acceptable
      */
-    public function consumeLogoutRequest(Provider $provider, Sp $sp, string $samlRequest, bool $deflated): array;
+    public function consumeLogoutRequest(Provider $provider, Sp $sp, array $message, bool $deflated): array;
 
     /**
      * The IdP's single-logout URL carrying the LogoutResponse; null when the provider has none.

@@ -38,7 +38,8 @@ use function trim;
  * certificate), audience, InResponseTo, the conditions with the library's three-minute drift,
  * signature wrapping refused by the library's signed-element validation; the Destination is checked
  * here against the SP URLs (the library would compare with `$_SERVER`). The redirect binding for the
- * AuthnRequest and the logout messages, the POST binding for the Response.
+ * AuthnRequest and the logout messages, the POST binding for the Response; a LogoutRequest must be
+ * signed (the redirect binding's query signature, or an enveloped signature).
  */
 final class OneLoginSamlProtocol implements SamlProtocol
 {
@@ -111,11 +112,11 @@ final class OneLoginSamlProtocol implements SamlProtocol
     }
 
     #[Override]
-    public function consumeLogoutRequest(Provider $provider, Sp $sp, string $samlRequest, bool $deflated): array
+    public function consumeLogoutRequest(Provider $provider, Sp $sp, array $message, bool $deflated): array
     {
         $settings = $this->settings($provider, $sp);
         try {
-            $decoded = base64_decode($samlRequest, true);
+            $decoded = base64_decode($message['SAMLRequest'] ?? '', true);
             $xml = $decoded === false ? '' : ($deflated ? (string) gzinflate($decoded) : $decoded);
             $request = new LogoutRequest($settings, base64_encode($xml));
             $document = new DOMDocument();
@@ -123,6 +124,12 @@ final class OneLoginSamlProtocol implements SamlProtocol
             self::assertDestination($document, $sp->sloUrl($provider->id));
             if (!$request->isValid()) {
                 throw new SsoException(SsoException::ASSERTION_INVALID, (string) $request->getError());
+            }
+            $signed = isset($message['Signature'])
+                ? Utils::validateBinarySign('SAMLRequest', $message, $settings->getIdPData())
+                : Utils::validateSign($document, Utils::formatCert((string) $provider->setting('certificate')));
+            if ($signed !== true) {
+                throw new SsoException(SsoException::ASSERTION_INVALID, 'the LogoutRequest is not signed by the provider');
             }
             $indexes = [];
             foreach (LogoutRequest::getSessionIndexes($xml) as $index) {
@@ -169,7 +176,7 @@ final class OneLoginSamlProtocol implements SamlProtocol
         $certificate = $provider->setting('certificate');
         if ($certificate === null) {
             $problems[] = 'certificate is not set';
-        } elseif (openssl_x509_read(Utils::formatCert($certificate)) === false) {
+        } elseif (@openssl_x509_read(Utils::formatCert($certificate)) === false) {
             $problems[] = 'certificate does not parse as X.509';
         }
         if ($problems === []) {

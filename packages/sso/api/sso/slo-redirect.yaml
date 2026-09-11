@@ -14,12 +14,15 @@ input:
     SAMLRequest: { type: "?string", rules: [optional] }
     SAMLResponse: { type: "?string", rules: [optional] }
     RelayState: { type: "?string", rules: [optional] }
+    SigAlg: { type: "?string", rules: [optional] }
+    Signature: { type: "?string", rules: [optional] }
 
 domain:
   class: Polaris\Sso\Http\Flow\SloRedirectEndpoint
   description: >
-    An IdP's LogoutRequest ends every session of the named user and is answered with the LogoutResponse
-    (302 to the IdP); an IdP's LogoutResponse ends an application-initiated logout.
+    An IdP's LogoutRequest (signed: SigAlg and Signature over the query, or an enveloped signature)
+    ends every session of the named user and is answered with the LogoutResponse (302 to the IdP);
+    an IdP's LogoutResponse ends an application-initiated logout.
 
 output:
   status: 302

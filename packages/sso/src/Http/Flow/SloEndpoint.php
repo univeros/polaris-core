@@ -23,10 +23,15 @@ abstract class SloEndpoint extends SsoEndpoint
 
     protected function singleLogout(Input $input, bool $deflated): Result
     {
-        $request = self::text($input->get('SAMLRequest'));
-        if ($request !== null) {
+        if (self::text($input->get('SAMLRequest')) !== null) {
+            $message = [];
+            foreach (['SAMLRequest', 'RelayState', 'SigAlg', 'Signature'] as $field) {
+                if (self::text($input->get($field)) !== null) {
+                    $message[$field] = (string) $input->get($field);
+                }
+            }
             try {
-                $url = $this->sso->idpLogout((string) $input->get('providerId'), $request, $deflated, self::text($input->get('RelayState')), $this->client($input));
+                $url = $this->sso->idpLogout((string) $input->get('providerId'), $message, $deflated, $this->client($input));
             } catch (SsoException $exception) {
                 return $this->refuse($exception);
             }

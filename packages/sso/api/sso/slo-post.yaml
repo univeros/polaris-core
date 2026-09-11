@@ -14,6 +14,8 @@ input:
     SAMLRequest: { type: "?string", rules: [optional] }
     SAMLResponse: { type: "?string", rules: [optional] }
     RelayState: { type: "?string", rules: [optional] }
+    SigAlg: { type: "?string", rules: [optional] }
+    Signature: { type: "?string", rules: [optional] }
 
 domain:
   class: Polaris\Sso\Http\Flow\SloPostEndpoint

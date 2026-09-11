@@ -183,14 +183,15 @@ final class SsoService
     /**
      * An IdP's LogoutRequest: every session of the named user ends; the IdP's URL for the LogoutResponse.
      *
+     * @param array<string, string> $message `SAMLRequest` and, when present, `RelayState`, `SigAlg`, `Signature`
      * @return string|null null when the provider has no logout response URL
      * @throws SsoException
      */
-    public function idpLogout(string $providerId, string $samlRequest, bool $deflated, ?string $relayState, ClientContext $client): ?string
+    public function idpLogout(string $providerId, array $message, bool $deflated, ClientContext $client): ?string
     {
         $provider = $this->enabledProvider($providerId, Provider::SAML);
         try {
-            $request = $this->saml->consumeLogoutRequest($provider, $this->sp, $samlRequest, $deflated);
+            $request = $this->saml->consumeLogoutRequest($provider, $this->sp, $message, $deflated);
         } catch (SsoException $exception) {
             $this->reject($provider, $exception->detail, $client);
         }
@@ -198,7 +199,7 @@ final class SsoService
         $revoked = $user instanceof User ? $this->sessions->revokeAll($user->id, 'sso_logout') : 0;
         $this->audit->record(AuditNames::SLO_COMPLETED, 'system', null, $user?->id, $provider->organizationId, ['provider_id' => $provider->id, 'direction' => 'idp', 'sessions_revoked' => $revoked], $client);
 
-        return $this->saml->logoutResponseUrl($provider, $this->sp, $request['id'], $relayState);
+        return $this->saml->logoutResponseUrl($provider, $this->sp, $request['id'], $message['RelayState'] ?? null);
     }
 
     /**
