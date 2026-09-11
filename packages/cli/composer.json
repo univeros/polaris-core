@@ -11,9 +11,9 @@
     ],
     "require": {
         "php": ">=8.3",
-        "polaris/core": "^0.3",
-        "polaris/pdo": "^0.3",
-        "polaris/psr15": "^0.3",
+        "polaris/core": "^0.4",
+        "polaris/pdo": "^0.4",
+        "polaris/psr15": "^0.4",
         "symfony/console": "^7.0 || ^8.0"
     },
     "autoload": {
@@ -26,7 +26,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-main": "0.3.x-dev"
+            "dev-main": "0.4.x-dev"
         }
     },
     "config": {
