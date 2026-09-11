@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "85196638250e39b093e2876f1cd09cc2",
+    "content-hash": "ffdccde111fb9f61e77922169ba0a151",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2948,7 +2948,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/admin",
-                "reference": "98425ead291cf7912cedd8903b467a8aa84822b3"
+                "reference": "aed3586d5c216c058208c85d1f229ec61dfb6c16"
             },
             "require": {
                 "php": ">=8.3",
@@ -2994,7 +2994,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/audit",
-                "reference": "26edfa83eda51f72cb77c144d07ab6b5ef3423d0"
+                "reference": "6e8f2fc0aa3d3d95edb5b08d95f7d0ee3aebc7fb"
             },
             "require": {
                 "php": ">=8.3",
@@ -3041,7 +3041,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/cli",
-                "reference": "08b5666682ae35c0e294f2c7ec57e86f87ef02d8"
+                "reference": "2a8f27cec2e51cf15b8fc5fb2d355d53adf6ef6d"
             },
             "require": {
                 "php": ">=8.3",
@@ -3085,7 +3085,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/core",
-                "reference": "d8263c3f9395432bc6439ace8d125107db5c08b9"
+                "reference": "379916f5f9fbb79669f0707924d7124fc8cbca7d"
             },
             "require": {
                 "endroid/qr-code": "^6.0",
@@ -3156,7 +3156,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/laravel",
-                "reference": "5b1cb73a0e5542bea6ec01b2cb3df0924d89fe38"
+                "reference": "95b6c5551a53a1a8b67d9a37ef84109b9ad7f7a3"
             },
             "require": {
                 "laravel/framework": "^13.0",
@@ -3200,12 +3200,63 @@
             }
         },
         {
+            "name": "polaris/messaging",
+            "version": "0.2.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/messaging",
+                "reference": "f15cb3b16db99f5ab24ecd7c29c0902aa7041554"
+            },
+            "require": {
+                "php": ">=8.3",
+                "polaris/audit": "^0.2",
+                "polaris/cli": "^0.2",
+                "polaris/core": "^0.2",
+                "psr/clock": "^1.0",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0",
+                "psr/log": "^3.0",
+                "symfony/console": "^7.0 || ^8.0",
+                "symfony/uid": "^7.0 || ^8.0"
+            },
+            "suggest": {
+                "phpmailer/phpmailer": "For PhpMailerChannel",
+                "symfony/mailer": "For SymfonyMailerChannel"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\Messaging\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
+            "description": "Messaging for Polaris for PHP: templated, translated, rate-limited email and SMS through pluggable channels, every send audited",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "polaris/pdo",
             "version": "0.2.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/pdo",
-                "reference": "8fa13f5e6942b323765686f0a123697810a06642"
+                "reference": "23dfb5d413ea959db812e25a1d58d877af64a2a9"
             },
             "require": {
                 "ext-pdo": "*",
@@ -3244,7 +3295,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/psr15",
-                "reference": "cf1891dd3078e8d5ce047143488dc6eeab3c3956"
+                "reference": "9c6764e7f014992e87cb601587d5f92956551d4c"
             },
             "require": {
                 "php": ">=8.3",
@@ -3287,7 +3338,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/symfony",
-                "reference": "f9643ab68087d2d59fc192020c94c1b4e00c571b"
+                "reference": "c24885c3fd13f6802caa8b8b0ae499ae3831ddd3"
             },
             "require": {
                 "nyholm/psr7": "^1.8",
@@ -3335,7 +3386,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/testing",
-                "reference": "17837f6b1cf9e0f438a3512dbdfe485da7ee80e2"
+                "reference": "fbff6b2f3d737102d6549371e6c6d3b1551deb77"
             },
             "require": {
                 "php": ">=8.3",
@@ -3373,7 +3424,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/yii",
-                "reference": "fb78d062dc60de72ee5e5788919bc2a86abecd54"
+                "reference": "b8b8df0d2840c674564bf32220a311e1ba47d1d0"
             },
             "require": {
                 "php": ">=8.3",
@@ -9935,6 +9986,87 @@
             "time": "2022-02-21T01:04:05+00:00"
         },
         {
+            "name": "phpmailer/phpmailer",
+            "version": "v6.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "d1ac35d784bf9f5e61b424901d5a014967f15b12"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/d1ac35d784bf9f5e61b424901d5a014967f15b12",
+                "reference": "d1ac35d784bf9f5e61b424901d5a014967f15b12",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-filter": "*",
+                "ext-hash": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+                "doctrine/annotations": "^1.2.6 || ^1.13.3",
+                "php-parallel-lint/php-console-highlighter": "^1.0.0",
+                "php-parallel-lint/php-parallel-lint": "^1.3.2",
+                "phpcompatibility/php-compatibility": "^9.3.5",
+                "roave/security-advisories": "dev-latest",
+                "squizlabs/php_codesniffer": "^3.7.2",
+                "yoast/phpunit-polyfills": "^1.0.4"
+            },
+            "suggest": {
+                "decomplexity/SendOauth2": "Adapter for using XOAUTH2 authentication",
+                "ext-mbstring": "Needed to send email in multibyte encoding charset or decode encoded addresses",
+                "ext-openssl": "Needed for secure SMTP sending and DKIM signing",
+                "greew/oauth2-azure-provider": "Needed for Microsoft Azure XOAUTH2 authentication",
+                "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
+                "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
+                "psr/log": "For optional PSR-3 debug logging",
+                "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)",
+                "thenetworg/oauth2-azure": "Needed for Microsoft XOAUTH2 authentication"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPMailer\\PHPMailer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-only"
+            ],
+            "authors": [
+                {
+                    "name": "Marcus Bointon",
+                    "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
+                },
+                {
+                    "name": "Andy Prevost",
+                    "email": "codeworxtech@users.sourceforge.net"
+                },
+                {
+                    "name": "Brent R. Matzelle"
+                }
+            ],
+            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "support": {
+                "issues": "https://github.com/PHPMailer/PHPMailer/issues",
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.12.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Synchro",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-10-15T16:49:08+00:00"
+        },
+        {
             "name": "phpstan/phpstan",
             "version": "2.2.13",
             "dist": {
@@ -12092,6 +12224,7 @@
         "polaris/cli": 20,
         "polaris/core": 20,
         "polaris/laravel": 20,
+        "polaris/messaging": 20,
         "polaris/pdo": 20,
         "polaris/psr15": 20,
         "polaris/symfony": 20,

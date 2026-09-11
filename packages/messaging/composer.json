@@ -1,0 +1,44 @@
+{
+    "name": "polaris/messaging",
+    "description": "Messaging for Polaris for PHP: templated, translated, rate-limited email and SMS through pluggable channels, every send audited",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "polaris/audit": "^0.2",
+        "polaris/cli": "^0.2",
+        "polaris/core": "^0.2",
+        "psr/clock": "^1.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.1 || ^2.0",
+        "psr/log": "^3.0",
+        "symfony/console": "^7.0 || ^8.0",
+        "symfony/uid": "^7.0 || ^8.0"
+    },
+    "suggest": {
+        "symfony/mailer": "For SymfonyMailerChannel",
+        "phpmailer/phpmailer": "For PhpMailerChannel"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\Messaging\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.2.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

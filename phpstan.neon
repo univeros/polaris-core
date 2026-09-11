@@ -18,3 +18,5 @@ parameters:
         - packages/audit/tests
         - packages/admin/src
         - packages/admin/tests
+        - packages/messaging/src
+        - packages/messaging/tests

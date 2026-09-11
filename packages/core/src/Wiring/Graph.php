@@ -195,6 +195,25 @@ final class Graph
 
     // --- ports and their defaults -------------------------------------------------------------
 
+    /**
+     * A port a plugin provides through `services()` keyed by the contract (`polaris/messaging` provides the
+     * mailer and the SMS sender), used when the Config leaves the port unset; null when no plugin does.
+     *
+     * @template T of object
+     * @param class-string<T> $contract
+     * @return T|null
+     */
+    private function port(string $contract): ?object
+    {
+        if (!isset($this->pluginServices[$contract])) {
+            return null;
+        }
+        /** @var T $service */
+        $service = $this->once($contract, fn(): object => ($this->pluginServices[$contract])($this));
+
+        return $service;
+    }
+
     public function clock(): ClockInterface
     {
         return $this->config->clock ?? $this->once(SystemClock::class, static fn(): SystemClock => new SystemClock());
@@ -227,17 +246,17 @@ final class Graph
 
     public function mailer(): OtpMailerInterface
     {
-        return $this->config->mailer ?? $this->once(LogOtpMailer::class, fn(): LogOtpMailer => new LogOtpMailer($this->logger()));
+        return $this->config->mailer ?? $this->port(OtpMailerInterface::class) ?? $this->once(LogOtpMailer::class, fn(): LogOtpMailer => new LogOtpMailer($this->logger()));
     }
 
     public function sms(): SmsSenderInterface
     {
-        return $this->config->sms ?? $this->once(LogSmsSender::class, fn(): LogSmsSender => new LogSmsSender($this->logger()));
+        return $this->config->sms ?? $this->port(SmsSenderInterface::class) ?? $this->once(LogSmsSender::class, fn(): LogSmsSender => new LogSmsSender($this->logger()));
     }
 
     public function breachCheck(): BreachedPasswordCheckInterface
     {
-        return $this->config->breachCheck ?? $this->once(NullBreachedPasswordCheck::class, static fn(): NullBreachedPasswordCheck => new NullBreachedPasswordCheck());
+        return $this->config->breachCheck ?? $this->port(BreachedPasswordCheckInterface::class) ?? $this->once(NullBreachedPasswordCheck::class, static fn(): NullBreachedPasswordCheck => new NullBreachedPasswordCheck());
     }
 
     public function encrypter(): EncrypterInterface
@@ -652,7 +671,7 @@ final class Graph
 
     public function metrics(): MetricsInterface
     {
-        return $this->config->metrics ?? $this->once(LogMetrics::class, fn(): LogMetrics => new LogMetrics($this->logger()));
+        return $this->config->metrics ?? $this->port(MetricsInterface::class) ?? $this->once(LogMetrics::class, fn(): LogMetrics => new LogMetrics($this->logger()));
     }
 
     /**
