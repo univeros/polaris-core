@@ -6,6 +6,11 @@ the project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Removed
+- Six local artefacts of an earlier demo run committed by mistake under `examples/univeros`
+  (a demo key pair, `.env`, the mailbox, a SQLite file, a server log); they carried no real
+  secret and remain only in the history of `v0.1.0`.
+
 ## [0.1.0] - 2026-09-10
 
 The first release of Polaris for PHP: the framework-agnostic packages extracted from
