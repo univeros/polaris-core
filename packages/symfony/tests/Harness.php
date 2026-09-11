@@ -19,8 +19,10 @@ use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
 use function is_array;
 use function json_encode;
 use function sprintf;
+use function str_replace;
 use function str_starts_with;
 use function strip_tags;
+use function strtolower;
 use function substr;
 
 use const JSON_THROW_ON_ERROR;
@@ -47,9 +49,11 @@ final class Harness implements HarnessContract
         foreach (self::SERVICES as $service) {
             $ids[$service] = 'polaris.test.' . $service;
         }
+        // The kernel's cache directory is keyed on this configuration, and the compiled routes live in
+        // it: the ids name the plugin classes, so two suites with different plugins never share routes.
         $pluginIds = [];
         foreach ($config->plugins as $index => $plugin) {
-            $pluginIds[$index] = 'polaris.test.plugin.' . $index;
+            $pluginIds[$index] = 'polaris.test.plugin.' . $index . '.' . strtolower(str_replace('\\', '_', $plugin::class));
         }
         $kernel = new TestKernel([
             'path_prefix' => $config->pathPrefix,
