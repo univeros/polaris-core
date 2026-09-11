@@ -4,6 +4,28 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- **`polaris/sentinel`** (`Polaris\Sentinel\`): a local risk engine on sign-up, sign-in, password reset and
+  code sends, as PSR-15 middleware in front of the guarded routes: velocity, credential stuffing, IP rules,
+  devices and disposable domains out of the box, captcha (Turnstile, hCaptcha), impossible travel (MaxMind
+  DB) and breached passwords (HIBP) with a provider; a policy that allows, challenges or blocks (sum capped
+  at 100; allow below 40, challenge from 40, block from 80; a verified captcha token turns a challenge into
+  an allow); `observe` records without enforcing, `enforce` answers `sentinel/blocked` and, with a captcha
+  verifier, `sentinel/challenge_required` (`challenge: captcha`, the client retries with `captcha_token`);
+  every decision where a signal spoke is a row in `polaris_sentinel_decision` and a `sentinel.evaluated`
+  audit event; the `polaris_device` cookie; `GET /admin/sentinel/decisions`, `GET|POST /admin/sentinel/ip-rules`,
+  `DELETE /admin/sentinel/ip-rules/{id}` and `POST /admin/sentinel/unblock` for the admin plugin's
+  principals; `sentinel:lists`; the bundled disposable-domain list (CC0). The breach checker also serves
+  core's password-policy port; `polaris/messaging` takes its quiet mode.
+- `@polaris-auth/client`: `client.sentinel.*`.
+
+### Changed
+- `Graph::port()` is public: a package takes another package's optional contribution the way the graph
+  takes a plugin-provided port (`polaris/messaging` takes a `Suppressor` from the graph when the host passes
+  none).
+
 ## [0.3.0] - 2026-09-11
 
 `polaris/messaging`, the client namespaces for the plugins, and the port rule that lets a plugin serve
