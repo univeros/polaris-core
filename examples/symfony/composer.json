@@ -10,13 +10,13 @@
             "options": {
                 "symlink": true,
                 "versions": {
-                    "polaris/cli": "0.5.x-dev",
-                    "polaris/core": "0.5.x-dev",
-                    "polaris/laravel": "0.5.x-dev",
-                    "polaris/pdo": "0.5.x-dev",
-                    "polaris/psr15": "0.5.x-dev",
-                    "polaris/symfony": "0.5.x-dev",
-                    "polaris/testing": "0.5.x-dev"
+                    "polaris/cli": "0.6.x-dev",
+                    "polaris/core": "0.6.x-dev",
+                    "polaris/laravel": "0.6.x-dev",
+                    "polaris/pdo": "0.6.x-dev",
+                    "polaris/psr15": "0.6.x-dev",
+                    "polaris/symfony": "0.6.x-dev",
+                    "polaris/testing": "0.6.x-dev"
                 }
             }
         }
@@ -24,11 +24,11 @@
     "require": {
         "php": ">=8.3",
         "ext-pdo_sqlite": "*",
-        "polaris/cli": "0.5.x-dev",
-        "polaris/core": "0.5.x-dev",
-        "polaris/pdo": "0.5.x-dev",
-        "polaris/psr15": "0.5.x-dev",
-        "polaris/symfony": "0.5.x-dev",
+        "polaris/cli": "0.6.x-dev",
+        "polaris/core": "0.6.x-dev",
+        "polaris/pdo": "0.6.x-dev",
+        "polaris/psr15": "0.6.x-dev",
+        "polaris/symfony": "0.6.x-dev",
         "symfony/dotenv": "^7.4",
         "symfony/framework-bundle": "^7.4",
         "symfony/security-bundle": "^7.4",

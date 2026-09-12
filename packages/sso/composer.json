@@ -15,9 +15,9 @@
         "ext-openssl": "*",
         "firebase/php-jwt": "^7.0",
         "onelogin/php-saml": "^4.3",
-        "polaris/admin": "^0.5",
-        "polaris/audit": "^0.5",
-        "polaris/core": "^0.5",
+        "polaris/admin": "^0.6",
+        "polaris/audit": "^0.6",
+        "polaris/core": "^0.6",
         "psr/clock": "^1.0",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
@@ -33,7 +33,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.5.x-dev"
+            "dev-main": "0.6.x-dev"
         }
     },
     "config": {

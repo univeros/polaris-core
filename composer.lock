@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee99d03bb4fc23e28c27bff1e76cf4d7",
+    "content-hash": "d4d36fc9b7100ce13c6279cf4df4f51d",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3074,17 +3074,17 @@
         },
         {
             "name": "polaris/admin",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/admin",
-                "reference": "4c2329bc5d63aa77a7e40f22a719d585604b0fc9"
+                "reference": "f88b7753d02c61c2a48f9f37e12ab5e2aef634b3"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/audit": "^0.5",
-                "polaris/cli": "^0.5",
-                "polaris/core": "^0.5",
+                "polaris/audit": "^0.6",
+                "polaris/cli": "^0.6",
+                "polaris/core": "^0.6",
                 "psr/clock": "^1.0",
                 "psr/http-message": "^1.1 || ^2.0",
                 "psr/http-server-handler": "^1.0",
@@ -3095,7 +3095,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -3120,16 +3120,16 @@
         },
         {
             "name": "polaris/audit",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/audit",
-                "reference": "2393707b8b3612ddec3852224a509e69f4b8ff47"
+                "reference": "bb062f0b32df3943cadbde77ba85fec17beeb0e6"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/cli": "^0.5",
-                "polaris/core": "^0.5",
+                "polaris/cli": "^0.6",
+                "polaris/core": "^0.6",
                 "psr/clock": "^1.0",
                 "psr/http-client": "^1.0",
                 "psr/http-factory": "^1.0",
@@ -3142,7 +3142,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -3167,17 +3167,17 @@
         },
         {
             "name": "polaris/cli",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/cli",
-                "reference": "e62c84880cd61b896cc7693f751dde41534ccaa9"
+                "reference": "975b1c5bf397c6a21e248e952636d2790a209666"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/core": "^0.5",
-                "polaris/pdo": "^0.5",
-                "polaris/psr15": "^0.5",
+                "polaris/core": "^0.6",
+                "polaris/pdo": "^0.6",
+                "polaris/psr15": "^0.6",
                 "symfony/console": "^7.0 || ^8.0"
             },
             "bin": [
@@ -3186,7 +3186,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -3211,11 +3211,11 @@
         },
         {
             "name": "polaris/core",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/core",
-                "reference": "0e4b04ec3b90d3d557939c202b04ebcfd23869ab"
+                "reference": "e1142e3aa90227b952c75a5d7f2fff3d58d8ae13"
             },
             "require": {
                 "endroid/qr-code": "^6.0",
@@ -3234,15 +3234,15 @@
                 "symfony/yaml": "^7.0 || ^8.0"
             },
             "require-dev": {
-                "polaris/cli": "^0.5",
-                "polaris/pdo": "^0.5",
-                "polaris/psr15": "^0.5",
-                "polaris/testing": "^0.5"
+                "polaris/cli": "^0.6",
+                "polaris/pdo": "^0.6",
+                "polaris/psr15": "^0.6",
+                "polaris/testing": "^0.6"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -3282,26 +3282,26 @@
         },
         {
             "name": "polaris/laravel",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/laravel",
-                "reference": "8c437b9f2ac75b6f005344a26e0c7336f3c707a8"
+                "reference": "c0c316e105e0aec3bbaf4fb0c0b7f63646deb285"
             },
             "require": {
                 "laravel/framework": "^13.0",
                 "nyholm/psr7": "^1.8",
                 "php": ">=8.3",
-                "polaris/cli": "^0.5",
-                "polaris/core": "^0.5",
-                "polaris/pdo": "^0.5",
-                "polaris/psr15": "^0.5",
+                "polaris/cli": "^0.6",
+                "polaris/core": "^0.6",
+                "polaris/pdo": "^0.6",
+                "polaris/psr15": "^0.6",
                 "symfony/psr-http-message-bridge": "^7.4 || ^8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -3331,17 +3331,17 @@
         },
         {
             "name": "polaris/messaging",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/messaging",
-                "reference": "bbf3733fba8b1aed23863dc4ab9ced1b27ee86bf"
+                "reference": "759decfa6ceec14496d4d9e37b398c3a8dfb4c63"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/audit": "^0.5",
-                "polaris/cli": "^0.5",
-                "polaris/core": "^0.5",
+                "polaris/audit": "^0.6",
+                "polaris/cli": "^0.6",
+                "polaris/core": "^0.6",
                 "psr/clock": "^1.0",
                 "psr/http-client": "^1.0",
                 "psr/http-factory": "^1.0",
@@ -3357,7 +3357,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -3382,21 +3382,21 @@
         },
         {
             "name": "polaris/pdo",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/pdo",
-                "reference": "9383d99f8a3044aadb17f470f07acb0995c6d36e"
+                "reference": "56d6dfe6bf91d5a68a429c656c91980fe93ee81e"
             },
             "require": {
                 "ext-pdo": "*",
                 "php": ">=8.3",
-                "polaris/core": "^0.5"
+                "polaris/core": "^0.6"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -3421,15 +3421,15 @@
         },
         {
             "name": "polaris/psr15",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/psr15",
-                "reference": "e48aa532ba4f24ba67ecca6c2484363aa87507d5"
+                "reference": "dec16fabcf14ec2a744a47fb2b34e1dce20c00a2"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/core": "^0.5",
+                "polaris/core": "^0.6",
                 "psr/clock": "^1.0",
                 "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.1 || ^2.0",
@@ -3439,7 +3439,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -3464,18 +3464,18 @@
         },
         {
             "name": "polaris/scim",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/scim",
-                "reference": "8a430816c9dd9910bc34600403f71f5ec18d1d3c"
+                "reference": "bba2b6f836fb38cbfb3cfef9594cd1ebe4d85eb0"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/admin": "^0.5",
-                "polaris/audit": "^0.5",
-                "polaris/core": "^0.5",
-                "polaris/sso": "^0.5",
+                "polaris/admin": "^0.6",
+                "polaris/audit": "^0.6",
+                "polaris/core": "^0.6",
+                "polaris/sso": "^0.6",
                 "psr/clock": "^1.0",
                 "psr/http-message": "^1.1 || ^2.0",
                 "psr/http-server-handler": "^1.0",
@@ -3485,7 +3485,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -3510,19 +3510,19 @@
         },
         {
             "name": "polaris/sentinel",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/sentinel",
-                "reference": "2aa17b00086e11dd8625dd6c2482fc0f1a00cfae"
+                "reference": "98479725a7d343f8ec48a53fa3f600983674951e"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/admin": "^0.5",
-                "polaris/audit": "^0.5",
-                "polaris/cli": "^0.5",
-                "polaris/core": "^0.5",
-                "polaris/messaging": "^0.5",
+                "polaris/admin": "^0.6",
+                "polaris/audit": "^0.6",
+                "polaris/cli": "^0.6",
+                "polaris/core": "^0.6",
+                "polaris/messaging": "^0.6",
                 "psr/clock": "^1.0",
                 "psr/http-client": "^1.0",
                 "psr/http-factory": "^1.0",
@@ -3541,7 +3541,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -3566,11 +3566,11 @@
         },
         {
             "name": "polaris/sso",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/sso",
-                "reference": "c8b28a43f96bef8c61ae61fd32431902032544d8"
+                "reference": "2375e545fcfe37640a93581040915324ba70bdb2"
             },
             "require": {
                 "ext-dom": "*",
@@ -3578,9 +3578,9 @@
                 "firebase/php-jwt": "^7.0",
                 "onelogin/php-saml": "^4.3",
                 "php": ">=8.3",
-                "polaris/admin": "^0.5",
-                "polaris/audit": "^0.5",
-                "polaris/core": "^0.5",
+                "polaris/admin": "^0.6",
+                "polaris/audit": "^0.6",
+                "polaris/core": "^0.6",
                 "psr/clock": "^1.0",
                 "psr/http-client": "^1.0",
                 "psr/http-factory": "^1.0",
@@ -3592,7 +3592,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -3617,19 +3617,19 @@
         },
         {
             "name": "polaris/symfony",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/symfony",
-                "reference": "010ccfff325e5acd093748c626bb18489a9b3c2e"
+                "reference": "88411a45e9b7d455817028712cfa654830eebb49"
             },
             "require": {
                 "nyholm/psr7": "^1.8",
                 "php": ">=8.3",
-                "polaris/cli": "^0.5",
-                "polaris/core": "^0.5",
-                "polaris/pdo": "^0.5",
-                "polaris/psr15": "^0.5",
+                "polaris/cli": "^0.6",
+                "polaris/core": "^0.6",
+                "polaris/pdo": "^0.6",
+                "polaris/psr15": "^0.6",
                 "symfony/framework-bundle": "^7.4 || ^8.0",
                 "symfony/psr-http-message-bridge": "^7.4 || ^8.0",
                 "symfony/security-bundle": "^7.4 || ^8.0"
@@ -3640,7 +3640,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -3665,20 +3665,20 @@
         },
         {
             "name": "polaris/testing",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/testing",
-                "reference": "46e71e8d6cc9a48afe70237a67b7c4f2edea2e66"
+                "reference": "f657e71616ad59737ea79abb2e60d0afccaaeef1"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/core": "^0.5"
+                "polaris/core": "^0.6"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -3703,18 +3703,18 @@
         },
         {
             "name": "polaris/yii",
-            "version": "0.5.x-dev",
+            "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/yii",
-                "reference": "f530e2928e75e1bdc64ec476e39785413da0ef02"
+                "reference": "3d3e3df892dc4fd41bd918be9a7e37660ceff7fd"
             },
             "require": {
                 "php": ">=8.3",
-                "polaris/cli": "^0.5",
-                "polaris/core": "^0.5",
-                "polaris/pdo": "^0.5",
-                "polaris/psr15": "^0.5",
+                "polaris/cli": "^0.6",
+                "polaris/core": "^0.6",
+                "polaris/pdo": "^0.6",
+                "polaris/psr15": "^0.6",
                 "psr/container": "^1.1 || ^2.0",
                 "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.1 || ^2.0",
@@ -3731,7 +3731,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.5.x-dev"
+                    "dev-main": "0.6.x-dev"
                 },
                 "config-plugin-options": {
                     "source-directory": "config"

@@ -4,7 +4,10 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.6.0] - 2026-09-12
+
+`polaris/scim`, a SCIM 2.0 server per organization; the six packages of the infrastructure program are
+released.
 
 ### Added
 - **`polaris/scim`** (`Polaris\Scim\`): a SCIM 2.0 server per organization at `/scim/v2/{connectionId}`
@@ -23,6 +26,8 @@ the project adheres to [Semantic Versioning](https://semver.org/).
 - A `204` response carries no content type (a host's HTTP foundation drops one on an empty response).
 - The Yii test application parses `application/scim+json` bodies as JSON; a Yii host adds the parser
   the same way.
+- The packages' version line is 0.6: `^0.6` between siblings, `0.6.x-dev` on the path repository and
+  in the demos.
 
 ## [0.5.0] - 2026-09-12
 
