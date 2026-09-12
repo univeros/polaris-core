@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { createClient, type ProblemBody } from "../src/index.js";
+import { challengeRetry, createClient, type ProblemBody } from "../src/index.js";
 
 const challenge: ProblemBody & { challenge: string } = {
     type: "https://polaris.univeros.io/problems/sentinel/challenge_required",
@@ -77,6 +77,34 @@ describe("the sentinel challenge retry", () => {
         expect(denied.error?.error).toBe("admin_forbidden");
         expect(captcha).not.toHaveBeenCalled();
         expect(requests).toHaveLength(1);
+    });
+
+    it("does not retry a request without a JSON object body", async () => {
+        const { requests, fetch } = recording({ status: 403, body: challenge });
+        const captcha = vi.fn(async () => "cf-token");
+        const client = createClient({ baseUrl: "https://polaris.example", token: "access", fetch, challenge: { captcha } });
+
+        const resend = await client.GET("/auth/me");
+
+        expect(resend.response.status).toBe(403);
+        expect(captcha).not.toHaveBeenCalled();
+        expect(requests).toHaveLength(1);
+    });
+
+    it("forgets the body of a request whose fetch failed", async () => {
+        const captcha = vi.fn(async () => "cf-token");
+        const retry = vi.fn(async () => new Response("{}", { status: 200 }));
+        const middleware = challengeRetry({ captcha });
+        const request = new Request("https://polaris.example/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: "ada@example.com", password: "pw" }) });
+        const hook = { id: "r1", request, schemaPath: "/auth/login", params: {}, options: { fetch: retry } } as never;
+
+        await middleware.onRequest?.(hook);
+        await middleware.onError?.({ ...(hook as object), error: new TypeError("network down") } as never);
+        const answered = await middleware.onResponse?.({ ...(hook as object), response: new Response(JSON.stringify(challenge), { status: 403 }) } as never);
+
+        expect(answered).toBeUndefined();
+        expect(captcha).not.toHaveBeenCalled();
+        expect(retry).not.toHaveBeenCalled();
     });
 
     it("keeps the challenge callback on the client withToken returns", async () => {
