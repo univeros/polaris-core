@@ -4,6 +4,26 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- **`polaris/scim`** (`Polaris\Scim\`): a SCIM 2.0 server per organization at `/scim/v2/{connectionId}`
+  (`ServiceProviderConfig`, `Schemas`, `ResourceTypes`, `Users` and `Groups` with filtering `eq|co|sw`
+  joined by `and`, PatchOp, 1-based pagination; SCIM error documents that also carry `error` and
+  `message`): a directory provisions the organization's members (created verified without a password,
+  joined with the `member` role; deactivated, or anonymised when the connection says so, on
+  deprovisioning; only the memberships the connection created are removed) and roles (Groups; the
+  built-in ones take members but keep their names). Connections with a `pst_` token stored as a keyed
+  hash, created, rotated and decommissioned by the organization under `/orgs/{id}/scim/connections`
+  (`org.update`), listed and removed by the operators under `/admin/scim`; every action a `scim.*`
+  audit event.
+- `@polaris-auth/client`: `client.scim.*`.
+
+### Changed
+- A `204` response carries no content type (a host's HTTP foundation drops one on an empty response).
+- The Yii test application parses `application/scim+json` bodies as JSON; a Yii host adds the parser
+  the same way.
+
 ## [0.5.0] - 2026-09-12
 
 `polaris/sso`, per-organization SAML and OIDC providers with verified domains and single logout.
