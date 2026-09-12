@@ -10,13 +10,13 @@
             "options": {
                 "symlink": true,
                 "versions": {
-                    "polaris/admin": "0.5.x-dev",
-                    "polaris/audit": "0.5.x-dev",
-                    "polaris/cli": "0.5.x-dev",
-                    "polaris/core": "0.5.x-dev",
-                    "polaris/pdo": "0.5.x-dev",
-                    "polaris/psr15": "0.5.x-dev",
-                    "polaris/testing": "0.5.x-dev"
+                    "polaris/admin": "0.6.x-dev",
+                    "polaris/audit": "0.6.x-dev",
+                    "polaris/cli": "0.6.x-dev",
+                    "polaris/core": "0.6.x-dev",
+                    "polaris/pdo": "0.6.x-dev",
+                    "polaris/psr15": "0.6.x-dev",
+                    "polaris/testing": "0.6.x-dev"
                 }
             }
         }
@@ -24,12 +24,12 @@
     "require": {
         "php": ">=8.3",
         "ext-pdo_sqlite": "*",
-        "polaris/admin": "0.5.x-dev",
-        "polaris/audit": "0.5.x-dev",
-        "polaris/cli": "0.5.x-dev",
-        "polaris/core": "0.5.x-dev",
-        "polaris/pdo": "0.5.x-dev",
-        "polaris/psr15": "0.5.x-dev",
+        "polaris/admin": "0.6.x-dev",
+        "polaris/audit": "0.6.x-dev",
+        "polaris/cli": "0.6.x-dev",
+        "polaris/core": "0.6.x-dev",
+        "polaris/pdo": "0.6.x-dev",
+        "polaris/psr15": "0.6.x-dev",
         "slim/psr7": "^1.7",
         "slim/slim": "^4.14"
     },

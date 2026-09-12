@@ -33,7 +33,7 @@ final class OpenApi
     /**
      * @return array<string, mixed>
      */
-    public static function document(Manifest $manifest, string $version = '0.5.0'): array
+    public static function document(Manifest $manifest, string $version = '0.6.0'): array
     {
         $paths = [];
         foreach ($manifest->endpoints() as $spec) {
