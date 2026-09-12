@@ -36,6 +36,10 @@ Plugin endpoints extend `Polaris\Http\Endpoint` like core's and read the same `I
 (`https://polaris.univeros.io/problems/<plugin>/<name>`), `title`, `status`, `detail`, plus `error` and
 `message` so a client reading core's envelope reads both. Core's own routes keep their plain envelope.
 
+The packages built on the contract, each in `packages/<id>` with its own README: `polaris/audit`,
+`polaris/admin`, `polaris/messaging`, `polaris/sentinel`, `polaris/sso` and `polaris/scim`; what each one
+asked of core is logged in [`decisions.md`](decisions.md).
+
 ## The CLI and the adapters
 
 `polaris schema:export|create|drop|diff`, `manifest` and `doctor` take `--bootstrap=<file>` (or

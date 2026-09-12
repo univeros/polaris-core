@@ -34,11 +34,16 @@ navigates by.
 | `polaris/laravel` | `Polaris\Laravel\` | Laravel 13: service provider, the endpoints as routes, the `polaris` guard, mail bridge, `polaris:*` artisan commands. |
 | `polaris/symfony` | `Polaris\Symfony\` | Symfony 7.4 / 8: bundle, the endpoints as routes, a firewall authenticator, mail bridge, `polaris:*` console commands. |
 | `polaris/yii` | `Polaris\Yii\` | Yii 3: config plugin, the endpoints as routes, an authentication method, mail bridge, `polaris:*` console commands. |
-| `polaris/audit` | `Polaris\Audit\` | The first plugin: a catalogued, redacted, append-only audit store with per-user and per-organization query routes, sinks, per-organization drains, retention and an optional hash chain. |
-| `@polaris-auth/client` (npm) | `packages/client-ts` | The TypeScript client generated from the manifest: `openapi-fetch` typed by the 52 endpoints, request bodies, `data` and `error` checked at compile time. |
+| `polaris/audit` | `Polaris\Audit\` | A plugin: every Polaris event becomes a catalogued, redacted, append-only record, queried per user and per organization, streamed to sinks and to each organization's drains, pruned by policy, optionally hash-chained. |
+| `polaris/admin` | `Polaris\Admin\` | A plugin: the operator API over users, sessions, MFA, organizations, audit drains and statistics, for admin users and API keys, every action audited. |
+| `polaris/messaging` | `Polaris\Messaging\` | A plugin: the verification, reset, invitation, one-time-code and security messages from templates overridable per instance and per organization, translated, rate-limited, sent through the channel you choose (Symfony Mailer, PHPMailer, Twilio, Vonage, a log). |
+| `polaris/sentinel` | `Polaris\Sentinel\` | A plugin: a local risk engine on sign-up, sign-in, password reset and code sends; signals score an attempt, a policy allows, challenges or blocks, `observe` mode records without enforcing. |
+| `polaris/sso` | `Polaris\Sso\` | A plugin: per-organization SAML 2.0 and OpenID Connect providers, verified domains, just-in-time users and memberships, single logout in both directions, the organization's own self-service routes. |
+| `polaris/scim` | `Polaris\Scim\` | A plugin: a SCIM 2.0 server per organization; a directory provisions members and roles with a connection token the organization creates and rotates itself. |
+| `@polaris-auth/client` (npm) | `packages/client-ts` | The TypeScript client generated from the manifest: `openapi-fetch` typed by the 52 core endpoints plus the plugins' namespaces (`client.audit`, `client.admin`, `client.sentinel`, `client.sso`, `client.scim`), request bodies, `data` and `error` checked at compile time. |
 
 This repository is the monorepo; each package is published to its own read-only
-repository for Composer.
+repository for Composer (fourteen `univeros/polaris.*` repositories; the client goes to npm).
 
 ---
 
@@ -96,7 +101,8 @@ the definitions, the `polaris/authentication` middleware and the `polaris:*` com
 
 From a browser or Node, `@polaris-auth/client` ([`packages/client-ts`](packages/client-ts)) is the same
 contract typed: `createClient({ baseUrl, token })` over `openapi-fetch`, generated from
-`polaris manifest --format=openapi` and drift-checked in CI.
+`polaris manifest --format=openapi` and drift-checked in CI. Beside the 52 core endpoints it carries the
+plugins' routes as namespaces (`client.audit`, `client.admin`, `client.sentinel`, `client.sso`, `client.scim`).
 
 ---
 
@@ -113,6 +119,7 @@ contract typed: `createClient({ baseUrl, token })` over `openapi-fetch`, generat
 | **Authorization** | Declarative per-endpoint permissions + a programmatic `Gate` |
 | **Security** | Rate limiting, account lockout, anti-enumeration, audit log, key rotation |
 | **Ops** | PSR-14 domain events, notification fan-out, transient-row pruning, metrics |
+| **Plugins** | Packages on the plugin contract ([`docs/plugins`](docs/plugins/README.md)): the operator API ([`polaris/admin`](packages/admin/README.md)), the audit store and drains ([`polaris/audit`](packages/audit/README.md)), messaging channels and templates ([`polaris/messaging`](packages/messaging/README.md)), the risk engine ([`polaris/sentinel`](packages/sentinel/README.md)), SSO ([`polaris/sso`](packages/sso/README.md)), SCIM ([`polaris/scim`](packages/scim/README.md)) |
 
 ---
 
