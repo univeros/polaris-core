@@ -1,0 +1,35 @@
+# POST /sso/slo/{providerId}: single logout, POST binding.
+endpoint:
+  method: POST
+  path: /sso/slo/{providerId}
+  summary: SAML single logout (POST binding)
+  tags: [sso]
+  auth: public
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    SAMLRequest: { type: "?string", rules: [optional] }
+    SAMLResponse: { type: "?string", rules: [optional] }
+    RelayState: { type: "?string", rules: [optional] }
+    SigAlg: { type: "?string", rules: [optional] }
+    Signature: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\Sso\Http\Flow\SloPostEndpoint
+  description: >
+    As the redirect binding, with the messages in the form body.
+
+output:
+  status: 302
+  example: {}
+
+errors:
+  - { status: 403, code: sso_assertion_invalid }
+  - { status: 403, code: sso_provider_disabled }
+  - { status: 404, code: sso_provider_not_found }
+  - { status: 422, code: sso_invalid_input }
+
+events: [sso.slo_completed]

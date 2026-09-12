@@ -1,0 +1,41 @@
+# POST /orgs/{id}/sso/domains/{domainId}/verify: prove the domain.
+endpoint:
+  method: POST
+  path: /orgs/{id}/sso/domains/{domainId}/verify
+  summary: Verify an SSO domain
+  tags: [sso, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: write
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    domainId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Sso\Http\Organization\VerifyDomainEndpoint
+  description: >
+    Looks for the token in the DNS TXT record _polaris.<domain>, then in
+    https://<domain>/.well-known/polaris-sso.txt; a verified domain stays verified. Recorded as
+    sso.domain_verified.
+
+output:
+  status: 200
+  example:
+    data:
+      id: "018f..."
+      domain: "acme.example"
+      verified: true
+      verified_at: "2026-09-11T10:00:00+00:00"
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: sso_forbidden }
+  - { status: 404, code: sso_not_found }
+  - { status: 422, code: sso_domain_unverified }
+
+events: [sso.domain_verified]

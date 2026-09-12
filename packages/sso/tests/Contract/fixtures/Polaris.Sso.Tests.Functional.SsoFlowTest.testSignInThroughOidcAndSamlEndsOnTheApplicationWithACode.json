@@ -1,0 +1,1416 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@acme.example",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789167600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "8Eo93gIYiZw39b5ycineXyFSYMqdHVgF1k8kUwBndB4"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789165800"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@acme.example",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789165800"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVhNDg3MjNhNGZhZWU1MzA5ZjU2MTYzMTYzOWRiOTVhOGEwZjUyZGUzZmU5YzVkODk2MGFlNTUxNTc0MzI0ZWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTY1NzA2Ljc3Nzc3NywibmJmIjoxNzg5MTY1NzA2Ljc3Nzc3NywiZXhwIjoxNzg5MTY2NjA2Ljc3Nzc3Nywic3ViIjoiMDFhMDkyOTYtMWNlMS03NDFiLWI0ZDItZDVlYTYxMWI1MTVjIiwianRpIjoiMDFhMDkyOTYtMWUxOS03MTU1LWFlNDYtYzBkMjhiNTJhMjJmIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5Mjk2LTFlMTgtN2MwOS04ZTBjLTdiOWI4OTc2OTE2YSIsImF1dGhfdGltZSI6MTc4OTE2NTcwNn0.dAdoN3pJWJaGkyLKRigxxxkbT2Cmlbf0RJcXYqD16VJy2MORuNVrBadjrclXxbyDEmvV5yFWq_hukOQz7X_m7bLLDnCni5WHMEoA2kiVaCC31k5vU_L4QiLyGEijJMPaWXDwoyAX1E0RzylxHV5Jt-hK8_exMyXIExfiqGPJMEVwuWDlErUUv2_zXXD06wb9Yikabic-haIKHYTYvPsPHd60o6pv7kbc5gm0g0AUHU60jAzN9SccB1H-MhguKffMyRZMMho7zFqeKjsgClEOSPYeeaV7Sw6UUT75de2FyZwq-gxdRLHKo2MHbIOtp1zDo09AyqXqAGyCe5x0qqQT_Q",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "9XzmoLSh3JRGTGgjFvktpOTmfK2n0gvg7Y-pFRJnVAI",
+                    "user": {
+                        "id": "01a09296-1ce1-741b-b4d2-d5ea611b515c",
+                        "email": "ada@acme.example",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVhNDg3MjNhNGZhZWU1MzA5ZjU2MTYzMTYzOWRiOTVhOGEwZjUyZGUzZmU5YzVkODk2MGFlNTUxNTc0MzI0ZWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTY1NzA2Ljc3Nzc3NywibmJmIjoxNzg5MTY1NzA2Ljc3Nzc3NywiZXhwIjoxNzg5MTY2NjA2Ljc3Nzc3Nywic3ViIjoiMDFhMDkyOTYtMWNlMS03NDFiLWI0ZDItZDVlYTYxMWI1MTVjIiwianRpIjoiMDFhMDkyOTYtMWUxOS03MTU1LWFlNDYtYzBkMjhiNTJhMjJmIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5Mjk2LTFlMTgtN2MwOS04ZTBjLTdiOWI4OTc2OTE2YSIsImF1dGhfdGltZSI6MTc4OTE2NTcwNn0.dAdoN3pJWJaGkyLKRigxxxkbT2Cmlbf0RJcXYqD16VJy2MORuNVrBadjrclXxbyDEmvV5yFWq_hukOQz7X_m7bLLDnCni5WHMEoA2kiVaCC31k5vU_L4QiLyGEijJMPaWXDwoyAX1E0RzylxHV5Jt-hK8_exMyXIExfiqGPJMEVwuWDlErUUv2_zXXD06wb9Yikabic-haIKHYTYvPsPHd60o6pv7kbc5gm0g0AUHU60jAzN9SccB1H-MhguKffMyRZMMho7zFqeKjsgClEOSPYeeaV7Sw6UUT75de2FyZwq-gxdRLHKo2MHbIOtp1zDo09AyqXqAGyCe5x0qqQT_Q"
+                ]
+            },
+            "body": {
+                "name": "Acme Rockets"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789165740"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09296-1e1d-7900-9052-03552ef317b0",
+                    "name": "Acme Rockets",
+                    "slug": "acme-rockets",
+                    "role": "owner"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/switch-org",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVhNDg3MjNhNGZhZWU1MzA5ZjU2MTYzMTYzOWRiOTVhOGEwZjUyZGUzZmU5YzVkODk2MGFlNTUxNTc0MzI0ZWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTY1NzA2Ljc3Nzc3NywibmJmIjoxNzg5MTY1NzA2Ljc3Nzc3NywiZXhwIjoxNzg5MTY2NjA2Ljc3Nzc3Nywic3ViIjoiMDFhMDkyOTYtMWNlMS03NDFiLWI0ZDItZDVlYTYxMWI1MTVjIiwianRpIjoiMDFhMDkyOTYtMWUxOS03MTU1LWFlNDYtYzBkMjhiNTJhMjJmIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5Mjk2LTFlMTgtN2MwOS04ZTBjLTdiOWI4OTc2OTE2YSIsImF1dGhfdGltZSI6MTc4OTE2NTcwNn0.dAdoN3pJWJaGkyLKRigxxxkbT2Cmlbf0RJcXYqD16VJy2MORuNVrBadjrclXxbyDEmvV5yFWq_hukOQz7X_m7bLLDnCni5WHMEoA2kiVaCC31k5vU_L4QiLyGEijJMPaWXDwoyAX1E0RzylxHV5Jt-hK8_exMyXIExfiqGPJMEVwuWDlErUUv2_zXXD06wb9Yikabic-haIKHYTYvPsPHd60o6pv7kbc5gm0g0AUHU60jAzN9SccB1H-MhguKffMyRZMMho7zFqeKjsgClEOSPYeeaV7Sw6UUT75de2FyZwq-gxdRLHKo2MHbIOtp1zDo09AyqXqAGyCe5x0qqQT_Q"
+                ]
+            },
+            "body": {
+                "organization_id": "01a09296-1e1d-7900-9052-03552ef317b0"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789165740"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVhNDg3MjNhNGZhZWU1MzA5ZjU2MTYzMTYzOWRiOTVhOGEwZjUyZGUzZmU5YzVkODk2MGFlNTUxNTc0MzI0ZWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTY1NzA2Ljc4MjU2NywibmJmIjoxNzg5MTY1NzA2Ljc4MjU2NywiZXhwIjoxNzg5MTY2NjA2Ljc4MjU2Nywic3ViIjoiMDFhMDkyOTYtMWNlMS03NDFiLWI0ZDItZDVlYTYxMWI1MTVjIiwianRpIjoiMDFhMDkyOTYtMWUxZS03OGJjLThlMmYtOTM5NjRlMTUzMDlhIiwib3JnIjoiMDFhMDkyOTYtMWUxZC03OTAwLTkwNTItMDM1NTJlZjMxN2IwIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkyOTYtMWUxOC03YzA5LThlMGMtN2I5Yjg5NzY5MTZhIiwiYXV0aF90aW1lIjoxNzg5MTY1NzA2fQ.fpNBcXtondRZn0CHJUhomgZUH3xZhmxdkf25FrzzPotE-Rd_nTpUWPw40d8A34QkXxve48rMXVHWm6gieJZEY2BTXIFhfgNee0Odj3UD1-u6cma_WOlRyoTGKLxhS6NTVXKbHlQmDED58zYxqf3Jkbv6yz6DJtFrKOOYwP9B2fMFIzA8fxbmoy7BOCyd-UDiLd_LeUJycUjUOdtKXd1pT2e8c9rQ7a-vlVOGSNtd9I1qZTDyRR6y55Z5SwREbzNPHCncxRxUHMIOBYbijOBs-G8DW1VpxeN3MjA8eEYn31Hq1GJCxhXeVLKyOFklUPR2sEkqanW6OcSa9oMLqp63QA",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "org": "01a09296-1e1d-7900-9052-03552ef317b0"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs/01a09296-1e1d-7900-9052-03552ef317b0/sso/providers",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVhNDg3MjNhNGZhZWU1MzA5ZjU2MTYzMTYzOWRiOTVhOGEwZjUyZGUzZmU5YzVkODk2MGFlNTUxNTc0MzI0ZWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTY1NzA2Ljc4MjU2NywibmJmIjoxNzg5MTY1NzA2Ljc4MjU2NywiZXhwIjoxNzg5MTY2NjA2Ljc4MjU2Nywic3ViIjoiMDFhMDkyOTYtMWNlMS03NDFiLWI0ZDItZDVlYTYxMWI1MTVjIiwianRpIjoiMDFhMDkyOTYtMWUxZS03OGJjLThlMmYtOTM5NjRlMTUzMDlhIiwib3JnIjoiMDFhMDkyOTYtMWUxZC03OTAwLTkwNTItMDM1NTJlZjMxN2IwIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkyOTYtMWUxOC03YzA5LThlMGMtN2I5Yjg5NzY5MTZhIiwiYXV0aF90aW1lIjoxNzg5MTY1NzA2fQ.fpNBcXtondRZn0CHJUhomgZUH3xZhmxdkf25FrzzPotE-Rd_nTpUWPw40d8A34QkXxve48rMXVHWm6gieJZEY2BTXIFhfgNee0Odj3UD1-u6cma_WOlRyoTGKLxhS6NTVXKbHlQmDED58zYxqf3Jkbv6yz6DJtFrKOOYwP9B2fMFIzA8fxbmoy7BOCyd-UDiLd_LeUJycUjUOdtKXd1pT2e8c9rQ7a-vlVOGSNtd9I1qZTDyRR6y55Z5SwREbzNPHCncxRxUHMIOBYbijOBs-G8DW1VpxeN3MjA8eEYn31Hq1GJCxhXeVLKyOFklUPR2sEkqanW6OcSa9oMLqp63QA"
+                ]
+            },
+            "body": {
+                "type": "oidc",
+                "name": "Okta",
+                "issuer": "https://acme.okta.example",
+                "config": {
+                    "client_id": "client-1",
+                    "client_secret": "shh"
+                },
+                "jit": {
+                    "enabled": true,
+                    "roles": [
+                        "member"
+                    ]
+                },
+                "redirect_uris": [
+                    "https://app.example/done"
+                ]
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "597"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789165740"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09296-1e20-7875-a28e-09b1c01bd3d1",
+                    "organization_id": "01a09296-1e1d-7900-9052-03552ef317b0",
+                    "type": "oidc",
+                    "name": "Okta",
+                    "issuer": "https://acme.okta.example",
+                    "config": {
+                        "client_id": "client-1",
+                        "client_secret_set": true
+                    },
+                    "attributes": [],
+                    "jit": {
+                        "enabled": true,
+                        "roles": [
+                            "member"
+                        ]
+                    },
+                    "redirect_uris": [
+                        "https://app.example/done"
+                    ],
+                    "enabled": true,
+                    "created_by": "01a09296-1ce1-741b-b4d2-d5ea611b515c",
+                    "created_at": "2026-09-11T22:28:26+00:00",
+                    "updated_at": "2026-09-11T22:28:26+00:00"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs/01a09296-1e1d-7900-9052-03552ef317b0/sso/providers",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVhNDg3MjNhNGZhZWU1MzA5ZjU2MTYzMTYzOWRiOTVhOGEwZjUyZGUzZmU5YzVkODk2MGFlNTUxNTc0MzI0ZWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTY1NzA2Ljc4MjU2NywibmJmIjoxNzg5MTY1NzA2Ljc4MjU2NywiZXhwIjoxNzg5MTY2NjA2Ljc4MjU2Nywic3ViIjoiMDFhMDkyOTYtMWNlMS03NDFiLWI0ZDItZDVlYTYxMWI1MTVjIiwianRpIjoiMDFhMDkyOTYtMWUxZS03OGJjLThlMmYtOTM5NjRlMTUzMDlhIiwib3JnIjoiMDFhMDkyOTYtMWUxZC03OTAwLTkwNTItMDM1NTJlZjMxN2IwIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkyOTYtMWUxOC03YzA5LThlMGMtN2I5Yjg5NzY5MTZhIiwiYXV0aF90aW1lIjoxNzg5MTY1NzA2fQ.fpNBcXtondRZn0CHJUhomgZUH3xZhmxdkf25FrzzPotE-Rd_nTpUWPw40d8A34QkXxve48rMXVHWm6gieJZEY2BTXIFhfgNee0Odj3UD1-u6cma_WOlRyoTGKLxhS6NTVXKbHlQmDED58zYxqf3Jkbv6yz6DJtFrKOOYwP9B2fMFIzA8fxbmoy7BOCyd-UDiLd_LeUJycUjUOdtKXd1pT2e8c9rQ7a-vlVOGSNtd9I1qZTDyRR6y55Z5SwREbzNPHCncxRxUHMIOBYbijOBs-G8DW1VpxeN3MjA8eEYn31Hq1GJCxhXeVLKyOFklUPR2sEkqanW6OcSa9oMLqp63QA"
+                ]
+            },
+            "body": {
+                "type": "saml",
+                "name": "Acme IdP",
+                "issuer": "https://idp.example/metadata",
+                "config": {
+                    "sso_url": "https://idp.example/sso",
+                    "slo_url": "https://idp.example/slo",
+                    "certificate": "MIIC...",
+                    "idp_initiated": true
+                },
+                "attributes": {
+                    "email": "mail"
+                },
+                "jit": {
+                    "enabled": true,
+                    "roles": [
+                        "member"
+                    ]
+                },
+                "redirect_uris": [
+                    "https://app.example/done"
+                ]
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "596"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789165740"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09296-1e20-7c75-a28e-09b1c107c7b5",
+                    "organization_id": "01a09296-1e1d-7900-9052-03552ef317b0",
+                    "type": "saml",
+                    "name": "Acme IdP",
+                    "issuer": "https://idp.example/metadata",
+                    "config": {
+                        "sso_url": "https://idp.example/sso",
+                        "slo_url": "https://idp.example/slo",
+                        "certificate": "MIIC...",
+                        "idp_initiated": true
+                    },
+                    "attributes": {
+                        "email": "mail"
+                    },
+                    "jit": {
+                        "enabled": true,
+                        "roles": [
+                            "member"
+                        ]
+                    },
+                    "redirect_uris": [
+                        "https://app.example/done"
+                    ],
+                    "enabled": true,
+                    "created_by": "01a09296-1ce1-741b-b4d2-d5ea611b515c",
+                    "created_at": "2026-09-11T22:28:26+00:00",
+                    "updated_at": "2026-09-11T22:28:26+00:00"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs/01a09296-1e1d-7900-9052-03552ef317b0/sso/domains",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVhNDg3MjNhNGZhZWU1MzA5ZjU2MTYzMTYzOWRiOTVhOGEwZjUyZGUzZmU5YzVkODk2MGFlNTUxNTc0MzI0ZWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTY1NzA2Ljc4MjU2NywibmJmIjoxNzg5MTY1NzA2Ljc4MjU2NywiZXhwIjoxNzg5MTY2NjA2Ljc4MjU2Nywic3ViIjoiMDFhMDkyOTYtMWNlMS03NDFiLWI0ZDItZDVlYTYxMWI1MTVjIiwianRpIjoiMDFhMDkyOTYtMWUxZS03OGJjLThlMmYtOTM5NjRlMTUzMDlhIiwib3JnIjoiMDFhMDkyOTYtMWUxZC03OTAwLTkwNTItMDM1NTJlZjMxN2IwIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkyOTYtMWUxOC03YzA5LThlMGMtN2I5Yjg5NzY5MTZhIiwiYXV0aF90aW1lIjoxNzg5MTY1NzA2fQ.fpNBcXtondRZn0CHJUhomgZUH3xZhmxdkf25FrzzPotE-Rd_nTpUWPw40d8A34QkXxve48rMXVHWm6gieJZEY2BTXIFhfgNee0Odj3UD1-u6cma_WOlRyoTGKLxhS6NTVXKbHlQmDED58zYxqf3Jkbv6yz6DJtFrKOOYwP9B2fMFIzA8fxbmoy7BOCyd-UDiLd_LeUJycUjUOdtKXd1pT2e8c9rQ7a-vlVOGSNtd9I1qZTDyRR6y55Z5SwREbzNPHCncxRxUHMIOBYbijOBs-G8DW1VpxeN3MjA8eEYn31Hq1GJCxhXeVLKyOFklUPR2sEkqanW6OcSa9oMLqp63QA"
+                ]
+            },
+            "body": {
+                "domain": "acme.example",
+                "provider_id": "01a09296-1e20-7875-a28e-09b1c01bd3d1"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "595"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789165740"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09296-1e21-737c-8247-8e083c04c1a7",
+                    "organization_id": "01a09296-1e1d-7900-9052-03552ef317b0",
+                    "provider_id": "01a09296-1e20-7875-a28e-09b1c01bd3d1",
+                    "domain": "acme.example",
+                    "verification": {
+                        "token": "polaris-sso-d7ac75a50edc0a57e3d5f2c96f908e6d",
+                        "dns": {
+                            "record": "_polaris.acme.example",
+                            "type": "TXT",
+                            "value": "polaris-sso-d7ac75a50edc0a57e3d5f2c96f908e6d"
+                        },
+                        "https": {
+                            "url": "https://acme.example/.well-known/polaris-sso.txt",
+                            "body": "polaris-sso-d7ac75a50edc0a57e3d5f2c96f908e6d"
+                        }
+                    },
+                    "verified": false,
+                    "verified_at": null,
+                    "created_at": "2026-09-11T22:28:26+00:00"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/sign-in",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@acme.example"
+            }
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/provider_not_found",
+                "title": "Provider not found",
+                "status": 404,
+                "detail": "No SSO provider answers this request.",
+                "error": "sso_provider_not_found",
+                "message": "No SSO provider answers this request."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs/01a09296-1e1d-7900-9052-03552ef317b0/sso/domains/01a09296-1e21-737c-8247-8e083c04c1a7/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVhNDg3MjNhNGZhZWU1MzA5ZjU2MTYzMTYzOWRiOTVhOGEwZjUyZGUzZmU5YzVkODk2MGFlNTUxNTc0MzI0ZWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTY1NzA2Ljc4MjU2NywibmJmIjoxNzg5MTY1NzA2Ljc4MjU2NywiZXhwIjoxNzg5MTY2NjA2Ljc4MjU2Nywic3ViIjoiMDFhMDkyOTYtMWNlMS03NDFiLWI0ZDItZDVlYTYxMWI1MTVjIiwianRpIjoiMDFhMDkyOTYtMWUxZS03OGJjLThlMmYtOTM5NjRlMTUzMDlhIiwib3JnIjoiMDFhMDkyOTYtMWUxZC03OTAwLTkwNTItMDM1NTJlZjMxN2IwIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkyOTYtMWUxOC03YzA5LThlMGMtN2I5Yjg5NzY5MTZhIiwiYXV0aF90aW1lIjoxNzg5MTY1NzA2fQ.fpNBcXtondRZn0CHJUhomgZUH3xZhmxdkf25FrzzPotE-Rd_nTpUWPw40d8A34QkXxve48rMXVHWm6gieJZEY2BTXIFhfgNee0Odj3UD1-u6cma_WOlRyoTGKLxhS6NTVXKbHlQmDED58zYxqf3Jkbv6yz6DJtFrKOOYwP9B2fMFIzA8fxbmoy7BOCyd-UDiLd_LeUJycUjUOdtKXd1pT2e8c9rQ7a-vlVOGSNtd9I1qZTDyRR6y55Z5SwREbzNPHCncxRxUHMIOBYbijOBs-G8DW1VpxeN3MjA8eEYn31Hq1GJCxhXeVLKyOFklUPR2sEkqanW6OcSa9oMLqp63QA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "594"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789165740"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09296-1e21-737c-8247-8e083c04c1a7",
+                    "organization_id": "01a09296-1e1d-7900-9052-03552ef317b0",
+                    "provider_id": "01a09296-1e20-7875-a28e-09b1c01bd3d1",
+                    "domain": "acme.example",
+                    "verification": {
+                        "token": "polaris-sso-d7ac75a50edc0a57e3d5f2c96f908e6d",
+                        "dns": {
+                            "record": "_polaris.acme.example",
+                            "type": "TXT",
+                            "value": "polaris-sso-d7ac75a50edc0a57e3d5f2c96f908e6d"
+                        },
+                        "https": {
+                            "url": "https://acme.example/.well-known/polaris-sso.txt",
+                            "body": "polaris-sso-d7ac75a50edc0a57e3d5f2c96f908e6d"
+                        }
+                    },
+                    "verified": true,
+                    "verified_at": "2026-09-11T22:28:26+00:00",
+                    "created_at": "2026-09-11T22:28:26+00:00"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/sign-in",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "someone@elsewhere.example"
+            }
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/provider_not_found",
+                "title": "Provider not found",
+                "status": 404,
+                "detail": "No SSO provider answers this request.",
+                "error": "sso_provider_not_found",
+                "message": "No SSO provider answers this request."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/sign-in",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "an email or a provider_id is required",
+                "error": "sso_invalid_input",
+                "message": "an email or a provider_id is required"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/sign-in",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "provider_id": "01a09296-1e20-7875-a28e-09b1c01bd3d1",
+                "redirect_uri": "https://evil.example/"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "redirect_uri is not one of the provider's",
+                "error": "sso_invalid_input",
+                "message": "redirect_uri is not one of the provider's"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/sign-in",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "Ada@ACME.example"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://idp.example/authorize?client_id=client-1",
+                    "provider_id": "01a09296-1e20-7875-a28e-09b1c01bd3d1",
+                    "type": "oidc"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/sso/callback/01a09296-1e20-7875-a28e-09b1c01bd3d1?code=good&state=unknown",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/assertion_invalid",
+                "title": "Sign-in refused",
+                "status": 403,
+                "detail": "The sign-in could not be completed.",
+                "error": "sso_assertion_invalid",
+                "message": "The sign-in could not be completed."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/sign-in",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "provider_id": "01a09296-1e20-7875-a28e-09b1c01bd3d1"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://idp.example/authorize?client_id=client-1",
+                    "provider_id": "01a09296-1e20-7875-a28e-09b1c01bd3d1",
+                    "type": "oidc"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/sso/callback/01a09296-1e20-7875-a28e-09b1c01bd3d1?code=bad&state=324f8c8f7f5a0674b51813505a073ef1",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/assertion_invalid",
+                "title": "Sign-in refused",
+                "status": 403,
+                "detail": "The sign-in could not be completed.",
+                "error": "sso_assertion_invalid",
+                "message": "The sign-in could not be completed."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/sso/callback/01a09296-1e20-7c75-a28e-09b1c107c7b5?code=good&state=324f8c8f7f5a0674b51813505a073ef1",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/provider_not_found",
+                "title": "Provider not found",
+                "status": 404,
+                "detail": "No SSO provider answers this request.",
+                "error": "sso_provider_not_found",
+                "message": "No SSO provider answers this request."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/sign-in",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "provider_id": "01a09296-1e20-7875-a28e-09b1c01bd3d1"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://idp.example/authorize?client_id=client-1",
+                    "provider_id": "01a09296-1e20-7875-a28e-09b1c01bd3d1",
+                    "type": "oidc"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/sso/callback/01a09296-1e20-7875-a28e-09b1c01bd3d1?code=good&state=42da67ec18d0932ae1811b91157dac9d",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 302,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Location": [
+                    "https://app.example/done?sso_code=tMMG_Q7usYVhe3pbdd-Q2zvnjabVqZxHUFwXTtFxTuA"
+                ]
+            },
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "code is required.",
+                "error": "sso_invalid_input",
+                "message": "code is required."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "nope"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/code_invalid",
+                "title": "Invalid code",
+                "status": 422,
+                "detail": "The code is unknown, already used or expired.",
+                "error": "sso_code_invalid",
+                "message": "The code is unknown, already used or expired."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "tMMG_Q7usYVhe3pbdd-Q2zvnjabVqZxHUFwXTtFxTuA"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVhNDg3MjNhNGZhZWU1MzA5ZjU2MTYzMTYzOWRiOTVhOGEwZjUyZGUzZmU5YzVkODk2MGFlNTUxNTc0MzI0ZWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTY1NzA2Ljc4Njk5NCwibmJmIjoxNzg5MTY1NzA2Ljc4Njk5NCwiZXhwIjoxNzg5MTY2NjA2Ljc4Njk5NCwic3ViIjoiMDFhMDkyOTYtMWNlMS03NDFiLWI0ZDItZDVlYTYxMWI1MTVjIiwianRpIjoiMDFhMDkyOTYtMWUyMi03ZjY0LWEyMzEtMzA3MWUzMTQ0MzRhIiwib3JnIjoiMDFhMDkyOTYtMWUxZC03OTAwLTkwNTItMDM1NTJlZjMxN2IwIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJzc28iXSwic2lkIjoiMDFhMDkyOTYtMWUyMi03ZWQwLWEyMzEtMzA3MWUxNWJlOWJhIiwiYXV0aF90aW1lIjoxNzg5MTY1NzA2fQ.CS7PJFiggiUBPX0J1qK40cxptkQ2awbLu_jFF1SBEwf2Kbw7hUwTTcBZHYkM8yEeEtw_ilPMWg4LndrMN4MrWehACkrw1ghvkbDiJDcIDGEyvgOr1Z3lcAd0IiKcnB6BiBxiTLgm7JBzElgiSvQ-i7MSTMYzGv-KOlGSwVsN5Gs_lQCrX9cc0hgtnjL1IeiIikj8bQJB9dlHuy4SSz20vcqiDr2TMHTBW8B24tRFAWUGWhbOiB2eIP7ULkK0DJVtlz885w_JIbaqEgw3D6fz4qIXsutHNFzzmVAVdDEf0LEXeUS2bZhMXUjOb4Ll7lfJaxu246KRcd2wPy9Ibcq53w",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "E5CpiBtDjrtTMPoeL8Jiy9M3PrfmB-xsl50SWm1wbTc",
+                    "user": {
+                        "id": "01a09296-1ce1-741b-b4d2-d5ea611b515c",
+                        "email": "ada@acme.example",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "tMMG_Q7usYVhe3pbdd-Q2zvnjabVqZxHUFwXTtFxTuA"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/code_invalid",
+                "title": "Invalid code",
+                "status": 422,
+                "detail": "The code is unknown, already used or expired.",
+                "error": "sso_code_invalid",
+                "message": "The code is unknown, already used or expired."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/auth/me",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVhNDg3MjNhNGZhZWU1MzA5ZjU2MTYzMTYzOWRiOTVhOGEwZjUyZGUzZmU5YzVkODk2MGFlNTUxNTc0MzI0ZWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTY1NzA2Ljc4Njk5NCwibmJmIjoxNzg5MTY1NzA2Ljc4Njk5NCwiZXhwIjoxNzg5MTY2NjA2Ljc4Njk5NCwic3ViIjoiMDFhMDkyOTYtMWNlMS03NDFiLWI0ZDItZDVlYTYxMWI1MTVjIiwianRpIjoiMDFhMDkyOTYtMWUyMi03ZjY0LWEyMzEtMzA3MWUzMTQ0MzRhIiwib3JnIjoiMDFhMDkyOTYtMWUxZC03OTAwLTkwNTItMDM1NTJlZjMxN2IwIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJzc28iXSwic2lkIjoiMDFhMDkyOTYtMWUyMi03ZWQwLWEyMzEtMzA3MWUxNWJlOWJhIiwiYXV0aF90aW1lIjoxNzg5MTY1NzA2fQ.CS7PJFiggiUBPX0J1qK40cxptkQ2awbLu_jFF1SBEwf2Kbw7hUwTTcBZHYkM8yEeEtw_ilPMWg4LndrMN4MrWehACkrw1ghvkbDiJDcIDGEyvgOr1Z3lcAd0IiKcnB6BiBxiTLgm7JBzElgiSvQ-i7MSTMYzGv-KOlGSwVsN5Gs_lQCrX9cc0hgtnjL1IeiIikj8bQJB9dlHuy4SSz20vcqiDr2TMHTBW8B24tRFAWUGWhbOiB2eIP7ULkK0DJVtlz885w_JIbaqEgw3D6fz4qIXsutHNFzzmVAVdDEf0LEXeUS2bZhMXUjOb4Ll7lfJaxu246KRcd2wPy9Ibcq53w"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "593"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789165740"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09296-1ce1-741b-b4d2-d5ea611b515c",
+                    "email": "ada@acme.example",
+                    "email_verified": true,
+                    "display_name": null,
+                    "status": "active",
+                    "mfa_enforced": false,
+                    "orgs": [],
+                    "roles": []
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/sign-in",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "provider_id": "01a09296-1e20-7c75-a28e-09b1c107c7b5"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://idp.example/sso?SAMLRequest=fake",
+                    "provider_id": "01a09296-1e20-7c75-a28e-09b1c107c7b5",
+                    "type": "saml"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/callback/01a09296-1e20-7c75-a28e-09b1c107c7b5",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "SAMLResponse": "bad",
+                "RelayState": "bbc14b8a631fcf93409906861e0dfa07"
+            }
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/assertion_invalid",
+                "title": "Sign-in refused",
+                "status": 403,
+                "detail": "The sign-in could not be completed.",
+                "error": "sso_assertion_invalid",
+                "message": "The sign-in could not be completed."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/sign-in",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "provider_id": "01a09296-1e20-7c75-a28e-09b1c107c7b5"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://idp.example/sso?SAMLRequest=fake",
+                    "provider_id": "01a09296-1e20-7c75-a28e-09b1c107c7b5",
+                    "type": "saml"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/callback/01a09296-1e20-7c75-a28e-09b1c107c7b5",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "SAMLResponse": "good:carol@acme.example",
+                "RelayState": "a5e86cb3d1d083f04093ade1ea79a323"
+            }
+        },
+        "response": {
+            "status": 302,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Location": [
+                    "https://app.example/done?sso_code=yVq7LiBRJP7WiHixlvtgDcKT--HYpmHvbQoVm1CdFfU"
+                ]
+            },
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "yVq7LiBRJP7WiHixlvtgDcKT--HYpmHvbQoVm1CdFfU"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVhNDg3MjNhNGZhZWU1MzA5ZjU2MTYzMTYzOWRiOTVhOGEwZjUyZGUzZmU5YzVkODk2MGFlNTUxNTc0MzI0ZWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTY1NzA2Ljc4ODg4MSwibmJmIjoxNzg5MTY1NzA2Ljc4ODg4MSwiZXhwIjoxNzg5MTY2NjA2Ljc4ODg4MSwic3ViIjoiMDFhMDkyOTYtMWUyNC03OWEzLWFmNjEtNTNkYmU3NWQ0OWJjIiwianRpIjoiMDFhMDkyOTYtMWUyNC03ZGIzLWFmNjEtNTNkYmU5YmRjNzQyIiwib3JnIjoiMDFhMDkyOTYtMWUxZC03OTAwLTkwNTItMDM1NTJlZjMxN2IwIiwicm9sZXMiOlsibWVtYmVyIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic3NvIl0sInNpZCI6IjAxYTA5Mjk2LTFlMjQtN2QzZi1hZjYxLTUzZGJlOTRhNWI3MSIsImF1dGhfdGltZSI6MTc4OTE2NTcwNn0.SASsUjOpb9sql_-mlaRE0nnX3_UM1Qbi-9eVxZeAkhk98Q1PogksAJ7M_tbJe4exxdNPHMXPJp5nL0C6w8rq1lEh2HlHv5JyJgc-dfR31pw2aB19h7jQ9XAFYBOf6VEExx9oEpOe4-MvAqP9RWiA5iM7BpI-YP82TeCcg3KinwyZiJhNiR2ELLT0qI1lh2KDXzLIqbFrhE4pXDLBoJmRG4DUf4W_lQ3Lvzoa70A-vZ8LU7ZtiuEc8L0id5mDv0vvMY9FgtV4J8r7lUCJ39CSOIiJ_xA7IsoRQ2LZZw-3pNXC-8yL1meoDQr6WfX813rtM2vzPl6WJXInB06_HTLm9w",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "5jlPcERUjfzroh5eKsVCu2itVERNvitbBQrcZQwKCyI",
+                    "user": {
+                        "id": "01a09296-1e24-79a3-af61-53dbe75d49bc",
+                        "email": "carol@acme.example",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/sign-in",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "provider_id": "01a09296-1e20-7c75-a28e-09b1c107c7b5"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://idp.example/sso?SAMLRequest=fake",
+                    "provider_id": "01a09296-1e20-7c75-a28e-09b1c107c7b5",
+                    "type": "saml"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/callback/01a09296-1e20-7c75-a28e-09b1c107c7b5",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "SAMLResponse": "good:carol@acme.example",
+                "RelayState": "a36cca14034dceedd246e54d8f1514e8"
+            }
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/assertion_invalid",
+                "title": "Sign-in refused",
+                "status": 403,
+                "detail": "The sign-in could not be completed.",
+                "error": "sso_assertion_invalid",
+                "message": "The sign-in could not be completed."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/callback/01a09296-1e20-7c75-a28e-09b1c107c7b5",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "SAMLResponse": "unsolicited:dave@acme.example"
+            }
+        },
+        "response": {
+            "status": 302,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Location": [
+                    "https://app.example/done?sso_code=URUVjJz3NtmPF68wOSXsjpLpTCfLAmF97YzhSzwS0J8"
+                ]
+            },
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/callback/01a09296-1e20-7c75-a28e-09b1c107c7b5",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/assertion_invalid",
+                "title": "Sign-in refused",
+                "status": 403,
+                "detail": "The sign-in could not be completed.",
+                "error": "sso_assertion_invalid",
+                "message": "The sign-in could not be completed."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/logout",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVhNDg3MjNhNGZhZWU1MzA5ZjU2MTYzMTYzOWRiOTVhOGEwZjUyZGUzZmU5YzVkODk2MGFlNTUxNTc0MzI0ZWIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTY1NzA2Ljc4ODg4MSwibmJmIjoxNzg5MTY1NzA2Ljc4ODg4MSwiZXhwIjoxNzg5MTY2NjA2Ljc4ODg4MSwic3ViIjoiMDFhMDkyOTYtMWUyNC03OWEzLWFmNjEtNTNkYmU3NWQ0OWJjIiwianRpIjoiMDFhMDkyOTYtMWUyNC03ZGIzLWFmNjEtNTNkYmU5YmRjNzQyIiwib3JnIjoiMDFhMDkyOTYtMWUxZC03OTAwLTkwNTItMDM1NTJlZjMxN2IwIiwicm9sZXMiOlsibWVtYmVyIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic3NvIl0sInNpZCI6IjAxYTA5Mjk2LTFlMjQtN2QzZi1hZjYxLTUzZGJlOTRhNWI3MSIsImF1dGhfdGltZSI6MTc4OTE2NTcwNn0.SASsUjOpb9sql_-mlaRE0nnX3_UM1Qbi-9eVxZeAkhk98Q1PogksAJ7M_tbJe4exxdNPHMXPJp5nL0C6w8rq1lEh2HlHv5JyJgc-dfR31pw2aB19h7jQ9XAFYBOf6VEExx9oEpOe4-MvAqP9RWiA5iM7BpI-YP82TeCcg3KinwyZiJhNiR2ELLT0qI1lh2KDXzLIqbFrhE4pXDLBoJmRG4DUf4W_lQ3Lvzoa70A-vZ8LU7ZtiuEc8L0id5mDv0vvMY9FgtV4J8r7lUCJ39CSOIiJ_xA7IsoRQ2LZZw-3pNXC-8yL1meoDQr6WfX813rtM2vzPl6WJXInB06_HTLm9w"
+                ]
+            },
+            "body": {
+                "provider_id": "01a09296-1e20-7c75-a28e-09b1c107c7b5"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789165740"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "logged_out",
+                    "url": "https://idp.example/slo?SAMLRequest=fake-logout"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/token/refresh",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "refresh_token": "5jlPcERUjfzroh5eKsVCu2itVERNvitbBQrcZQwKCyI"
+            }
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "59"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789165740"
+                ]
+            },
+            "body": {
+                "error": "invalid_grant",
+                "message": "The refresh token is invalid or expired."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/sso/slo/01a09296-1e20-7c75-a28e-09b1c107c7b5?SAMLRequest=logout:ada@acme.example&RelayState=rs",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 302,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Location": [
+                    "https://idp.example/slo?SAMLResponse=fake-response&InResponseTo=logout-request-1"
+                ]
+            },
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/token/refresh",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "refresh_token": "E5CpiBtDjrtTMPoeL8Jiy9M3PrfmB-xsl50SWm1wbTc"
+            }
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "58"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789165740"
+                ]
+            },
+            "body": {
+                "error": "invalid_grant",
+                "message": "The refresh token is invalid or expired."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/slo/01a09296-1e20-7c75-a28e-09b1c107c7b5",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "SAMLRequest": "bogus"
+            }
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/assertion_invalid",
+                "title": "Sign-in refused",
+                "status": 403,
+                "detail": "The sign-in could not be completed.",
+                "error": "sso_assertion_invalid",
+                "message": "The sign-in could not be completed."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/slo/01a09296-1e20-7c75-a28e-09b1c107c7b5",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "SAMLResponse": "fake"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "logged_out"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/sso/slo/01a09296-1e20-7c75-a28e-09b1c107c7b5",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/sso/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "A SAMLRequest or a SAMLResponse is required.",
+                "error": "sso_invalid_input",
+                "message": "A SAMLRequest or a SAMLResponse is required."
+            }
+        }
+    }
+]

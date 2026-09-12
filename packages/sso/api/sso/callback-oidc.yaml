@@ -1,0 +1,38 @@
+# GET /sso/callback/{providerId}: the OIDC authorization response.
+endpoint:
+  method: GET
+  path: /sso/callback/{providerId}
+  summary: OIDC callback
+  tags: [sso]
+  auth: public
+  effect: write
+  receipt: false
+
+input:
+  source: query
+  fields:
+    code: { type: "?string", rules: [optional] }
+    state: { type: "?string", rules: [optional] }
+    error: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\Sso\Http\Flow\OidcCallbackEndpoint
+  description: >
+    Exchanges the code with the provider, verifies the id_token (issuer, audience, nonce, signature,
+    expiry), resolves or provisions the user, ensures the membership, opens an organization-scoped
+    session and sends the browser to the application's redirect_uri with sso_code. Rejections are
+    sso/assertion_invalid; the reason is in the audit trail (sso.assertion_rejected).
+
+output:
+  status: 302
+  example: {}
+
+errors:
+  - { status: 403, code: sso_assertion_invalid }
+  - { status: 403, code: sso_user_unknown }
+  - { status: 403, code: sso_account_disabled }
+  - { status: 403, code: sso_membership_suspended }
+  - { status: 403, code: sso_provider_disabled }
+  - { status: 404, code: sso_provider_not_found }
+
+events: [sso.signed_in, sso.assertion_rejected]

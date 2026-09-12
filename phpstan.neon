@@ -22,3 +22,5 @@ parameters:
         - packages/messaging/tests
         - packages/sentinel/src
         - packages/sentinel/tests
+        - packages/sso/src
+        - packages/sso/tests

@@ -1,0 +1,38 @@
+# POST /sso/logout: the application ends an SSO session and learns where the IdP's logout is.
+endpoint:
+  method: POST
+  path: /sso/logout
+  summary: Single logout from the application
+  tags: [sso]
+  auth: bearer
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    organization_id: { type: "?string", rules: [optional] }
+    provider_id: { type: "?string", rules: [optional] }
+    post_logout_uri: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\Sso\Http\Flow\LogoutEndpoint
+  description: >
+    Every session of the caller ends; url is where the browser goes so the IdP ends its own session
+    (a SAML LogoutRequest, or the OIDC end-session endpoint), null when the provider offers none. The
+    provider is provider_id, or the first of the token's active organization (organization_id when the
+    session has none).
+
+output:
+  status: 200
+  example:
+    data:
+      status: "logged_out"
+      url: "https://idp.example.com/slo?SAMLRequest=..."
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 404, code: sso_provider_not_found }
+  - { status: 422, code: sso_invalid_input }
+
+events: [sso.slo_completed]

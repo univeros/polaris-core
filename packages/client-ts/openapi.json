@@ -4597,7 +4597,10 @@
                                         "type": "string"
                                     },
                                     "permission_keys": {
-                                        "type": "string"
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
                                     }
                                 }
                             }
@@ -10316,6 +10319,2466 @@
                     },
                     "422": {
                         "description": "admin_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/sso/providers/{id}": {
+            "delete": {
+                "operationId": "delete_sso_AdminDeleteProviderEndpoint",
+                "summary": "Remove an SSO provider (operator)",
+                "tags": [
+                    "admin",
+                    "sso"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "sso",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "deleted"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "admin_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/sso/providers": {
+            "get": {
+                "operationId": "get_sso_AdminListProvidersEndpoint",
+                "summary": "List the SSO providers of every organization",
+                "tags": [
+                    "admin",
+                    "sso"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "sso",
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "organization_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "enabled": {
+                                                        "type": "boolean"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "organization_id",
+                                                    "type",
+                                                    "name",
+                                                    "enabled"
+                                                ]
+                                            }
+                                        },
+                                        "next_cursor": {
+                                            "type": [
+                                                "string",
+                                                "null"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data",
+                                        "next_cursor"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "organization_id": "018f...",
+                                            "type": "oidc",
+                                            "name": "Okta",
+                                            "enabled": true
+                                        }
+                                    ],
+                                    "next_cursor": null
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "admin_unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "admin_forbidden | admin_impersonation_denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "admin_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sso/callback/{providerId}": {
+            "get": {
+                "operationId": "get_sso_OidcCallbackEndpoint",
+                "summary": "OIDC callback",
+                "tags": [
+                    "sso"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "sso",
+                "parameters": [
+                    {
+                        "name": "providerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "error",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": []
+                                },
+                                "example": []
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "sso_assertion_invalid | sso_user_unknown | sso_account_disabled | sso_membership_suspended | sso_provider_disabled",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_provider_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_sso_SamlCallbackEndpoint",
+                "summary": "SAML assertion consumer",
+                "tags": [
+                    "sso"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "sso",
+                "parameters": [
+                    {
+                        "name": "providerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "SAMLResponse": {
+                                        "type": "string"
+                                    },
+                                    "RelayState": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": []
+                                },
+                                "example": []
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "sso_assertion_invalid | sso_user_unknown | sso_account_disabled | sso_membership_suspended | sso_provider_disabled",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_provider_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orgs/{id}/sso/domains": {
+            "post": {
+                "operationId": "post_sso_AddDomainEndpoint",
+                "summary": "Add an SSO domain",
+                "tags": [
+                    "sso",
+                    "orgs"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "sso",
+                "x-polaris-requires-permissions": [
+                    "org.update"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "domain": {
+                                        "type": "string"
+                                    },
+                                    "provider_id": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "domain",
+                                    "provider_id"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "domain": {
+                                                    "type": "string"
+                                                },
+                                                "verified": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "domain",
+                                                "verified"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "domain": "acme.example",
+                                        "verified": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "forbidden | sso_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "sso_conflict",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "sso_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "get_sso_ListDomainsEndpoint",
+                "summary": "List the organization's SSO domains",
+                "tags": [
+                    "sso",
+                    "orgs"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "sso",
+                "x-polaris-requires-permissions": [
+                    "org.update"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "organization_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "provider_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "domain": {
+                                                        "type": "string"
+                                                    },
+                                                    "verification": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "token": {
+                                                                "type": "string"
+                                                            },
+                                                            "dns": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "record": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "type": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "record",
+                                                                    "type",
+                                                                    "value"
+                                                                ]
+                                                            },
+                                                            "https": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "url": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "body": {
+                                                                        "type": "string"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "url",
+                                                                    "body"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "token",
+                                                            "dns",
+                                                            "https"
+                                                        ]
+                                                    },
+                                                    "verified": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "verified_at": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "organization_id",
+                                                    "provider_id",
+                                                    "domain",
+                                                    "verification",
+                                                    "verified",
+                                                    "verified_at",
+                                                    "created_at"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "organization_id": "018f...",
+                                            "provider_id": "018f...",
+                                            "domain": "acme.example",
+                                            "verification": {
+                                                "token": "polaris-sso-...",
+                                                "dns": {
+                                                    "record": "_polaris.acme.example",
+                                                    "type": "TXT",
+                                                    "value": "polaris-sso-..."
+                                                },
+                                                "https": {
+                                                    "url": "https://acme.example/.well-known/polaris-sso.txt",
+                                                    "body": "polaris-sso-..."
+                                                }
+                                            },
+                                            "verified": false,
+                                            "verified_at": null,
+                                            "created_at": "2026-09-11T10:00:00+00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "forbidden | sso_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orgs/{id}/sso/domains/{domainId}": {
+            "delete": {
+                "operationId": "delete_sso_DeleteDomainEndpoint",
+                "summary": "Remove an SSO domain",
+                "tags": [
+                    "sso",
+                    "orgs"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "sso",
+                "x-polaris-requires-permissions": [
+                    "org.update"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "domainId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "deleted"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "forbidden | sso_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orgs/{id}/sso/domains/{domainId}/verify": {
+            "post": {
+                "operationId": "post_sso_VerifyDomainEndpoint",
+                "summary": "Verify an SSO domain",
+                "tags": [
+                    "sso",
+                    "orgs"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "sso",
+                "x-polaris-requires-permissions": [
+                    "org.update"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "domainId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "domain": {
+                                                    "type": "string"
+                                                },
+                                                "verified": {
+                                                    "type": "boolean"
+                                                },
+                                                "verified_at": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "domain",
+                                                "verified",
+                                                "verified_at"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "domain": "acme.example",
+                                        "verified": true,
+                                        "verified_at": "2026-09-11T10:00:00+00:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "forbidden | sso_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "sso_domain_unverified",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sso/exchange": {
+            "post": {
+                "operationId": "post_sso_ExchangeEndpoint",
+                "summary": "Exchange the sign-on code for the session",
+                "tags": [
+                    "sso"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "sso",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "code": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "code"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "refresh_token": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "email_verified": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "email",
+                                                        "email_verified"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "token_type",
+                                                "expires_in",
+                                                "refresh_token",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "<jwt>",
+                                        "token_type": "Bearer",
+                                        "expires_in": 900,
+                                        "refresh_token": "<opaque>",
+                                        "user": {
+                                            "id": "018f...",
+                                            "email": "ada@example.com",
+                                            "email_verified": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "sso_invalid_input | sso_code_invalid",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sso/logout": {
+            "post": {
+                "operationId": "post_sso_LogoutEndpoint",
+                "summary": "Single logout from the application",
+                "tags": [
+                    "sso"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "sso",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "organization_id": {
+                                        "type": "string"
+                                    },
+                                    "provider_id": {
+                                        "type": "string"
+                                    },
+                                    "post_logout_uri": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "url": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status",
+                                                "url"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "logged_out",
+                                        "url": "https://idp.example.com/slo?SAMLRequest=..."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_provider_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "sso_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sso/metadata/{providerId}": {
+            "get": {
+                "operationId": "get_sso_MetadataEndpoint",
+                "summary": "SAML service provider metadata",
+                "tags": [
+                    "sso"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "sso",
+                "parameters": [
+                    {
+                        "name": "providerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": []
+                                },
+                                "example": []
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_provider_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orgs/{id}/sso/providers": {
+            "post": {
+                "operationId": "post_sso_CreateProviderEndpoint",
+                "summary": "Add an SSO provider",
+                "tags": [
+                    "sso",
+                    "orgs"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "sso",
+                "x-polaris-requires-permissions": [
+                    "org.update"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "issuer": {
+                                        "type": "string"
+                                    },
+                                    "config": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    },
+                                    "attributes": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    },
+                                    "jit": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    },
+                                    "redirect_uris": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "enabled": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "type",
+                                    "name",
+                                    "issuer",
+                                    "config",
+                                    "redirect_uris"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "organization_id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "issuer": {
+                                                    "type": "string"
+                                                },
+                                                "config": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "sso_url": {
+                                                            "type": "string"
+                                                        },
+                                                        "certificate": {
+                                                            "type": "string"
+                                                        },
+                                                        "idp_initiated": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "sso_url",
+                                                        "certificate",
+                                                        "idp_initiated"
+                                                    ]
+                                                },
+                                                "attributes": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "email",
+                                                        "name"
+                                                    ]
+                                                },
+                                                "jit": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "enabled": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "roles": {
+                                                            "type": "array",
+                                                            "items": []
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "enabled",
+                                                        "roles"
+                                                    ]
+                                                },
+                                                "redirect_uris": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "enabled": {
+                                                    "type": "boolean"
+                                                },
+                                                "created_by": {
+                                                    "type": "string"
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "organization_id",
+                                                "type",
+                                                "name",
+                                                "issuer",
+                                                "config",
+                                                "attributes",
+                                                "jit",
+                                                "redirect_uris",
+                                                "enabled",
+                                                "created_by",
+                                                "created_at",
+                                                "updated_at"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "organization_id": "018f...",
+                                        "type": "saml",
+                                        "name": "Acme IdP",
+                                        "issuer": "https://idp.acme.example/metadata",
+                                        "config": {
+                                            "sso_url": "https://idp.acme.example/sso",
+                                            "certificate": "MIIC...",
+                                            "idp_initiated": false
+                                        },
+                                        "attributes": {
+                                            "email": "email",
+                                            "name": "displayName"
+                                        },
+                                        "jit": {
+                                            "enabled": false,
+                                            "roles": []
+                                        },
+                                        "redirect_uris": [
+                                            "https://app.example.com/sso/done"
+                                        ],
+                                        "enabled": true,
+                                        "created_by": "018f...",
+                                        "created_at": "2026-09-11T10:00:00+00:00",
+                                        "updated_at": "2026-09-11T10:00:00+00:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "forbidden | sso_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "sso_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "get_sso_ListProvidersEndpoint",
+                "summary": "List the organization's SSO providers",
+                "tags": [
+                    "sso",
+                    "orgs"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "sso",
+                "x-polaris-requires-permissions": [
+                    "org.update"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "organization_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "issuer": {
+                                                        "type": "string"
+                                                    },
+                                                    "config": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "client_id": {
+                                                                "type": "string"
+                                                            },
+                                                            "scopes": {
+                                                                "type": "string"
+                                                            },
+                                                            "client_secret_set": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "client_id",
+                                                            "scopes",
+                                                            "client_secret_set"
+                                                        ]
+                                                    },
+                                                    "attributes": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "email": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "email",
+                                                            "name"
+                                                        ]
+                                                    },
+                                                    "jit": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "enabled": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "roles": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "enabled",
+                                                            "roles"
+                                                        ]
+                                                    },
+                                                    "redirect_uris": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "enabled": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "created_by": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "organization_id",
+                                                    "type",
+                                                    "name",
+                                                    "issuer",
+                                                    "config",
+                                                    "attributes",
+                                                    "jit",
+                                                    "redirect_uris",
+                                                    "enabled",
+                                                    "created_by",
+                                                    "created_at",
+                                                    "updated_at"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "organization_id": "018f...",
+                                            "type": "oidc",
+                                            "name": "Okta",
+                                            "issuer": "https://acme.okta.com",
+                                            "config": {
+                                                "client_id": "0oa...",
+                                                "scopes": "openid email profile",
+                                                "client_secret_set": true
+                                            },
+                                            "attributes": {
+                                                "email": "email",
+                                                "name": "name"
+                                            },
+                                            "jit": {
+                                                "enabled": true,
+                                                "roles": [
+                                                    "member"
+                                                ]
+                                            },
+                                            "redirect_uris": [
+                                                "https://app.example.com/sso/done"
+                                            ],
+                                            "enabled": true,
+                                            "created_by": "018f...",
+                                            "created_at": "2026-09-11T10:00:00+00:00",
+                                            "updated_at": "2026-09-11T10:00:00+00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "forbidden | sso_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orgs/{id}/sso/providers/{providerId}": {
+            "delete": {
+                "operationId": "delete_sso_DeleteProviderEndpoint",
+                "summary": "Remove an SSO provider",
+                "tags": [
+                    "sso",
+                    "orgs"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "sso",
+                "x-polaris-requires-permissions": [
+                    "org.update"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "providerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "deleted"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "forbidden | sso_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "get_sso_ReadProviderEndpoint",
+                "summary": "Read an SSO provider",
+                "tags": [
+                    "sso",
+                    "orgs"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "sso",
+                "x-polaris-requires-permissions": [
+                    "org.update"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "providerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "sp": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "entity_id": {
+                                                            "type": "string"
+                                                        },
+                                                        "acs_url": {
+                                                            "type": "string"
+                                                        },
+                                                        "slo_url": {
+                                                            "type": "string"
+                                                        },
+                                                        "metadata_url": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "entity_id",
+                                                        "acs_url",
+                                                        "slo_url",
+                                                        "metadata_url"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "type",
+                                                "name",
+                                                "sp"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "type": "saml",
+                                        "name": "Acme IdP",
+                                        "sp": {
+                                            "entity_id": "https://app.example.com/auth/sso/metadata/018f...",
+                                            "acs_url": "https://app.example.com/auth/sso/callback/018f...",
+                                            "slo_url": "https://app.example.com/auth/sso/slo/018f...",
+                                            "metadata_url": "https://app.example.com/auth/sso/metadata/018f..."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "forbidden | sso_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "patch_sso_UpdateProviderEndpoint",
+                "summary": "Update an SSO provider",
+                "tags": [
+                    "sso",
+                    "orgs"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "sso",
+                "x-polaris-requires-permissions": [
+                    "org.update"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "providerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "issuer": {
+                                        "type": "string"
+                                    },
+                                    "config": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    },
+                                    "attributes": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    },
+                                    "jit": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    },
+                                    "redirect_uris": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "enabled": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "enabled": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "enabled"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "enabled": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "forbidden | sso_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "sso_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orgs/{id}/sso/providers/{providerId}/test": {
+            "post": {
+                "operationId": "post_sso_TestProviderEndpoint",
+                "summary": "Test an SSO provider's configuration",
+                "tags": [
+                    "sso",
+                    "orgs"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "sso",
+                "x-polaris-requires-permissions": [
+                    "org.update"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "providerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "ok": {
+                                                    "type": "boolean"
+                                                },
+                                                "problems": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "ok",
+                                                "problems"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "ok": false,
+                                        "problems": [
+                                            "discovery unreachable: Could not resolve host"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "forbidden | sso_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sso/sign-in": {
+            "post": {
+                "operationId": "post_sso_SignInEndpoint",
+                "summary": "Start a single sign-on",
+                "tags": [
+                    "sso"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "sso",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "provider_id": {
+                                        "type": "string"
+                                    },
+                                    "redirect_uri": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "url": {
+                                                    "type": "string"
+                                                },
+                                                "provider_id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "url",
+                                                "provider_id",
+                                                "type"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "url": "https://idp.example.com/authorize?response_type=code&client_id=...",
+                                        "provider_id": "018f...",
+                                        "type": "oidc"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "sso_provider_disabled",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_provider_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "sso_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sso/slo/{providerId}": {
+            "post": {
+                "operationId": "post_sso_SloPostEndpoint",
+                "summary": "SAML single logout (POST binding)",
+                "tags": [
+                    "sso"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "sso",
+                "parameters": [
+                    {
+                        "name": "providerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "SAMLRequest": {
+                                        "type": "string"
+                                    },
+                                    "SAMLResponse": {
+                                        "type": "string"
+                                    },
+                                    "RelayState": {
+                                        "type": "string"
+                                    },
+                                    "SigAlg": {
+                                        "type": "string"
+                                    },
+                                    "Signature": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": []
+                                },
+                                "example": []
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "sso_assertion_invalid | sso_provider_disabled",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_provider_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "sso_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "get_sso_SloRedirectEndpoint",
+                "summary": "SAML single logout (redirect binding)",
+                "tags": [
+                    "sso"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "sso",
+                "parameters": [
+                    {
+                        "name": "providerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "SAMLRequest",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "SAMLResponse",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "RelayState",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "SigAlg",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Signature",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": []
+                                },
+                                "example": []
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "sso_assertion_invalid | sso_provider_disabled",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sso_provider_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "sso_invalid_input",
                         "content": {
                             "application/problem+json": {
                                 "schema": {

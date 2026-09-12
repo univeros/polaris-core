@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Polaris\Tests\Contract;
 
+use function array_map;
+use function array_values;
 use function count;
+use function in_array;
 use function is_array;
 use function is_string;
 use function json_encode;
 use function ksort;
 use function preg_match;
+use function preg_replace;
 use function str_starts_with;
 use function strlen;
 use function usort;
@@ -35,7 +39,9 @@ final class Normalizer
             if (in_array($lower, self::VOLATILE_HEADERS, true) || in_array($lower, $transportHeaders, true)) {
                 continue;
             }
-            $headers[$lower] = is_array($values) ? array_values($values) : [$values];
+            $values = is_array($values) ? array_values($values) : [$values];
+            // A plugin's hand-off code in a Location header is minted per run, as a body token is.
+            $headers[$lower] = array_map(static fn(mixed $value): mixed => is_string($value) ? preg_replace('/sso_code=[A-Za-z0-9_-]+/', 'sso_code=<code>', $value) : $value, $values);
         }
         ksort($headers);
 
@@ -86,6 +92,8 @@ final class Normalizer
         if (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $value) === 1) {
             return '<uuid>';
         }
+        // An id inside a longer string (a plugin's URL naming a record) is minted per run too.
+        $value = (string) preg_replace('/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i', '<uuid>', $value);
         if (preg_match('/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/', $value) === 1 && strlen($value) > 60) {
             return '<jwt>';
         }

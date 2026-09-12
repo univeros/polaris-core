@@ -1,0 +1,42 @@
+# GET /orgs/{id}/sso/domains: the organization's domains.
+endpoint:
+  method: GET
+  path: /orgs/{id}/sso/domains
+  summary: List the organization's SSO domains
+  tags: [sso, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Sso\Http\Organization\ListDomainsEndpoint
+  description: >
+    Each domain with its verification instructions (a DNS TXT record _polaris.<domain>, or the file
+    /.well-known/polaris-sso.txt over https, carrying the token) and whether it is verified.
+
+output:
+  status: 200
+  example:
+    data:
+      - id: "018f..."
+        organization_id: "018f..."
+        provider_id: "018f..."
+        domain: "acme.example"
+        verification:
+          token: "polaris-sso-..."
+          dns: { record: "_polaris.acme.example", type: "TXT", value: "polaris-sso-..." }
+          https: { url: "https://acme.example/.well-known/polaris-sso.txt", body: "polaris-sso-..." }
+        verified: false
+        verified_at: null
+        created_at: "2026-09-11T10:00:00+00:00"
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: sso_forbidden }
+
+events: []

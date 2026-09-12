@@ -1,0 +1,34 @@
+# DELETE /admin/sso/providers/{id}: an operator removes a provider.
+endpoint:
+  method: DELETE
+  path: /admin/sso/providers/{id}
+  summary: Remove an SSO provider (operator)
+  tags: [admin, sso]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Sso\Http\Admin\AdminDeleteProviderEndpoint
+  description: >
+    The provider and its domains. Needs own on the instance or on the provider's organization;
+    recorded as sso.provider_deleted.
+
+output:
+  status: 200
+  example:
+    data:
+      status: "deleted"
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 403, code: admin_impersonation_denied }
+  - { status: 404, code: admin_not_found }
+
+events: [sso.provider_deleted]

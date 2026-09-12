@@ -1,0 +1,43 @@
+# PATCH /orgs/{id}/sso/providers/{providerId}: change a provider.
+endpoint:
+  method: PATCH
+  path: /orgs/{id}/sso/providers/{providerId}
+  summary: Update an SSO provider
+  tags: [sso, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    name: { type: "?string", rules: [optional] }
+    issuer: { type: "?string", rules: [optional] }
+    config: { type: "?object", rules: [optional] }
+    attributes: { type: "?object", rules: [optional] }
+    jit: { type: "?object", rules: [optional] }
+    redirect_uris: { type: "?list<string>", rules: [optional] }
+    enabled: { type: "?boolean", rules: [optional] }
+
+domain:
+  class: Polaris\Sso\Http\Organization\UpdateProviderEndpoint
+  description: >
+    The fields given replace the provider's (type cannot change); a config without client_secret keeps
+    the stored one. Recorded as sso.provider_updated.
+
+output:
+  status: 200
+  example:
+    data:
+      id: "018f..."
+      enabled: false
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: sso_forbidden }
+  - { status: 404, code: sso_not_found }
+  - { status: 422, code: sso_invalid_input }
+
+events: [sso.provider_updated]

@@ -18,7 +18,7 @@ function recording(status: number, body: unknown) {
     return { requests, fetch };
 }
 
-describe("client.admin, client.audit and client.sentinel", () => {
+describe("client.admin, client.audit, client.sentinel and client.sso", () => {
     it("maps the admin methods onto their routes with the API key as bearer", async () => {
         const { requests, fetch } = recording(200, { data: [], next_cursor: null });
         const client = createClient({ baseUrl: "https://polaris.example/api", token: "pak_secret", fetch });
@@ -82,6 +82,27 @@ describe("client.admin, client.audit and client.sentinel", () => {
             "GET /admin/sentinel/ip-rules",
         ]);
         expect(await requests[3]?.json()).toEqual({ identifier: "ada@example.com" });
+    });
+
+    it("maps the sso methods onto the flow, organization and operator routes", async () => {
+        const { requests, fetch } = recording(200, { data: { url: "https://idp.example/authorize", provider_id: "p1", type: "oidc" } });
+        const client = createClient({ baseUrl: "https://polaris.example", fetch });
+
+        await client.sso.signIn({ body: { email: "ada@acme.example" } });
+        await client.sso.exchange({ body: { code: "c" } });
+        await client.withToken("owner").sso.createProvider({ params: { path: { id: "o1" } }, body: { type: "oidc", name: "Okta", issuer: "https://acme.okta.example", config: { client_id: "c" }, redirect_uris: ["https://app.example/done"] } });
+        await client.withToken("owner").sso.verifyDomain({ params: { path: { id: "o1", domainId: "d1" } } });
+        await client.withToken("pak_owner").sso.adminListProviders({ params: { query: { limit: 5 } } });
+
+        expect(requests.map((request) => `${request.method} ${new URL(request.url).pathname}${new URL(request.url).search}`)).toEqual([
+            "POST /sso/sign-in",
+            "POST /sso/exchange",
+            "POST /orgs/o1/sso/providers",
+            "POST /orgs/o1/sso/domains/d1/verify",
+            "GET /admin/sso/providers?limit=5",
+        ]);
+        expect(requests[0]?.headers.get("Authorization")).toBeNull();
+        expect(requests[2]?.headers.get("Authorization")).toBe("Bearer owner");
     });
 
     it("binds the namespaces to the token of each client", async () => {

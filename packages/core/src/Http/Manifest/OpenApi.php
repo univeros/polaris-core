@@ -12,6 +12,7 @@ use function count;
 use function explode;
 use function preg_match_all;
 use function in_array;
+use function ltrim;
 use function sprintf;
 use function str_starts_with;
 use function strtolower;
@@ -179,10 +180,12 @@ final class OpenApi
      */
     private static function schema(FieldSpec $field): array
     {
+        $type = ltrim($field->type, '?');
         $schema = match (true) {
-            $field->type === 'integer', $field->type === 'boolean' => ['type' => $field->type],
-            $field->type === 'array' => ['type' => 'array'],
-            str_starts_with($field->type, 'list<') => ['type' => 'array', 'items' => ['type' => in_array($inner = substr($field->type, 5, -1), ['integer', 'boolean'], true) ? $inner : 'string']],
+            $type === 'integer', $type === 'boolean' => ['type' => $type],
+            $type === 'array' => ['type' => 'array'],
+            $type === 'object' => ['type' => 'object', 'additionalProperties' => true],
+            str_starts_with($type, 'list<') => ['type' => 'array', 'items' => ['type' => in_array($inner = substr($type, 5, -1), ['integer', 'boolean'], true) ? $inner : 'string']],
             default => ['type' => 'string'],
         };
         foreach ($field->rules as $rule) {

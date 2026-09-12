@@ -1,0 +1,36 @@
+# POST /sso/exchange: the hand-off code for the session.
+endpoint:
+  method: POST
+  path: /sso/exchange
+  summary: Exchange the sign-on code for the session
+  tags: [sso]
+  auth: public
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    code: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Sso\Http\Flow\ExchangeEndpoint
+  description: >
+    The sso_code the callback appended to the redirect_uri, valid once for 60 seconds; answers the
+    login envelope (access token, refresh token, user).
+
+output:
+  status: 200
+  example:
+    data:
+      access_token: "<jwt>"
+      token_type: Bearer
+      expires_in: 900
+      refresh_token: "<opaque>"
+      user: { id: "018f...", email: "ada@example.com", email_verified: true }
+
+errors:
+  - { status: 422, code: sso_invalid_input }
+  - { status: 422, code: sso_code_invalid }
+
+events: []
