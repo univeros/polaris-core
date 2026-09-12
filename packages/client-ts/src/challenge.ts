@@ -17,7 +17,7 @@ const CAPTCHA = "captcha";
  * The transparent challenge retry: the body of every request is kept by its id until the response is
  * in; a captcha challenge asks the host for a token and replays the request once with it. Any other
  * response, and the retried response itself, come back as they are, so a wrong token is one problem
- * document and never a loop.
+ * document and never a loop. A request without a JSON object body is not retried (nothing to add the token to).
  */
 export function challengeRetry(challenge: ChallengeOptions): Middleware {
     const bodies = new Map<string, string>();
@@ -27,9 +27,9 @@ export function challengeRetry(challenge: ChallengeOptions): Middleware {
             bodies.set(id, await request.clone().text());
         },
         async onResponse({ id, request, response, options }) {
-            const body = bodies.get(id) ?? "";
+            const fields = jsonFields(bodies.get(id) ?? "");
             bodies.delete(id);
-            if (response.status !== 403 || !(await isCaptchaChallenge(response))) {
+            if (fields === null || response.status !== 403 || !(await isCaptchaChallenge(response))) {
                 return undefined;
             }
             const token = await challenge.captcha();
@@ -38,11 +38,14 @@ export function challengeRetry(challenge: ChallengeOptions): Middleware {
                 new Request(request.url, {
                     method: request.method,
                     headers: request.headers,
-                    body: withCaptchaToken(body, token),
+                    body: JSON.stringify({ ...fields, captcha_token: token }),
                     credentials: request.credentials,
                     signal: request.signal,
                 }),
             );
+        },
+        onError({ id }) {
+            bodies.delete(id);
         },
     };
 }
@@ -62,16 +65,16 @@ async function isCaptchaChallenge(response: Response): Promise<boolean> {
     }
 }
 
-function withCaptchaToken(body: string, token: string): string {
-    let parsed: unknown = {};
-    if (body !== "") {
-        try {
-            parsed = JSON.parse(body);
-        } catch {
-            parsed = {};
-        }
+/** The fields of a JSON object body; null for an empty or non-JSON-object body, which cannot take a `captcha_token`. */
+function jsonFields(body: string): Record<string, unknown> | null {
+    if (body === "") {
+        return null;
     }
-    const fields = typeof parsed === "object" && parsed !== null && !Array.isArray(parsed) ? parsed : {};
+    try {
+        const parsed: unknown = JSON.parse(body);
 
-    return JSON.stringify({ ...fields, captcha_token: token });
+        return typeof parsed === "object" && parsed !== null && !Array.isArray(parsed) ? (parsed as Record<string, unknown>) : null;
+    } catch {
+        return null;
+    }
 }
