@@ -15,6 +15,7 @@ use Symfony\Component\Uid\Uuid;
 
 use function array_slice;
 use function count;
+use function in_array;
 use function is_array;
 use function is_string;
 use function mb_strlen;
@@ -28,12 +29,14 @@ use const DATE_ATOM;
 /**
  * SCIM Groups onto the organization's roles: `displayName` is the role name, `members` the memberships
  * holding it. A Group the directory creates is a custom role with an empty permission set until an
- * organization admin fills it; a system role (owner, admin, member) can be listed and given members but
+ * organization admin fills it; a built-in role (owner, admin, member) can be listed and given members but
  * neither renamed nor deleted.
  */
 final class Groups
 {
     public const string SCHEMA = 'urn:ietf:params:scim:schemas:core:2.0:Group';
+    /** The roles every organization starts with: listed and given members, never renamed or deleted here. */
+    private const array PROTECTED = ['owner', 'admin', 'member'];
 
     public function __construct(
         private readonly DatabaseAdapter $database,
@@ -161,8 +164,8 @@ final class Groups
      */
     public function delete(Connection $connection, array $role): void
     {
-        if (($role['is_system'] ?? false) === true || (int) ($role['is_system'] ?? 0) === 1) {
-            throw new ScimError(403, 'A system role cannot be deleted.', ScimError::MUTABILITY);
+        if (in_array($role['slug'] ?? null, self::PROTECTED, true)) {
+            throw new ScimError(403, 'A built-in role cannot be deleted.', ScimError::MUTABILITY);
         }
         $this->database->delete('auth_membership_roles', ['role_id' => $role['id']]);
         $this->database->delete('auth_role_permissions', ['role_id' => $role['id']]);
@@ -209,8 +212,8 @@ final class Groups
         if ($name === (string) $role['name']) {
             return;
         }
-        if (($role['is_system'] ?? false) === true || (int) ($role['is_system'] ?? 0) === 1) {
-            throw new ScimError(403, 'A system role cannot be renamed.', ScimError::MUTABILITY);
+        if (in_array($role['slug'] ?? null, self::PROTECTED, true)) {
+            throw new ScimError(403, 'A built-in role cannot be renamed.', ScimError::MUTABILITY);
         }
         $this->database->update('auth_roles', ['id' => $role['id']], ['name' => $name, 'updated_at' => $this->clock->now()]);
     }

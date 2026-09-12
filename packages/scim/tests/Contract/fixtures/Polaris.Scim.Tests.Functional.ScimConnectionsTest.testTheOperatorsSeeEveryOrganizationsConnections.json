@@ -1,0 +1,749 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@acme.example",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789182000"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "Er6H7Sc2N6lBtQwZVVmSSgqUtwmfZP3bBHzp1LYW7L8"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179300"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@acme.example",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179300"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjliYzNkZmQ1ZjM2MmE5ZWI3Y2UxZWFmZWZiNDQ2ZmQ4ZTM2ZWMxYmVmNmNiMDk2YWExZjg4NDIwMTdmN2JkZDIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MDgzLjA1MjQxNCwibmJmIjoxNzg5MTc5MDgzLjA1MjQxNCwiZXhwIjoxNzg5MTc5OTgzLjA1MjQxNCwic3ViIjoiMDFhMDkzNjItMzgxMS03MTUzLTk0ZGEtMDBiMjdmYmJjNGQ1IiwianRpIjoiMDFhMDkzNjItMzkyYy03NjUxLWIzMjYtOWQ0YmZhZThiZmFhIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MzYyLTM5MmMtNzRkNS1iMzI2LTlkNGJmYTJmZjQ4NCIsImF1dGhfdGltZSI6MTc4OTE3OTA4Mn0.feVMogzCTtUNKuo3GjswHUJyVv7nq6DnEG0gVLX--HQaLQVWGVct0mQlZROZJgR5W4KGtFYbW_mDrOrSKjjWXek6NwEaRUDGRGi8qmfd_NAVTNNsSsNOMkVeiiceX_VRFwZhjPpAhN9c81nh8CQCTjSFpyICWdWUCiM-n55MvnaoiowIQfxUrQ35NOeSjMnUAySEbzercFWvOS5suhEWO_rNjXSOUtmOzh3EA-Lwc3JJwKhHxiQ2JOxdcO9iieEGy2i1LxKCDVz1MtJS5alGbvw_aTp0qtd_AnoZUKfxR0lqXgtPQBds0uybBhQrJE2Yyi_SemEoyszhXJWTC50FrQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "ZgvQg9YmvBEgCXkyu67e6J1ESLoQZa44YOQQh96knPk",
+                    "user": {
+                        "id": "01a09362-3811-7153-94da-00b27fbbc4d5",
+                        "email": "ada@acme.example",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjliYzNkZmQ1ZjM2MmE5ZWI3Y2UxZWFmZWZiNDQ2ZmQ4ZTM2ZWMxYmVmNmNiMDk2YWExZjg4NDIwMTdmN2JkZDIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MDgzLjA1MjQxNCwibmJmIjoxNzg5MTc5MDgzLjA1MjQxNCwiZXhwIjoxNzg5MTc5OTgzLjA1MjQxNCwic3ViIjoiMDFhMDkzNjItMzgxMS03MTUzLTk0ZGEtMDBiMjdmYmJjNGQ1IiwianRpIjoiMDFhMDkzNjItMzkyYy03NjUxLWIzMjYtOWQ0YmZhZThiZmFhIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MzYyLTM5MmMtNzRkNS1iMzI2LTlkNGJmYTJmZjQ4NCIsImF1dGhfdGltZSI6MTc4OTE3OTA4Mn0.feVMogzCTtUNKuo3GjswHUJyVv7nq6DnEG0gVLX--HQaLQVWGVct0mQlZROZJgR5W4KGtFYbW_mDrOrSKjjWXek6NwEaRUDGRGi8qmfd_NAVTNNsSsNOMkVeiiceX_VRFwZhjPpAhN9c81nh8CQCTjSFpyICWdWUCiM-n55MvnaoiowIQfxUrQ35NOeSjMnUAySEbzercFWvOS5suhEWO_rNjXSOUtmOzh3EA-Lwc3JJwKhHxiQ2JOxdcO9iieEGy2i1LxKCDVz1MtJS5alGbvw_aTp0qtd_AnoZUKfxR0lqXgtPQBds0uybBhQrJE2Yyi_SemEoyszhXJWTC50FrQ"
+                ]
+            },
+            "body": {
+                "name": "Acme Rockets"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179120"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09362-392d-7c42-8968-b983434964eb",
+                    "name": "Acme Rockets",
+                    "slug": "acme-rockets",
+                    "role": "owner"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/switch-org",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjliYzNkZmQ1ZjM2MmE5ZWI3Y2UxZWFmZWZiNDQ2ZmQ4ZTM2ZWMxYmVmNmNiMDk2YWExZjg4NDIwMTdmN2JkZDIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MDgzLjA1MjQxNCwibmJmIjoxNzg5MTc5MDgzLjA1MjQxNCwiZXhwIjoxNzg5MTc5OTgzLjA1MjQxNCwic3ViIjoiMDFhMDkzNjItMzgxMS03MTUzLTk0ZGEtMDBiMjdmYmJjNGQ1IiwianRpIjoiMDFhMDkzNjItMzkyYy03NjUxLWIzMjYtOWQ0YmZhZThiZmFhIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MzYyLTM5MmMtNzRkNS1iMzI2LTlkNGJmYTJmZjQ4NCIsImF1dGhfdGltZSI6MTc4OTE3OTA4Mn0.feVMogzCTtUNKuo3GjswHUJyVv7nq6DnEG0gVLX--HQaLQVWGVct0mQlZROZJgR5W4KGtFYbW_mDrOrSKjjWXek6NwEaRUDGRGi8qmfd_NAVTNNsSsNOMkVeiiceX_VRFwZhjPpAhN9c81nh8CQCTjSFpyICWdWUCiM-n55MvnaoiowIQfxUrQ35NOeSjMnUAySEbzercFWvOS5suhEWO_rNjXSOUtmOzh3EA-Lwc3JJwKhHxiQ2JOxdcO9iieEGy2i1LxKCDVz1MtJS5alGbvw_aTp0qtd_AnoZUKfxR0lqXgtPQBds0uybBhQrJE2Yyi_SemEoyszhXJWTC50FrQ"
+                ]
+            },
+            "body": {
+                "organization_id": "01a09362-392d-7c42-8968-b983434964eb"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179120"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjliYzNkZmQ1ZjM2MmE5ZWI3Y2UxZWFmZWZiNDQ2ZmQ4ZTM2ZWMxYmVmNmNiMDk2YWExZjg4NDIwMTdmN2JkZDIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MDgzLjA1NDM2MiwibmJmIjoxNzg5MTc5MDgzLjA1NDM2MiwiZXhwIjoxNzg5MTc5OTgzLjA1NDM2Miwic3ViIjoiMDFhMDkzNjItMzgxMS03MTUzLTk0ZGEtMDBiMjdmYmJjNGQ1IiwianRpIjoiMDFhMDkzNjItMzkyZS03NTkwLTk0NmEtNWI5ZTIzZDJlNTVkIiwib3JnIjoiMDFhMDkzNjItMzkyZC03YzQyLTg5NjgtYjk4MzQzNDk2NGViIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkzNjItMzkyYy03NGQ1LWIzMjYtOWQ0YmZhMmZmNDg0IiwiYXV0aF90aW1lIjoxNzg5MTc5MDgyfQ.muRRAbXV4cY3a-6dYkjzGhbmMw3tsB00DqJLcjWyeym7dzmmfMdCxZmTeFhUskT2z4nXa8h2ejsNlEK8URmhf4g4xgZuN5iW50zSoJE20qf103u4TlYvA5oaG2gTldhVJu_OQXxseToP7gWOIxF5BOAx3cRvnsZqUscV_NMyIwyejqMK-elP5gOlaTf9R-Wttuylgpta9HEjQHYcgIO8xEhJTW3U9aI6VJhhki_2twbW9J0te0q4e1jhj3Ear3KJElSfZcR_MGJwRf488_aCo9P0pOZvn8J2m3AbsxSCgTSWhTX8Qa38s79k5g6LD6RpipSiFIQqPxz5-EFDRs0R3A",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "org": "01a09362-392d-7c42-8968-b983434964eb"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjliYzNkZmQ1ZjM2MmE5ZWI3Y2UxZWFmZWZiNDQ2ZmQ4ZTM2ZWMxYmVmNmNiMDk2YWExZjg4NDIwMTdmN2JkZDIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MDgzLjA1MjQxNCwibmJmIjoxNzg5MTc5MDgzLjA1MjQxNCwiZXhwIjoxNzg5MTc5OTgzLjA1MjQxNCwic3ViIjoiMDFhMDkzNjItMzgxMS03MTUzLTk0ZGEtMDBiMjdmYmJjNGQ1IiwianRpIjoiMDFhMDkzNjItMzkyYy03NjUxLWIzMjYtOWQ0YmZhZThiZmFhIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MzYyLTM5MmMtNzRkNS1iMzI2LTlkNGJmYTJmZjQ4NCIsImF1dGhfdGltZSI6MTc4OTE3OTA4Mn0.feVMogzCTtUNKuo3GjswHUJyVv7nq6DnEG0gVLX--HQaLQVWGVct0mQlZROZJgR5W4KGtFYbW_mDrOrSKjjWXek6NwEaRUDGRGi8qmfd_NAVTNNsSsNOMkVeiiceX_VRFwZhjPpAhN9c81nh8CQCTjSFpyICWdWUCiM-n55MvnaoiowIQfxUrQ35NOeSjMnUAySEbzercFWvOS5suhEWO_rNjXSOUtmOzh3EA-Lwc3JJwKhHxiQ2JOxdcO9iieEGy2i1LxKCDVz1MtJS5alGbvw_aTp0qtd_AnoZUKfxR0lqXgtPQBds0uybBhQrJE2Yyi_SemEoyszhXJWTC50FrQ"
+                ]
+            },
+            "body": {
+                "name": "Globex"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "597"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179120"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09362-392f-77fc-af06-86afd0bf3722",
+                    "name": "Globex",
+                    "slug": "globex",
+                    "role": "owner"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/switch-org",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjliYzNkZmQ1ZjM2MmE5ZWI3Y2UxZWFmZWZiNDQ2ZmQ4ZTM2ZWMxYmVmNmNiMDk2YWExZjg4NDIwMTdmN2JkZDIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MDgzLjA1MjQxNCwibmJmIjoxNzg5MTc5MDgzLjA1MjQxNCwiZXhwIjoxNzg5MTc5OTgzLjA1MjQxNCwic3ViIjoiMDFhMDkzNjItMzgxMS03MTUzLTk0ZGEtMDBiMjdmYmJjNGQ1IiwianRpIjoiMDFhMDkzNjItMzkyYy03NjUxLWIzMjYtOWQ0YmZhZThiZmFhIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MzYyLTM5MmMtNzRkNS1iMzI2LTlkNGJmYTJmZjQ4NCIsImF1dGhfdGltZSI6MTc4OTE3OTA4Mn0.feVMogzCTtUNKuo3GjswHUJyVv7nq6DnEG0gVLX--HQaLQVWGVct0mQlZROZJgR5W4KGtFYbW_mDrOrSKjjWXek6NwEaRUDGRGi8qmfd_NAVTNNsSsNOMkVeiiceX_VRFwZhjPpAhN9c81nh8CQCTjSFpyICWdWUCiM-n55MvnaoiowIQfxUrQ35NOeSjMnUAySEbzercFWvOS5suhEWO_rNjXSOUtmOzh3EA-Lwc3JJwKhHxiQ2JOxdcO9iieEGy2i1LxKCDVz1MtJS5alGbvw_aTp0qtd_AnoZUKfxR0lqXgtPQBds0uybBhQrJE2Yyi_SemEoyszhXJWTC50FrQ"
+                ]
+            },
+            "body": {
+                "organization_id": "01a09362-392f-77fc-af06-86afd0bf3722"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "596"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179120"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjliYzNkZmQ1ZjM2MmE5ZWI3Y2UxZWFmZWZiNDQ2ZmQ4ZTM2ZWMxYmVmNmNiMDk2YWExZjg4NDIwMTdmN2JkZDIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MDgzLjA1NjAxMywibmJmIjoxNzg5MTc5MDgzLjA1NjAxMywiZXhwIjoxNzg5MTc5OTgzLjA1NjAxMywic3ViIjoiMDFhMDkzNjItMzgxMS03MTUzLTk0ZGEtMDBiMjdmYmJjNGQ1IiwianRpIjoiMDFhMDkzNjItMzkzMC03MDIzLWE4MzYtNjJmOTI2MWFjYjJhIiwib3JnIjoiMDFhMDkzNjItMzkyZi03N2ZjLWFmMDYtODZhZmQwYmYzNzIyIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkzNjItMzkyYy03NGQ1LWIzMjYtOWQ0YmZhMmZmNDg0IiwiYXV0aF90aW1lIjoxNzg5MTc5MDgyfQ.lILxL-YGQCdJOoeuZFeEN4ogBCrJieiofN7Xinl-1zNzPI3p8Mu-dF1coaGuv7s0pUMpp4Qe3-y01sSvpIX_8rQgyAd17p5yhlRo8d9Aq8LuY2boj2AFw0NOVMvP8FS9pMWY8bo4tL3uhCfvlDyaq5nYjX8mWM6Mt9zEixmLJPQN_FKFyN4-YPS0K9A4QBFaCITsD7SyCf3vCJEtyXxtEIDBen6g3pIgVCmZdCS5FXQDLJxos50FPJQj-2ZtFl3q1Xi_z_NIk8-eC8QfXPvAwA1cuR1fr3n_jVnpoMzlHCJJDHVfP3zvMD_ifUfBSh1MkQebh3mfv6nBlh0saDo2LQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "org": "01a09362-392f-77fc-af06-86afd0bf3722"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs/01a09362-392d-7c42-8968-b983434964eb/scim/connections",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjliYzNkZmQ1ZjM2MmE5ZWI3Y2UxZWFmZWZiNDQ2ZmQ4ZTM2ZWMxYmVmNmNiMDk2YWExZjg4NDIwMTdmN2JkZDIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MDgzLjA1NDM2MiwibmJmIjoxNzg5MTc5MDgzLjA1NDM2MiwiZXhwIjoxNzg5MTc5OTgzLjA1NDM2Miwic3ViIjoiMDFhMDkzNjItMzgxMS03MTUzLTk0ZGEtMDBiMjdmYmJjNGQ1IiwianRpIjoiMDFhMDkzNjItMzkyZS03NTkwLTk0NmEtNWI5ZTIzZDJlNTVkIiwib3JnIjoiMDFhMDkzNjItMzkyZC03YzQyLTg5NjgtYjk4MzQzNDk2NGViIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkzNjItMzkyYy03NGQ1LWIzMjYtOWQ0YmZhMmZmNDg0IiwiYXV0aF90aW1lIjoxNzg5MTc5MDgyfQ.muRRAbXV4cY3a-6dYkjzGhbmMw3tsB00DqJLcjWyeym7dzmmfMdCxZmTeFhUskT2z4nXa8h2ejsNlEK8URmhf4g4xgZuN5iW50zSoJE20qf103u4TlYvA5oaG2gTldhVJu_OQXxseToP7gWOIxF5BOAx3cRvnsZqUscV_NMyIwyejqMK-elP5gOlaTf9R-Wttuylgpta9HEjQHYcgIO8xEhJTW3U9aI6VJhhki_2twbW9J0te0q4e1jhj3Ear3KJElSfZcR_MGJwRf488_aCo9P0pOZvn8J2m3AbsxSCgTSWhTX8Qa38s79k5g6LD6RpipSiFIQqPxz5-EFDRs0R3A"
+                ]
+            },
+            "body": {
+                "name": "Okta",
+                "deprovision": "deactivate"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "595"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179120"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09362-3931-72a1-89e0-42282da693c0",
+                    "organization_id": "01a09362-392d-7c42-8968-b983434964eb",
+                    "sso_provider_id": null,
+                    "name": "Okta",
+                    "status": "active",
+                    "deprovision": "deactivate",
+                    "last_sync_at": null,
+                    "decommissioned_at": null,
+                    "created_by": "01a09362-3811-7153-94da-00b27fbbc4d5",
+                    "created_at": "2026-09-12T02:11:23+00:00",
+                    "sync": {
+                        "users": 0,
+                        "groups": 0,
+                        "provisioned_members": 0
+                    },
+                    "token": "pst_c8olHBA346cwJuG5qFAh7qvPpUT24t7L2rcN7kYoC9Q",
+                    "scim_base_url": "https://app.example/auth/scim/v2/01a09362-3931-72a1-89e0-42282da693c0"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs/01a09362-392f-77fc-af06-86afd0bf3722/scim/connections",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjliYzNkZmQ1ZjM2MmE5ZWI3Y2UxZWFmZWZiNDQ2ZmQ4ZTM2ZWMxYmVmNmNiMDk2YWExZjg4NDIwMTdmN2JkZDIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MDgzLjA1NjAxMywibmJmIjoxNzg5MTc5MDgzLjA1NjAxMywiZXhwIjoxNzg5MTc5OTgzLjA1NjAxMywic3ViIjoiMDFhMDkzNjItMzgxMS03MTUzLTk0ZGEtMDBiMjdmYmJjNGQ1IiwianRpIjoiMDFhMDkzNjItMzkzMC03MDIzLWE4MzYtNjJmOTI2MWFjYjJhIiwib3JnIjoiMDFhMDkzNjItMzkyZi03N2ZjLWFmMDYtODZhZmQwYmYzNzIyIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkzNjItMzkyYy03NGQ1LWIzMjYtOWQ0YmZhMmZmNDg0IiwiYXV0aF90aW1lIjoxNzg5MTc5MDgyfQ.lILxL-YGQCdJOoeuZFeEN4ogBCrJieiofN7Xinl-1zNzPI3p8Mu-dF1coaGuv7s0pUMpp4Qe3-y01sSvpIX_8rQgyAd17p5yhlRo8d9Aq8LuY2boj2AFw0NOVMvP8FS9pMWY8bo4tL3uhCfvlDyaq5nYjX8mWM6Mt9zEixmLJPQN_FKFyN4-YPS0K9A4QBFaCITsD7SyCf3vCJEtyXxtEIDBen6g3pIgVCmZdCS5FXQDLJxos50FPJQj-2ZtFl3q1Xi_z_NIk8-eC8QfXPvAwA1cuR1fr3n_jVnpoMzlHCJJDHVfP3zvMD_ifUfBSh1MkQebh3mfv6nBlh0saDo2LQ"
+                ]
+            },
+            "body": {
+                "name": "Entra",
+                "deprovision": "deactivate"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "594"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179120"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09362-3931-764d-89e0-42282f3fb9cd",
+                    "organization_id": "01a09362-392f-77fc-af06-86afd0bf3722",
+                    "sso_provider_id": null,
+                    "name": "Entra",
+                    "status": "active",
+                    "deprovision": "deactivate",
+                    "last_sync_at": null,
+                    "decommissioned_at": null,
+                    "created_by": "01a09362-3811-7153-94da-00b27fbbc4d5",
+                    "created_at": "2026-09-12T02:11:23+00:00",
+                    "sync": {
+                        "users": 0,
+                        "groups": 0,
+                        "provisioned_members": 0
+                    },
+                    "token": "pst_yG_yD7Npju5ORz5CSw5UVmRITd_2GQ6bv_hZN_zRnhI",
+                    "scim_base_url": "https://app.example/auth/scim/v2/01a09362-3931-764d-89e0-42282f3fb9cd"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/scim/connections",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/unauthorized",
+                "title": "Unauthorized",
+                "status": 401,
+                "detail": "An admin user or an API key is required.",
+                "error": "admin_unauthorized",
+                "message": "An admin user or an API key is required."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/scim/connections?limit=0",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_I8EwC5Sc-KwtNLxbChBILBsV_-yIiYhvxYPo-_kXRkA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "limit must be a positive integer.",
+                "error": "admin_invalid_input",
+                "message": "limit must be a positive integer."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/scim/connections",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_I8EwC5Sc-KwtNLxbChBILBsV_-yIiYhvxYPo-_kXRkA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a09362-3931-72a1-89e0-42282da693c0",
+                        "organization_id": "01a09362-392d-7c42-8968-b983434964eb",
+                        "sso_provider_id": null,
+                        "name": "Okta",
+                        "status": "active",
+                        "deprovision": "deactivate",
+                        "last_sync_at": null,
+                        "decommissioned_at": null,
+                        "created_by": "01a09362-3811-7153-94da-00b27fbbc4d5",
+                        "created_at": "2026-09-12T02:11:23+00:00"
+                    },
+                    {
+                        "id": "01a09362-3931-764d-89e0-42282f3fb9cd",
+                        "organization_id": "01a09362-392f-77fc-af06-86afd0bf3722",
+                        "sso_provider_id": null,
+                        "name": "Entra",
+                        "status": "active",
+                        "deprovision": "deactivate",
+                        "last_sync_at": null,
+                        "decommissioned_at": null,
+                        "created_by": "01a09362-3811-7153-94da-00b27fbbc4d5",
+                        "created_at": "2026-09-12T02:11:23+00:00"
+                    }
+                ],
+                "next_cursor": null
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/scim/connections?limit=1",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_I8EwC5Sc-KwtNLxbChBILBsV_-yIiYhvxYPo-_kXRkA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a09362-3931-72a1-89e0-42282da693c0",
+                        "organization_id": "01a09362-392d-7c42-8968-b983434964eb",
+                        "sso_provider_id": null,
+                        "name": "Okta",
+                        "status": "active",
+                        "deprovision": "deactivate",
+                        "last_sync_at": null,
+                        "decommissioned_at": null,
+                        "created_by": "01a09362-3811-7153-94da-00b27fbbc4d5",
+                        "created_at": "2026-09-12T02:11:23+00:00"
+                    }
+                ],
+                "next_cursor": "01a09362-3931-72a1-89e0-42282da693c0"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/scim/connections?limit=1&cursor=01a09362-3931-72a1-89e0-42282da693c0",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_I8EwC5Sc-KwtNLxbChBILBsV_-yIiYhvxYPo-_kXRkA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a09362-3931-764d-89e0-42282f3fb9cd",
+                        "organization_id": "01a09362-392f-77fc-af06-86afd0bf3722",
+                        "sso_provider_id": null,
+                        "name": "Entra",
+                        "status": "active",
+                        "deprovision": "deactivate",
+                        "last_sync_at": null,
+                        "decommissioned_at": null,
+                        "created_by": "01a09362-3811-7153-94da-00b27fbbc4d5",
+                        "created_at": "2026-09-12T02:11:23+00:00"
+                    }
+                ],
+                "next_cursor": null
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/scim/connections",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_89zprCmQ0UGgT3-JMmtoKOufOfW4nJqfCzRd8Qnthjw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a09362-3931-764d-89e0-42282f3fb9cd",
+                        "organization_id": "01a09362-392f-77fc-af06-86afd0bf3722",
+                        "sso_provider_id": null,
+                        "name": "Entra",
+                        "status": "active",
+                        "deprovision": "deactivate",
+                        "last_sync_at": null,
+                        "decommissioned_at": null,
+                        "created_by": "01a09362-3811-7153-94da-00b27fbbc4d5",
+                        "created_at": "2026-09-12T02:11:23+00:00"
+                    }
+                ],
+                "next_cursor": null
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/admin/scim/connections?organization_id=01a09362-392d-7c42-8968-b983434964eb",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_89zprCmQ0UGgT3-JMmtoKOufOfW4nJqfCzRd8Qnthjw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/forbidden",
+                "title": "Forbidden",
+                "status": 403,
+                "detail": "This action is outside the scope of your admin role.",
+                "error": "admin_forbidden",
+                "message": "This action is outside the scope of your admin role."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/admin/scim/connections/01a09362-3931-72a1-89e0-42282da693c0",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_I8EwC5Sc-KwtNLxbChBILBsV_-yIiYhvxYPo-_kXRkA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/forbidden",
+                "title": "Forbidden",
+                "status": 403,
+                "detail": "The viewer role does not allow this action.",
+                "error": "admin_forbidden",
+                "message": "The viewer role does not allow this action."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/admin/scim/connections/nope",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_ekiRWWf4gqiE43A-KW5apCnt3bysoIOGx2uLX4C4jY0"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/admin/not_found",
+                "title": "Not found",
+                "status": 404,
+                "detail": "The connection does not exist.",
+                "error": "admin_not_found",
+                "message": "The connection does not exist."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/admin/scim/connections/01a09362-3931-72a1-89e0-42282da693c0",
+            "headers": {
+                "Authorization": [
+                    "Bearer pak_ekiRWWf4gqiE43A-KW5apCnt3bysoIOGx2uLX4C4jY0"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "deleted"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/orgs/01a09362-392d-7c42-8968-b983434964eb/scim/connections",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjliYzNkZmQ1ZjM2MmE5ZWI3Y2UxZWFmZWZiNDQ2ZmQ4ZTM2ZWMxYmVmNmNiMDk2YWExZjg4NDIwMTdmN2JkZDIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MDgzLjA1NDM2MiwibmJmIjoxNzg5MTc5MDgzLjA1NDM2MiwiZXhwIjoxNzg5MTc5OTgzLjA1NDM2Miwic3ViIjoiMDFhMDkzNjItMzgxMS03MTUzLTk0ZGEtMDBiMjdmYmJjNGQ1IiwianRpIjoiMDFhMDkzNjItMzkyZS03NTkwLTk0NmEtNWI5ZTIzZDJlNTVkIiwib3JnIjoiMDFhMDkzNjItMzkyZC03YzQyLTg5NjgtYjk4MzQzNDk2NGViIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkzNjItMzkyYy03NGQ1LWIzMjYtOWQ0YmZhMmZmNDg0IiwiYXV0aF90aW1lIjoxNzg5MTc5MDgyfQ.muRRAbXV4cY3a-6dYkjzGhbmMw3tsB00DqJLcjWyeym7dzmmfMdCxZmTeFhUskT2z4nXa8h2ejsNlEK8URmhf4g4xgZuN5iW50zSoJE20qf103u4TlYvA5oaG2gTldhVJu_OQXxseToP7gWOIxF5BOAx3cRvnsZqUscV_NMyIwyejqMK-elP5gOlaTf9R-Wttuylgpta9HEjQHYcgIO8xEhJTW3U9aI6VJhhki_2twbW9J0te0q4e1jhj3Ear3KJElSfZcR_MGJwRf488_aCo9P0pOZvn8J2m3AbsxSCgTSWhTX8Qa38s79k5g6LD6RpipSiFIQqPxz5-EFDRs0R3A"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "593"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179120"
+                ]
+            },
+            "body": {
+                "data": []
+            }
+        }
+    }
+]

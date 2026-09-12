@@ -40,7 +40,7 @@ final readonly class Filter
         if ($filter === '') {
             return new self([]);
         }
-        $matched = preg_match_all('/([A-Za-z][A-Za-z0-9_.]*(?:\[[^\]]*\])?)\s+(eq|co|sw)\s+"((?:[^"\\\\]|\\\\.)*)"(?:\s+and\s+|$)/i', $filter, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
+        $matched = preg_match_all('/([A-Za-z][A-Za-z0-9_.]*(?:\[[^\]]*\])?(?:\.[A-Za-z]+)?)\s+(eq|co|sw)\s+"((?:[^"\\\\]|\\\\.)*)"(?:\s+and\s+|$)/i', $filter, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
         if ($matched === false || $matched === 0) {
             throw ScimError::invalid('The filter is not supported: use attr eq|co|sw "value", joined by and.', ScimError::INVALID_FILTER);
         }

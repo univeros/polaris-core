@@ -1,0 +1,2233 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@acme.example",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789182000"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "NWLKgkFT65GF7RP-RoM0t7DrCs4ukwy18assB1sQM4Y"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179300"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@acme.example",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179300"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImQ1OTg3ODA4MDIzZWQ1MTdlZTY2MjlhYTBmYjViZmRiZTQ5NWFhNWQ1NTdlMTkwMjlmYWRjY2MzYzQ4N2Y5Y2EifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MTg2Ljc2MjA4NywibmJmIjoxNzg5MTc5MTg2Ljc2MjA4NywiZXhwIjoxNzg5MTgwMDg2Ljc2MjA4Nywic3ViIjoiMDFhMDkzNjMtY2QyNC03YTc1LWE4ZTktOGJjMzgxMDRjMDI3IiwianRpIjoiMDFhMDkzNjMtY2U0OC03MzcxLWIxYWYtYjY1ZTg4ZTFiYmViIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MzYzLWNlNDctNzQyZC04ZmJkLTg0ODllZTk0ODE3ZiIsImF1dGhfdGltZSI6MTc4OTE3OTE4Nn0.Do6olrJEa4Mt7rlYuzBKnxWtsAsxlgmegtlLyvNwUwdjfQyrXXkvr8jYrERvdTeHiSLW5E8c-PEwxrSMIPLRjPqUSM6f6K6wvrC7iiNG05sai9_Q1xGrya00yrKmXVZqy2GUrdRANNGiJeVMjMtgIxmZy1WUhxhKlwBXo2Bn5RmoxcvPUGkWTHlY_GAAUiZB0WjRCjqfhO4pJXiu4vHy_w7RMgzKfHwgNX1_XYxUY18QfipJYyNyte9a7CqAtHO76J_nmnuqlIRuxziOp5Bgh1O74jv9nPin8jHleBlnk4u2ZsYgeqowa59QPb6EZDqrdRkM0BI7s2vpbWnTIsJ8Lg",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "YvwQ7StAsBE-0g4eH2lq5jUaoE1trgfE_lt1ZRezqPA",
+                    "user": {
+                        "id": "01a09363-cd24-7a75-a8e9-8bc38104c027",
+                        "email": "ada@acme.example",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImQ1OTg3ODA4MDIzZWQ1MTdlZTY2MjlhYTBmYjViZmRiZTQ5NWFhNWQ1NTdlMTkwMjlmYWRjY2MzYzQ4N2Y5Y2EifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MTg2Ljc2MjA4NywibmJmIjoxNzg5MTc5MTg2Ljc2MjA4NywiZXhwIjoxNzg5MTgwMDg2Ljc2MjA4Nywic3ViIjoiMDFhMDkzNjMtY2QyNC03YTc1LWE4ZTktOGJjMzgxMDRjMDI3IiwianRpIjoiMDFhMDkzNjMtY2U0OC03MzcxLWIxYWYtYjY1ZTg4ZTFiYmViIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MzYzLWNlNDctNzQyZC04ZmJkLTg0ODllZTk0ODE3ZiIsImF1dGhfdGltZSI6MTc4OTE3OTE4Nn0.Do6olrJEa4Mt7rlYuzBKnxWtsAsxlgmegtlLyvNwUwdjfQyrXXkvr8jYrERvdTeHiSLW5E8c-PEwxrSMIPLRjPqUSM6f6K6wvrC7iiNG05sai9_Q1xGrya00yrKmXVZqy2GUrdRANNGiJeVMjMtgIxmZy1WUhxhKlwBXo2Bn5RmoxcvPUGkWTHlY_GAAUiZB0WjRCjqfhO4pJXiu4vHy_w7RMgzKfHwgNX1_XYxUY18QfipJYyNyte9a7CqAtHO76J_nmnuqlIRuxziOp5Bgh1O74jv9nPin8jHleBlnk4u2ZsYgeqowa59QPb6EZDqrdRkM0BI7s2vpbWnTIsJ8Lg"
+                ]
+            },
+            "body": {
+                "name": "Acme Rockets"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179240"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09363-ce4f-7905-80f0-701d318ede5d",
+                    "name": "Acme Rockets",
+                    "slug": "acme-rockets",
+                    "role": "owner"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/switch-org",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImQ1OTg3ODA4MDIzZWQ1MTdlZTY2MjlhYTBmYjViZmRiZTQ5NWFhNWQ1NTdlMTkwMjlmYWRjY2MzYzQ4N2Y5Y2EifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MTg2Ljc2MjA4NywibmJmIjoxNzg5MTc5MTg2Ljc2MjA4NywiZXhwIjoxNzg5MTgwMDg2Ljc2MjA4Nywic3ViIjoiMDFhMDkzNjMtY2QyNC03YTc1LWE4ZTktOGJjMzgxMDRjMDI3IiwianRpIjoiMDFhMDkzNjMtY2U0OC03MzcxLWIxYWYtYjY1ZTg4ZTFiYmViIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTA5MzYzLWNlNDctNzQyZC04ZmJkLTg0ODllZTk0ODE3ZiIsImF1dGhfdGltZSI6MTc4OTE3OTE4Nn0.Do6olrJEa4Mt7rlYuzBKnxWtsAsxlgmegtlLyvNwUwdjfQyrXXkvr8jYrERvdTeHiSLW5E8c-PEwxrSMIPLRjPqUSM6f6K6wvrC7iiNG05sai9_Q1xGrya00yrKmXVZqy2GUrdRANNGiJeVMjMtgIxmZy1WUhxhKlwBXo2Bn5RmoxcvPUGkWTHlY_GAAUiZB0WjRCjqfhO4pJXiu4vHy_w7RMgzKfHwgNX1_XYxUY18QfipJYyNyte9a7CqAtHO76J_nmnuqlIRuxziOp5Bgh1O74jv9nPin8jHleBlnk4u2ZsYgeqowa59QPb6EZDqrdRkM0BI7s2vpbWnTIsJ8Lg"
+                ]
+            },
+            "body": {
+                "organization_id": "01a09363-ce4f-7905-80f0-701d318ede5d"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179240"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImQ1OTg3ODA4MDIzZWQ1MTdlZTY2MjlhYTBmYjViZmRiZTQ5NWFhNWQ1NTdlMTkwMjlmYWRjY2MzYzQ4N2Y5Y2EifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MTg2Ljc2ODg3LCJuYmYiOjE3ODkxNzkxODYuNzY4ODcsImV4cCI6MTc4OTE4MDA4Ni43Njg4Nywic3ViIjoiMDFhMDkzNjMtY2QyNC03YTc1LWE4ZTktOGJjMzgxMDRjMDI3IiwianRpIjoiMDFhMDkzNjMtY2U1MC03ZDgzLTg4MDEtZTFhNjcwZjRhMThjIiwib3JnIjoiMDFhMDkzNjMtY2U0Zi03OTA1LTgwZjAtNzAxZDMxOGVkZTVkIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkzNjMtY2U0Ny03NDJkLThmYmQtODQ4OWVlOTQ4MTdmIiwiYXV0aF90aW1lIjoxNzg5MTc5MTg2fQ.CJ78SmgnKDsFNc4krF3xaFV299WQpNl3GYrpN8KMpcJlyoj0t5LHgHb2sF4ZfMA89qiXuO4BQtBybIUb1tDhn0jlrQsQJYUNCxqtqxAsRYrmTG0daj1i726_FMaDAz5FkU2C_5DeDv_h4Qkl0LLHmmaGZRwKP2rfZXR4Cb_nI99UyRkdqt9q1RnKxmPZsqnjGJDEI2GQr2PMwSBUINcQqej19BNIOYX1rFsWAgLw1tAVDbMWbD4LXXn0Rq00mCNa_JdXo5zGSuvu0hcm7XfEzKNozAh2hqhzDhKPuN1h9wUlkGnXDElwizWgBGnvrQi7DxVHKd_mbgXgqUIP5CMnAA",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "org": "01a09363-ce4f-7905-80f0-701d318ede5d"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs/01a09363-ce4f-7905-80f0-701d318ede5d/scim/connections",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImQ1OTg3ODA4MDIzZWQ1MTdlZTY2MjlhYTBmYjViZmRiZTQ5NWFhNWQ1NTdlMTkwMjlmYWRjY2MzYzQ4N2Y5Y2EifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MTg2Ljc2ODg3LCJuYmYiOjE3ODkxNzkxODYuNzY4ODcsImV4cCI6MTc4OTE4MDA4Ni43Njg4Nywic3ViIjoiMDFhMDkzNjMtY2QyNC03YTc1LWE4ZTktOGJjMzgxMDRjMDI3IiwianRpIjoiMDFhMDkzNjMtY2U1MC03ZDgzLTg4MDEtZTFhNjcwZjRhMThjIiwib3JnIjoiMDFhMDkzNjMtY2U0Zi03OTA1LTgwZjAtNzAxZDMxOGVkZTVkIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkzNjMtY2U0Ny03NDJkLThmYmQtODQ4OWVlOTQ4MTdmIiwiYXV0aF90aW1lIjoxNzg5MTc5MTg2fQ.CJ78SmgnKDsFNc4krF3xaFV299WQpNl3GYrpN8KMpcJlyoj0t5LHgHb2sF4ZfMA89qiXuO4BQtBybIUb1tDhn0jlrQsQJYUNCxqtqxAsRYrmTG0daj1i726_FMaDAz5FkU2C_5DeDv_h4Qkl0LLHmmaGZRwKP2rfZXR4Cb_nI99UyRkdqt9q1RnKxmPZsqnjGJDEI2GQr2PMwSBUINcQqej19BNIOYX1rFsWAgLw1tAVDbMWbD4LXXn0Rq00mCNa_JdXo5zGSuvu0hcm7XfEzKNozAh2hqhzDhKPuN1h9wUlkGnXDElwizWgBGnvrQi7DxVHKd_mbgXgqUIP5CMnAA"
+                ]
+            },
+            "body": {
+                "name": "Okta",
+                "deprovision": "deactivate"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "597"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179240"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09363-ce53-7137-936b-a22c1922d0ad",
+                    "organization_id": "01a09363-ce4f-7905-80f0-701d318ede5d",
+                    "sso_provider_id": null,
+                    "name": "Okta",
+                    "status": "active",
+                    "deprovision": "deactivate",
+                    "last_sync_at": null,
+                    "decommissioned_at": null,
+                    "created_by": "01a09363-cd24-7a75-a8e9-8bc38104c027",
+                    "created_at": "2026-09-12T02:13:06+00:00",
+                    "sync": {
+                        "users": 0,
+                        "groups": 0,
+                        "provisioned_members": 0
+                    },
+                    "token": "pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM",
+                    "scim_base_url": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs/01a09363-ce4f-7905-80f0-701d318ede5d/scim/connections",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImQ1OTg3ODA4MDIzZWQ1MTdlZTY2MjlhYTBmYjViZmRiZTQ5NWFhNWQ1NTdlMTkwMjlmYWRjY2MzYzQ4N2Y5Y2EifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MTg2Ljc2ODg3LCJuYmYiOjE3ODkxNzkxODYuNzY4ODcsImV4cCI6MTc4OTE4MDA4Ni43Njg4Nywic3ViIjoiMDFhMDkzNjMtY2QyNC03YTc1LWE4ZTktOGJjMzgxMDRjMDI3IiwianRpIjoiMDFhMDkzNjMtY2U1MC03ZDgzLTg4MDEtZTFhNjcwZjRhMThjIiwib3JnIjoiMDFhMDkzNjMtY2U0Zi03OTA1LTgwZjAtNzAxZDMxOGVkZTVkIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkzNjMtY2U0Ny03NDJkLThmYmQtODQ4OWVlOTQ4MTdmIiwiYXV0aF90aW1lIjoxNzg5MTc5MTg2fQ.CJ78SmgnKDsFNc4krF3xaFV299WQpNl3GYrpN8KMpcJlyoj0t5LHgHb2sF4ZfMA89qiXuO4BQtBybIUb1tDhn0jlrQsQJYUNCxqtqxAsRYrmTG0daj1i726_FMaDAz5FkU2C_5DeDv_h4Qkl0LLHmmaGZRwKP2rfZXR4Cb_nI99UyRkdqt9q1RnKxmPZsqnjGJDEI2GQr2PMwSBUINcQqej19BNIOYX1rFsWAgLw1tAVDbMWbD4LXXn0Rq00mCNa_JdXo5zGSuvu0hcm7XfEzKNozAh2hqhzDhKPuN1h9wUlkGnXDElwizWgBGnvrQi7DxVHKd_mbgXgqUIP5CMnAA"
+                ]
+            },
+            "body": {
+                "name": "Entra",
+                "deprovision": "deactivate"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "596"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179240"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09363-ce53-7567-936b-a22c19a9313e",
+                    "organization_id": "01a09363-ce4f-7905-80f0-701d318ede5d",
+                    "sso_provider_id": null,
+                    "name": "Entra",
+                    "status": "active",
+                    "deprovision": "deactivate",
+                    "last_sync_at": null,
+                    "decommissioned_at": null,
+                    "created_by": "01a09363-cd24-7a75-a8e9-8bc38104c027",
+                    "created_at": "2026-09-12T02:13:06+00:00",
+                    "sync": {
+                        "users": 0,
+                        "groups": 0,
+                        "provisioned_members": 0
+                    },
+                    "token": "pst_OmbYUkdbDnnwMLSJvccvFtMFy7r887nL-YSNVZSwl8Q",
+                    "scim_base_url": "https://app.example/auth/scim/v2/01a09363-ce53-7567-936b-a22c19a9313e"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "401",
+                "detail": "A valid connection token is required.",
+                "error": "scim_error",
+                "message": "A valid connection token is required."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_nope"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "401",
+                "detail": "A valid connection token is required.",
+                "error": "scim_error",
+                "message": "A valid connection token is required."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_OmbYUkdbDnnwMLSJvccvFtMFy7r887nL-YSNVZSwl8Q"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "401",
+                "detail": "A valid connection token is required.",
+                "error": "scim_error",
+                "message": "A valid connection token is required."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/ServiceProviderConfig",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+                ],
+                "patch": {
+                    "supported": true
+                },
+                "bulk": {
+                    "supported": false,
+                    "maxOperations": 0,
+                    "maxPayloadSize": 0
+                },
+                "filter": {
+                    "supported": true,
+                    "maxResults": 200
+                },
+                "changePassword": {
+                    "supported": false
+                },
+                "sort": {
+                    "supported": false
+                },
+                "etag": {
+                    "supported": false
+                },
+                "authenticationSchemes": [
+                    {
+                        "type": "oauthbearertoken",
+                        "name": "Bearer token",
+                        "description": "The connection token as Authorization: Bearer",
+                        "primary": true
+                    }
+                ],
+                "meta": {
+                    "resourceType": "ServiceProviderConfig",
+                    "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/ServiceProviderConfig"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Schemas",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+                ],
+                "totalResults": 2,
+                "startIndex": 1,
+                "itemsPerPage": 2,
+                "Resources": [
+                    {
+                        "id": "urn:ietf:params:scim:schemas:core:2.0:User",
+                        "name": "User",
+                        "description": "A member of the organization",
+                        "attributes": [
+                            {
+                                "name": "userName",
+                                "type": "string",
+                                "multiValued": false,
+                                "required": true,
+                                "caseExact": false,
+                                "mutability": "readWrite",
+                                "returned": "default",
+                                "uniqueness": "server",
+                                "description": "The member's email address"
+                            },
+                            {
+                                "name": "displayName",
+                                "type": "string",
+                                "multiValued": false,
+                                "required": false,
+                                "caseExact": false,
+                                "mutability": "readWrite",
+                                "returned": "default",
+                                "uniqueness": "none",
+                                "description": ""
+                            },
+                            {
+                                "name": "externalId",
+                                "type": "string",
+                                "multiValued": false,
+                                "required": false,
+                                "caseExact": false,
+                                "mutability": "readWrite",
+                                "returned": "default",
+                                "uniqueness": "none",
+                                "description": ""
+                            },
+                            {
+                                "name": "active",
+                                "type": "boolean",
+                                "multiValued": false,
+                                "required": false,
+                                "caseExact": false,
+                                "mutability": "readWrite",
+                                "returned": "default",
+                                "uniqueness": "none",
+                                "description": ""
+                            },
+                            {
+                                "name": "name",
+                                "type": "complex",
+                                "multiValued": false,
+                                "required": false,
+                                "mutability": "readWrite",
+                                "returned": "default",
+                                "subAttributes": [
+                                    {
+                                        "name": "formatted",
+                                        "type": "string",
+                                        "multiValued": false,
+                                        "required": false,
+                                        "caseExact": false,
+                                        "mutability": "readWrite",
+                                        "returned": "default",
+                                        "uniqueness": "none",
+                                        "description": ""
+                                    },
+                                    {
+                                        "name": "givenName",
+                                        "type": "string",
+                                        "multiValued": false,
+                                        "required": false,
+                                        "caseExact": false,
+                                        "mutability": "readWrite",
+                                        "returned": "default",
+                                        "uniqueness": "none",
+                                        "description": ""
+                                    },
+                                    {
+                                        "name": "familyName",
+                                        "type": "string",
+                                        "multiValued": false,
+                                        "required": false,
+                                        "caseExact": false,
+                                        "mutability": "readWrite",
+                                        "returned": "default",
+                                        "uniqueness": "none",
+                                        "description": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "emails",
+                                "type": "complex",
+                                "multiValued": true,
+                                "required": false,
+                                "mutability": "readWrite",
+                                "returned": "default",
+                                "subAttributes": [
+                                    {
+                                        "name": "value",
+                                        "type": "string",
+                                        "multiValued": false,
+                                        "required": false,
+                                        "caseExact": false,
+                                        "mutability": "readWrite",
+                                        "returned": "default",
+                                        "uniqueness": "none",
+                                        "description": ""
+                                    },
+                                    {
+                                        "name": "primary",
+                                        "type": "boolean",
+                                        "multiValued": false,
+                                        "required": false,
+                                        "caseExact": false,
+                                        "mutability": "readWrite",
+                                        "returned": "default",
+                                        "uniqueness": "none",
+                                        "description": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "groups",
+                                "type": "complex",
+                                "multiValued": true,
+                                "required": false,
+                                "mutability": "readOnly",
+                                "returned": "default",
+                                "subAttributes": [
+                                    {
+                                        "name": "value",
+                                        "type": "string",
+                                        "multiValued": false,
+                                        "required": false,
+                                        "caseExact": false,
+                                        "mutability": "readWrite",
+                                        "returned": "default",
+                                        "uniqueness": "none",
+                                        "description": ""
+                                    },
+                                    {
+                                        "name": "display",
+                                        "type": "string",
+                                        "multiValued": false,
+                                        "required": false,
+                                        "caseExact": false,
+                                        "mutability": "readWrite",
+                                        "returned": "default",
+                                        "uniqueness": "none",
+                                        "description": ""
+                                    }
+                                ]
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "Schema",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Schemas/urn:ietf:params:scim:schemas:core:2.0:User"
+                        }
+                    },
+                    {
+                        "id": "urn:ietf:params:scim:schemas:core:2.0:Group",
+                        "name": "Group",
+                        "description": "A role of the organization",
+                        "attributes": [
+                            {
+                                "name": "displayName",
+                                "type": "string",
+                                "multiValued": false,
+                                "required": true,
+                                "caseExact": false,
+                                "mutability": "readWrite",
+                                "returned": "default",
+                                "uniqueness": "server",
+                                "description": ""
+                            },
+                            {
+                                "name": "externalId",
+                                "type": "string",
+                                "multiValued": false,
+                                "required": false,
+                                "caseExact": false,
+                                "mutability": "readWrite",
+                                "returned": "default",
+                                "uniqueness": "none",
+                                "description": ""
+                            },
+                            {
+                                "name": "members",
+                                "type": "complex",
+                                "multiValued": true,
+                                "required": false,
+                                "mutability": "readWrite",
+                                "returned": "default",
+                                "subAttributes": [
+                                    {
+                                        "name": "value",
+                                        "type": "string",
+                                        "multiValued": false,
+                                        "required": false,
+                                        "caseExact": false,
+                                        "mutability": "readWrite",
+                                        "returned": "default",
+                                        "uniqueness": "none",
+                                        "description": ""
+                                    },
+                                    {
+                                        "name": "display",
+                                        "type": "string",
+                                        "multiValued": false,
+                                        "required": false,
+                                        "caseExact": false,
+                                        "mutability": "readWrite",
+                                        "returned": "default",
+                                        "uniqueness": "none",
+                                        "description": ""
+                                    }
+                                ]
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "Schema",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Schemas/urn:ietf:params:scim:schemas:core:2.0:Group"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/ResourceTypes",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+                ],
+                "totalResults": 2,
+                "startIndex": 1,
+                "itemsPerPage": 2,
+                "Resources": [
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+                        ],
+                        "id": "User",
+                        "name": "User",
+                        "endpoint": "/Users",
+                        "schema": "urn:ietf:params:scim:schemas:core:2.0:User",
+                        "meta": {
+                            "resourceType": "ResourceType",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/ResourceTypes/User"
+                        }
+                    },
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+                        ],
+                        "id": "Group",
+                        "name": "Group",
+                        "endpoint": "/Groups",
+                        "schema": "urn:ietf:params:scim:schemas:core:2.0:Group",
+                        "meta": {
+                            "resourceType": "ResourceType",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/ResourceTypes/Group"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users",
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ],
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": {
+                "userName": "not an email"
+            }
+        },
+        "response": {
+            "status": 400,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "400",
+                "detail": "userName must be the member's email address.",
+                "error": "scim_invalidValue",
+                "message": "userName must be the member's email address.",
+                "scimType": "invalidValue"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users",
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ],
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:schemas:core:2.0:User"
+                ],
+                "userName": "Bob@Acme.example",
+                "externalId": "okta-bob",
+                "name": {
+                    "givenName": "Bob",
+                    "familyName": "Builder"
+                },
+                "emails": [
+                    {
+                        "value": "bob@acme.example",
+                        "primary": true
+                    }
+                ],
+                "active": true
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:schemas:core:2.0:User"
+                ],
+                "id": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                "userName": "bob@acme.example",
+                "displayName": "Bob Builder",
+                "name": {
+                    "formatted": "Bob Builder"
+                },
+                "emails": [
+                    {
+                        "value": "bob@acme.example",
+                        "primary": true
+                    }
+                ],
+                "active": true,
+                "groups": [
+                    {
+                        "value": "01a09363-ce4f-7c85-80f0-701d333d751a",
+                        "display": "Member",
+                        "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c85-80f0-701d333d751a"
+                    }
+                ],
+                "meta": {
+                    "resourceType": "User",
+                    "created": "2026-09-12T02:13:06+00:00",
+                    "lastModified": "2026-09-12T02:13:06+00:00",
+                    "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                },
+                "externalId": "okta-bob"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users",
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ],
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": {
+                "userName": "bob@acme.example"
+            }
+        },
+        "response": {
+            "status": 409,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "409",
+                "detail": "A member with this userName exists.",
+                "error": "scim_uniqueness",
+                "message": "A member with this userName exists.",
+                "scimType": "uniqueness"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users?filter=userName%20pr",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 400,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "400",
+                "detail": "The filter is not supported: use attr eq|co|sw \"value\", joined by and.",
+                "error": "scim_invalidFilter",
+                "message": "The filter is not supported: use attr eq|co|sw \"value\", joined by and.",
+                "scimType": "invalidFilter"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users?filter=userName%20eq%20%22bob%40acme.example%22",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+                ],
+                "totalResults": 1,
+                "startIndex": 1,
+                "itemsPerPage": 1,
+                "Resources": [
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:User"
+                        ],
+                        "id": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                        "userName": "bob@acme.example",
+                        "displayName": "Bob Builder",
+                        "name": {
+                            "formatted": "Bob Builder"
+                        },
+                        "emails": [
+                            {
+                                "value": "bob@acme.example",
+                                "primary": true
+                            }
+                        ],
+                        "active": true,
+                        "groups": [
+                            {
+                                "value": "01a09363-ce4f-7c85-80f0-701d333d751a",
+                                "display": "Member",
+                                "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c85-80f0-701d333d751a"
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "User",
+                            "created": "2026-09-12T02:13:06+00:00",
+                            "lastModified": "2026-09-12T02:13:06+00:00",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                        },
+                        "externalId": "okta-bob"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+                ],
+                "totalResults": 2,
+                "startIndex": 1,
+                "itemsPerPage": 2,
+                "Resources": [
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:User"
+                        ],
+                        "id": "01a09363-cd24-7a75-a8e9-8bc38104c027",
+                        "userName": "ada@acme.example",
+                        "displayName": null,
+                        "name": {
+                            "formatted": null
+                        },
+                        "emails": [
+                            {
+                                "value": "ada@acme.example",
+                                "primary": true
+                            }
+                        ],
+                        "active": true,
+                        "groups": [
+                            {
+                                "value": "01a09363-ce4f-7b7d-80f0-701d3224a918",
+                                "display": "Owner",
+                                "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7b7d-80f0-701d3224a918"
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "User",
+                            "created": "2026-09-12T02:13:06+00:00",
+                            "lastModified": "2026-09-12T02:13:06+00:00",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-cd24-7a75-a8e9-8bc38104c027"
+                        }
+                    },
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:User"
+                        ],
+                        "id": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                        "userName": "bob@acme.example",
+                        "displayName": "Bob Builder",
+                        "name": {
+                            "formatted": "Bob Builder"
+                        },
+                        "emails": [
+                            {
+                                "value": "bob@acme.example",
+                                "primary": true
+                            }
+                        ],
+                        "active": true,
+                        "groups": [
+                            {
+                                "value": "01a09363-ce4f-7c85-80f0-701d333d751a",
+                                "display": "Member",
+                                "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c85-80f0-701d333d751a"
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "User",
+                            "created": "2026-09-12T02:13:06+00:00",
+                            "lastModified": "2026-09-12T02:13:06+00:00",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                        },
+                        "externalId": "okta-bob"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users?startIndex=2&count=1",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+                ],
+                "totalResults": 2,
+                "startIndex": 2,
+                "itemsPerPage": 1,
+                "Resources": [
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:User"
+                        ],
+                        "id": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                        "userName": "bob@acme.example",
+                        "displayName": "Bob Builder",
+                        "name": {
+                            "formatted": "Bob Builder"
+                        },
+                        "emails": [
+                            {
+                                "value": "bob@acme.example",
+                                "primary": true
+                            }
+                        ],
+                        "active": true,
+                        "groups": [
+                            {
+                                "value": "01a09363-ce4f-7c85-80f0-701d333d751a",
+                                "display": "Member",
+                                "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c85-80f0-701d333d751a"
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "User",
+                            "created": "2026-09-12T02:13:06+00:00",
+                            "lastModified": "2026-09-12T02:13:06+00:00",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                        },
+                        "externalId": "okta-bob"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:schemas:core:2.0:User"
+                ],
+                "id": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                "userName": "bob@acme.example",
+                "displayName": "Bob Builder",
+                "name": {
+                    "formatted": "Bob Builder"
+                },
+                "emails": [
+                    {
+                        "value": "bob@acme.example",
+                        "primary": true
+                    }
+                ],
+                "active": true,
+                "groups": [
+                    {
+                        "value": "01a09363-ce4f-7c85-80f0-701d333d751a",
+                        "display": "Member",
+                        "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c85-80f0-701d333d751a"
+                    }
+                ],
+                "meta": {
+                    "resourceType": "User",
+                    "created": "2026-09-12T02:13:06+00:00",
+                    "lastModified": "2026-09-12T02:13:06+00:00",
+                    "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                },
+                "externalId": "okta-bob"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/nope",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "404",
+                "detail": "User not found.",
+                "error": "scim_error",
+                "message": "User not found."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "PATCH",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde",
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ],
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+                ],
+                "Operations": [
+                    {
+                        "op": "replace",
+                        "path": "active",
+                        "value": false
+                    },
+                    {
+                        "op": "replace",
+                        "value": {
+                            "displayName": "Robert"
+                        }
+                    }
+                ]
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:schemas:core:2.0:User"
+                ],
+                "id": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                "userName": "bob@acme.example",
+                "displayName": "Robert",
+                "name": {
+                    "formatted": "Robert"
+                },
+                "emails": [
+                    {
+                        "value": "bob@acme.example",
+                        "primary": true
+                    }
+                ],
+                "active": false,
+                "groups": [
+                    {
+                        "value": "01a09363-ce4f-7c85-80f0-701d333d751a",
+                        "display": "Member",
+                        "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c85-80f0-701d333d751a"
+                    }
+                ],
+                "meta": {
+                    "resourceType": "User",
+                    "created": "2026-09-12T02:13:06+00:00",
+                    "lastModified": "2026-09-12T02:13:06+00:00",
+                    "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                },
+                "externalId": "okta-bob"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "PATCH",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde",
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ],
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": {
+                "Operations": []
+            }
+        },
+        "response": {
+            "status": 400,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "400",
+                "detail": "A PATCH carries the PatchOp schema.",
+                "error": "scim_invalidSyntax",
+                "message": "A PATCH carries the PatchOp schema.",
+                "scimType": "invalidSyntax"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "PUT",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde",
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ],
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": {
+                "userName": "bob@acme.example",
+                "displayName": "Bob",
+                "active": true,
+                "externalId": "okta-bob-2"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:schemas:core:2.0:User"
+                ],
+                "id": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                "userName": "bob@acme.example",
+                "displayName": "Bob",
+                "name": {
+                    "formatted": "Bob"
+                },
+                "emails": [
+                    {
+                        "value": "bob@acme.example",
+                        "primary": true
+                    }
+                ],
+                "active": true,
+                "groups": [
+                    {
+                        "value": "01a09363-ce4f-7c85-80f0-701d333d751a",
+                        "display": "Member",
+                        "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c85-80f0-701d333d751a"
+                    }
+                ],
+                "meta": {
+                    "resourceType": "User",
+                    "created": "2026-09-12T02:13:06+00:00",
+                    "lastModified": "2026-09-12T02:13:06+00:00",
+                    "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                },
+                "externalId": "okta-bob-2"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups",
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ],
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:schemas:core:2.0:Group"
+                ],
+                "displayName": "Engineering",
+                "externalId": "okta-eng",
+                "members": [
+                    {
+                        "value": "01a09363-ce55-757c-9bd1-10aed1e10dde"
+                    }
+                ]
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:schemas:core:2.0:Group"
+                ],
+                "id": "01a09363-ce58-7498-81ad-5f9e51241301",
+                "displayName": "Engineering",
+                "members": [
+                    {
+                        "value": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                        "display": "bob@acme.example",
+                        "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                    }
+                ],
+                "meta": {
+                    "resourceType": "Group",
+                    "created": "2026-09-12T02:13:06+00:00",
+                    "lastModified": "2026-09-12T02:13:06+00:00",
+                    "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce58-7498-81ad-5f9e51241301"
+                },
+                "externalId": "okta-eng"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:schemas:core:2.0:User"
+                ],
+                "id": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                "userName": "bob@acme.example",
+                "displayName": "Bob",
+                "name": {
+                    "formatted": "Bob"
+                },
+                "emails": [
+                    {
+                        "value": "bob@acme.example",
+                        "primary": true
+                    }
+                ],
+                "active": true,
+                "groups": [
+                    {
+                        "value": "01a09363-ce4f-7c85-80f0-701d333d751a",
+                        "display": "Member",
+                        "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c85-80f0-701d333d751a"
+                    },
+                    {
+                        "value": "01a09363-ce58-7498-81ad-5f9e51241301",
+                        "display": "Engineering",
+                        "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce58-7498-81ad-5f9e51241301"
+                    }
+                ],
+                "meta": {
+                    "resourceType": "User",
+                    "created": "2026-09-12T02:13:06+00:00",
+                    "lastModified": "2026-09-12T02:13:06+00:00",
+                    "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                },
+                "externalId": "okta-bob-2"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups",
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ],
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": {
+                "displayName": "Engineering"
+            }
+        },
+        "response": {
+            "status": 409,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "409",
+                "detail": "A group with this displayName exists.",
+                "error": "scim_uniqueness",
+                "message": "A group with this displayName exists.",
+                "scimType": "uniqueness"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups?filter=displayName%20eq%20%22Engineering%22",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+                ],
+                "totalResults": 1,
+                "startIndex": 1,
+                "itemsPerPage": 1,
+                "Resources": [
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:Group"
+                        ],
+                        "id": "01a09363-ce58-7498-81ad-5f9e51241301",
+                        "displayName": "Engineering",
+                        "members": [
+                            {
+                                "value": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                                "display": "bob@acme.example",
+                                "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "Group",
+                            "created": "2026-09-12T02:13:06+00:00",
+                            "lastModified": "2026-09-12T02:13:06+00:00",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce58-7498-81ad-5f9e51241301"
+                        },
+                        "externalId": "okta-eng"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+                ],
+                "totalResults": 4,
+                "startIndex": 1,
+                "itemsPerPage": 4,
+                "Resources": [
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:Group"
+                        ],
+                        "id": "01a09363-ce4f-7b7d-80f0-701d3224a918",
+                        "displayName": "Owner",
+                        "members": [
+                            {
+                                "value": "01a09363-cd24-7a75-a8e9-8bc38104c027",
+                                "display": "ada@acme.example",
+                                "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-cd24-7a75-a8e9-8bc38104c027"
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "Group",
+                            "created": "2026-09-12T02:13:06+00:00",
+                            "lastModified": "2026-09-12T02:13:06+00:00",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7b7d-80f0-701d3224a918"
+                        }
+                    },
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:Group"
+                        ],
+                        "id": "01a09363-ce4f-7c75-80f0-701d32ab82f1",
+                        "displayName": "Administrator",
+                        "members": [],
+                        "meta": {
+                            "resourceType": "Group",
+                            "created": "2026-09-12T02:13:06+00:00",
+                            "lastModified": "2026-09-12T02:13:06+00:00",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c75-80f0-701d32ab82f1"
+                        }
+                    },
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:Group"
+                        ],
+                        "id": "01a09363-ce4f-7c85-80f0-701d333d751a",
+                        "displayName": "Member",
+                        "members": [
+                            {
+                                "value": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                                "display": "bob@acme.example",
+                                "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "Group",
+                            "created": "2026-09-12T02:13:06+00:00",
+                            "lastModified": "2026-09-12T02:13:06+00:00",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c85-80f0-701d333d751a"
+                        }
+                    },
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:Group"
+                        ],
+                        "id": "01a09363-ce58-7498-81ad-5f9e51241301",
+                        "displayName": "Engineering",
+                        "members": [
+                            {
+                                "value": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                                "display": "bob@acme.example",
+                                "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "Group",
+                            "created": "2026-09-12T02:13:06+00:00",
+                            "lastModified": "2026-09-12T02:13:06+00:00",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce58-7498-81ad-5f9e51241301"
+                        },
+                        "externalId": "okta-eng"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users?filter=userName%20eq%20%22ada%40acme.example%22",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+                ],
+                "totalResults": 1,
+                "startIndex": 1,
+                "itemsPerPage": 1,
+                "Resources": [
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:User"
+                        ],
+                        "id": "01a09363-cd24-7a75-a8e9-8bc38104c027",
+                        "userName": "ada@acme.example",
+                        "displayName": null,
+                        "name": {
+                            "formatted": null
+                        },
+                        "emails": [
+                            {
+                                "value": "ada@acme.example",
+                                "primary": true
+                            }
+                        ],
+                        "active": true,
+                        "groups": [
+                            {
+                                "value": "01a09363-ce4f-7b7d-80f0-701d3224a918",
+                                "display": "Owner",
+                                "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7b7d-80f0-701d3224a918"
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "User",
+                            "created": "2026-09-12T02:13:06+00:00",
+                            "lastModified": "2026-09-12T02:13:06+00:00",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-cd24-7a75-a8e9-8bc38104c027"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "PATCH",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce58-7498-81ad-5f9e51241301",
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ],
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+                ],
+                "Operations": [
+                    {
+                        "op": "add",
+                        "path": "members",
+                        "value": [
+                            {
+                                "value": "01a09363-cd24-7a75-a8e9-8bc38104c027"
+                            }
+                        ]
+                    },
+                    {
+                        "op": "remove",
+                        "path": "members[value eq \"01a09363-ce55-757c-9bd1-10aed1e10dde\"]"
+                    }
+                ]
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:schemas:core:2.0:Group"
+                ],
+                "id": "01a09363-ce58-7498-81ad-5f9e51241301",
+                "displayName": "Engineering",
+                "members": [
+                    {
+                        "value": "01a09363-cd24-7a75-a8e9-8bc38104c027",
+                        "display": "ada@acme.example",
+                        "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-cd24-7a75-a8e9-8bc38104c027"
+                    }
+                ],
+                "meta": {
+                    "resourceType": "Group",
+                    "created": "2026-09-12T02:13:06+00:00",
+                    "lastModified": "2026-09-12T02:13:06+00:00",
+                    "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce58-7498-81ad-5f9e51241301"
+                },
+                "externalId": "okta-eng"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "PUT",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce58-7498-81ad-5f9e51241301",
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ],
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": {
+                "displayName": "Platform",
+                "members": [
+                    {
+                        "value": "01a09363-ce55-757c-9bd1-10aed1e10dde"
+                    }
+                ]
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:schemas:core:2.0:Group"
+                ],
+                "id": "01a09363-ce58-7498-81ad-5f9e51241301",
+                "displayName": "Platform",
+                "members": [
+                    {
+                        "value": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                        "display": "bob@acme.example",
+                        "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                    }
+                ],
+                "meta": {
+                    "resourceType": "Group",
+                    "created": "2026-09-12T02:13:06+00:00",
+                    "lastModified": "2026-09-12T02:13:06+00:00",
+                    "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce58-7498-81ad-5f9e51241301"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups?filter=displayName%20eq%20%22Member%22",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+                ],
+                "totalResults": 1,
+                "startIndex": 1,
+                "itemsPerPage": 1,
+                "Resources": [
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:Group"
+                        ],
+                        "id": "01a09363-ce4f-7c85-80f0-701d333d751a",
+                        "displayName": "Member",
+                        "members": [
+                            {
+                                "value": "01a09363-ce55-757c-9bd1-10aed1e10dde",
+                                "display": "bob@acme.example",
+                                "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde"
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "Group",
+                            "created": "2026-09-12T02:13:06+00:00",
+                            "lastModified": "2026-09-12T02:13:06+00:00",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c85-80f0-701d333d751a"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "PUT",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c85-80f0-701d333d751a",
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ],
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": {
+                "displayName": "Renamed"
+            }
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "403",
+                "detail": "A built-in role cannot be renamed.",
+                "error": "scim_mutability",
+                "message": "A built-in role cannot be renamed.",
+                "scimType": "mutability"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7c85-80f0-701d333d751a",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "403",
+                "detail": "A built-in role cannot be deleted.",
+                "error": "scim_mutability",
+                "message": "A built-in role cannot be deleted.",
+                "scimType": "mutability"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce58-7498-81ad-5f9e51241301",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 204,
+            "headers": [],
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce58-7498-81ad-5f9e51241301",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "404",
+                "detail": "Group not found.",
+                "error": "scim_error",
+                "message": "Group not found."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 204,
+            "headers": [],
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-ce55-757c-9bd1-10aed1e10dde",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:Error"
+                ],
+                "status": "404",
+                "detail": "User not found.",
+                "error": "scim_error",
+                "message": "User not found."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "bob@acme.example",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179300"
+                ]
+            },
+            "body": {
+                "error": "invalid_credentials",
+                "message": "Invalid email or password."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users",
+            "headers": {
+                "Authorization": [
+                    "Bearer pst_l1Ybo2_1EOi_IWyBgfMmEcvkFjtRrW9fpwOfD6RbufM"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/scim+json"
+                ]
+            },
+            "body": {
+                "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+                ],
+                "totalResults": 1,
+                "startIndex": 1,
+                "itemsPerPage": 1,
+                "Resources": [
+                    {
+                        "schemas": [
+                            "urn:ietf:params:scim:schemas:core:2.0:User"
+                        ],
+                        "id": "01a09363-cd24-7a75-a8e9-8bc38104c027",
+                        "userName": "ada@acme.example",
+                        "displayName": null,
+                        "name": {
+                            "formatted": null
+                        },
+                        "emails": [
+                            {
+                                "value": "ada@acme.example",
+                                "primary": true
+                            }
+                        ],
+                        "active": true,
+                        "groups": [
+                            {
+                                "value": "01a09363-ce4f-7b7d-80f0-701d3224a918",
+                                "display": "Owner",
+                                "$ref": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Groups/01a09363-ce4f-7b7d-80f0-701d3224a918"
+                            }
+                        ],
+                        "meta": {
+                            "resourceType": "User",
+                            "created": "2026-09-12T02:13:06+00:00",
+                            "lastModified": "2026-09-12T02:13:06+00:00",
+                            "location": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad/Users/01a09363-cd24-7a75-a8e9-8bc38104c027"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/orgs/01a09363-ce4f-7905-80f0-701d318ede5d/scim/connections/01a09363-ce53-7137-936b-a22c1922d0ad",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImQ1OTg3ODA4MDIzZWQ1MTdlZTY2MjlhYTBmYjViZmRiZTQ5NWFhNWQ1NTdlMTkwMjlmYWRjY2MzYzQ4N2Y5Y2EifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzg5MTc5MTg2Ljc2ODg3LCJuYmYiOjE3ODkxNzkxODYuNzY4ODcsImV4cCI6MTc4OTE4MDA4Ni43Njg4Nywic3ViIjoiMDFhMDkzNjMtY2QyNC03YTc1LWE4ZTktOGJjMzgxMDRjMDI3IiwianRpIjoiMDFhMDkzNjMtY2U1MC03ZDgzLTg4MDEtZTFhNjcwZjRhMThjIiwib3JnIjoiMDFhMDkzNjMtY2U0Zi03OTA1LTgwZjAtNzAxZDMxOGVkZTVkIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMDkzNjMtY2U0Ny03NDJkLThmYmQtODQ4OWVlOTQ4MTdmIiwiYXV0aF90aW1lIjoxNzg5MTc5MTg2fQ.CJ78SmgnKDsFNc4krF3xaFV299WQpNl3GYrpN8KMpcJlyoj0t5LHgHb2sF4ZfMA89qiXuO4BQtBybIUb1tDhn0jlrQsQJYUNCxqtqxAsRYrmTG0daj1i726_FMaDAz5FkU2C_5DeDv_h4Qkl0LLHmmaGZRwKP2rfZXR4Cb_nI99UyRkdqt9q1RnKxmPZsqnjGJDEI2GQr2PMwSBUINcQqej19BNIOYX1rFsWAgLw1tAVDbMWbD4LXXn0Rq00mCNa_JdXo5zGSuvu0hcm7XfEzKNozAh2hqhzDhKPuN1h9wUlkGnXDElwizWgBGnvrQi7DxVHKd_mbgXgqUIP5CMnAA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "595"
+                ],
+                "X-RateLimit-Reset": [
+                    "1789179240"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a09363-ce53-7137-936b-a22c1922d0ad",
+                    "organization_id": "01a09363-ce4f-7905-80f0-701d318ede5d",
+                    "sso_provider_id": null,
+                    "name": "Okta",
+                    "status": "active",
+                    "deprovision": "deactivate",
+                    "last_sync_at": "2026-09-12T02:13:07+00:00",
+                    "decommissioned_at": null,
+                    "created_by": "01a09363-cd24-7a75-a8e9-8bc38104c027",
+                    "created_at": "2026-09-12T02:13:06+00:00",
+                    "sync": {
+                        "users": 0,
+                        "groups": 0,
+                        "provisioned_members": 0
+                    },
+                    "scim_base_url": "https://app.example/auth/scim/v2/01a09363-ce53-7137-936b-a22c1922d0ad"
+                }
+            }
+        }
+    }
+]

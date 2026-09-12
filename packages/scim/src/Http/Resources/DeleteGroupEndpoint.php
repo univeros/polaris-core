@@ -31,6 +31,6 @@ final class DeleteGroupEndpoint extends GroupEndpoint
         }
         $this->audit->record(AuditNames::GROUP_DELETED, $connection, (string) $role['id'], ['name' => (string) $role['name']], $this->client($input));
 
-        return new Result(204, [], ['Content-Type' => self::CONTENT_TYPE]);
+        return new Result(204);
     }
 }

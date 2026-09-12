@@ -32,6 +32,6 @@ final class DeleteUserEndpoint extends UserEndpoint
         $outcome = $this->users->delete($connection, $user);
         $this->audit->record($outcome === 'deleted' ? AuditNames::USER_DELETED : AuditNames::USER_DEACTIVATED, $connection, $user->id, ['deprovision' => $outcome], $this->client($input));
 
-        return new Result(204, [], ['Content-Type' => self::CONTENT_TYPE]);
+        return new Result(204);
     }
 }

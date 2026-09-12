@@ -24,7 +24,11 @@ final class JsonResponse
 
     public function result(Result $result): ResponseInterface
     {
-        $response = $this->factory->createResponse($result->status)->withHeader('Content-Type', $result->problem ? 'application/problem+json' : 'application/json');
+        $response = $this->factory->createResponse($result->status);
+        if ($result->status !== 204) {
+            // A response without content has no content type; HttpFoundation drops one anyway.
+            $response = $response->withHeader('Content-Type', $result->problem ? 'application/problem+json' : 'application/json');
+        }
         foreach ($result->headers as $name => $value) {
             $response = $response->withHeader($name, $value);
         }

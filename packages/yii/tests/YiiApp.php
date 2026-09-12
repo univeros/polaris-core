@@ -11,6 +11,7 @@ use HttpSoft\Message\UploadedFileFactory;
 use HttpSoft\Message\UriFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
@@ -26,6 +27,7 @@ use Yiisoft\EventDispatcher\Dispatcher\Dispatcher;
 use Yiisoft\EventDispatcher\Provider\ListenerCollection;
 use Yiisoft\EventDispatcher\Provider\Provider;
 use Yiisoft\Middleware\Dispatcher\MiddlewareDispatcher;
+use Yiisoft\Request\Body\Parser\JsonParser;
 use Yiisoft\Request\Body\RequestBodyParser;
 use Yiisoft\Router\FastRoute\UrlMatcher;
 use Yiisoft\Router\Middleware\Router;
@@ -84,6 +86,8 @@ final class YiiApp
             ListenerCollection::class => static fn (ListenerCollectionFactory $factory): ListenerCollection => $factory->create($events),
             ListenerProviderInterface::class => Provider::class,
             EventDispatcherInterface::class => Dispatcher::class,
+            // A directory speaks application/scim+json: a +json body parses as JSON, as it does in a Yii host that adds the parser.
+            RequestBodyParser::class => static fn (ResponseFactoryInterface $responses, ContainerInterface $container): RequestBodyParser => (new RequestBodyParser($responses, $container))->withParser('application/scim+json', JsonParser::class),
             Application::class => static fn (MiddlewareDispatcher $dispatcher, ResponseFactoryInterface $responses): Application => new Application(
                 $dispatcher->withMiddlewares([RequestBodyParser::class, Router::class]),
                 null,
