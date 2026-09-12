@@ -4,6 +4,15 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- `@polaris-auth/client`: the transparent challenge retry. `createClient({ challenge: { captcha } })` takes a
+  callback that yields a captcha token; when a request answers `403` with the `sentinel/challenge_required`
+  problem and `challenge: captcha`, the client asks it once and sends the same request again with
+  `captcha_token` added to the body. Without the callback the problem document is returned as before.
+  `challengeRetry(options)` is exported as an `openapi-fetch` middleware.
+
 ## [0.6.0] - 2026-09-12
 
 `polaris/scim`, a SCIM 2.0 server per organization; the six packages of the infrastructure program are

@@ -1,9 +1,9 @@
 # @polaris-auth/client
 
 The TypeScript client for [Polaris for PHP](https://github.com/univeros/polaris-core), generated from
-the route manifest: `openapi-fetch` typed by the 52 core endpoints and the routes of the `polaris/audit`
-and `polaris/admin` plugins, so a request body, its `data` and its `error` are checked at compile time
-against the same contract the PHP hosts serve.
+the route manifest: `openapi-fetch` typed by the 52 core endpoints and the routes of the `polaris/audit`,
+`polaris/admin`, `polaris/sentinel`, `polaris/sso` and `polaris/scim` plugins, so a request body, its
+`data` and its `error` are checked at compile time against the same contract the PHP hosts serve.
 
 ```sh
 npm install @polaris-auth/client
@@ -23,10 +23,10 @@ if (login.data && "access_token" in login.data.data) {          // a session, or
 }
 ```
 
-`createClient({ baseUrl, token, fetch, headers })` takes `openapi-fetch`'s options plus `token`, sent as
-`Authorization: Bearer` on every request (an access token, or the `mfa_token` for the MFA gate);
-`withToken(token)` returns a new client bound to another token, `token: null` an anonymous one. Nothing
-else: when to refresh and where to keep tokens is your application's policy. Every method of
+`createClient({ baseUrl, token, challenge, fetch, headers })` takes `openapi-fetch`'s options plus `token`,
+sent as `Authorization: Bearer` on every request (an access token, or the `mfa_token` for the MFA gate), and
+`challenge` (below); `withToken(token)` returns a new client bound to another token, `token: null` an
+anonymous one. Nothing else: when to refresh and where to keep tokens is your application's policy. Every method of
 `openapi-fetch` is there (`GET`, `POST`, `PATCH`, `DELETE`, `use` for middleware).
 
 ## The plugins
@@ -56,6 +56,26 @@ Response types come from each endpoint's `output.example` in the manifest (JSON 
 `docs/adapters/spec.md` §7): a documented approximation, exact for the shapes the specs show. Error
 bodies are `ErrorBody` (`{ error, message }`) and `ValidationErrorBody` (`{ errors }`).
 
+## The sentinel challenge
+
+With `polaris/sentinel` enforcing, a sign-up, sign-in, password reset or code send may answer `403` with
+the `sentinel/challenge_required` problem and `challenge: captcha`. Give the client a way to get a captcha
+token and it answers the challenge itself: the callback is asked once, and the same request is sent
+again with `captcha_token` added to its body.
+
+```ts
+const polaris = createClient({
+    baseUrl,
+    challenge: { captcha: () => turnstile.execute() },   // the host's widget (Turnstile, hCaptcha, ...) yields the token
+});
+const login = await polaris.POST("/auth/login", { body: { email, password } });   // challenged, solved, answered
+```
+
+One retry only: the retried response is returned as it is, so a wrong token is one problem document
+and never a loop; every other error, and the challenge when no `captcha` callback is given, is returned
+as today. `withToken` keeps the callback. `challengeRetry(options)` is exported for a plain `openapi-fetch`
+client (`client.use(challengeRetry({ captcha }))`).
+
 ## Development
 
 ```sh
@@ -65,10 +85,11 @@ npm run typecheck
 npm test             # starts examples/slim (installed and set up) and runs register → verify → login → me, then the admin and audit namespaces
 ```
 
-`openapi.json`, `src/schema.d.ts`, `src/audit.ts` and `src/admin.ts` are checked in; CI regenerates them
-and fails on a difference, so a manifest change ships with its types. `polaris.php` is the application the
-client is generated for (core with the audit and admin plugins). `POLARIS_URL=http://host:port npm test` runs the test against a
-server you started. Node 20 or later.
+`openapi.json`, `src/schema.d.ts` and the namespaces (`src/audit.ts`, `src/admin.ts`, `src/sentinel.ts`,
+`src/sso.ts`, `src/scim.ts`) are checked in; CI regenerates them and fails on a difference, so a manifest
+change ships with its types. `polaris.php` is the application the client is generated for (core with the
+five plugins that have routes). `POLARIS_URL=http://host:port npm test` runs the test against a server
+you started. Node 20 or later.
 
 ## License
 
