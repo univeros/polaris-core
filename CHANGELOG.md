@@ -4,7 +4,10 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.6.1] - 2026-09-12
+
+The TypeScript client answers a `polaris/sentinel` captcha challenge with one retry; the root README lists
+the six packages of the infrastructure program.
 
 ### Added
 - `@polaris-auth/client`: the transparent challenge retry. `createClient({ challenge: { captcha } })` takes a
