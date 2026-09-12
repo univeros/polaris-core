@@ -1,6 +1,7 @@
 import createOpenApiClient, { type Client, type ClientOptions } from "openapi-fetch";
 import { admin, type AdminApi } from "./admin.js";
 import { audit, type AuditApi } from "./audit.js";
+import { challengeRetry, type ChallengeOptions } from "./challenge.js";
 import { sentinel, type SentinelApi } from "./sentinel.js";
 import { scim, type ScimApi } from "./scim.js";
 import { sso, type SsoApi } from "./sso.js";
@@ -9,6 +10,7 @@ import type { components, paths } from "./schema.js";
 export type { components, operations, paths } from "./schema.js";
 export { admin, type AdminApi } from "./admin.js";
 export { audit, type AuditApi } from "./audit.js";
+export { challengeRetry, type ChallengeOptions } from "./challenge.js";
 export { sentinel, type SentinelApi } from "./sentinel.js";
 export { scim, type ScimApi } from "./scim.js";
 export { sso, type SsoApi } from "./sso.js";
@@ -25,6 +27,12 @@ export interface PolarisClientOptions extends ClientOptions {
     baseUrl: string;
     /** Sent as `Authorization: Bearer` on every request: an access token, the `mfa_token` for the MFA gate, or an admin API key (`pak_...`). */
     token?: string | null;
+    /**
+     * How to answer a `polaris/sentinel` challenge: with `captcha`, a `403 sentinel/challenge_required`
+     * with `challenge: captcha` asks it for a token and retries the request once with `captcha_token`
+     * in the body. Without it the problem document is returned as any other error.
+     */
+    challenge?: ChallengeOptions;
 }
 
 export interface PolarisClient extends Client<paths> {
@@ -47,12 +55,16 @@ export interface PolarisClient extends Client<paths> {
 /**
  * An `openapi-fetch` client typed by `paths` (generated from `polaris manifest --format=openapi`), so
  * `client.POST("/auth/login", { body })` checks the body and types `data` and `error`; the plugins' routes
- * are also methods of `client.audit`, `client.admin`, `client.sentinel`, `client.sso` and `client.scim`. No refresh loop and no storage: when to refresh
+ * are also methods of `client.audit`, `client.admin`, `client.sentinel`, `client.sso` and `client.scim`; `challenge.captcha`
+ * answers a sentinel captcha challenge with one retry. No refresh loop and no storage: when to refresh
  * and where to keep tokens is the application's policy.
  */
 export function createClient(options: PolarisClientOptions): PolarisClient {
-    const { token = null, ...clientOptions } = options;
+    const { token = null, challenge, ...clientOptions } = options;
     const client = createOpenApiClient<paths>(clientOptions);
+    if (challenge !== undefined) {
+        client.use(challengeRetry(challenge));
+    }
     if (token !== null) {
         client.use({
             onRequest({ request }) {
