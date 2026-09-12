@@ -1,0 +1,33 @@
+# PATCH /scim/v2/{connectionId}/Groups/{id}: Patch a SCIM group.
+endpoint:
+  method: PATCH
+  path: /scim/v2/{connectionId}/Groups/{id}
+  summary: Patch a SCIM group
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    schemas: { type: "list<string>", rules: [required] }
+    Operations: { type: array, rules: [required] }
+
+domain:
+  class: Polaris\Scim\Http\Resources\PatchGroupEndpoint
+  description: >
+    PatchOp operations on displayName, externalId and members (add, replace, remove with a value list, or remove with members[value eq "id"]). Recorded as scim.group_updated.
+
+output:
+  status: 200
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+  - { status: 400, code: scim_invalidSyntax }
+  - { status: 400, code: scim_invalidPath }
+  - { status: 400, code: scim_invalidValue }
+  - { status: 403, code: scim_mutability }
+events: [scim.group_updated]

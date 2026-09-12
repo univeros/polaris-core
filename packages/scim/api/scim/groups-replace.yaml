@@ -1,0 +1,32 @@
+# PUT /scim/v2/{connectionId}/Groups/{id}: Replace a SCIM group.
+endpoint:
+  method: PUT
+  path: /scim/v2/{connectionId}/Groups/{id}
+  summary: Replace a SCIM group
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    displayName: { type: string, rules: [required] }
+    externalId: { type: "?string", rules: [optional] }
+    members: { type: "?array", rules: [optional] }
+
+domain:
+  class: Polaris\Scim\Http\Resources\ReplaceGroupEndpoint
+  description: >
+    The name (custom roles only) and the whole member list. Recorded as scim.group_updated.
+
+output:
+  status: 200
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+  - { status: 400, code: scim_invalidValue }
+  - { status: 403, code: scim_mutability }
+events: [scim.group_updated]

@@ -1,0 +1,29 @@
+# DELETE /scim/v2/{connectionId}/Groups/{id}: Delete a SCIM group.
+endpoint:
+  method: DELETE
+  path: /scim/v2/{connectionId}/Groups/{id}
+  summary: Delete a SCIM group
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: destructive
+  receipt: false
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Scim\Http\Resources\DeleteGroupEndpoint
+  description: >
+    A custom role and its assignments; a system role is refused. 204. Recorded as scim.group_deleted.
+
+output:
+  status: 204
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+  - { status: 403, code: scim_mutability }
+events: [scim.group_deleted]

@@ -1,0 +1,29 @@
+# GET /scim/v2/{connectionId}/Groups/{id}: Read a SCIM group.
+endpoint:
+  method: GET
+  path: /scim/v2/{connectionId}/Groups/{id}
+  summary: Read a SCIM group
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: read
+  receipt: false
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Scim\Http\Resources\ReadGroupEndpoint
+  description: >
+    One role with its members.
+
+output:
+  status: 200
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+
+events: []

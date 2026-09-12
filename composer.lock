@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b43d1b7d9fa552ce2ed3f3252b54d869",
+    "content-hash": "ee99d03bb4fc23e28c27bff1e76cf4d7",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3078,7 +3078,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/admin",
-                "reference": "0da0b26b0e97371c8d2c72d3a09f341be44f162a"
+                "reference": "4c2329bc5d63aa77a7e40f22a719d585604b0fc9"
             },
             "require": {
                 "php": ">=8.3",
@@ -3124,7 +3124,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/audit",
-                "reference": "0499f39e6384f23bce74fe100a9ab4bc541dc538"
+                "reference": "2393707b8b3612ddec3852224a509e69f4b8ff47"
             },
             "require": {
                 "php": ">=8.3",
@@ -3171,7 +3171,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/cli",
-                "reference": "059a9d8853047d4f14075cc84aa2898817f8cbe0"
+                "reference": "e62c84880cd61b896cc7693f751dde41534ccaa9"
             },
             "require": {
                 "php": ">=8.3",
@@ -3215,7 +3215,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/core",
-                "reference": "b079d044f382d50de08a9a59350d274fbbc5d7d8"
+                "reference": "0e4b04ec3b90d3d557939c202b04ebcfd23869ab"
             },
             "require": {
                 "endroid/qr-code": "^6.0",
@@ -3286,7 +3286,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/laravel",
-                "reference": "6d9156869138e916f8d2cf1278de7d28449f2b0f"
+                "reference": "8c437b9f2ac75b6f005344a26e0c7336f3c707a8"
             },
             "require": {
                 "laravel/framework": "^13.0",
@@ -3335,7 +3335,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/messaging",
-                "reference": "39d9d131104538f1c97cca460723f459e7105f09"
+                "reference": "bbf3733fba8b1aed23863dc4ab9ced1b27ee86bf"
             },
             "require": {
                 "php": ">=8.3",
@@ -3386,7 +3386,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/pdo",
-                "reference": "9a467b8ec6cc565a05c158c88eb7f26d52917919"
+                "reference": "9383d99f8a3044aadb17f470f07acb0995c6d36e"
             },
             "require": {
                 "ext-pdo": "*",
@@ -3425,7 +3425,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/psr15",
-                "reference": "b81c5066d09ea1a464f76855d7a4489d0ac3a1f1"
+                "reference": "e48aa532ba4f24ba67ecca6c2484363aa87507d5"
             },
             "require": {
                 "php": ">=8.3",
@@ -3463,12 +3463,58 @@
             }
         },
         {
+            "name": "polaris/scim",
+            "version": "0.5.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/scim",
+                "reference": "8a430816c9dd9910bc34600403f71f5ec18d1d3c"
+            },
+            "require": {
+                "php": ">=8.3",
+                "polaris/admin": "^0.5",
+                "polaris/audit": "^0.5",
+                "polaris/core": "^0.5",
+                "polaris/sso": "^0.5",
+                "psr/clock": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0",
+                "symfony/uid": "^7.0 || ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\Scim\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
+            "description": "SCIM for Polaris for PHP: a SCIM 2.0 server per organization with provisioning tokens, users and groups projected onto members and roles, organization self-service and operator routes",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "polaris/sentinel",
             "version": "0.5.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/sentinel",
-                "reference": "19bd99368fef26e32735b6aa33e5bf6886d77ce1"
+                "reference": "2aa17b00086e11dd8625dd6c2482fc0f1a00cfae"
             },
             "require": {
                 "php": ">=8.3",
@@ -3524,7 +3570,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/sso",
-                "reference": "3c604c0cea58cc9a407914192f8d2d62ae2cce12"
+                "reference": "c8b28a43f96bef8c61ae61fd32431902032544d8"
             },
             "require": {
                 "ext-dom": "*",
@@ -3575,7 +3621,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/symfony",
-                "reference": "aa56da2d199ec1e00cb171bc9f77f4ace93d46a5"
+                "reference": "010ccfff325e5acd093748c626bb18489a9b3c2e"
             },
             "require": {
                 "nyholm/psr7": "^1.8",
@@ -3623,7 +3669,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/testing",
-                "reference": "795b59976a3c93f2d36ac5727644cc4574b1759d"
+                "reference": "46e71e8d6cc9a48afe70237a67b7c4f2edea2e66"
             },
             "require": {
                 "php": ">=8.3",
@@ -3661,7 +3707,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/yii",
-                "reference": "dea02d74612bc54b144e3a1ffb98d55f1bb60715"
+                "reference": "f530e2928e75e1bdc64ec476e39785413da0ef02"
             },
             "require": {
                 "php": ">=8.3",
@@ -12571,6 +12617,7 @@
         "polaris/messaging": 20,
         "polaris/pdo": 20,
         "polaris/psr15": 20,
+        "polaris/scim": 20,
         "polaris/sentinel": 20,
         "polaris/sso": 20,
         "polaris/symfony": 20,

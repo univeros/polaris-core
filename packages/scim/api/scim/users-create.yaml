@@ -1,0 +1,35 @@
+# POST /scim/v2/{connectionId}/Users: Create a SCIM user.
+endpoint:
+  method: POST
+  path: /scim/v2/{connectionId}/Users
+  summary: Create a SCIM user
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    userName: { type: string, rules: [required] }
+    externalId: { type: "?string", rules: [optional] }
+    displayName: { type: "?string", rules: [optional] }
+    name: { type: "?object", rules: [optional] }
+    emails: { type: "?array", rules: [optional] }
+    active: { type: "?boolean", rules: [optional] }
+
+domain:
+  class: Polaris\Scim\Http\Resources\CreateUserEndpoint
+  description: >
+    A member: the user is created with userName as the email, verified, without a password (or found by email when the account exists), and joins the organization with the member role; active false deactivates the account. Recorded as scim.user_created.
+
+output:
+  status: 201
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+  - { status: 400, code: scim_invalidValue }
+  - { status: 409, code: scim_uniqueness }
+events: [scim.user_created]

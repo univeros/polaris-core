@@ -1,0 +1,42 @@
+# GET /orgs/{id}/scim/connections: the organization's connections.
+endpoint:
+  method: GET
+  path: /orgs/{id}/scim/connections
+  summary: List the organization's SCIM connections
+  tags: [scim-admin, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Scim\Http\Organization\ListConnectionsEndpoint
+  description: >
+    The connections of the caller's active organization (the path id must match, a superadmin
+    excepted) with their sync state, never the tokens.
+
+output:
+  status: 200
+  example:
+    data:
+      - id: "018f..."
+        organization_id: "018f..."
+        sso_provider_id: null
+        name: "Okta"
+        status: "active"
+        deprovision: "deactivate"
+        last_sync_at: "2026-09-12T10:00:00+00:00"
+        decommissioned_at: null
+        created_by: "018f..."
+        created_at: "2026-09-12T10:00:00+00:00"
+        sync: { users: 12, groups: 2, provisioned_members: 12 }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: scim_forbidden }
+
+events: []

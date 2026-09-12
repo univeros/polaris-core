@@ -24,3 +24,5 @@ parameters:
         - packages/sentinel/tests
         - packages/sso/src
         - packages/sso/tests
+        - packages/scim/src
+        - packages/scim/tests

@@ -18,7 +18,7 @@ function recording(status: number, body: unknown) {
     return { requests, fetch };
 }
 
-describe("client.admin, client.audit, client.sentinel and client.sso", () => {
+describe("client.admin, client.audit, client.sentinel, client.sso and client.scim", () => {
     it("maps the admin methods onto their routes with the API key as bearer", async () => {
         const { requests, fetch } = recording(200, { data: [], next_cursor: null });
         const client = createClient({ baseUrl: "https://polaris.example/api", token: "pak_secret", fetch });
@@ -103,6 +103,24 @@ describe("client.admin, client.audit, client.sentinel and client.sso", () => {
         ]);
         expect(requests[0]?.headers.get("Authorization")).toBeNull();
         expect(requests[2]?.headers.get("Authorization")).toBe("Bearer owner");
+    });
+
+    it("maps the scim methods onto the connection and SCIM routes", async () => {
+        const { requests, fetch } = recording(200, { data: [] });
+        const client = createClient({ baseUrl: "https://polaris.example", token: "owner", fetch });
+
+        await client.scim.createConnection({ params: { path: { id: "o1" } }, body: { name: "Okta", deprovision: "deactivate" } });
+        await client.scim.rotateConnection({ params: { path: { id: "o1", connectionId: "c1" } } });
+        await client.withToken("pst_secret").scim.listUsers({ params: { path: { connectionId: "c1" }, query: { filter: 'userName eq "ada@acme.example"', count: 10 } } });
+        await client.withToken("pak_owner").scim.adminListConnections({ params: { query: { limit: 5 } } });
+
+        expect(requests.map((request) => `${request.method} ${new URL(request.url).pathname}${decodeURIComponent(new URL(request.url).search)}`)).toEqual([
+            "POST /orgs/o1/scim/connections",
+            "POST /orgs/o1/scim/connections/c1/rotate",
+            'GET /scim/v2/c1/Users?filter=userName eq "ada@acme.example"&count=10',
+            "GET /admin/scim/connections?limit=5",
+        ]);
+        expect(requests[2]?.headers.get("Authorization")).toBe("Bearer pst_secret");
     });
 
     it("binds the namespaces to the token of each client", async () => {

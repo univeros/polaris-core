@@ -1,0 +1,38 @@
+# POST /orgs/{id}/scim/connections/{connectionId}/rotate: a new token.
+endpoint:
+  method: POST
+  path: /orgs/{id}/scim/connections/{connectionId}/rotate
+  summary: Rotate a SCIM connection token
+  tags: [scim-admin, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: write
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    connectionId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Scim\Http\Organization\RotateConnectionEndpoint
+  description: >
+    A new token, in this response only; the previous one stops at once. A decommissioned connection is
+    refused. Recorded as scim.connection_rotated.
+
+output:
+  status: 200
+  example:
+    data:
+      id: "018f..."
+      token: "pst_..."
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: scim_forbidden }
+  - { status: 404, code: scim_not_found }
+  - { status: 409, code: scim_conflict }
+
+events: [scim.connection_rotated]

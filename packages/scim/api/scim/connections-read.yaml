@@ -1,0 +1,39 @@
+# GET /orgs/{id}/scim/connections/{connectionId}: one connection and its sync state.
+endpoint:
+  method: GET
+  path: /orgs/{id}/scim/connections/{connectionId}
+  summary: Read a SCIM connection
+  tags: [scim-admin, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: read
+  receipt: false
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    connectionId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Scim\Http\Organization\ReadConnectionEndpoint
+  description: >
+    The connection, how many users and groups the directory manages, the members it provisioned, the
+    last sync, and the base URL the directory is configured with.
+
+output:
+  status: 200
+  example:
+    data:
+      id: "018f..."
+      status: "active"
+      sync: { users: 12, groups: 2, provisioned_members: 12 }
+      scim_base_url: "https://app.example.com/auth/scim/v2/018f..."
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: scim_forbidden }
+  - { status: 404, code: scim_not_found }
+
+events: []

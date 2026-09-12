@@ -1,0 +1,27 @@
+# GET /scim/v2/{connectionId}/ServiceProviderConfig: SCIM service provider configuration.
+endpoint:
+  method: GET
+  path: /scim/v2/{connectionId}/ServiceProviderConfig
+  summary: SCIM service provider configuration
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Scim\Http\Resources\ServiceProviderConfigEndpoint
+  description: >
+    What this server supports: filtering, PATCH, bearer tokens; no bulk, sorting or ETags. SCIM documents (application/scim+json); errors are SCIM error documents that also carry error and message.
+
+output:
+  status: 200
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+
+events: []

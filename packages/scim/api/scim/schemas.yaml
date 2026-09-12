@@ -1,0 +1,27 @@
+# GET /scim/v2/{connectionId}/Schemas: SCIM schemas.
+endpoint:
+  method: GET
+  path: /scim/v2/{connectionId}/Schemas
+  summary: SCIM schemas
+  tags: [scim]
+  auth: public   # the scim middleware resolves the connection token
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Scim\Http\Resources\SchemasEndpoint
+  description: >
+    The User and Group schemas with the attributes this server maps.
+
+output:
+  status: 200
+  example: {}
+
+errors:
+  - { status: 401, code: scim_error }
+  - { status: 404, code: scim_error }
+
+events: []
