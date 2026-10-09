@@ -18,7 +18,7 @@ function recording(status: number, body: unknown) {
     return { requests, fetch };
 }
 
-describe("client.admin, client.audit, client.sentinel, client.sso and client.scim", () => {
+describe("the plugin namespaces", () => {
     it("maps the admin methods onto their routes with the API key as bearer", async () => {
         const { requests, fetch } = recording(200, { data: [], next_cursor: null });
         const client = createClient({ baseUrl: "https://polaris.example/api", token: "pak_secret", fetch });
@@ -121,6 +121,44 @@ describe("client.admin, client.audit, client.sentinel, client.sso and client.sci
             "GET /admin/scim/connections?limit=5",
         ]);
         expect(requests[2]?.headers.get("Authorization")).toBe("Bearer pst_secret");
+    });
+
+    it("maps the passwordless, username, anonymous and multi-session methods onto their routes", async () => {
+        const { requests, fetch } = recording(200, { data: { status: "sent" } });
+        const client = createClient({ baseUrl: "https://polaris.example", fetch });
+
+        await client.passwordless.magicLinkSend({ body: { email: "ada@example.com", redirect_uri: "https://app.example/signed-in" } });
+        await client.passwordless.magicLinkExchange({ body: { code: "c" } });
+        await client.passwordless.emailOtpSend({ body: { email: "ada@example.com", purpose: "reset-password" } });
+        await client.passwordless.phoneVerify({ body: { phone: "+15551234567", code: "123456" } });
+        await client.withToken("access").passwordless.oneTimeTokenGenerate();
+        await client.username.signIn({ body: { username: "ada.l", password: "secret" } });
+        await client.withToken("access").username.update({ body: { username: "ada.l" } });
+        await client.anonymous.signIn();
+        await client.withToken("guest").anonymous.convert({ body: { access_token: "account" } });
+        await client.withToken("access").multiSession.list({ headers: { "X-Polaris-Device": "d1" } });
+        await client.withToken("access").multiSession.switch({ body: { session_id: "s2" }, headers: { "X-Polaris-Device": "d1" } });
+        await client.withToken("access").multiSession.revoke({ params: { path: { sessionId: "s2" } } });
+        await client.multiSession.lastMethod();
+
+        expect(requests.map((request) => `${request.method} ${new URL(request.url).pathname}`)).toEqual([
+            "POST /magic-link/send",
+            "POST /magic-link/exchange",
+            "POST /email-otp/send",
+            "POST /phone/verify",
+            "POST /one-time-token/generate",
+            "POST /username/sign-in",
+            "PATCH /username",
+            "POST /anonymous/sign-in",
+            "POST /anonymous/convert",
+            "GET /multi-session/list",
+            "POST /multi-session/switch",
+            "DELETE /multi-session/s2",
+            "GET /multi-session/last-method",
+        ]);
+        expect(await requests[2]?.json()).toEqual({ email: "ada@example.com", purpose: "reset-password" });
+        expect(requests[8]?.headers.get("Authorization")).toBe("Bearer guest");
+        expect(requests[10]?.headers.get("X-Polaris-Device")).toBe("d1");
     });
 
     it("binds the namespaces to the token of each client", async () => {

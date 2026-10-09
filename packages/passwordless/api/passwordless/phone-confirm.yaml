@@ -1,0 +1,37 @@
+# POST /phone/confirm: attaches the number with its confirmation code.
+endpoint:
+  method: POST
+  path: /phone/confirm
+  summary: Confirm a phone number
+  tags: [passwordless]
+  auth: bearer
+  step_up: true
+  rate_limit: token_consume
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    phone: { type: string, rules: [required, "max:32"] }
+    code: { type: string, rules: [required], sensitive: true }
+
+domain:
+  class: Polaris\Passwordless\Http\PhoneConfirmEndpoint
+  description: >
+    Spends the code POST /phone/add sent to the caller and makes the number the caller's verified
+    phone (replacing the one they had). Each number belongs to one account.
+
+output:
+  status: 200
+  example:
+    data: { phone: "+15551234567", verified: true }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 401, code: step_up_required }   # a user with MFA and a stale auth_time; clear via /auth/mfa/step-up
+  - { status: 409, code: passwordless_phone_taken }
+  - { status: 422, code: passwordless_code_invalid }
+  - { status: 422, code: passwordless_invalid_input }
+
+events: []

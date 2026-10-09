@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4d36fc9b7100ce13c6279cf4df4f51d",
+    "content-hash": "2a9b50013b9327635894f429eeda8315",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3078,7 +3078,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/admin",
-                "reference": "f88b7753d02c61c2a48f9f37e12ab5e2aef634b3"
+                "reference": "cefbac4721f3456bdb6cfcc6351b51327988b8db"
             },
             "require": {
                 "php": ">=8.3",
@@ -3119,12 +3119,55 @@
             }
         },
         {
+            "name": "polaris/anonymous",
+            "version": "0.6.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/anonymous",
+                "reference": "88a98fb10e01ba309ab187c659a19659e7b31b41"
+            },
+            "require": {
+                "php": ">=8.3",
+                "polaris/cli": "^0.6",
+                "polaris/core": "^0.6",
+                "psr/clock": "^1.0",
+                "psr/event-dispatcher": "^1.0",
+                "symfony/console": "^7.0 || ^8.0",
+                "symfony/uid": "^7.0 || ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\Anonymous\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
+            "description": "Anonymous sign-in for Polaris for PHP: guest sessions, an explicit conversion into a real account through a host hook, pruning of the guests nobody converted",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "polaris/audit",
             "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/audit",
-                "reference": "bb062f0b32df3943cadbde77ba85fec17beeb0e6"
+                "reference": "a50a5e80e83d7fd59fa6e3e25cff6c6f42a4ae2a"
             },
             "require": {
                 "php": ">=8.3",
@@ -3171,7 +3214,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/cli",
-                "reference": "975b1c5bf397c6a21e248e952636d2790a209666"
+                "reference": "1fa13fe5d7aa4a4076480c4e549b6e3be3a07221"
             },
             "require": {
                 "php": ">=8.3",
@@ -3215,7 +3258,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/core",
-                "reference": "e1142e3aa90227b952c75a5d7f2fff3d58d8ae13"
+                "reference": "b9b3722eff9032e46f3d8956b5c8a9be4c25e7d5"
             },
             "require": {
                 "endroid/qr-code": "^6.0",
@@ -3286,7 +3329,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/laravel",
-                "reference": "c0c316e105e0aec3bbaf4fb0c0b7f63646deb285"
+                "reference": "f14f8b9d904816cb40dd9d9677fa315e3c5b0e61"
             },
             "require": {
                 "laravel/framework": "^13.0",
@@ -3335,7 +3378,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/messaging",
-                "reference": "759decfa6ceec14496d4d9e37b398c3a8dfb4c63"
+                "reference": "1d15819a7d255579d62d01c0c363ac17bc9a3ea5"
             },
             "require": {
                 "php": ">=8.3",
@@ -3381,12 +3424,98 @@
             }
         },
         {
+            "name": "polaris/multi-session",
+            "version": "0.6.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/multi-session",
+                "reference": "8e6c745803a89d211fff68454ee053b597f8eb8e"
+            },
+            "require": {
+                "php": ">=8.3",
+                "polaris/core": "^0.6",
+                "psr/clock": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0",
+                "symfony/uid": "^7.0 || ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\MultiSession\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
+            "description": "Multi-session for Polaris for PHP: several signed-in accounts on one device, switching between them without signing in again, revoking one, and the last sign-in method for the client to pre-select",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "polaris/passwordless",
+            "version": "0.6.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/passwordless",
+                "reference": "dda3017db2a6036d333ccb3db363cce7b27083a0"
+            },
+            "require": {
+                "php": ">=8.3",
+                "polaris/core": "^0.6",
+                "polaris/messaging": "^0.6",
+                "psr/clock": "^1.0",
+                "psr/event-dispatcher": "^1.0",
+                "psr/simple-cache": "^3.0",
+                "symfony/uid": "^7.0 || ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\Passwordless\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
+            "description": "Passwordless sign-in for Polaris for PHP: magic links, email one-time codes (sign-in, email verification, password reset), phone codes for a verified second contact, one-time tokens for session transfer",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "polaris/pdo",
             "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/pdo",
-                "reference": "56d6dfe6bf91d5a68a429c656c91980fe93ee81e"
+                "reference": "bfa6c219aaf47e8a0f2fa04b7ac0df6e5c91fd13"
             },
             "require": {
                 "ext-pdo": "*",
@@ -3425,7 +3554,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/psr15",
-                "reference": "dec16fabcf14ec2a744a47fb2b34e1dce20c00a2"
+                "reference": "f042de44ff387ca529cf4acc95f13722cef2f116"
             },
             "require": {
                 "php": ">=8.3",
@@ -3468,7 +3597,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/scim",
-                "reference": "bba2b6f836fb38cbfb3cfef9594cd1ebe4d85eb0"
+                "reference": "c8a07aaae0e43e35893ec6fb3f260f32c86c2dca"
             },
             "require": {
                 "php": ">=8.3",
@@ -3514,7 +3643,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/sentinel",
-                "reference": "98479725a7d343f8ec48a53fa3f600983674951e"
+                "reference": "8e2553862a55759d9503c5e269eb6634736da5c7"
             },
             "require": {
                 "php": ">=8.3",
@@ -3570,7 +3699,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/sso",
-                "reference": "2375e545fcfe37640a93581040915324ba70bdb2"
+                "reference": "1c4587540a376deb4e7bbffdbfc64de545981000"
             },
             "require": {
                 "ext-dom": "*",
@@ -3621,7 +3750,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/symfony",
-                "reference": "88411a45e9b7d455817028712cfa654830eebb49"
+                "reference": "b61e387fed914209e9412e6b8ccf96999b5bacf0"
             },
             "require": {
                 "nyholm/psr7": "^1.8",
@@ -3669,7 +3798,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/testing",
-                "reference": "f657e71616ad59737ea79abb2e60d0afccaaeef1"
+                "reference": "27745a586c05cbcfeb0ea373d65a298fa1717821"
             },
             "require": {
                 "php": ">=8.3",
@@ -3702,12 +3831,52 @@
             }
         },
         {
+            "name": "polaris/username",
+            "version": "0.6.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/username",
+                "reference": "50d3a044c1c2b41fa4e36dc4236a4f5ad921a9f9"
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=8.3",
+                "polaris/core": "^0.6",
+                "psr/clock": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\Username\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
+            "description": "Username for Polaris for PHP: sign in with a username or an email through core's password path, case-insensitive unique usernames with a display form, validation rules from configuration",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "polaris/yii",
             "version": "0.6.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/yii",
-                "reference": "3d3e3df892dc4fd41bd918be9a7e37660ceff7fd"
+                "reference": "9215738a84ab59b05039254948233161daf69ca1"
             },
             "require": {
                 "php": ">=8.3",
@@ -12610,11 +12779,14 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "polaris/admin": 20,
+        "polaris/anonymous": 20,
         "polaris/audit": 20,
         "polaris/cli": 20,
         "polaris/core": 20,
         "polaris/laravel": 20,
         "polaris/messaging": 20,
+        "polaris/multi-session": 20,
+        "polaris/passwordless": 20,
         "polaris/pdo": 20,
         "polaris/psr15": 20,
         "polaris/scim": 20,
@@ -12622,6 +12794,7 @@
         "polaris/sso": 20,
         "polaris/symfony": 20,
         "polaris/testing": 20,
+        "polaris/username": 20,
         "polaris/yii": 20
     },
     "prefer-stable": true,

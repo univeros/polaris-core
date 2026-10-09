@@ -2,7 +2,8 @@
 
 The TypeScript client for [Polaris for PHP](https://github.com/univeros/polaris-core), generated from
 the route manifest: `openapi-fetch` typed by the 52 core endpoints and the routes of the `polaris/audit`,
-`polaris/admin`, `polaris/sentinel`, `polaris/sso` and `polaris/scim` plugins, so a request body, its
+`polaris/admin`, `polaris/sentinel`, `polaris/sso`, `polaris/scim`, `polaris/passwordless`,
+`polaris/username`, `polaris/anonymous` and `polaris/multi-session` plugins, so a request body, its
 `data` and its `error` are checked at compile time against the same contract the PHP hosts serve.
 
 ```sh
@@ -44,17 +45,34 @@ const trail = await polaris.withToken(accessToken).audit.me();
 `client.audit` (`me`, `organization`, `types`), `client.admin` (users, sessions, MFA, organizations,
 audit, drains, stats, keys, grants; see the package README), `client.sentinel` (`listDecisions`,
 `listIpRules`, `createIpRule`, `deleteIpRule`, `unblock`), `client.sso` (`signIn`, `exchange`, `logout`,
-the organization's providers and domains, the operators' list) and `client.scim` (the organization's
-connections, the operators' list, and the SCIM server's own routes for a directory client) are generated
-into `src/audit.ts`, `src/admin.ts`, `src/sentinel.ts`, `src/sso.ts` and `src/scim.ts` by
-`scripts/generate-namespaces.mjs` from the `x-polaris-plugin` marker of the OpenAPI document; a later
-plugin gets its namespace the same way. Their errors are RFC 9457 problem documents,
+the organization's providers and domains, the operators' list), `client.scim` (the organization's
+connections, the operators' list, and the SCIM server's own routes for a directory client),
+`client.passwordless` (`magicLinkSend`, `magicLinkVerify`, `magicLinkExchange`, `emailOtpSend`,
+`emailOtpVerify`, `emailOtpVerifyEmail`, `emailOtpResetPassword`, `phoneSend`, `phoneVerify`, `phoneAdd`,
+`phoneConfirm`, `oneTimeTokenGenerate`, `oneTimeTokenVerify`), `client.username` (`signIn`, `update`),
+`client.anonymous` (`signIn`, `convert`) and `client.multiSession` (`list`, `switch`, `revoke`,
+`lastMethod`) are generated into `src/<plugin id>.ts` by `scripts/generate-namespaces.mjs` from the
+`x-polaris-plugin` marker of the OpenAPI document; a later plugin gets its namespace the same way, its id
+camel-cased (`multi-session` is `client.multiSession`). Their errors are RFC 9457 problem documents,
 `ProblemBody` (`{ type, title, status, detail, error, message, errors? }`), served as
 `application/problem+json`.
 
 Response types come from each endpoint's `output.example` in the manifest (JSON Schema by example,
 `docs/adapters/spec.md` §7): a documented approximation, exact for the shapes the specs show. Error
 bodies are `ErrorBody` (`{ error, message }`) and `ValidationErrorBody` (`{ errors }`).
+
+## Several accounts on one device
+
+With `polaris/multi-session`, every response that carries a token pair also carries the device id in
+`X-Polaris-Device` (and, for a browser, the HttpOnly cookie `polaris_ms_device`). A client that is not a
+browser sends it back on the multi-session routes:
+
+```ts
+const device = signIn.response.headers.get("X-Polaris-Device")!;
+const accounts = await polaris.withToken(access).multiSession.list({ headers: { "X-Polaris-Device": device } });
+const other = await polaris.withToken(access).multiSession.switch({ body: { session_id: accounts.data!.data[1]!.session_id }, headers: { "X-Polaris-Device": device } });
+const button = (await polaris.multiSession.lastMethod({ headers: { "X-Polaris-Device": device } })).data?.data.last_method;
+```
 
 ## The sentinel challenge
 

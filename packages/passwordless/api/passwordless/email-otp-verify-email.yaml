@@ -1,0 +1,33 @@
+# POST /email-otp/verify-email: verify the email with a code.
+endpoint:
+  method: POST
+  path: /email-otp/verify-email
+  summary: Verify the email with a code
+  tags: [passwordless]
+  auth: public
+  rate_limit: token_consume
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    email: { type: string, rules: [required, email, "max:320"] }
+    code: { type: string, rules: [required], sensitive: true }
+
+domain:
+  class: Polaris\Passwordless\Http\EmailOtpVerifyEmailEndpoint
+  description: >
+    The code alternative to core's POST /auth/email/verify (which stays as it is): spends a
+    verify-email code and marks the address verified.
+
+output:
+  status: 200
+  example:
+    data: { status: verified }
+
+errors:
+  - { status: 422, code: passwordless_code_invalid }
+  - { status: 422, code: passwordless_invalid_input }
+
+events: [user.email_verified]

@@ -27,6 +27,14 @@
     <file>packages/sso/tests</file>
     <file>packages/scim/src</file>
     <file>packages/scim/tests</file>
+    <file>packages/passwordless/src</file>
+    <file>packages/passwordless/tests</file>
+    <file>packages/username/src</file>
+    <file>packages/username/tests</file>
+    <file>packages/anonymous/src</file>
+    <file>packages/anonymous/tests</file>
+    <file>packages/multi-session/src</file>
+    <file>packages/multi-session/tests</file>
     <file>examples/slim/src</file>
     <file>examples/slim/public</file>
     <file>examples/laravel/src</file>

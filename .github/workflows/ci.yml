@@ -203,6 +203,6 @@ jobs:
         run: |
           npm ci
           npm run generate
-          git diff --exit-code -- openapi.json src/schema.d.ts src/audit.ts src/admin.ts
+          git diff --exit-code -- openapi.json src
           npm run typecheck
           npm test

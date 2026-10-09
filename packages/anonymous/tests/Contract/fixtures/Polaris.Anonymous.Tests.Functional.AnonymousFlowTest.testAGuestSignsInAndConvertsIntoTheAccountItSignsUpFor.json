@@ -1,0 +1,432 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/anonymous/sign-in",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791565200"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWI0ZDcxYWM5ZGI0NmU2MzA0Nzg3NDFjOWFlMzU1OTRkZmU5MDUxZTM5Y2RlZWQwMDJkOWQxNWNiNzMyOGQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTY1MDc5Ljk2ODc3NiwibmJmIjoxNzkxNTY1MDc5Ljk2ODc3NiwiZXhwIjoxNzkxNTY1OTc5Ljk2ODc3Niwic3ViIjoiMDFhMTIxOTktYTVhMC03OWIwLWFhYWMtMWJmMmIzNzdmOGM3IiwianRpIjoiMDFhMTIxOTktYTVhMC03YzAwLWFhYWMtMWJmMmI1MDgxZjU5Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibWZhIjpmYWxzZSwiYW1yIjpbImFub255bW91cyJdLCJzaWQiOiIwMWExMjE5OS1hNWEwLTdiMzAtYWFhYy0xYmYyYjQyYWRhMjkiLCJhdXRoX3RpbWUiOjE3OTE1NjUwNzl9.jvh3sXolokz74XhD8F-XLl0NG2DBAWh3DuqeAZ38OyYVQ484onqIsY7afR5dS8QMb0AHH6WgoELB3bxNevNxhoja0Hy21IDbyril9zHxRhA-kg760MCK2HWPycfvYxfSCCyu1FtdhGVHMexzcId7nHRUd3FdPo1Aw2ACyoZ1edpadecheNX2gmkTMgrwUtMFhv8G438D9K7BCfqFlxSTmz3ezAqjqQy-RpvP1CEBeBDnGes2ubmFQcscdLyakClCXYc9eWWr2o7iSXPnafH3LRJ_z3eVZyyVbi7TCShfA2JRqVrMFd-3EvwfaXa3YKTTBQxORGzHTKxyR2FKPkxNlw",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "Jkx-IRtCDUIedRz5ANMAXEUIwRkPMDrfRtfKvAjCBgw",
+                    "user": {
+                        "id": "01a12199-a5a0-79b0-aaac-1bf2b377f8c7",
+                        "email": "01a12199-a5a0-79b0-aaac-1bf2b377f8c7@anonymous.invalid",
+                        "email_verified": false
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/anonymous/convert",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "access_token": "x"
+            }
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer"
+                ]
+            },
+            "body": {
+                "error": "unauthorized",
+                "message": "Authentication is required."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/anonymous/convert",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWI0ZDcxYWM5ZGI0NmU2MzA0Nzg3NDFjOWFlMzU1OTRkZmU5MDUxZTM5Y2RlZWQwMDJkOWQxNWNiNzMyOGQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTY1MDc5Ljk2ODc3NiwibmJmIjoxNzkxNTY1MDc5Ljk2ODc3NiwiZXhwIjoxNzkxNTY1OTc5Ljk2ODc3Niwic3ViIjoiMDFhMTIxOTktYTVhMC03OWIwLWFhYWMtMWJmMmIzNzdmOGM3IiwianRpIjoiMDFhMTIxOTktYTVhMC03YzAwLWFhYWMtMWJmMmI1MDgxZjU5Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibWZhIjpmYWxzZSwiYW1yIjpbImFub255bW91cyJdLCJzaWQiOiIwMWExMjE5OS1hNWEwLTdiMzAtYWFhYy0xYmYyYjQyYWRhMjkiLCJhdXRoX3RpbWUiOjE3OTE1NjUwNzl9.jvh3sXolokz74XhD8F-XLl0NG2DBAWh3DuqeAZ38OyYVQ484onqIsY7afR5dS8QMb0AHH6WgoELB3bxNevNxhoja0Hy21IDbyril9zHxRhA-kg760MCK2HWPycfvYxfSCCyu1FtdhGVHMexzcId7nHRUd3FdPo1Aw2ACyoZ1edpadecheNX2gmkTMgrwUtMFhv8G438D9K7BCfqFlxSTmz3ezAqjqQy-RpvP1CEBeBDnGes2ubmFQcscdLyakClCXYc9eWWr2o7iSXPnafH3LRJ_z3eVZyyVbi7TCShfA2JRqVrMFd-3EvwfaXa3YKTTBQxORGzHTKxyR2FKPkxNlw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791565080"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/anonymous/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "access_token is required.",
+                "error": "anonymous_invalid_input",
+                "message": "access_token is required.",
+                "errors": [
+                    "access_token is required."
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/anonymous/convert",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWI0ZDcxYWM5ZGI0NmU2MzA0Nzg3NDFjOWFlMzU1OTRkZmU5MDUxZTM5Y2RlZWQwMDJkOWQxNWNiNzMyOGQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTY1MDc5Ljk2ODc3NiwibmJmIjoxNzkxNTY1MDc5Ljk2ODc3NiwiZXhwIjoxNzkxNTY1OTc5Ljk2ODc3Niwic3ViIjoiMDFhMTIxOTktYTVhMC03OWIwLWFhYWMtMWJmMmIzNzdmOGM3IiwianRpIjoiMDFhMTIxOTktYTVhMC03YzAwLWFhYWMtMWJmMmI1MDgxZjU5Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibWZhIjpmYWxzZSwiYW1yIjpbImFub255bW91cyJdLCJzaWQiOiIwMWExMjE5OS1hNWEwLTdiMzAtYWFhYy0xYmYyYjQyYWRhMjkiLCJhdXRoX3RpbWUiOjE3OTE1NjUwNzl9.jvh3sXolokz74XhD8F-XLl0NG2DBAWh3DuqeAZ38OyYVQ484onqIsY7afR5dS8QMb0AHH6WgoELB3bxNevNxhoja0Hy21IDbyril9zHxRhA-kg760MCK2HWPycfvYxfSCCyu1FtdhGVHMexzcId7nHRUd3FdPo1Aw2ACyoZ1edpadecheNX2gmkTMgrwUtMFhv8G438D9K7BCfqFlxSTmz3ezAqjqQy-RpvP1CEBeBDnGes2ubmFQcscdLyakClCXYc9eWWr2o7iSXPnafH3LRJ_z3eVZyyVbi7TCShfA2JRqVrMFd-3EvwfaXa3YKTTBQxORGzHTKxyR2FKPkxNlw"
+                ]
+            },
+            "body": {
+                "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWI0ZDcxYWM5ZGI0NmU2MzA0Nzg3NDFjOWFlMzU1OTRkZmU5MDUxZTM5Y2RlZWQwMDJkOWQxNWNiNzMyOGQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTY1MDc5Ljk2ODc3NiwibmJmIjoxNzkxNTY1MDc5Ljk2ODc3NiwiZXhwIjoxNzkxNTY1OTc5Ljk2ODc3Niwic3ViIjoiMDFhMTIxOTktYTVhMC03OWIwLWFhYWMtMWJmMmIzNzdmOGM3IiwianRpIjoiMDFhMTIxOTktYTVhMC03YzAwLWFhYWMtMWJmMmI1MDgxZjU5Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibWZhIjpmYWxzZSwiYW1yIjpbImFub255bW91cyJdLCJzaWQiOiIwMWExMjE5OS1hNWEwLTdiMzAtYWFhYy0xYmYyYjQyYWRhMjkiLCJhdXRoX3RpbWUiOjE3OTE1NjUwNzl9.jvh3sXolokz74XhD8F-XLl0NG2DBAWh3DuqeAZ38OyYVQ484onqIsY7afR5dS8QMb0AHH6WgoELB3bxNevNxhoja0Hy21IDbyril9zHxRhA-kg760MCK2HWPycfvYxfSCCyu1FtdhGVHMexzcId7nHRUd3FdPo1Aw2ACyoZ1edpadecheNX2gmkTMgrwUtMFhv8G438D9K7BCfqFlxSTmz3ezAqjqQy-RpvP1CEBeBDnGes2ubmFQcscdLyakClCXYc9eWWr2o7iSXPnafH3LRJ_z3eVZyyVbi7TCShfA2JRqVrMFd-3EvwfaXa3YKTTBQxORGzHTKxyR2FKPkxNlw"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791565080"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/anonymous/token_invalid",
+                "title": "Invalid token",
+                "status": 422,
+                "detail": "The access token is not a live session of another account.",
+                "error": "anonymous_token_invalid",
+                "message": "The access token is not a live session of another account."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791565200"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "0l4ggVpBhJJbdI6n8JPQMbZrEDnBFIFc28y63oWK2kc"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791565200"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791565200"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWI0ZDcxYWM5ZGI0NmU2MzA0Nzg3NDFjOWFlMzU1OTRkZmU5MDUxZTM5Y2RlZWQwMDJkOWQxNWNiNzMyOGQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTY1MDgwLjMwMTQyNCwibmJmIjoxNzkxNTY1MDgwLjMwMTQyNCwiZXhwIjoxNzkxNTY1OTgwLjMwMTQyNCwic3ViIjoiMDFhMTIxOTktYTVhMy03MzBmLWIwYjMtNTE1ZmMxNGE0Y2E5IiwianRpIjoiMDFhMTIxOTktYTZlZC03NjYyLTk5MzEtNDgxNmRiMjVmOTMyIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMTk5LWE2ZWQtNzQ4Mi05OTMxLTQ4MTZkYTM4NTRjZSIsImF1dGhfdGltZSI6MTc5MTU2NTA4MH0.R0bH2tqbMjFhWLNFBWa9BpM4CYyZ73fvmwcEWLVEmkWn9pC3Bu1r7citUiqksasYReZN0YlN4sJu2WXAc0CRQKS7hLQ8PU2klC2CbB29X_Zok3cSGDp4Qk7Inx0YVaMmEEsqvgXxoFiyHPBk_gR8CLWAwOz8pr1I9lB5NMQMKOD3ky4l8JERdyAwwG0bJFT_nEINx-1IaGEGWEnGSD7d0X0a384U8cW9EKvPxSXkXkOyAJW597lP4lmLfFjpmsBSP9a_hDoi8xB5P3MIPkjtuTXuM-VDcxRu9Hr19kaB9hIagJEaM7UJYwlE_HUsLaEJhsi9_M8JkFGKO7TT2EgyYA",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "pj458AGIP7KCxa7v-E_oIdCOOraC24j-BrxoQ20f2KA",
+                    "user": {
+                        "id": "01a12199-a5a3-730f-b0b3-515fc14a4ca9",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/anonymous/convert",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWI0ZDcxYWM5ZGI0NmU2MzA0Nzg3NDFjOWFlMzU1OTRkZmU5MDUxZTM5Y2RlZWQwMDJkOWQxNWNiNzMyOGQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTY1MDgwLjMwMTQyNCwibmJmIjoxNzkxNTY1MDgwLjMwMTQyNCwiZXhwIjoxNzkxNTY1OTgwLjMwMTQyNCwic3ViIjoiMDFhMTIxOTktYTVhMy03MzBmLWIwYjMtNTE1ZmMxNGE0Y2E5IiwianRpIjoiMDFhMTIxOTktYTZlZC03NjYyLTk5MzEtNDgxNmRiMjVmOTMyIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMTk5LWE2ZWQtNzQ4Mi05OTMxLTQ4MTZkYTM4NTRjZSIsImF1dGhfdGltZSI6MTc5MTU2NTA4MH0.R0bH2tqbMjFhWLNFBWa9BpM4CYyZ73fvmwcEWLVEmkWn9pC3Bu1r7citUiqksasYReZN0YlN4sJu2WXAc0CRQKS7hLQ8PU2klC2CbB29X_Zok3cSGDp4Qk7Inx0YVaMmEEsqvgXxoFiyHPBk_gR8CLWAwOz8pr1I9lB5NMQMKOD3ky4l8JERdyAwwG0bJFT_nEINx-1IaGEGWEnGSD7d0X0a384U8cW9EKvPxSXkXkOyAJW597lP4lmLfFjpmsBSP9a_hDoi8xB5P3MIPkjtuTXuM-VDcxRu9Hr19kaB9hIagJEaM7UJYwlE_HUsLaEJhsi9_M8JkFGKO7TT2EgyYA"
+                ]
+            },
+            "body": {
+                "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWI0ZDcxYWM5ZGI0NmU2MzA0Nzg3NDFjOWFlMzU1OTRkZmU5MDUxZTM5Y2RlZWQwMDJkOWQxNWNiNzMyOGQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTY1MDc5Ljk2ODc3NiwibmJmIjoxNzkxNTY1MDc5Ljk2ODc3NiwiZXhwIjoxNzkxNTY1OTc5Ljk2ODc3Niwic3ViIjoiMDFhMTIxOTktYTVhMC03OWIwLWFhYWMtMWJmMmIzNzdmOGM3IiwianRpIjoiMDFhMTIxOTktYTVhMC03YzAwLWFhYWMtMWJmMmI1MDgxZjU5Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibWZhIjpmYWxzZSwiYW1yIjpbImFub255bW91cyJdLCJzaWQiOiIwMWExMjE5OS1hNWEwLTdiMzAtYWFhYy0xYmYyYjQyYWRhMjkiLCJhdXRoX3RpbWUiOjE3OTE1NjUwNzl9.jvh3sXolokz74XhD8F-XLl0NG2DBAWh3DuqeAZ38OyYVQ484onqIsY7afR5dS8QMb0AHH6WgoELB3bxNevNxhoja0Hy21IDbyril9zHxRhA-kg760MCK2HWPycfvYxfSCCyu1FtdhGVHMexzcId7nHRUd3FdPo1Aw2ACyoZ1edpadecheNX2gmkTMgrwUtMFhv8G438D9K7BCfqFlxSTmz3ezAqjqQy-RpvP1CEBeBDnGes2ubmFQcscdLyakClCXYc9eWWr2o7iSXPnafH3LRJ_z3eVZyyVbi7TCShfA2JRqVrMFd-3EvwfaXa3YKTTBQxORGzHTKxyR2FKPkxNlw"
+            }
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791565140"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/anonymous/not_a_guest",
+                "title": "Not a guest",
+                "status": 403,
+                "detail": "Only a guest session can be converted.",
+                "error": "anonymous_not_a_guest",
+                "message": "Only a guest session can be converted."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/anonymous/convert",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWI0ZDcxYWM5ZGI0NmU2MzA0Nzg3NDFjOWFlMzU1OTRkZmU5MDUxZTM5Y2RlZWQwMDJkOWQxNWNiNzMyOGQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTY1MDc5Ljk2ODc3NiwibmJmIjoxNzkxNTY1MDc5Ljk2ODc3NiwiZXhwIjoxNzkxNTY1OTc5Ljk2ODc3Niwic3ViIjoiMDFhMTIxOTktYTVhMC03OWIwLWFhYWMtMWJmMmIzNzdmOGM3IiwianRpIjoiMDFhMTIxOTktYTVhMC03YzAwLWFhYWMtMWJmMmI1MDgxZjU5Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibWZhIjpmYWxzZSwiYW1yIjpbImFub255bW91cyJdLCJzaWQiOiIwMWExMjE5OS1hNWEwLTdiMzAtYWFhYy0xYmYyYjQyYWRhMjkiLCJhdXRoX3RpbWUiOjE3OTE1NjUwNzl9.jvh3sXolokz74XhD8F-XLl0NG2DBAWh3DuqeAZ38OyYVQ484onqIsY7afR5dS8QMb0AHH6WgoELB3bxNevNxhoja0Hy21IDbyril9zHxRhA-kg760MCK2HWPycfvYxfSCCyu1FtdhGVHMexzcId7nHRUd3FdPo1Aw2ACyoZ1edpadecheNX2gmkTMgrwUtMFhv8G438D9K7BCfqFlxSTmz3ezAqjqQy-RpvP1CEBeBDnGes2ubmFQcscdLyakClCXYc9eWWr2o7iSXPnafH3LRJ_z3eVZyyVbi7TCShfA2JRqVrMFd-3EvwfaXa3YKTTBQxORGzHTKxyR2FKPkxNlw"
+                ]
+            },
+            "body": {
+                "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWI0ZDcxYWM5ZGI0NmU2MzA0Nzg3NDFjOWFlMzU1OTRkZmU5MDUxZTM5Y2RlZWQwMDJkOWQxNWNiNzMyOGQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTY1MDgwLjMwMTQyNCwibmJmIjoxNzkxNTY1MDgwLjMwMTQyNCwiZXhwIjoxNzkxNTY1OTgwLjMwMTQyNCwic3ViIjoiMDFhMTIxOTktYTVhMy03MzBmLWIwYjMtNTE1ZmMxNGE0Y2E5IiwianRpIjoiMDFhMTIxOTktYTZlZC03NjYyLTk5MzEtNDgxNmRiMjVmOTMyIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMTk5LWE2ZWQtNzQ4Mi05OTMxLTQ4MTZkYTM4NTRjZSIsImF1dGhfdGltZSI6MTc5MTU2NTA4MH0.R0bH2tqbMjFhWLNFBWa9BpM4CYyZ73fvmwcEWLVEmkWn9pC3Bu1r7citUiqksasYReZN0YlN4sJu2WXAc0CRQKS7hLQ8PU2klC2CbB29X_Zok3cSGDp4Qk7Inx0YVaMmEEsqvgXxoFiyHPBk_gR8CLWAwOz8pr1I9lB5NMQMKOD3ky4l8JERdyAwwG0bJFT_nEINx-1IaGEGWEnGSD7d0X0a384U8cW9EKvPxSXkXkOyAJW597lP4lmLfFjpmsBSP9a_hDoi8xB5P3MIPkjtuTXuM-VDcxRu9Hr19kaB9hIagJEaM7UJYwlE_HUsLaEJhsi9_M8JkFGKO7TT2EgyYA"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791565140"
+                ]
+            },
+            "body": {
+                "data": {
+                    "guest_id": "01a12199-a5a0-79b0-aaac-1bf2b377f8c7",
+                    "user_id": "01a12199-a5a3-730f-b0b3-515fc14a4ca9",
+                    "status": "converted"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/token/refresh",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "refresh_token": "Jkx-IRtCDUIedRz5ANMAXEUIwRkPMDrfRtfKvAjCBgw"
+            }
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "59"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791565140"
+                ]
+            },
+            "body": {
+                "error": "invalid_grant",
+                "message": "The refresh token is invalid or expired."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/anonymous/convert",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWI0ZDcxYWM5ZGI0NmU2MzA0Nzg3NDFjOWFlMzU1OTRkZmU5MDUxZTM5Y2RlZWQwMDJkOWQxNWNiNzMyOGQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTY1MDc5Ljk2ODc3NiwibmJmIjoxNzkxNTY1MDc5Ljk2ODc3NiwiZXhwIjoxNzkxNTY1OTc5Ljk2ODc3Niwic3ViIjoiMDFhMTIxOTktYTVhMC03OWIwLWFhYWMtMWJmMmIzNzdmOGM3IiwianRpIjoiMDFhMTIxOTktYTVhMC03YzAwLWFhYWMtMWJmMmI1MDgxZjU5Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibWZhIjpmYWxzZSwiYW1yIjpbImFub255bW91cyJdLCJzaWQiOiIwMWExMjE5OS1hNWEwLTdiMzAtYWFhYy0xYmYyYjQyYWRhMjkiLCJhdXRoX3RpbWUiOjE3OTE1NjUwNzl9.jvh3sXolokz74XhD8F-XLl0NG2DBAWh3DuqeAZ38OyYVQ484onqIsY7afR5dS8QMb0AHH6WgoELB3bxNevNxhoja0Hy21IDbyril9zHxRhA-kg760MCK2HWPycfvYxfSCCyu1FtdhGVHMexzcId7nHRUd3FdPo1Aw2ACyoZ1edpadecheNX2gmkTMgrwUtMFhv8G438D9K7BCfqFlxSTmz3ezAqjqQy-RpvP1CEBeBDnGes2ubmFQcscdLyakClCXYc9eWWr2o7iSXPnafH3LRJ_z3eVZyyVbi7TCShfA2JRqVrMFd-3EvwfaXa3YKTTBQxORGzHTKxyR2FKPkxNlw"
+                ]
+            },
+            "body": {
+                "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWI0ZDcxYWM5ZGI0NmU2MzA0Nzg3NDFjOWFlMzU1OTRkZmU5MDUxZTM5Y2RlZWQwMDJkOWQxNWNiNzMyOGQifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTY1MDgwLjMwMTQyNCwibmJmIjoxNzkxNTY1MDgwLjMwMTQyNCwiZXhwIjoxNzkxNTY1OTgwLjMwMTQyNCwic3ViIjoiMDFhMTIxOTktYTVhMy03MzBmLWIwYjMtNTE1ZmMxNGE0Y2E5IiwianRpIjoiMDFhMTIxOTktYTZlZC03NjYyLTk5MzEtNDgxNmRiMjVmOTMyIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMTk5LWE2ZWQtNzQ4Mi05OTMxLTQ4MTZkYTM4NTRjZSIsImF1dGhfdGltZSI6MTc5MTU2NTA4MH0.R0bH2tqbMjFhWLNFBWa9BpM4CYyZ73fvmwcEWLVEmkWn9pC3Bu1r7citUiqksasYReZN0YlN4sJu2WXAc0CRQKS7hLQ8PU2klC2CbB29X_Zok3cSGDp4Qk7Inx0YVaMmEEsqvgXxoFiyHPBk_gR8CLWAwOz8pr1I9lB5NMQMKOD3ky4l8JERdyAwwG0bJFT_nEINx-1IaGEGWEnGSD7d0X0a384U8cW9EKvPxSXkXkOyAJW597lP4lmLfFjpmsBSP9a_hDoi8xB5P3MIPkjtuTXuM-VDcxRu9Hr19kaB9hIagJEaM7UJYwlE_HUsLaEJhsi9_M8JkFGKO7TT2EgyYA"
+            }
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791565140"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/anonymous/not_a_guest",
+                "title": "Not a guest",
+                "status": 403,
+                "detail": "Only a guest session can be converted.",
+                "error": "anonymous_not_a_guest",
+                "message": "Only a guest session can be converted."
+            }
+        }
+    }
+]

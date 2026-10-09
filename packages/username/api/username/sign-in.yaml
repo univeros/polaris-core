@@ -1,0 +1,42 @@
+# POST /username/sign-in: password sign-in with a username or an email.
+endpoint:
+  method: POST
+  path: /username/sign-in
+  summary: Sign in with a username and a password
+  tags: [username]
+  auth: public
+  rate_limit: login
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    username: { type: string, rules: [required, "max:320"] }
+    password: { type: string, rules: [required], sensitive: true }
+
+domain:
+  class: Polaris\Username\Http\SignInEndpoint
+  description: >
+    username is a username (compared without regard to case) or an email. The password goes through
+    core's login: timing parity for unknown accounts, lockout, the email-verification rule and the MFA
+    gate. The answer is core's login envelope, or its mfa_required ticket to complete at
+    /auth/mfa/verify. Unknown username, wrong password and live lockout are one 401.
+
+output:
+  status: 200
+  example:
+    data:
+      access_token: "<jwt>"
+      token_type: Bearer
+      expires_in: 900
+      refresh_token: "<opaque>"
+      user: { id: "018f...", email: "ada@example.com", email_verified: true }
+
+errors:
+  - { status: 401, code: username_invalid_credentials }
+  - { status: 403, code: username_email_unverified }
+  - { status: 403, code: username_account_disabled }
+  - { status: 422, code: username_invalid_input }
+
+events: [user.logged_in, user.login_failed, user.locked]

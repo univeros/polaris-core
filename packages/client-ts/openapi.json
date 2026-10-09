@@ -14922,6 +14922,2094 @@
                     }
                 }
             }
+        },
+        "/email-otp/reset-password": {
+            "post": {
+                "operationId": "post_passwordless_EmailOtpResetPasswordEndpoint",
+                "summary": "Reset the password with an email code",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "passwordless",
+                "x-polaris-rate-limit": "token_consume",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 320
+                                    },
+                                    "code": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "code",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "password_reset"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passwordless_code_invalid | passwordless_invalid_input | passwordless_password_invalid",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/email-otp/send": {
+            "post": {
+                "operationId": "post_passwordless_EmailOtpSendEndpoint",
+                "summary": "Send an email code",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "passwordless",
+                "x-polaris-rate-limit": "mfa_send",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 320
+                                    },
+                                    "purpose": {
+                                        "type": "string",
+                                        "enum": [
+                                            "sign-in",
+                                            "verify-email",
+                                            "reset-password"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "email"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "sent"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passwordless_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/email-otp/verify-email": {
+            "post": {
+                "operationId": "post_passwordless_EmailOtpVerifyEmailEndpoint",
+                "summary": "Verify the email with a code",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "passwordless",
+                "x-polaris-rate-limit": "token_consume",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 320
+                                    },
+                                    "code": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "code"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "verified"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passwordless_code_invalid | passwordless_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/email-otp/verify": {
+            "post": {
+                "operationId": "post_passwordless_EmailOtpVerifyEndpoint",
+                "summary": "Sign in with an email code",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "passwordless",
+                "x-polaris-rate-limit": "token_consume",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 320
+                                    },
+                                    "code": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "code"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "refresh_token": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "email_verified": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "email",
+                                                        "email_verified"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "token_type",
+                                                "expires_in",
+                                                "refresh_token",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "<jwt>",
+                                        "token_type": "Bearer",
+                                        "expires_in": 900,
+                                        "refresh_token": "<opaque>",
+                                        "user": {
+                                            "id": "018f...",
+                                            "email": "ada@example.com",
+                                            "email_verified": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "passwordless_account_disabled",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passwordless_code_invalid | passwordless_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/magic-link/exchange": {
+            "post": {
+                "operationId": "post_passwordless_MagicLinkExchangeEndpoint",
+                "summary": "Exchange the magic link's code for the session",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "passwordless",
+                "x-polaris-rate-limit": "token_consume",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    }
+                                },
+                                "required": [
+                                    "code"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "refresh_token": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "email_verified": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "email",
+                                                        "email_verified"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "token_type",
+                                                "expires_in",
+                                                "refresh_token",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "<jwt>",
+                                        "token_type": "Bearer",
+                                        "expires_in": 900,
+                                        "refresh_token": "<opaque>",
+                                        "user": {
+                                            "id": "018f...",
+                                            "email": "ada@example.com",
+                                            "email_verified": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passwordless_invalid_input | passwordless_token_invalid",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/magic-link/send": {
+            "post": {
+                "operationId": "post_passwordless_MagicLinkSendEndpoint",
+                "summary": "Send a magic link",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "passwordless",
+                "x-polaris-rate-limit": "mfa_send",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 320
+                                    },
+                                    "redirect_uri": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "email"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "sent"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passwordless_invalid_input | passwordless_redirect_not_allowed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/magic-link/verify": {
+            "get": {
+                "operationId": "get_passwordless_MagicLinkVerifyEndpoint",
+                "summary": "Open a magic link",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "passwordless",
+                "x-polaris-rate-limit": "token_consume",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "password",
+                            "x-polaris-sensitive": true
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": []
+                                },
+                                "example": []
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "passwordless_account_disabled",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passwordless_invalid_input | passwordless_token_invalid",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/one-time-token/generate": {
+            "post": {
+                "operationId": "post_passwordless_OneTimeTokenGenerateEndpoint",
+                "summary": "Generate a one-time token",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "passwordless",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "token",
+                                                "expires_in"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "token": "<opaque>",
+                                        "expires_in": 180
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "passwordless_session_required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/one-time-token/verify": {
+            "post": {
+                "operationId": "post_passwordless_OneTimeTokenVerifyEndpoint",
+                "summary": "Sign in with a one-time token",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "passwordless",
+                "x-polaris-rate-limit": "token_consume",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    }
+                                },
+                                "required": [
+                                    "token"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "refresh_token": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "email_verified": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "email",
+                                                        "email_verified"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "token_type",
+                                                "expires_in",
+                                                "refresh_token",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "<jwt>",
+                                        "token_type": "Bearer",
+                                        "expires_in": 900,
+                                        "refresh_token": "<opaque>",
+                                        "user": {
+                                            "id": "018f...",
+                                            "email": "ada@example.com",
+                                            "email_verified": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passwordless_invalid_input | passwordless_token_invalid",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/phone/add": {
+            "post": {
+                "operationId": "post_passwordless_PhoneAddEndpoint",
+                "summary": "Add a phone number",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "passwordless",
+                "x-polaris-rate-limit": "mfa_send",
+                "x-polaris-step-up": true,
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "maxLength": 32
+                                    }
+                                },
+                                "required": [
+                                    "phone"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "sent"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized | step_up_required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passwordless_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/phone/confirm": {
+            "post": {
+                "operationId": "post_passwordless_PhoneConfirmEndpoint",
+                "summary": "Confirm a phone number",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "passwordless",
+                "x-polaris-rate-limit": "token_consume",
+                "x-polaris-step-up": true,
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "maxLength": 32
+                                    },
+                                    "code": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    }
+                                },
+                                "required": [
+                                    "phone",
+                                    "code"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "phone": {
+                                                    "type": "string"
+                                                },
+                                                "verified": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "required": [
+                                                "phone",
+                                                "verified"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "phone": "+15551234567",
+                                        "verified": true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized | step_up_required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "passwordless_phone_taken",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passwordless_code_invalid | passwordless_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/phone/send": {
+            "post": {
+                "operationId": "post_passwordless_PhoneSendEndpoint",
+                "summary": "Send a phone sign-in code",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "passwordless",
+                "x-polaris-rate-limit": "mfa_send",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "maxLength": 32
+                                    }
+                                },
+                                "required": [
+                                    "phone"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "sent"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passwordless_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/phone/verify": {
+            "post": {
+                "operationId": "post_passwordless_PhoneVerifyEndpoint",
+                "summary": "Sign in with a phone code",
+                "tags": [
+                    "passwordless"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "passwordless",
+                "x-polaris-rate-limit": "token_consume",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "maxLength": 32
+                                    },
+                                    "code": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    }
+                                },
+                                "required": [
+                                    "phone",
+                                    "code"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "refresh_token": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "email_verified": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "email",
+                                                        "email_verified"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "token_type",
+                                                "expires_in",
+                                                "refresh_token",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "<jwt>",
+                                        "token_type": "Bearer",
+                                        "expires_in": 900,
+                                        "refresh_token": "<opaque>",
+                                        "user": {
+                                            "id": "018f...",
+                                            "email": "ada@example.com",
+                                            "email_verified": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "passwordless_account_disabled",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passwordless_code_invalid | passwordless_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/username/sign-in": {
+            "post": {
+                "operationId": "post_username_SignInEndpoint",
+                "summary": "Sign in with a username and a password",
+                "tags": [
+                    "username"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "username",
+                "x-polaris-rate-limit": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "maxLength": 320
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    }
+                                },
+                                "required": [
+                                    "username",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "refresh_token": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "email_verified": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "email",
+                                                        "email_verified"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "token_type",
+                                                "expires_in",
+                                                "refresh_token",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "<jwt>",
+                                        "token_type": "Bearer",
+                                        "expires_in": 900,
+                                        "refresh_token": "<opaque>",
+                                        "user": {
+                                            "id": "018f...",
+                                            "email": "ada@example.com",
+                                            "email_verified": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "username_invalid_credentials",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "username_email_unverified | username_account_disabled",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "username_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/username": {
+            "patch": {
+                "operationId": "patch_username_UpdateEndpoint",
+                "summary": "Set or change your username",
+                "tags": [
+                    "username"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "username",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "maxLength": 64
+                                    },
+                                    "display_username": {
+                                        "type": "string",
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "username"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "username": {
+                                                    "type": "string"
+                                                },
+                                                "display_username": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "username",
+                                                "display_username"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "username": "ada.lovelace",
+                                        "display_username": "Ada.Lovelace"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "username_taken",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "username_invalid",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/anonymous/convert": {
+            "post": {
+                "operationId": "post_anonymous_ConvertEndpoint",
+                "summary": "Convert the guest into an account",
+                "tags": [
+                    "anonymous"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "anonymous",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "access_token": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    }
+                                },
+                                "required": [
+                                    "access_token"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "guest_id": {
+                                                    "type": "string"
+                                                },
+                                                "user_id": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "guest_id",
+                                                "user_id",
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "guest_id": "018f...",
+                                        "user_id": "018f...",
+                                        "status": "converted"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "anonymous_not_a_guest",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "anonymous_invalid_input | anonymous_token_invalid",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/anonymous/sign-in": {
+            "post": {
+                "operationId": "post_anonymous_SignInEndpoint",
+                "summary": "Sign in as a guest",
+                "tags": [
+                    "anonymous"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "anonymous",
+                "x-polaris-rate-limit": "register",
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "refresh_token": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "email_verified": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "email",
+                                                        "email_verified"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "token_type",
+                                                "expires_in",
+                                                "refresh_token",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "<jwt>",
+                                        "token_type": "Bearer",
+                                        "expires_in": 900,
+                                        "refresh_token": "<opaque>",
+                                        "user": {
+                                            "id": "018f...",
+                                            "email": "018f...@anonymous.invalid",
+                                            "email_verified": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/multi-session/last-method": {
+            "get": {
+                "operationId": "get_multi-session_LastMethodEndpoint",
+                "summary": "Read the device's last sign-in method",
+                "tags": [
+                    "multi-session"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "multi-session",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "last_method": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "last_method"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "last_method": "magic_link"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/multi-session/list": {
+            "get": {
+                "operationId": "get_multi-session_ListEndpoint",
+                "summary": "List the accounts signed in on this device",
+                "tags": [
+                    "multi-session"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "multi-session",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "session_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "user": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "email": {
+                                                                "type": "string"
+                                                            },
+                                                            "display_name": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "id",
+                                                            "email",
+                                                            "display_name"
+                                                        ]
+                                                    },
+                                                    "last_method": {
+                                                        "type": "string"
+                                                    },
+                                                    "signed_in_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "last_seen": {
+                                                        "type": "string"
+                                                    },
+                                                    "current": {
+                                                        "type": "boolean"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "session_id",
+                                                    "user",
+                                                    "last_method",
+                                                    "signed_in_at",
+                                                    "last_seen",
+                                                    "current"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "session_id": "018f...",
+                                            "user": {
+                                                "id": "018f...",
+                                                "email": "ada@example.com",
+                                                "display_name": "Ada"
+                                            },
+                                            "last_method": "magic_link",
+                                            "signed_in_at": "2026-10-09T10:00:00+00:00",
+                                            "last_seen": "2026-10-09T10:05:00+00:00",
+                                            "current": true
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "multi_session_device_unknown",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/multi-session/{sessionId}": {
+            "delete": {
+                "operationId": "delete_multi-session_RevokeEndpoint",
+                "summary": "Sign one account out of this device",
+                "tags": [
+                    "multi-session"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "multi-session",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "sessionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "revoked"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "multi_session_device_unknown",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "multi_session_session_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/multi-session/switch": {
+            "post": {
+                "operationId": "post_multi-session_SwitchEndpoint",
+                "summary": "Switch to another account signed in on this device",
+                "tags": [
+                    "multi-session"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "multi-session",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "session_id": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "session_id"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "refresh_token": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "email_verified": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "email",
+                                                        "email_verified"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "token_type",
+                                                "expires_in",
+                                                "refresh_token",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "<jwt>",
+                                        "token_type": "Bearer",
+                                        "expires_in": 900,
+                                        "refresh_token": "<opaque>",
+                                        "user": {
+                                            "id": "018f...",
+                                            "email": "grace@example.com",
+                                            "email_verified": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "multi_session_device_unknown",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "multi_session_session_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "multi_session_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {

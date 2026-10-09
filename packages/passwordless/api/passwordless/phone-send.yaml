@@ -1,0 +1,32 @@
+# POST /phone/send: texts a sign-in code to a verified phone.
+endpoint:
+  method: POST
+  path: /phone/send
+  summary: Send a phone sign-in code
+  tags: [passwordless]
+  auth: public
+  rate_limit: mfa_send
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    phone: { type: string, rules: [required, "max:32"] }
+
+domain:
+  class: Polaris\Passwordless\Http\PhoneSendEndpoint
+  description: >
+    phone is an E.164 number (spaces, dashes and parentheses are ignored). A 6-digit code, valid for 5
+    minutes and 5 attempts, is texted when the number is an active user's verified phone; a phone never
+    signs anybody up. The answer is the same 202 whether or not anything was sent.
+
+output:
+  status: 202
+  example:
+    data: { status: sent }
+
+errors:
+  - { status: 422, code: passwordless_invalid_input }
+
+events: []

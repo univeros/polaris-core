@@ -1,0 +1,36 @@
+{
+    "name": "polaris/passwordless",
+    "description": "Passwordless sign-in for Polaris for PHP: magic links, email one-time codes (sign-in, email verification, password reset), phone codes for a verified second contact, one-time tokens for session transfer",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "polaris/core": "^0.6",
+        "polaris/messaging": "^0.6",
+        "psr/clock": "^1.0",
+        "psr/event-dispatcher": "^1.0",
+        "psr/simple-cache": "^3.0",
+        "symfony/uid": "^7.0 || ^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\Passwordless\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.6.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

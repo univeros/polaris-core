@@ -1,0 +1,34 @@
+# POST /magic-link/send: emails a sign-in link.
+endpoint:
+  method: POST
+  path: /magic-link/send
+  summary: Send a magic link
+  tags: [passwordless]
+  auth: public
+  rate_limit: mfa_send
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    email: { type: string, rules: [required, email, "max:320"] }
+    redirect_uri: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\Passwordless\Http\MagicLinkSendEndpoint
+  description: >
+    Emails a link to GET /magic-link/verify, valid once for 15 minutes, when the address belongs to an
+    active user or to nobody and sign-up is on. redirect_uri must be one of the plugin's (the first by
+    default). The answer is the same 202 whether or not anything was sent.
+
+output:
+  status: 202
+  example:
+    data: { status: sent }
+
+errors:
+  - { status: 422, code: passwordless_invalid_input }
+  - { status: 422, code: passwordless_redirect_not_allowed }
+
+events: []

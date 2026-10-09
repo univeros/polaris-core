@@ -1,0 +1,34 @@
+# POST /anonymous/sign-in: a guest session.
+endpoint:
+  method: POST
+  path: /anonymous/sign-in
+  summary: Sign in as a guest
+  tags: [anonymous]
+  auth: public
+  rate_limit: register
+  effect: write
+  receipt: true
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Anonymous\Http\SignInEndpoint
+  description: >
+    Creates a guest: a user without a password whose email is the placeholder <id>@anonymous.invalid,
+    and opens its session (amr ["anonymous"], no organization). The answer is core's login envelope.
+    The guest becomes a real account through POST /anonymous/convert.
+
+output:
+  status: 201
+  example:
+    data:
+      access_token: "<jwt>"
+      token_type: Bearer
+      expires_in: 900
+      refresh_token: "<opaque>"
+      user: { id: "018f...", email: "018f...@anonymous.invalid", email_verified: false }
+
+errors: []
+
+events: [user.logged_in]

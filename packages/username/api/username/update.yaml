@@ -1,0 +1,36 @@
+# PATCH /username: the caller's username.
+endpoint:
+  method: PATCH
+  path: /username
+  summary: Set or change your username
+  tags: [username]
+  auth: bearer
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    username: { type: string, rules: [required, "max:64"] }
+    display_username: { type: "?string", rules: [optional, "max:64"] }
+
+domain:
+  class: Polaris\Username\Http\UpdateEndpoint
+  description: >
+    The username must pass the plugin's rules (length, characters, reserved names) and be free without
+    regard to case; it is stored lowercased, display_username keeps the case the user wants (the
+    username as typed by default, never other letters).
+
+output:
+  status: 200
+  example:
+    data:
+      username: "ada.lovelace"
+      display_username: "Ada.Lovelace"
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 409, code: username_taken }
+  - { status: 422, code: username_invalid }
+
+events: []

@@ -1,0 +1,32 @@
+# DELETE /multi-session/{sessionId}: ends one of the device's sessions.
+endpoint:
+  method: DELETE
+  path: /multi-session/{sessionId}
+  summary: Sign one account out of this device
+  tags: [multi-session]
+  auth: bearer
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    sessionId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\MultiSession\Http\RevokeEndpoint
+  description: >
+    sessionId is one of the device's live sessions, the caller's own included; the bearer's session
+    must be on the device. The session ends and the device forgets it; the other accounts stay signed in.
+
+output:
+  status: 200
+  example:
+    data: { status: revoked }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: multi_session_device_unknown }
+  - { status: 404, code: multi_session_session_not_found }
+
+events: []

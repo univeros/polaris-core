@@ -1687,6 +1687,363 @@ export interface paths {
         patch: operations["patch_scim_PatchUserEndpoint"];
         trace?: never;
     };
+    "/email-otp/reset-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reset the password with an email code */
+        post: operations["post_passwordless_EmailOtpResetPasswordEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/email-otp/send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send an email code */
+        post: operations["post_passwordless_EmailOtpSendEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/email-otp/verify-email": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify the email with a code */
+        post: operations["post_passwordless_EmailOtpVerifyEmailEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/email-otp/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign in with an email code */
+        post: operations["post_passwordless_EmailOtpVerifyEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/magic-link/exchange": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Exchange the magic link's code for the session */
+        post: operations["post_passwordless_MagicLinkExchangeEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/magic-link/send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send a magic link */
+        post: operations["post_passwordless_MagicLinkSendEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/magic-link/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Open a magic link */
+        get: operations["get_passwordless_MagicLinkVerifyEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/one-time-token/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate a one-time token */
+        post: operations["post_passwordless_OneTimeTokenGenerateEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/one-time-token/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign in with a one-time token */
+        post: operations["post_passwordless_OneTimeTokenVerifyEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/phone/add": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add a phone number */
+        post: operations["post_passwordless_PhoneAddEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/phone/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Confirm a phone number */
+        post: operations["post_passwordless_PhoneConfirmEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/phone/send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send a phone sign-in code */
+        post: operations["post_passwordless_PhoneSendEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/phone/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign in with a phone code */
+        post: operations["post_passwordless_PhoneVerifyEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/username/sign-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign in with a username and a password */
+        post: operations["post_username_SignInEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/username": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Set or change your username */
+        patch: operations["patch_username_UpdateEndpoint"];
+        trace?: never;
+    };
+    "/anonymous/convert": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Convert the guest into an account */
+        post: operations["post_anonymous_ConvertEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/anonymous/sign-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign in as a guest */
+        post: operations["post_anonymous_SignInEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/multi-session/last-method": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read the device's last sign-in method */
+        get: operations["get_multi-session_LastMethodEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/multi-session/list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List the accounts signed in on this device */
+        get: operations["get_multi-session_ListEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/multi-session/{sessionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Sign one account out of this device */
+        delete: operations["delete_multi-session_RevokeEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/multi-session/switch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Switch to another account signed in on this device */
+        post: operations["post_multi-session_SwitchEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -10633,6 +10990,1252 @@ export interface operations {
             };
             /** @description scim_uniqueness */
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passwordless_EmailOtpResetPasswordEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: email */
+                    email: string;
+                    /** Format: password */
+                    code: string;
+                    /** Format: password */
+                    password: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "password_reset"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description passwordless_code_invalid | passwordless_invalid_input | passwordless_password_invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passwordless_EmailOtpSendEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: email */
+                    email: string;
+                    /** @enum {string} */
+                    purpose?: "sign-in" | "verify-email" | "reset-password";
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "sent"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description passwordless_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passwordless_EmailOtpVerifyEmailEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: email */
+                    email: string;
+                    /** Format: password */
+                    code: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "verified"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description passwordless_code_invalid | passwordless_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passwordless_EmailOtpVerifyEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: email */
+                    email: string;
+                    /** Format: password */
+                    code: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "<jwt>",
+                     *         "token_type": "Bearer",
+                     *         "expires_in": 900,
+                     *         "refresh_token": "<opaque>",
+                     *         "user": {
+                     *           "id": "018f...",
+                     *           "email": "ada@example.com",
+                     *           "email_verified": true
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            token_type: string;
+                            expires_in: number;
+                            refresh_token: string;
+                            user: {
+                                id: string;
+                                email: string;
+                                email_verified: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description passwordless_account_disabled */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passwordless_code_invalid | passwordless_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passwordless_MagicLinkExchangeEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: password */
+                    code: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "<jwt>",
+                     *         "token_type": "Bearer",
+                     *         "expires_in": 900,
+                     *         "refresh_token": "<opaque>",
+                     *         "user": {
+                     *           "id": "018f...",
+                     *           "email": "ada@example.com",
+                     *           "email_verified": true
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            token_type: string;
+                            expires_in: number;
+                            refresh_token: string;
+                            user: {
+                                id: string;
+                                email: string;
+                                email_verified: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description passwordless_invalid_input | passwordless_token_invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passwordless_MagicLinkSendEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: email */
+                    email: string;
+                    redirect_uri?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "sent"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description passwordless_invalid_input | passwordless_redirect_not_allowed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_passwordless_MagicLinkVerifyEndpoint: {
+        parameters: {
+            query: {
+                token: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example [] */
+                    "application/json": [
+                    ];
+                };
+            };
+            /** @description passwordless_account_disabled */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passwordless_invalid_input | passwordless_token_invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passwordless_OneTimeTokenGenerateEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "token": "<opaque>",
+                     *         "expires_in": 180
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            token: string;
+                            expires_in: number;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passwordless_session_required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passwordless_OneTimeTokenVerifyEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: password */
+                    token: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "<jwt>",
+                     *         "token_type": "Bearer",
+                     *         "expires_in": 900,
+                     *         "refresh_token": "<opaque>",
+                     *         "user": {
+                     *           "id": "018f...",
+                     *           "email": "ada@example.com",
+                     *           "email_verified": true
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            token_type: string;
+                            expires_in: number;
+                            refresh_token: string;
+                            user: {
+                                id: string;
+                                email: string;
+                                email_verified: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description passwordless_invalid_input | passwordless_token_invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passwordless_PhoneAddEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    phone: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "sent"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized | step_up_required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passwordless_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passwordless_PhoneConfirmEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    phone: string;
+                    /** Format: password */
+                    code: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "phone": "+15551234567",
+                     *         "verified": true
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            phone: string;
+                            verified: boolean;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized | step_up_required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passwordless_phone_taken */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passwordless_code_invalid | passwordless_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passwordless_PhoneSendEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    phone: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "sent"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description passwordless_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passwordless_PhoneVerifyEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    phone: string;
+                    /** Format: password */
+                    code: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "<jwt>",
+                     *         "token_type": "Bearer",
+                     *         "expires_in": 900,
+                     *         "refresh_token": "<opaque>",
+                     *         "user": {
+                     *           "id": "018f...",
+                     *           "email": "ada@example.com",
+                     *           "email_verified": true
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            token_type: string;
+                            expires_in: number;
+                            refresh_token: string;
+                            user: {
+                                id: string;
+                                email: string;
+                                email_verified: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description passwordless_account_disabled */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passwordless_code_invalid | passwordless_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_username_SignInEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    username: string;
+                    /** Format: password */
+                    password: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "<jwt>",
+                     *         "token_type": "Bearer",
+                     *         "expires_in": 900,
+                     *         "refresh_token": "<opaque>",
+                     *         "user": {
+                     *           "id": "018f...",
+                     *           "email": "ada@example.com",
+                     *           "email_verified": true
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            token_type: string;
+                            expires_in: number;
+                            refresh_token: string;
+                            user: {
+                                id: string;
+                                email: string;
+                                email_verified: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description username_invalid_credentials */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description username_email_unverified | username_account_disabled */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description username_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    patch_username_UpdateEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    username: string;
+                    display_username?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "username": "ada.lovelace",
+                     *         "display_username": "Ada.Lovelace"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            username: string;
+                            display_username: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description username_taken */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description username_invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_anonymous_ConvertEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: password */
+                    access_token: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "guest_id": "018f...",
+                     *         "user_id": "018f...",
+                     *         "status": "converted"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            guest_id: string;
+                            user_id: string;
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description anonymous_not_a_guest */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description anonymous_invalid_input | anonymous_token_invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_anonymous_SignInEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "<jwt>",
+                     *         "token_type": "Bearer",
+                     *         "expires_in": 900,
+                     *         "refresh_token": "<opaque>",
+                     *         "user": {
+                     *           "id": "018f...",
+                     *           "email": "018f...@anonymous.invalid",
+                     *           "email_verified": false
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            token_type: string;
+                            expires_in: number;
+                            refresh_token: string;
+                            user: {
+                                id: string;
+                                email: string;
+                                email_verified: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+    "get_multi-session_LastMethodEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "last_method": "magic_link"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            last_method: string;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    "get_multi-session_ListEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "session_id": "018f...",
+                     *           "user": {
+                     *             "id": "018f...",
+                     *             "email": "ada@example.com",
+                     *             "display_name": "Ada"
+                     *           },
+                     *           "last_method": "magic_link",
+                     *           "signed_in_at": "2026-10-09T10:00:00+00:00",
+                     *           "last_seen": "2026-10-09T10:05:00+00:00",
+                     *           "current": true
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            session_id: string;
+                            user: {
+                                id: string;
+                                email: string;
+                                display_name: string;
+                            };
+                            last_method: string;
+                            signed_in_at: string;
+                            last_seen: string;
+                            current: boolean;
+                        }[];
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description multi_session_device_unknown */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "delete_multi-session_RevokeEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sessionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "revoked"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description multi_session_device_unknown */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description multi_session_session_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "post_multi-session_SwitchEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    session_id: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "<jwt>",
+                     *         "token_type": "Bearer",
+                     *         "expires_in": 900,
+                     *         "refresh_token": "<opaque>",
+                     *         "user": {
+                     *           "id": "018f...",
+                     *           "email": "grace@example.com",
+                     *           "email_verified": true
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            token_type: string;
+                            expires_in: number;
+                            refresh_token: string;
+                            user: {
+                                id: string;
+                                email: string;
+                                email_verified: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description multi_session_device_unknown */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description multi_session_session_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description multi_session_invalid_input */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };

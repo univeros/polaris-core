@@ -20,6 +20,26 @@
             <directory>packages/sentinel/tests/Functional</directory>
             <directory>packages/sso/tests/Functional</directory>
             <directory>packages/scim/tests/Functional</directory>
+            <directory>packages/passwordless/tests/Functional</directory>
+            <directory>packages/username/tests/Functional</directory>
+            <directory>packages/anonymous/tests/Functional</directory>
+            <directory>packages/multi-session/tests/Functional</directory>
+        </testsuite>
+        <testsuite name="passwordless">
+            <directory>packages/passwordless/tests</directory>
+            <exclude>packages/passwordless/tests/Functional</exclude>
+        </testsuite>
+        <testsuite name="username">
+            <directory>packages/username/tests</directory>
+            <exclude>packages/username/tests/Functional</exclude>
+        </testsuite>
+        <testsuite name="anonymous">
+            <directory>packages/anonymous/tests</directory>
+            <exclude>packages/anonymous/tests/Functional</exclude>
+        </testsuite>
+        <testsuite name="multi-session">
+            <directory>packages/multi-session/tests</directory>
+            <exclude>packages/multi-session/tests/Functional</exclude>
         </testsuite>
         <testsuite name="scim">
             <directory>packages/scim/tests</directory>
@@ -70,6 +90,10 @@
             <directory>packages/sentinel/src</directory>
             <directory>packages/sso/src</directory>
             <directory>packages/scim/src</directory>
+            <directory>packages/passwordless/src</directory>
+            <directory>packages/username/src</directory>
+            <directory>packages/anonymous/src</directory>
+            <directory>packages/multi-session/src</directory>
         </include>
     </source>
 </phpunit>
