@@ -1,0 +1,41 @@
+# POST /passkey/register/options: the creation options for navigator.credentials.create().
+endpoint:
+  method: POST
+  path: /passkey/register/options
+  summary: Start registering a passkey
+  tags: [passkey]
+  auth: bearer
+  step_up: true
+  rate_limit: mfa_enroll
+  effect: write
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Passkey\Http\RegisterOptionsEndpoint
+  description: >
+    PublicKeyCredentialCreationOptionsJSON for the caller: the relying party, the user, a challenge valid
+    for five minutes, a discoverable credential (residentKey required) with the configured user
+    verification and attachment, the caller's existing passkeys excluded. The browser's answer goes to
+    POST /passkey/register/verify.
+
+output:
+  status: 200
+  example:
+    data:
+      rp: { id: "app.example.com", name: "App" }
+      user: { id: "<opaque>", name: "ada@example.com", displayName: "Ada" }
+      challenge: "<opaque>"
+      pubKeyCredParams: [{ type: public-key, alg: -7 }, { type: public-key, alg: -257 }]
+      authenticatorSelection: { residentKey: required, userVerification: preferred }
+      attestation: none
+      excludeCredentials: []
+      timeout: 60000
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 401, code: step_up_required }
+
+events: []

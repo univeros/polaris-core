@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The walkthrough every demo runs, executable: register -> verify -> login -> enrol TOTP -> confirm ->
 # login again (MFA) -> verify the code -> create an organization -> list it -> switch to it -> list its
-# members. Run from a demo directory (each examples/<host>/bin/walkthrough.sh does). Starts its own
+# members; on the Slim demo, a social sign-in through its fake provider too. Run from a demo directory (each examples/<host>/bin/walkthrough.sh does). Starts its own
 # PHP server on POLARIS_DOCROOT (default public) unless POLARIS_URL points at a running one; reads the
 # demo's mailbox from POLARIS_MAIL_LOG (default var/mail.log). Exits non-zero on the first failure.
 set -euo pipefail
@@ -54,4 +54,18 @@ call GET /orgs "$ACCESS"; step "10. GET /orgs"; expect 200
 call POST /auth/switch-org "$ACCESS" "{\"organization_id\":\"$ORG\"}"; step "11. POST /auth/switch-org (token scoped to the org)"; expect 200
 ACCESS=$(printf '%s' "$BODY" | json data.access_token)
 call GET "/orgs/$ORG/members" "$ACCESS"; step "12. GET /orgs/{id}/members"; expect 200
-echo "PASS: registered $EMAIL, verified, logged in with TOTP, created organization $ORG"
+if curl -sf "$URL/fake-oauth/me" > /dev/null; then
+    # The Slim demo's own OAuth 2 server: polaris/social's GenericOAuth end to end, no account anywhere.
+    call POST /social/fake/start '' '{}'; step "13. POST /social/fake/start (the demo's fake provider)"; expect 200
+    AUTHORIZE=$(printf '%s' "$BODY" | json data.url)
+    CALLBACK=$(curl -s -o /dev/null -w '%{redirect_url}' "$AUTHORIZE")
+    LOCATION=$(curl -s -o /dev/null -w '%{redirect_url}' "$CALLBACK"); STATUS=302; step "14. GET /social/fake/callback (302 to the application)"
+    [ -n "$LOCATION" ] || { echo "the callback did not redirect" >&2; exit 1; }
+    CODE=${LOCATION##*code=}; CODE=${CODE%%&*}
+    call POST /social/exchange '' "{\"code\":\"$CODE\"}"; step "15. POST /social/exchange"; expect 200
+    SOCIAL=$(printf '%s' "$BODY" | json data.access_token)
+    call GET /social/accounts "$SOCIAL"; step "16. GET /social/accounts"; expect 200
+    echo "PASS: registered $EMAIL, verified, logged in with TOTP, created organization $ORG, signed in through the fake provider"
+else
+    echo "PASS: registered $EMAIL, verified, logged in with TOTP, created organization $ORG"
+fi

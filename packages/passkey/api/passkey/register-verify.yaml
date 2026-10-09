@@ -1,0 +1,43 @@
+# POST /passkey/register/verify: the credential the browser created.
+endpoint:
+  method: POST
+  path: /passkey/register/verify
+  summary: Finish registering a passkey
+  tags: [passkey]
+  auth: bearer
+  step_up: true
+  rate_limit: mfa_confirm
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    credential: { type: object, rules: [required] }   # the PublicKeyCredential JSON (credential.toJSON()), or its string
+    name: { type: "?string", rules: [optional, "max:80"] }
+
+domain:
+  class: Polaris\Passkey\Http\RegisterVerifyEndpoint
+  description: >
+    Verifies the attestation against the challenge, the relying party and the allowed origins, and stores
+    the passkey. When the plugin enrols passkeys as MFA factors (the default), the passkey is also a
+    confirmed core factor of type passkey: the first factor answers the recovery codes, as core's
+    enrolments do. name defaults to "Passkey". Step-up gated, as core's enrolments are not: a passkey with user
+    verification signs in past the MFA gate, so a stolen access token alone must not register one.
+
+output:
+  status: 201
+  example:
+    data:
+      passkey: { id: "018f...", name: "MacBook", aaguid: "<uuid>", transports: [internal, hybrid], backed_up: true, factor_id: "018f...", last_used_at: null, created_at: "2026-10-09T10:00:00+00:00" }
+      recovery_codes: ["<code>", "<code>"]
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 401, code: step_up_required }
+  - { status: 403, code: passkey_origin_mismatch }
+  - { status: 422, code: passkey_challenge_invalid }
+  - { status: 422, code: passkey_credential_invalid }
+  - { status: 422, code: passkey_invalid_input }
+
+events: [mfa.enrolled]

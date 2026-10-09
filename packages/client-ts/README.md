@@ -3,7 +3,8 @@
 The TypeScript client for [Polaris for PHP](https://github.com/univeros/polaris-core), generated from
 the route manifest: `openapi-fetch` typed by the 52 core endpoints and the routes of the `polaris/audit`,
 `polaris/admin`, `polaris/sentinel`, `polaris/sso`, `polaris/scim`, `polaris/passwordless`,
-`polaris/username`, `polaris/anonymous` and `polaris/multi-session` plugins, so a request body, its
+`polaris/username`, `polaris/anonymous`, `polaris/multi-session`, `polaris/social` and `polaris/passkey`
+plugins, so a request body, its
 `data` and its `error` are checked at compile time against the same contract the PHP hosts serve.
 
 ```sh
@@ -50,8 +51,10 @@ connections, the operators' list, and the SCIM server's own routes for a directo
 `client.passwordless` (`magicLinkSend`, `magicLinkVerify`, `magicLinkExchange`, `emailOtpSend`,
 `emailOtpVerify`, `emailOtpVerifyEmail`, `emailOtpResetPassword`, `phoneSend`, `phoneVerify`, `phoneAdd`,
 `phoneConfirm`, `oneTimeTokenGenerate`, `oneTimeTokenVerify`), `client.username` (`signIn`, `update`),
-`client.anonymous` (`signIn`, `convert`) and `client.multiSession` (`list`, `switch`, `revoke`,
-`lastMethod`) are generated into `src/<plugin id>.ts` by `scripts/generate-namespaces.mjs` from the
+`client.anonymous` (`signIn`, `convert`), `client.multiSession` (`list`, `switch`, `revoke`,
+`lastMethod`), `client.social` (`start`, `exchange`, `oneTap`, `accounts`, `link`, `unlink`, `token`) and
+`client.passkey` (`registerOptions`, `registerVerify`, `authenticateOptions`, `authenticateVerify`, `list`,
+`rename`, `delete`) are generated into `src/<plugin id>.ts` by `scripts/generate-namespaces.mjs` from the
 `x-polaris-plugin` marker of the OpenAPI document; a later plugin gets its namespace the same way, its id
 camel-cased (`multi-session` is `client.multiSession`). Their errors are RFC 9457 problem documents,
 `ProblemBody` (`{ type, title, status, detail, error, message, errors? }`), served as
@@ -60,6 +63,38 @@ camel-cased (`multi-session` is `client.multiSession`). Their errors are RFC 945
 Response types come from each endpoint's `output.example` in the manifest (JSON Schema by example,
 `docs/adapters/spec.md` §7): a documented approximation, exact for the shapes the specs show. Error
 bodies are `ErrorBody` (`{ error, message }`) and `ValidationErrorBody` (`{ errors }`).
+
+## Social sign-in
+
+`client.social.start()` answers the provider's URL and a `state`; keep the state (`sessionStorage`), send
+the browser to the URL, and on the page the sign-in ends on compare the `state` in the query with it
+before exchanging the `code`:
+
+```ts
+const { data } = await polaris.social.start({ params: { path: { provider: "google" } }, body: {} });
+sessionStorage.setItem("polaris.social.state", data!.data.state);
+location.assign(data!.data.url);
+// ...on /signed-in:
+const query = new URLSearchParams(location.search);
+if (query.get("state") !== sessionStorage.getItem("polaris.social.state")) throw new Error("not the flow this browser started");
+const session = await polaris.social.exchange({ body: { code: query.get("code")! } });
+```
+
+## Passkeys
+
+`registerPasskey()`, `signInWithPasskey()` and `passkeyAssertion()` run the WebAuthn ceremonies of
+`polaris/passkey` in the browser (`navigator.credentials`, a secure context) over the client's routes;
+they are the only hand-written code besides the sentinel retry.
+
+```ts
+import { createClient, registerPasskey, signInWithPasskey, passkeyAssertion } from "@polaris-auth/client";
+
+const { passkey, recovery_codes } = await registerPasskey(polaris.withToken(accessToken), "MacBook");
+const session = await signInWithPasskey(polaris);                         // a prompt
+const autofilled = await signInWithPasskey(polaris, { conditional: true }); // the form's autofill (autocomplete="username webauthn")
+// The passkey as the second factor of a password login that answered mfa_required:
+await polaris.withToken(mfaToken).POST("/auth/mfa/verify", { body: { factor_id, code: await passkeyAssertion(polaris) } });
+```
 
 ## Several accounts on one device
 

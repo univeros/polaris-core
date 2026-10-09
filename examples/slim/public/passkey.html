@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Polaris passkey demo</title>
+    <style>
+        body { font: 15px/1.5 system-ui, sans-serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; }
+        button { font: inherit; padding: .4rem .9rem; margin-right: .5rem; }
+        pre { background: #f4f4f4; padding: .75rem; overflow: auto; white-space: pre-wrap; }
+        #result { font-weight: 600; }
+    </style>
+</head>
+<body>
+    <h1>Passkeys on the Polaris demo</h1>
+    <p>Registers an account, enrols a passkey for it, signs out and signs back in with the passkey alone
+        (WebAuthn, <code>polaris/passkey</code>). The Playwright run drives it with a virtual authenticator.</p>
+    <p>
+        <button id="run" type="button">Run the whole flow</button>
+        <input id="email" type="text" autocomplete="username webauthn" placeholder="email (autofill a passkey here)">
+    </p>
+    <p id="result" data-state="idle">idle</p>
+    <pre id="log"></pre>
+    <script type="module">
+        const log = (line) => { document.getElementById("log").textContent += line + "\n"; };
+        const result = (state, text) => { const el = document.getElementById("result"); el.dataset.state = state; el.textContent = text; };
+        const api = async (method, path, body, token) => {
+            const headers = { "Content-Type": "application/json" };
+            if (token) headers["Authorization"] = "Bearer " + token;
+            const response = await fetch(path, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
+            const json = await response.json().catch(() => ({}));
+            log(method + " " + path + " -> " + response.status);
+            if (!response.ok) throw new Error(path + " answered " + response.status + ": " + JSON.stringify(json));
+            return json.data;
+        };
+        const parseCreation = (json) => PublicKeyCredential.parseCreationOptionsFromJSON(json);
+        const parseRequest = (json) => PublicKeyCredential.parseRequestOptionsFromJSON(json);
+
+        document.getElementById("run").addEventListener("click", async () => {
+            try {
+                result("running", "running");
+                const email = "passkey+" + Date.now() + "@example.com";
+                const password = "Sup3r-Secret-Passw0rd";
+                await api("POST", "/auth/register", { email, password });
+                const mail = await (await fetch("/mailbox?" + Date.now())).text().catch(() => "");
+                const token = [...mail.matchAll(/"token":"([^"]+)"/g)].at(-1)?.[1];
+                if (!token) throw new Error("no verification token in var/mail.log (served as /mailbox)");
+                await api("POST", "/auth/email/verify", { token });
+                const login = await api("POST", "/auth/login", { email, password });
+                const options = await api("POST", "/passkey/register/options", {}, login.access_token);
+                const created = await navigator.credentials.create({ publicKey: parseCreation(options) });
+                const registered = await api("POST", "/passkey/register/verify", { credential: created.toJSON(), name: "Virtual authenticator" }, login.access_token);
+                log("registered passkey " + registered.passkey.id + " with " + registered.recovery_codes.length + " recovery codes");
+                await api("POST", "/auth/logout", {}, login.access_token);
+
+                const request = await api("POST", "/passkey/authenticate/options", {});
+                const assertion = await navigator.credentials.get({ publicKey: parseRequest(request) });
+                const session = await api("POST", "/passkey/authenticate/verify", { credential: assertion.toJSON() });
+                const me = await api("GET", "/auth/me", undefined, session.access_token);
+                if (me.email !== email) throw new Error("signed in as " + me.email);
+                const claims = JSON.parse(atob(session.access_token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+                log("signed in as " + me.email + " with amr " + JSON.stringify(claims.amr) + ", mfa " + claims.mfa);
+
+                const gate = await api("POST", "/auth/login", { email, password });
+                if (!gate.mfa_required) throw new Error("the password login should hit the MFA gate now");
+                const second = await navigator.credentials.get({ publicKey: parseRequest(await api("POST", "/passkey/authenticate/options", {})) });
+                const verified = await api("POST", "/auth/mfa/verify", { factor_id: registered.passkey.factor_id, code: JSON.stringify(second.toJSON()) }, gate.mfa_token);
+                log("passed the MFA gate with the passkey: " + (verified.access_token ? "ok" : "no token"));
+                result("pass", "PASS: " + email);
+            } catch (error) {
+                log(String(error));
+                result("fail", "FAIL: " + error.message);
+            }
+        });
+    </script>
+</body>
+</html>

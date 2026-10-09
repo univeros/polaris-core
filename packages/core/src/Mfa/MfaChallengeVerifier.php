@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Polaris\Mfa;
 
+use Closure;
+use Polaris\Contract\MfaFactorType;
 use Polaris\Contract\RepositoryInterface;
 use SensitiveParameter;
 use Polaris\Model\MfaFactor;
@@ -24,16 +26,20 @@ use function in_array;
  * factor routing or replay rules. It performs no token minting and emits no events — the caller
  * wraps it with the policy for what a successful verification grants.
  */
-final readonly class MfaChallengeVerifier
+final class MfaChallengeVerifier
 {
     /**
      * @param RepositoryInterface<MfaFactor> $factors
+     * @param array<string, MfaFactorType>|Closure(): array<string, MfaFactorType> $types the plugins' factor
+     *   types by `type`, verifying their own rows; a closure is resolved on the first verification, so a
+     *   type may depend on the services this verifier is part of
      */
     public function __construct(
-        private RepositoryInterface $factors,
-        private MfaTotpService $totp,
-        private OtpService $otp,
-        private RecoveryCodeService $recovery,
+        private readonly RepositoryInterface $factors,
+        private readonly MfaTotpService $totp,
+        private readonly OtpService $otp,
+        private readonly RecoveryCodeService $recovery,
+        private array|Closure $types = [],
     ) {
     }
 
@@ -107,10 +113,23 @@ final readonly class MfaChallengeVerifier
             MfaFactor::TYPE_TOTP => $this->totp->verify($userId, $factorId, $code),
             MfaFactor::TYPE_SMS,
             MfaFactor::TYPE_EMAIL => $this->otp->verify($userId, $factorId, $code, $purpose),
-            default => throw new MfaFactorNotFoundException('MFA factor not found.'),
+            // A plugin's type (`passkey`) verifies its own rows; a row of a type nobody verifies is unusable.
+            default => ($this->types()[$factor->type] ?? throw new MfaFactorNotFoundException('MFA factor not found.'))->verify($factor, $code, $purpose),
         };
 
         return $factorId;
+    }
+
+    /**
+     * @return array<string, MfaFactorType>
+     */
+    private function types(): array
+    {
+        if ($this->types instanceof Closure) {
+            $this->types = ($this->types)();
+        }
+
+        return $this->types;
     }
 
     /**

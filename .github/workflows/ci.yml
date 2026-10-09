@@ -16,7 +16,8 @@ jobs:
 
     services:
       postgres:
-        image: postgres:16
+        # Docker Hub's unauthenticated pull limit stopped three runs in a row; the mirror serves the same image.
+        image: mirror.gcr.io/library/postgres:16
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -206,3 +207,9 @@ jobs:
           git diff --exit-code -- openapi.json src
           npm run typecheck
           npm test
+
+      - name: The passkey page of the Slim demo in Chromium with a virtual authenticator
+        working-directory: packages/client-ts
+        run: |
+          npx playwright install --with-deps chromium
+          npm run e2e

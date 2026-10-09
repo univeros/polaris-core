@@ -4,9 +4,11 @@ import { anonymous, type AnonymousApi } from "./anonymous.js";
 import { audit, type AuditApi } from "./audit.js";
 import { challengeRetry, type ChallengeOptions } from "./challenge.js";
 import { multiSession, type MultiSessionApi } from "./multi-session.js";
+import { passkey, type PasskeyApi } from "./passkey.js";
 import { passwordless, type PasswordlessApi } from "./passwordless.js";
 import { sentinel, type SentinelApi } from "./sentinel.js";
 import { scim, type ScimApi } from "./scim.js";
+import { social, type SocialApi } from "./social.js";
 import { sso, type SsoApi } from "./sso.js";
 import { username, type UsernameApi } from "./username.js";
 import type { components, paths } from "./schema.js";
@@ -17,17 +19,20 @@ export { anonymous, type AnonymousApi } from "./anonymous.js";
 export { audit, type AuditApi } from "./audit.js";
 export { challengeRetry, type ChallengeOptions } from "./challenge.js";
 export { multiSession, type MultiSessionApi } from "./multi-session.js";
+export { passkey, type PasskeyApi } from "./passkey.js";
 export { passwordless, type PasswordlessApi } from "./passwordless.js";
 export { sentinel, type SentinelApi } from "./sentinel.js";
 export { scim, type ScimApi } from "./scim.js";
+export { social, type SocialApi } from "./social.js";
 export { sso, type SsoApi } from "./sso.js";
 export { username, type UsernameApi } from "./username.js";
+export { registerPasskey, signInWithPasskey, passkeyAssertion, passkeyAutofillAvailable, type SignInWithPasskeyOptions } from "./webauthn.js";
 
 /** The `{ error, message }` envelope every non-2xx response of a core route carries. */
 export type ErrorBody = components["schemas"]["Error"];
 /** The `{ errors: [...] }` envelope of a core route's 422. */
 export type ValidationErrorBody = components["schemas"]["ValidationError"];
-/** The RFC 9457 problem document every non-2xx response of a plugin route (`audit`, `admin`, `sentinel`, `sso`, `scim`, `passwordless`, `username`, `anonymous`, `multi-session`) carries. */
+/** The RFC 9457 problem document every non-2xx response of a plugin route (`audit`, `admin`, `sentinel`, `sso`, `scim`, `passwordless`, `username`, `anonymous`, `multi-session`, `social`, `passkey`) carries. */
 export type ProblemBody = components["schemas"]["Problem"];
 
 export interface PolarisClientOptions extends ClientOptions {
@@ -67,6 +72,10 @@ export interface PolarisClient extends Client<paths> {
      * The device travels as the `X-Polaris-Device` header a sign-in answers (or the HttpOnly cookie in a browser).
      */
     readonly multiSession: MultiSessionApi;
+    /** The `polaris/social` routes: `client.social.start()`, `exchange()`, `oneTap()`, `accounts()`, `link()`, `unlink()`, `token()`. */
+    readonly social: SocialApi;
+    /** The `polaris/passkey` routes (`registerOptions()`, `registerVerify()`, `authenticateOptions()`, `authenticateVerify()`, `list()`, `rename()`, `delete()`); `registerPasskey()` and `signInWithPasskey()` run the browser ceremonies. */
+    readonly passkey: PasskeyApi;
     /** A new client on the same options bound to another token (null for anonymous); this one is unchanged. */
     withToken(token: string | null): PolarisClient;
 }
@@ -75,7 +84,7 @@ export interface PolarisClient extends Client<paths> {
  * An `openapi-fetch` client typed by `paths` (generated from `polaris manifest --format=openapi`), so
  * `client.POST("/auth/login", { body })` checks the body and types `data` and `error`; the plugins' routes
  * are also methods of `client.audit`, `client.admin`, `client.sentinel`, `client.sso`, `client.scim`, `client.passwordless`,
- * `client.username`, `client.anonymous` and `client.multiSession`; `challenge.captcha`
+ * `client.username`, `client.anonymous`, `client.multiSession`, `client.social` and `client.passkey`; `challenge.captcha`
  * answers a sentinel captcha challenge with one retry. No refresh loop and no storage: when to refresh
  * and where to keep tokens is the application's policy.
  */
@@ -106,6 +115,8 @@ export function createClient(options: PolarisClientOptions): PolarisClient {
         username: username(client),
         anonymous: anonymous(client),
         multiSession: multiSession(client),
+        social: social(client),
+        passkey: passkey(client),
         withToken: (next: string | null) => createClient({ ...options, token: next }),
     };
 }

@@ -17010,6 +17010,1894 @@
                     }
                 }
             }
+        },
+        "/social/accounts": {
+            "get": {
+                "operationId": "get_social_AccountsEndpoint",
+                "summary": "List your linked provider accounts",
+                "tags": [
+                    "social"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "social",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "provider": {
+                                                        "type": "string"
+                                                    },
+                                                    "provider_account_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "email": {
+                                                        "type": "string"
+                                                    },
+                                                    "email_verified": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "scopes": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "profile": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "picture": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "name",
+                                                            "picture"
+                                                        ]
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "provider",
+                                                    "provider_account_id",
+                                                    "email",
+                                                    "email_verified",
+                                                    "scopes",
+                                                    "profile",
+                                                    "created_at",
+                                                    "updated_at"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "provider": "google",
+                                            "provider_account_id": "1029384756",
+                                            "email": "ada@example.com",
+                                            "email_verified": true,
+                                            "scopes": [
+                                                "openid",
+                                                "email",
+                                                "profile"
+                                            ],
+                                            "profile": {
+                                                "name": "Ada",
+                                                "picture": "https://..."
+                                            },
+                                            "created_at": "2026-10-09T10:00:00+00:00",
+                                            "updated_at": "2026-10-09T10:00:00+00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/social/{provider}/callback": {
+            "post": {
+                "operationId": "post_social_CallbackPostEndpoint",
+                "summary": "The provider's callback (form_post)",
+                "tags": [
+                    "social"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "social",
+                "x-polaris-rate-limit": "token_consume",
+                "parameters": [
+                    {
+                        "name": "provider",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    },
+                                    "state": {
+                                        "type": "string"
+                                    },
+                                    "error": {
+                                        "type": "string"
+                                    },
+                                    "user": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "state"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": []
+                                },
+                                "example": []
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "social_provider_error | social_account_disabled | social_email_unverified",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "social_account_exists | social_account_linked | social_email_mismatch",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "social_email_required | social_state_invalid",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "social_provider_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "get_social_CallbackEndpoint",
+                "summary": "The provider's callback",
+                "tags": [
+                    "social"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "social",
+                "x-polaris-rate-limit": "token_consume",
+                "parameters": [
+                    {
+                        "name": "provider",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "password",
+                            "x-polaris-sensitive": true
+                        }
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "error",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": []
+                                },
+                                "example": []
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "social_provider_error | social_account_disabled | social_email_unverified",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "social_account_exists | social_account_linked | social_email_mismatch",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "social_email_required | social_state_invalid",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "social_provider_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/social/exchange": {
+            "post": {
+                "operationId": "post_social_ExchangeEndpoint",
+                "summary": "Exchange the sign-in code for the session",
+                "tags": [
+                    "social"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "social",
+                "x-polaris-rate-limit": "token_consume",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    }
+                                },
+                                "required": [
+                                    "code"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "refresh_token": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "email_verified": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "email",
+                                                        "email_verified"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "token_type",
+                                                "expires_in",
+                                                "refresh_token",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "<jwt>",
+                                        "token_type": "Bearer",
+                                        "expires_in": 900,
+                                        "refresh_token": "<opaque>",
+                                        "user": {
+                                            "id": "018f...",
+                                            "email": "ada@example.com",
+                                            "email_verified": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "social_code_invalid | social_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/social/{provider}/link": {
+            "post": {
+                "operationId": "post_social_LinkEndpoint",
+                "summary": "Link a provider to your account",
+                "tags": [
+                    "social"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "social",
+                "x-polaris-rate-limit": "mfa_enroll",
+                "x-polaris-step-up": true,
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "provider",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "redirect_uri": {
+                                        "type": "string"
+                                    },
+                                    "scopes": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "url": {
+                                                    "type": "string"
+                                                },
+                                                "state": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "url",
+                                                "state"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "url": "https://github.com/login/oauth/authorize?client_id=...&state=...",
+                                        "state": "<opaque>"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized | step_up_required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "social_provider_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "social_redirect_not_allowed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/social/google/one-tap": {
+            "post": {
+                "operationId": "post_social_OneTapEndpoint",
+                "summary": "Sign in with Google One Tap",
+                "tags": [
+                    "social"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "social",
+                "x-polaris-rate-limit": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "credential": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "x-polaris-sensitive": true
+                                    }
+                                },
+                                "required": [
+                                    "credential"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "refresh_token": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "email_verified": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "email",
+                                                        "email_verified"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "token_type",
+                                                "expires_in",
+                                                "refresh_token",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "<jwt>",
+                                        "token_type": "Bearer",
+                                        "expires_in": 900,
+                                        "refresh_token": "<opaque>",
+                                        "user": {
+                                            "id": "018f...",
+                                            "email": "ada@example.com",
+                                            "email_verified": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "social_provider_error | social_account_disabled | social_email_unverified",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "social_provider_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "social_account_exists",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "social_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/social/{provider}/start": {
+            "post": {
+                "operationId": "post_social_StartEndpoint",
+                "summary": "Start a social sign-in",
+                "tags": [
+                    "social"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "social",
+                "x-polaris-rate-limit": "login",
+                "parameters": [
+                    {
+                        "name": "provider",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "redirect_uri": {
+                                        "type": "string"
+                                    },
+                                    "scopes": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "url": {
+                                                    "type": "string"
+                                                },
+                                                "state": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "url",
+                                                "state"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "url": "https://accounts.google.com/o/oauth2/v2/auth?client_id=...&state=...",
+                                        "state": "<opaque>"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "social_provider_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "social_redirect_not_allowed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/social/{provider}/token": {
+            "post": {
+                "operationId": "post_social_TokenEndpoint",
+                "summary": "Get a provider token for the user",
+                "tags": [
+                    "social"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "social",
+                "x-polaris-step-up": true,
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "provider",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "expires_at": {
+                                                    "type": "string"
+                                                },
+                                                "scopes": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "expires_at",
+                                                "scopes"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "<opaque>",
+                                        "expires_at": "2026-10-09T11:00:00+00:00",
+                                        "scopes": [
+                                            "repo"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized | step_up_required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "social_not_linked",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "social_no_refresh",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/social/{provider}": {
+            "delete": {
+                "operationId": "delete_social_UnlinkEndpoint",
+                "summary": "Unlink a provider",
+                "tags": [
+                    "social"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "social",
+                "x-polaris-step-up": true,
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "provider",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "unlinked"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized | step_up_required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "social_not_linked",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "social_last_credential",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/passkey/authenticate/options": {
+            "post": {
+                "operationId": "post_passkey_AuthenticateOptionsEndpoint",
+                "summary": "Start a passkey sign-in",
+                "tags": [
+                    "passkey"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "passkey",
+                "x-polaris-rate-limit": "token_refresh",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "challenge": {
+                                                    "type": "string"
+                                                },
+                                                "rpId": {
+                                                    "type": "string"
+                                                },
+                                                "allowCredentials": {
+                                                    "type": "array",
+                                                    "items": []
+                                                },
+                                                "userVerification": {
+                                                    "type": "string"
+                                                },
+                                                "timeout": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "challenge",
+                                                "rpId",
+                                                "allowCredentials",
+                                                "userVerification",
+                                                "timeout"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "challenge": "<opaque>",
+                                        "rpId": "app.example.com",
+                                        "allowCredentials": [],
+                                        "userVerification": "preferred",
+                                        "timeout": 60000
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/passkey/authenticate/verify": {
+            "post": {
+                "operationId": "post_passkey_AuthenticateVerifyEndpoint",
+                "summary": "Sign in with a passkey",
+                "tags": [
+                    "passkey"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "passkey",
+                "x-polaris-rate-limit": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "credential": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    }
+                                },
+                                "required": [
+                                    "credential"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string"
+                                                },
+                                                "token_type": {
+                                                    "type": "string"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer"
+                                                },
+                                                "refresh_token": {
+                                                    "type": "string"
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "email_verified": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "email",
+                                                        "email_verified"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "access_token",
+                                                "token_type",
+                                                "expires_in",
+                                                "refresh_token",
+                                                "user"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "access_token": "<jwt>",
+                                        "token_type": "Bearer",
+                                        "expires_in": 900,
+                                        "refresh_token": "<opaque>",
+                                        "user": {
+                                            "id": "018f...",
+                                            "email": "ada@example.com",
+                                            "email_verified": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "passkey_account_disabled | passkey_email_unverified | passkey_user_verification_required | passkey_origin_mismatch",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passkey_challenge_invalid | passkey_credential_invalid | passkey_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/passkey/{id}": {
+            "delete": {
+                "operationId": "delete_passkey_DeleteEndpoint",
+                "summary": "Remove a passkey",
+                "tags": [
+                    "passkey"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "passkey",
+                "x-polaris-step-up": true,
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "deleted"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized | step_up_required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "passkey_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "passkey_last_factor",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "patch_passkey_RenameEndpoint",
+                "summary": "Rename a passkey",
+                "tags": [
+                    "passkey"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "passkey",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 80
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "aaguid": {
+                                                    "type": "string"
+                                                },
+                                                "transports": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "backed_up": {
+                                                    "type": "boolean"
+                                                },
+                                                "factor_id": {
+                                                    "type": "string"
+                                                },
+                                                "last_used_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "name",
+                                                "aaguid",
+                                                "transports",
+                                                "backed_up",
+                                                "factor_id",
+                                                "last_used_at",
+                                                "created_at"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "name": "Work laptop",
+                                        "aaguid": "<uuid>",
+                                        "transports": [
+                                            "internal"
+                                        ],
+                                        "backed_up": true,
+                                        "factor_id": "018f...",
+                                        "last_used_at": null,
+                                        "created_at": "2026-10-09T10:00:00+00:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "passkey_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passkey_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/passkey/list": {
+            "get": {
+                "operationId": "get_passkey_ListEndpoint",
+                "summary": "List your passkeys",
+                "tags": [
+                    "passkey"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "passkey",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "aaguid": {
+                                                        "type": "string"
+                                                    },
+                                                    "transports": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "backed_up": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "factor_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "last_used_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "name",
+                                                    "aaguid",
+                                                    "transports",
+                                                    "backed_up",
+                                                    "factor_id",
+                                                    "last_used_at",
+                                                    "created_at"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "name": "MacBook",
+                                            "aaguid": "<uuid>",
+                                            "transports": [
+                                                "internal",
+                                                "hybrid"
+                                            ],
+                                            "backed_up": true,
+                                            "factor_id": "018f...",
+                                            "last_used_at": "2026-10-09T10:05:00+00:00",
+                                            "created_at": "2026-10-09T10:00:00+00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/passkey/register/options": {
+            "post": {
+                "operationId": "post_passkey_RegisterOptionsEndpoint",
+                "summary": "Start registering a passkey",
+                "tags": [
+                    "passkey"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "passkey",
+                "x-polaris-rate-limit": "mfa_enroll",
+                "x-polaris-step-up": true,
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "rp": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "name"
+                                                    ]
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "displayName": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "name",
+                                                        "displayName"
+                                                    ]
+                                                },
+                                                "challenge": {
+                                                    "type": "string"
+                                                },
+                                                "pubKeyCredParams": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "type": "string"
+                                                            },
+                                                            "alg": {
+                                                                "type": "integer"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "type",
+                                                            "alg"
+                                                        ]
+                                                    }
+                                                },
+                                                "authenticatorSelection": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "residentKey": {
+                                                            "type": "string"
+                                                        },
+                                                        "userVerification": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "residentKey",
+                                                        "userVerification"
+                                                    ]
+                                                },
+                                                "attestation": {
+                                                    "type": "string"
+                                                },
+                                                "excludeCredentials": {
+                                                    "type": "array",
+                                                    "items": []
+                                                },
+                                                "timeout": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "rp",
+                                                "user",
+                                                "challenge",
+                                                "pubKeyCredParams",
+                                                "authenticatorSelection",
+                                                "attestation",
+                                                "excludeCredentials",
+                                                "timeout"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "rp": {
+                                            "id": "app.example.com",
+                                            "name": "App"
+                                        },
+                                        "user": {
+                                            "id": "<opaque>",
+                                            "name": "ada@example.com",
+                                            "displayName": "Ada"
+                                        },
+                                        "challenge": "<opaque>",
+                                        "pubKeyCredParams": [
+                                            {
+                                                "type": "public-key",
+                                                "alg": -7
+                                            },
+                                            {
+                                                "type": "public-key",
+                                                "alg": -257
+                                            }
+                                        ],
+                                        "authenticatorSelection": {
+                                            "residentKey": "required",
+                                            "userVerification": "preferred"
+                                        },
+                                        "attestation": "none",
+                                        "excludeCredentials": [],
+                                        "timeout": 60000
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized | step_up_required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/passkey/register/verify": {
+            "post": {
+                "operationId": "post_passkey_RegisterVerifyEndpoint",
+                "summary": "Finish registering a passkey",
+                "tags": [
+                    "passkey"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "passkey",
+                "x-polaris-rate-limit": "mfa_confirm",
+                "x-polaris-step-up": true,
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "credential": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 80
+                                    }
+                                },
+                                "required": [
+                                    "credential"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "passkey": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "aaguid": {
+                                                            "type": "string"
+                                                        },
+                                                        "transports": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "backed_up": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "factor_id": {
+                                                            "type": "string"
+                                                        },
+                                                        "last_used_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id",
+                                                        "name",
+                                                        "aaguid",
+                                                        "transports",
+                                                        "backed_up",
+                                                        "factor_id",
+                                                        "last_used_at",
+                                                        "created_at"
+                                                    ]
+                                                },
+                                                "recovery_codes": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "passkey",
+                                                "recovery_codes"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "passkey": {
+                                            "id": "018f...",
+                                            "name": "MacBook",
+                                            "aaguid": "<uuid>",
+                                            "transports": [
+                                                "internal",
+                                                "hybrid"
+                                            ],
+                                            "backed_up": true,
+                                            "factor_id": "018f...",
+                                            "last_used_at": null,
+                                            "created_at": "2026-10-09T10:00:00+00:00"
+                                        },
+                                        "recovery_codes": [
+                                            "<code>",
+                                            "<code>"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized | step_up_required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "passkey_origin_mismatch",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "passkey_challenge_invalid | passkey_credential_invalid | passkey_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {

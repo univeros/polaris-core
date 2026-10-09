@@ -1,0 +1,519 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/nope/start",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/provider_not_found",
+                "title": "Provider not found",
+                "status": 404,
+                "detail": "No such provider is configured.",
+                "error": "social_provider_not_found",
+                "message": "No such provider is configured."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/google/start",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "redirect_uri": "https://evil.example/"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/redirect_not_allowed",
+                "title": "Redirect not allowed",
+                "status": 422,
+                "detail": "redirect_uri is not one of the allowed ones.",
+                "error": "social_redirect_not_allowed",
+                "message": "redirect_uri is not one of the allowed ones."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/google/callback?code=good&state=unknown",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/state_invalid",
+                "title": "Invalid state",
+                "status": 422,
+                "detail": "The state is unknown, used, expired or not signed for this application.",
+                "error": "social_state_invalid",
+                "message": "The state is unknown, used, expired or not signed for this application."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/google/start",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "7"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://accounts.google.com/o/oauth2/v2/auth?client_id=google-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgoogle%2Fcallback&response_type=code&scope=openid%20email%20profile&state=6dc2afac78d708fe49c195de09b5b1ef&access_type=offline&prompt=select_account&code_challenge=bgzqKLd3BDMOb3o4JnzezdDwhW8kinc5HlQJBr7hK-4&code_challenge_method=S256&nonce=98e753166244c2f6a38cb13e9685f0eb",
+                    "state": "6dc2afac78d708fe49c195de09b5b1ef"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/google/callback?code=good&state=6dc2afac78d708fe49c195de09b5b1ef",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 302,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Location": [
+                    "https://app.polaris.test/signed-in?code=fHBNelJCmunyd4On42Cbdull-rfIMFEzeyszv4uoV-M&state=6dc2afac78d708fe49c195de09b5b1ef"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/google/callback?code=good&state=6dc2afac78d708fe49c195de09b5b1ef",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "7"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/state_invalid",
+                "title": "Invalid state",
+                "status": 422,
+                "detail": "The state is unknown, used, expired or not signed for this application.",
+                "error": "social_state_invalid",
+                "message": "The state is unknown, used, expired or not signed for this application."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "6"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "code is required.",
+                "error": "social_invalid_input",
+                "message": "code is required.",
+                "errors": [
+                    "code is required."
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "nope"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "5"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/code_invalid",
+                "title": "Invalid code",
+                "status": 422,
+                "detail": "The code is unknown, used or expired.",
+                "error": "social_code_invalid",
+                "message": "The code is unknown, used or expired."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "fHBNelJCmunyd4On42Cbdull-rfIMFEzeyszv4uoV-M"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI2MzM0OCwibmJmIjoxNzkxNTc4NTQ4LjI2MzM0OCwiZXhwIjoxNzkxNTc5NDQ4LjI2MzM0OCwic3ViIjoiMDFhMTIyNjctMjgyNi03ZDFkLTg3OGUtYWU0ZGI5OGRiYzg0IiwianRpIjoiMDFhMTIyNjctMjgyNy03NTRkLTk2ZGEtMTM2Nzg2MDRlMzdmIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODI3LTc0NjEtOTZkYS0xMzY3ODU3OWY5ZWUiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.Nuxw-86CSuGS-ZgX0wCWEsMXUQyso4dLbdH_LzIsYGhoqKTEHSE_u_IHB09jcIPbjrGVTa3mF-lY_FjH1DBHZ-TRNBu69JZ4D53p6gv2HhqIvBfycmAQvfPBxwW7oOcw3BNAzqc8-Axxtpl2mPlbvp5XvSobMsck3iPrOYAHL4D1_y6Oggh6QmvEgGlgoQItTZD1cRuBrhxNeONlkFhsncurk3YI2O0JmbETLEysrwOStA2p-F27kbH1uVsZQVWgihbl4zs3LxF-_ZFFC7B-GBlEpJkCGX5wUJWnsMOTi8Akz3x-riqXnTqixLj8y6oWoIl5TUiBZnpNIWOSHcQvug",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "VlEoxUN8h7BaHzEfaqVc7CKr1sqDWB9yOrbuDb91Gmg",
+                    "user": {
+                        "id": "01a12267-2826-7d1d-878e-ae4db98dbc84",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "fHBNelJCmunyd4On42Cbdull-rfIMFEzeyszv4uoV-M"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/code_invalid",
+                "title": "Invalid code",
+                "status": 422,
+                "detail": "The code is unknown, used or expired.",
+                "error": "social_code_invalid",
+                "message": "The code is unknown, used or expired."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/auth/me",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI2MzM0OCwibmJmIjoxNzkxNTc4NTQ4LjI2MzM0OCwiZXhwIjoxNzkxNTc5NDQ4LjI2MzM0OCwic3ViIjoiMDFhMTIyNjctMjgyNi03ZDFkLTg3OGUtYWU0ZGI5OGRiYzg0IiwianRpIjoiMDFhMTIyNjctMjgyNy03NTRkLTk2ZGEtMTM2Nzg2MDRlMzdmIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODI3LTc0NjEtOTZkYS0xMzY3ODU3OWY5ZWUiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.Nuxw-86CSuGS-ZgX0wCWEsMXUQyso4dLbdH_LzIsYGhoqKTEHSE_u_IHB09jcIPbjrGVTa3mF-lY_FjH1DBHZ-TRNBu69JZ4D53p6gv2HhqIvBfycmAQvfPBxwW7oOcw3BNAzqc8-Axxtpl2mPlbvp5XvSobMsck3iPrOYAHL4D1_y6Oggh6QmvEgGlgoQItTZD1cRuBrhxNeONlkFhsncurk3YI2O0JmbETLEysrwOStA2p-F27kbH1uVsZQVWgihbl4zs3LxF-_ZFFC7B-GBlEpJkCGX5wUJWnsMOTi8Akz3x-riqXnTqixLj8y6oWoIl5TUiBZnpNIWOSHcQvug"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a12267-2826-7d1d-878e-ae4db98dbc84",
+                    "email": "ada@example.com",
+                    "email_verified": true,
+                    "display_name": "Ada Lovelace",
+                    "status": "active",
+                    "mfa_enforced": false,
+                    "orgs": [],
+                    "roles": []
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/google/start",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "6"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://accounts.google.com/o/oauth2/v2/auth?client_id=google-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgoogle%2Fcallback&response_type=code&scope=openid%20email%20profile&state=9965f27f59bbafdffa0b83d8540e15b6&access_type=offline&prompt=select_account&code_challenge=aWrd0fLw3BjDG-GsXYUXrqCSpdwOKXrU9H4Cw7TCakU&code_challenge_method=S256&nonce=aad8d48ef147ee6205e01a18049143f2",
+                    "state": "9965f27f59bbafdffa0b83d8540e15b6"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/google/callback?code=good&state=9965f27f59bbafdffa0b83d8540e15b6",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 302,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Location": [
+                    "https://app.polaris.test/signed-in?code=fp7Dcu1etTafJwPQeG6ony6aCh1RtEpAySuqgH825k0&state=9965f27f59bbafdffa0b83d8540e15b6"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "2"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "fp7Dcu1etTafJwPQeG6ony6aCh1RtEpAySuqgH825k0"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "1"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI2NjgzNSwibmJmIjoxNzkxNTc4NTQ4LjI2NjgzNSwiZXhwIjoxNzkxNTc5NDQ4LjI2NjgzNSwic3ViIjoiMDFhMTIyNjctMjgyNi03ZDFkLTg3OGUtYWU0ZGI5OGRiYzg0IiwianRpIjoiMDFhMTIyNjctMjgyYS03Y2YwLThmMTAtZGEwMGI0YjkxZmRiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODJhLTdjMDgtOGYxMC1kYTAwYjQxMTc0Y2YiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.XpQWm-bajiwZgXf3GVwj5dIR4gjYk09118DwLdCao-PwH3SAsm57Ox1s7NyFa--IJfC7_TaVkkqOPhHZjexnChDgX8SRgGCDtkYpZfKfzpOv7pdl4U-fVNeMKAhNHVI60YuClTsliV0nQ1nMlNX-00pFomN2qfoYG4B4uwSzQtKYdf9Rtlvuu7nNgfg-RzD00EFsUFtoa_x_H-hFZFWzH2ehIoU30wSZBtMEfCRQ2FWQSpaRuxE7sQTC5gaYsZFdHsMJ-1YVyProonc678L-DQWwWoTXQctmkZQxwEtBJN2FpMudHxr6YsM6txEjNReFjL7rFUew0WNtFlaXoqC0iA",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "xicF7hzOUq6mdJY0Eu_EH7ET9KvfpcuD7Yx9plqClvs",
+                    "user": {
+                        "id": "01a12267-2826-7d1d-878e-ae4db98dbc84",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    }
+]

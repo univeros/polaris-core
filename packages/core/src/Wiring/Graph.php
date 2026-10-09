@@ -24,6 +24,8 @@ use Polaris\Contract\IdentityProviderInterface;
 use Polaris\Contract\MetricsInterface;
 use Polaris\Contract\OtpMailerInterface;
 use Polaris\Schema\Schema;
+use Polaris\Contract\MfaFactorType;
+use Polaris\Contract\MfaFactorTypeProvider;
 use Polaris\Contract\Plugin;
 use Polaris\Contract\PasswordHasherInterface;
 use Polaris\Contract\QrCodeRendererInterface;
@@ -68,6 +70,7 @@ use Polaris\Mfa\OtpFactorService;
 use Polaris\Mfa\OtphpTotpProvider;
 use Polaris\Mfa\OtpService;
 use Polaris\Mfa\RecoveryCodeService;
+use Polaris\Model\MfaFactor;
 use Polaris\Notification\NotificationListener;
 use Polaris\Observability\AuditLogListener;
 use Polaris\Observability\MetricsListener;
@@ -115,6 +118,7 @@ use ReflectionClass;
 use ReflectionNamedType;
 
 use function array_key_exists;
+use function in_array;
 use function array_values;
 use function sprintf;
 
@@ -579,7 +583,32 @@ final class Graph
 
     public function mfaVerifier(): MfaChallengeVerifier
     {
-        return $this->once(MfaChallengeVerifier::class, fn(): MfaChallengeVerifier => new MfaChallengeVerifier($this->repository(MfaFactorRepository::class), $this->mfaTotp(), $this->otp(), $this->recoveryCodes()));
+        return $this->once(MfaChallengeVerifier::class, fn(): MfaChallengeVerifier => new MfaChallengeVerifier($this->repository(MfaFactorRepository::class), $this->mfaTotp(), $this->otp(), $this->recoveryCodes(), fn(): array => $this->mfaFactorTypes()));
+    }
+
+    /**
+     * The plugins' MFA factor types by `type` ({@see MfaFactorTypeProvider}); core's own types stay core's.
+     * Resolved on the verifier's first use, so a type may be built from the MFA services themselves.
+     *
+     * @return array<string, MfaFactorType>
+     */
+    private function mfaFactorTypes(): array
+    {
+        $types = [];
+        foreach ($this->plugins() as $plugin) {
+            if (!$plugin instanceof MfaFactorTypeProvider) {
+                continue;
+            }
+            foreach ($plugin->mfaFactorTypes($this) as $type) {
+                $name = $type->type();
+                if (in_array($name, [MfaFactor::TYPE_TOTP, MfaFactor::TYPE_SMS, MfaFactor::TYPE_EMAIL], true) || isset($types[$name])) {
+                    throw new LogicException(sprintf('Plugin "%s" registers the MFA factor type "%s", which core or another plugin already verifies.', $plugin->id(), $name));
+                }
+                $types[$name] = $type;
+            }
+        }
+
+        return $types;
     }
 
     public function mfaLogin(): MfaLoginService

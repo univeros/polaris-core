@@ -149,3 +149,122 @@ entries here when a WP confirms or changes them.
   refusal of passwordless sign-in for a user whose only factors share its channel, or a core seam where
   the `login_mfa` ticket carries the factors allowed to complete it (a logged core change). TOTP and
   recovery codes are unaffected.
+- 2026-10-09 · WP2 · Decision #1, the one planned core seam (spec §3.2, §9.2): a plugin adds an MFA
+  factor type through two contracts, `Polaris\Contract\MfaFactorType` (`type()`, `verify(factor, code,
+  purpose)`) and `Polaris\Contract\MfaFactorTypeProvider` (`mfaFactorTypes(Graph)`, implemented by the
+  plugin as `CommandProvider` is), and `MfaChallengeVerifier` dispatches a factor whose type is not
+  `totp`, `sms` or `email` to the registered type. Core owns the factor row (`auth_mfa_factors`, listed,
+  relabelled, defaulted and removed by its own routes, the first-factor recovery codes through
+  `MfaConfirmation`), the `login_mfa` ticket and the verify routes (`/auth/mfa/verify`,
+  `/auth/mfa/step-up`, whose `code` carries what the type verifies, for a passkey the assertion JSON);
+  the plugin owns enrolment (its own ceremony routes) and verification. `/auth/mfa/challenge` keeps
+  answering `422 unsupported_factor` for a plugin type as it does for TOTP: the plugin's options route is
+  the challenge. The session a plugin type completes carries core's `amr: ["pwd","otp"]`, as after a
+  passwordless sign-in (the verify routes are frozen). No route, fixture or existing behaviour changes;
+  the 184 core fixtures replay unchanged. · Rejected: registration on `Config` (the type needs the
+  graph's services, so it would be a factory callable the host writes; the plugin already has the
+  graph); a `passkey` type inside core (the plugin owns the verification, spec §3.2).
+- 2026-10-09 · WP2 · `polaris/passkey`: one table `polaris_passkey` (id, user_id, credential_id,
+  public_key as the COSE key, counter, aaguid, transports, backed_up, name, factor_id, last_used_at,
+  created_at); the options of a ceremony live in the cache for 5 minutes keyed by the challenge, so a
+  verify finds them without a session (discoverable sign-in, conditional UI) and once. A credential is a
+  core factor (`factor_id`) when the plugin is configured `mfaFactor: true` (the default): registration
+  creates the confirmed factor row through `MfaConfirmation`, so the first one answers recovery codes and
+  `mfa.enrolled`; removing the factor through core's route keeps the passkey as a sign-in credential
+  (the plugin's listener clears the link); deleting the passkey removes its factor, refused as
+  `passkey/last_factor` when core's enforcement protects it. A sign-in session carries
+  `amr: ["passkey"]`, and `mfa: true` with the MFA gate skipped only when the authenticator reported user
+  verification (`UV`), because then the passkey is itself two factors; without `UV` core's gate applies
+  as for passwordless. `DELETE /passkey/{id}` is a `step_up` route like core's factor delete. Relying
+  party id and allowed origins come from the plugin's configuration; an origin or rpId the authenticator
+  did not sign for is `passkey/origin_mismatch`, read from the client data before the library runs.
+  Attestation is `none` (the authenticator's attestation is not verified, as Better Auth's); the
+  library is `web-auth/webauthn-lib` ^5.3 behind `Polaris\Passkey\Protocol`. Tests use a software
+  authenticator (P-256, `none` attestation) so the recorded fixtures carry real WebAuthn payloads.
+  · Rejected: `polaris_passkey_challenge` table (the cache is what sso and passwordless use); counting
+  passkeys as credentials for `social/last_credential` (couples the packages).
+- 2026-10-09 · WP2 · `polaris/social`: the OAuth state lives in the cache (spec §3.1 allows it; what sso
+  does), no `polaris_social_state` table. Linking starts at `POST /social/{provider}/link` (bearer,
+  `step_up`), which puts the user in the state; `POST /social/{provider}/start` is public and has no
+  `link` flag (a public route carries no bearer). The callback accepts `GET` and `POST` (Apple answers
+  with `response_mode=form_post`). A sign-in by a trusted provider with a verified email links to the
+  existing user; an untrusted provider or an unverified email refuses with `social/account_exists` and
+  the user links from a session; sign-up creates a verified user without a password, `amr:
+  ["social:<provider>"]`. The last credential is "no password and no other linked account", so unlinking
+  it is `social/last_credential`. Provider tokens are encrypted with core's encrypter and never returned
+  except by `POST /social/{provider}/token`, which refreshes an expiring one. The catalog is data
+  (`Catalog`: endpoints, scopes, PKCE, OIDC issuer, profile mapping) behind one `OAuth2Provider`, with
+  provider classes only where the protocol differs: Apple (client-secret JWT, `form_post`, the user from
+  the id_token and the first callback), Google (One Tap), Microsoft (tenant), GitHub (a second call for
+  the verified email); `GenericOAuth` is the same class on a host's own definition. `polaris/audit` is
+  required (the `social.*` names join the catalog, as sso's do). · Rejected: a state table; `link: bool`
+  on the public start route.
+- 2026-10-09 · WP2 · The OAuth proxy: `proxy: 'https://auth.example.com'` names the stable origin
+  registered at the providers. A deployment whose `baseUrl` is another origin (a preview, localhost)
+  sends the provider to the stable origin's callback and puts its own callback in the state as a signed
+  `return_to` (a keyed hash under core's pepper, which the deployments share); the stable origin's
+  callback forwards a state carrying a validly signed `return_to` to it with the code, and refuses an
+  unsigned or tampered one (`social/state_invalid`), so it is never an open redirector. The preview
+  then completes the exchange itself with its own cache entry and client secret. · Rejected: a shared
+  state store between deployments (nothing shared but the secrets).
+- 2026-10-09 · WP2 · The factor types a plugin registers are resolved on the verifier's first use (a
+  closure in `MfaChallengeVerifier`), not when the graph builds it: the passkey type is built from the
+  plugin's service, which needs core's MFA login service, which needs the verifier; resolving at
+  construction looped. The provider contract says so. · Rejected: forbidding a type to use the MFA
+  services (the passkey type opens no session itself, but its service does for sign-in).
+- 2026-10-09 · WP2 · Rate limits reuse core's groups: `/passkey/authenticate/options` is `token_refresh`
+  (60 a minute per IP: a conditional-UI page mints a challenge on load and the challenge is a random
+  string in the cache), `/passkey/authenticate/verify`, `/social/{provider}/start` and
+  `/social/google/one-tap` `login`, the callbacks and `/social/exchange` `token_consume`, the
+  registration routes `mfa_enroll` and `mfa_confirm`, `/social/{provider}/link` `mfa_enroll`. Sentinel
+  guards `/passkey/authenticate/verify`, `/social/{provider}/start` and `/social/google/one-tap` as
+  `sign_in` through the plugins' `SENTINEL_ROUTES`.
+- 2026-10-09 · WP2 · Core's test normaliser masks `state`, `nonce`, `code_challenge` and `code` in any URL
+  a body or a Location header carries (the social `start` answers the provider's authorization URL with
+  per-run values; sso's `sso_code` was the only case before). A provider's scope list is split on spaces
+  or commas (GitHub and Facebook answer commas). The social fixtures run the recorded providers through
+  the same routing PSR-18 client sso's tests use; the four hosts replay them unchanged.
+- 2026-10-09 · WP2 · The Slim demo: `src/FakeProvider.php` is the demo's own OAuth 2 server behind the
+  `fake` provider (a `Definition`, as any host's server), called in-process through `LoopbackClient`
+  because `php -S` serves one request at a time; the plugins' short-lived state goes to `src/FileCache.php`
+  (`var/cache`) because every `php -S` request is a fresh process, while the rate limits stay in memory;
+  the demo's origin is `http://localhost:8080` (an IP is not a relying party id). The Playwright run of
+  spec §8 WP2.4 drives `examples/slim/public/passkey.html` from `packages/client-ts` (the repository's
+  one Node project: `npm run e2e`, Chromium with a CDP virtual authenticator), after the client's tests in
+  the same CI job. The walkthrough signs in through the fake provider on the Slim demo only (it probes
+  `/fake-oauth/me`). · Rejected: a second Node project under `examples/slim`; Playwright talking to the
+  passkey routes directly (the browser side is the point of the run).
+- 2026-10-09 · WP2 · Security review of the two packages, the seam and the demo (before the PR), fixed:
+  (1) account pre-hijacking through linking: a trusted provider's verified email that matches an
+  unverified existing user claims that user (the password set without proving the mailbox goes, as
+  after a passwordless sign-in; the sessions and the other linked accounts too) instead of linking into
+  whoever registered the address; (2) a social or passkey sign-in respects core's `require_verified_email`
+  (`social/email_unverified`, `passkey/email_unverified`): a sign-up through a provider that did not
+  vouch for the email makes an account but no session until the email is verified; (3) the callback's
+  redirect carries the `state` back with the code, so the application compares it with what `start`
+  answered before exchanging (login CSRF); (4) a passkey sign-in without user verification is not offered
+  its own factor as the second step: another factor gates it, and when there is none the sign-in is
+  `passkey/user_verification_required`; (5) passkey registration is a `step_up` route (a passkey with
+  user verification signs in past the gate, so a stolen access token must not register one), as is
+  `/social/{provider}/token`; (6) both plugins delete the user's accounts and passkeys on core's
+  `UserDeleted`; (7) a One Tap sign-in keeps the provider tokens a callback stored; (8) the proxy's
+  signed payload names the provider and expires with the state; (9) a profile's name fits the display
+  name (120 characters); (10) one provider account per user and provider (unique index); (11) a plain
+  http origin for passkeys is accepted on localhost only; (12) the demo's mailbox route answers the
+  loopback only. · Rejected: binding the OAuth state to a cookie (the API has no cookie session; the
+  state comparison is the client's, as Better Auth's); rate limiting the token route beyond the
+  authenticated budget (the step-up is the protection).
+- 2026-10-09 · WP2 · Kept from the review, as residual risks matching sso's behaviour: the one-use reads
+  of a state, a challenge and a hand-off code are a get then a delete on the PSR-16 cache (no atomic take);
+  the hand-off outcome is cached as the envelope; `JWT::$leeway` is process-wide (sso sets it too); a
+  colliding factor type surfaces at the first verification rather than at boot (the types are lazy);
+  turning `mfaFactor` off after enrolment leaves factor rows nothing verifies (recovery codes remain);
+  `start` takes the scopes it is given (within the provider's consent screen); the last-credential and
+  unlink checks are not transactional. Open for the 1.0 review: a link started by one session and
+  completed in another browser links the provider account to the starter (the exchange is public, as
+  sso's); binding the exchange of a link outcome to the starting bearer would close it.
+- 2026-10-09 · WP2 · CI pulls the Postgres service from Google's Docker Hub mirror
+  (`mirror.gcr.io/library/postgres:16`): four consecutive runs of #48 failed on Docker Hub's
+  unauthenticated pull-rate limit on the shared runner addresses before a single test ran, and a rerun
+  does not clear it. The mirror serves the same image without that limit. · Rejected: a Docker Hub
+  login step (a secret for a public image); waiting out the limit (hours per occurrence).

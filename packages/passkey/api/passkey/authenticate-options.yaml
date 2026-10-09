@@ -1,0 +1,35 @@
+# POST /passkey/authenticate/options: the request options for navigator.credentials.get().
+endpoint:
+  method: POST
+  path: /passkey/authenticate/options
+  summary: Start a passkey sign-in
+  tags: [passkey]
+  auth: public
+  rate_limit: token_refresh
+  effect: write
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Passkey\Http\AuthenticateOptionsEndpoint
+  description: >
+    PublicKeyCredentialRequestOptionsJSON with a challenge valid for five minutes and no allowed
+    credential named (discoverable: the authenticator offers the user's passkeys, and conditional UI
+    can autofill). The browser's answer goes to POST /passkey/authenticate/verify to sign in, or to
+    core's POST /auth/mfa/verify or /auth/mfa/step-up as the code of a passkey factor.
+
+output:
+  status: 200
+  example:
+    data:
+      challenge: "<opaque>"
+      rpId: "app.example.com"
+      allowCredentials: []
+      userVerification: preferred
+      timeout: 60000
+
+errors: []
+
+events: []

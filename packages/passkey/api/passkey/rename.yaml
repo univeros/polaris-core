@@ -1,0 +1,32 @@
+# PATCH /passkey/{id}: rename a passkey.
+endpoint:
+  method: PATCH
+  path: /passkey/{id}
+  summary: Rename a passkey
+  tags: [passkey]
+  auth: bearer
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    name: { type: string, rules: [required, "max:80"] }
+
+domain:
+  class: Polaris\Passkey\Http\RenameEndpoint
+  description: >
+    The new name, also the label of the core factor the passkey backs. A passkey that is not the
+    caller's is not found.
+
+output:
+  status: 200
+  example:
+    data: { id: "018f...", name: "Work laptop", aaguid: "<uuid>", transports: [internal], backed_up: true, factor_id: "018f...", last_used_at: null, created_at: "2026-10-09T10:00:00+00:00" }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 404, code: passkey_not_found }
+  - { status: 422, code: passkey_invalid_input }
+
+events: []

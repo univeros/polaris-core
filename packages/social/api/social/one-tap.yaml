@@ -1,0 +1,41 @@
+# POST /social/google/one-tap: Google One Tap's credential for the session.
+endpoint:
+  method: POST
+  path: /social/google/one-tap
+  summary: Sign in with Google One Tap
+  tags: [social]
+  auth: public
+  rate_limit: login
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    credential: { type: string, rules: [required], sensitive: true }
+
+domain:
+  class: Polaris\Social\Http\OneTapEndpoint
+  description: >
+    The id_token the One Tap prompt handed the page, verified offline against Google's keys (issuer,
+    audience, signature), then the same linking policy as a callback; core's login envelope.
+
+output:
+  status: 200
+  example:
+    data:
+      access_token: "<jwt>"
+      token_type: Bearer
+      expires_in: 900
+      refresh_token: "<opaque>"
+      user: { id: "018f...", email: "ada@example.com", email_verified: true }
+
+errors:
+  - { status: 403, code: social_provider_error }
+  - { status: 403, code: social_account_disabled }
+  - { status: 403, code: social_email_unverified }
+  - { status: 404, code: social_provider_not_found }
+  - { status: 409, code: social_account_exists }
+  - { status: 422, code: social_invalid_input }
+
+events: [user.logged_in]
