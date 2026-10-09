@@ -42,9 +42,9 @@
                 const email = "passkey+" + Date.now() + "@example.com";
                 const password = "Sup3r-Secret-Passw0rd";
                 await api("POST", "/auth/register", { email, password });
-                const mail = await (await fetch("/mail.log?" + Date.now())).text().catch(() => "");
+                const mail = await (await fetch("/mailbox?" + Date.now())).text().catch(() => "");
                 const token = [...mail.matchAll(/"token":"([^"]+)"/g)].at(-1)?.[1];
-                if (!token) throw new Error("no verification token in var/mail.log (served as /mail.log)");
+                if (!token) throw new Error("no verification token in var/mail.log (served as /mailbox)");
                 await api("POST", "/auth/email/verify", { token });
                 const login = await api("POST", "/auth/login", { email, password });
                 const options = await api("POST", "/passkey/register/options", {}, login.access_token);

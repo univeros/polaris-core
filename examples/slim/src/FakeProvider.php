@@ -43,7 +43,8 @@ final class FakeProvider
     public static function register(App $app, string $root): void
     {
         // The demo's mailbox, for the passkey page to read its verification token.
-        $app->get('/mail.log', static function (ServerRequestInterface $request, ResponseInterface $response) use ($root): ResponseInterface {
+        // Not `/mail.log`: php -S serves a path with a static-looking extension as a file, never through index.php.
+        $app->get('/mailbox', static function (ServerRequestInterface $request, ResponseInterface $response) use ($root): ResponseInterface {
             // The mailbox holds verification and reset tokens: the demo serves it to the demo's own browser only.
             if (!in_array($request->getServerParams()['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true)) {
                 return $response->withStatus(403);
