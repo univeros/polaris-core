@@ -11,8 +11,8 @@
     ],
     "require": {
         "php": ">=8.3",
-        "polaris/cli": "^0.6",
-        "polaris/core": "^0.6",
+        "polaris/cli": "^0.7",
+        "polaris/core": "^0.7",
         "psr/clock": "^1.0",
         "psr/event-dispatcher": "^1.0",
         "symfony/console": "^7.0 || ^8.0",
@@ -25,7 +25,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.6.x-dev"
+            "dev-main": "0.7.x-dev"
         }
     },
     "config": {

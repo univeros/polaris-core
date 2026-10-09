@@ -12,10 +12,10 @@
     "require": {
         "php": ">=8.3",
         "nyholm/psr7": "^1.8",
-        "polaris/cli": "^0.6",
-        "polaris/core": "^0.6",
-        "polaris/pdo": "^0.6",
-        "polaris/psr15": "^0.6",
+        "polaris/cli": "^0.7",
+        "polaris/core": "^0.7",
+        "polaris/pdo": "^0.7",
+        "polaris/psr15": "^0.7",
         "symfony/framework-bundle": "^7.4 || ^8.0",
         "symfony/psr-http-message-bridge": "^7.4 || ^8.0",
         "symfony/security-bundle": "^7.4 || ^8.0"
@@ -30,7 +30,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.6.x-dev"
+            "dev-main": "0.7.x-dev"
         }
     },
     "config": {
