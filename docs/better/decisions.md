@@ -135,3 +135,10 @@ entries here when a WP confirms or changes them.
   sso's); the magic link is a GET that mail scanners may spend and whose code is not bound to the browser
   that asked (the spec's flow, Better Auth's too); a switch emits no `UserLoggedIn` (it is not a sign-in);
   guest sign-in is bounded by the `register` rate limit and sentinel.
+- 2026-10-09 · WP1 · The split workflow submits a package Packagist does not know yet: when
+  `update-package` answers 404 on a split's first push, it calls `create-package` with the same
+  `PACKAGIST_AUTH`, so the four new packages register themselves when this PR's merge splits them. The
+  four split repositories (`univeros/polaris.{passwordless,username,anonymous,multi-session}`) must exist
+  and `POLARIS_SPLIT_TOKEN` must reach them first (owner). Packagist's "Legacy Auto-Update, Needs
+  Attention" label on the existing packages is the API-ping path this workflow uses; it clears when the
+  owner's Packagist account syncs its GitHub hooks, outside this repository.
