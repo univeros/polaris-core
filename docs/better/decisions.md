@@ -268,3 +268,36 @@ entries here when a WP confirms or changes them.
   unauthenticated pull-rate limit on the shared runner addresses before a single test ran, and a rerun
   does not clear it. The mirror serves the same image without that limit. · Rejected: a Docker Hub
   login step (a secret for a public image); waiting out the limit (hours per occurrence).
+- 2026-10-10 · WP3 · Spec §9.4: `polaris/oauth-provider` is written fresh behind the plugin contract, not
+  `league/oauth2-server`: the library's repository interfaces fight the plugin schema contract (it
+  wants its own entities and storage for clients, scopes, codes and tokens), its entity model duplicates
+  core's users, and what WP3 adds on top (DPoP, CIBA, token exchange, CIMD, device flow data pages) is
+  not in it, so it would be an adaptation layer plus forks. `lcobucci/jwt` (core's) mints the access
+  tokens with core's signing key and `kid`; `firebase/php-jwt` (sso's and social's) verifies client
+  assertions and DPoP proofs from JWKs. Plugin ids: `api-keys` (`Polaris\ApiKeys\`, `api/api-keys/`,
+  `client.apiKeys`, problems `api-keys/*`) and `oauth` for the `polaris/oauth-provider` package
+  (`Polaris\OAuth\`, `api/oauth/`, `client.oauth` as spec §5 names it, problems `oauth/*` as §7).
+  · Rejected: `league/oauth2-server` adapted to the schema contract (see above); plugin id
+  `oauth-provider` (`client.oauthProvider`, problems `oauth-provider/*`, against §5 and §7).
+- 2026-10-10 · WP3 · Decision #2, a core seam (spec §3.5 "the plugin middleware accepts `Authorization:
+  Bearer pk_...` or `x-api-key` on every Polaris route"): a plugin middleware cannot do that, because
+  core's `TokenAuthenticationMiddleware` answers 401 on every `auth: bearer` route before the plugins'
+  middleware runs. So core gains `Polaris\Contract\BearerResolver` (`resolve(ServerRequestInterface):
+  ?TokenInterface`, null for a request it does not recognise, `AuthorizationTokenException` to refuse
+  one it does) and `Polaris\Contract\BearerResolverProvider` (`bearerResolvers(Graph)`, implemented by
+  the plugin as `MfaFactorTypeProvider` is), collected by `Graph::bearerResolvers()`; psr15's
+  `TokenAuthenticationMiddleware` asks the resolvers first, on `auth: bearer` routes only, and parses
+  the core JWT when none answers. The seam is in the middleware, not in `TokenFactoryInterface`, so
+  `polaris/admin`'s principals, scim, the host guards and every other caller of
+  `tokenFactory()->fromTokenString()` keep seeing core sessions only (an API key is never an admin
+  principal by accident). No route, fixture or existing behaviour changes. · Rejected: running the
+  plugins' middleware before token authentication (the contract says "after the bearer token was
+  parsed"); a `TokenFactoryInterface` port (one plugin at a time, and every consumer would accept keys).
+- 2026-10-10 · WP3 · Decision #3, a core seam: a token that carries the metadata `delegated` (a list of
+  permission names, set in-process by a bearer resolver and never read from the wire) makes
+  `Gate::authority()` answer the database-resolved authority with its `scope` intersected with that
+  list; roles stay (they describe the owner). Core's own access tokens never carry it. This is "the
+  key's permissions intersected with the owner's" of §3.5 and "scopes = permissions" of §3.6 in one
+  place; WP4's agent tokens will carry it too. · Rejected: the plugin middleware re-checking the
+  route's permissions against the key (the `AUTHORITY` attribute would still carry the owner's full
+  authority into the endpoints); trusting `scope` on core tokens (a behaviour change of the 52 routes).

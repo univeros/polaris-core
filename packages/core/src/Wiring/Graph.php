@@ -17,6 +17,8 @@ use Polaris\Authorization\RoleService;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\RateLimitConfig;
 use Polaris\Config\Secrets;
+use Polaris\Contract\BearerResolver;
+use Polaris\Contract\BearerResolverProvider;
 use Polaris\Contract\BreachedPasswordCheckInterface;
 use Polaris\Contract\DatabaseAdapter;
 use Polaris\Contract\EncrypterInterface;
@@ -131,6 +133,9 @@ final class Graph
 {
     /** @var array<string, object> */
     private array $instances = [];
+
+    /** @var list<BearerResolver>|null built on first use */
+    private ?array $bearerResolvers = null;
 
     private readonly Manifest $manifest;
 
@@ -378,6 +383,30 @@ final class Graph
     public function tokenFactory(): TokenFactoryInterface
     {
         return $this->once(PolarisTokenFactory::class, fn(): PolarisTokenFactory => new PolarisTokenFactory($this->tokenParser(), $this->tokenGenerator(), $this->identityProvider(), $this->clock()));
+    }
+
+    /**
+     * The plugins' bearer resolvers ({@see BearerResolverProvider}), in registration order: the
+     * pipeline's token authentication asks them before parsing the core JWT. Built on the first
+     * request that needs them, so a resolver may be built from any service.
+     *
+     * @return list<BearerResolver>
+     */
+    public function bearerResolvers(): array
+    {
+        if ($this->bearerResolvers === null) {
+            $resolvers = [];
+            foreach ($this->plugins() as $plugin) {
+                if ($plugin instanceof BearerResolverProvider) {
+                    foreach ($plugin->bearerResolvers($this) as $resolver) {
+                        $resolvers[] = $resolver;
+                    }
+                }
+            }
+            $this->bearerResolvers = $resolvers;
+        }
+
+        return $this->bearerResolvers;
     }
 
     public function denylist(): AccessTokenDenylist

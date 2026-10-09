@@ -8,6 +8,9 @@ use Polaris\Contract\TokenInterface;
 use Polaris\Exception\AuthorizationException;
 
 use function array_fill_keys;
+use function array_filter;
+use function array_values;
+use function is_array;
 use function is_string;
 
 /**
@@ -23,6 +26,9 @@ use function is_string;
  */
 final readonly class Gate
 {
+    /** The token metadata naming the permissions a delegate's owner handed it (set by a bearer resolver). */
+    public const string DELEGATED = 'delegated';
+
     public function __construct(private PermissionResolver $permissions)
     {
     }
@@ -45,15 +51,26 @@ final readonly class Gate
     /**
      * The caller's database-resolved authority for their active org. The middleware attaches it
      * to the request so downstream guards never have to trust token claims for role decisions.
+     *
+     * A token a plugin's bearer resolver built for a delegate (an API key, an OAuth client, an agent)
+     * carries {@see self::DELEGATED}, the permissions the owner delegated: the authority's scope is the
+     * intersection, the roles stay the owner's. Core's own access tokens never carry it, and a resolver
+     * sets it in-process, so a claim on the wire cannot widen anything.
      */
     public function authority(TokenInterface $token): ResolvedAuthority
     {
         $organization = $token->getMetadata('org');
-
-        return $this->permissions->resolve(
+        $authority = $this->permissions->resolve(
             (string) $token->getMetadata('sub'),
             is_string($organization) ? $organization : null,
         );
+        $delegated = $token->getMetadata(self::DELEGATED);
+        if (!is_array($delegated)) {
+            return $authority;
+        }
+        $allowed = array_fill_keys(array_filter($delegated, is_string(...)), true);
+
+        return new ResolvedAuthority($authority->roles, array_values(array_filter($authority->scope, static fn(string $permission): bool => isset($allowed[$permission]))));
     }
 
     public function allowsAuthority(ResolvedAuthority $authority, string ...$permissions): bool

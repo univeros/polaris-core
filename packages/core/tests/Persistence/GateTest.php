@@ -21,6 +21,7 @@ use Polaris\Repository\PermissionRepository;
 use Polaris\Repository\RolePermissionRepository;
 use Polaris\Repository\RoleRepository;
 use Polaris\Repository\UserRepository;
+use Polaris\Token\Token;
 
 use function is_string;
 
@@ -50,6 +51,20 @@ final class GateTest extends DatabaseTestCase
 
         $this->expectException(AuthorizationException::class);
         $this->gate()->authorize($token, 'members.invite');
+    }
+
+    public function testADelegatedTokenHoldsTheIntersectionOfItsListAndTheOwnersAuthority(): void
+    {
+        $owner = $this->memberWith('members.read');
+        $delegated = new Token('', ['sub' => $owner->getMetadata('sub'), 'org' => $owner->getMetadata('org'), Gate::DELEGATED => ['members.read', 'members.invite']]);
+        $nothing = new Token('', ['sub' => $owner->getMetadata('sub'), 'org' => $owner->getMetadata('org'), Gate::DELEGATED => ['members.invite']]);
+
+        self::assertSame(['members.read'], $this->gate()->authority($delegated)->scope, 'what the owner holds, of what was delegated');
+        self::assertSame(['limited'], $this->gate()->authority($delegated)->roles, 'the roles stay the owner\'s');
+        self::assertTrue($this->gate()->allows($delegated, 'members.read'));
+        self::assertFalse($this->gate()->allows($delegated, 'members.invite'), 'delegated but not held');
+        self::assertSame([], $this->gate()->authority($nothing)->scope);
+        self::assertFalse($this->gate()->allows($nothing, 'members.read'), 'held but not delegated');
     }
 
     private function gate(): Gate
