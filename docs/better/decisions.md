@@ -263,3 +263,8 @@ entries here when a WP confirms or changes them.
   unlink checks are not transactional. Open for the 1.0 review: a link started by one session and
   completed in another browser links the provider account to the starter (the exchange is public, as
   sso's); binding the exchange of a link outcome to the starting bearer would close it.
+- 2026-10-09 · WP2 · CI pulls the Postgres service from the ECR Public mirror of the Docker official
+  image (`public.ecr.aws/docker/library/postgres:16`): four consecutive runs of #48 failed on Docker
+  Hub's unauthenticated pull-rate limit on the shared runner addresses before a single test ran, and a
+  rerun does not clear it. The mirror serves the same image without that limit. · Rejected: a Docker
+  Hub login step (a secret for a public image); waiting out the limit (hours per occurrence).
