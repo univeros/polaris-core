@@ -23,7 +23,8 @@ export default defineConfig({
         cwd: demo,
         // The demo binds its callbacks and passkeys to this origin (its .env does not override the environment).
         env: { POLARIS_BASE_URL: baseURL },
-        url: `http://127.0.0.1:${port}/auth/.well-known/jwks.json`,
+        // A static file: php -S answers 404 for a routed path whose extension looks static (`.json`).
+        url: `http://127.0.0.1:${port}/passkey.html`,
         reuseExistingServer: false,
         timeout: 30_000,
     },
