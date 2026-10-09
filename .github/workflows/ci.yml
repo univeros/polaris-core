@@ -16,7 +16,8 @@ jobs:
 
     services:
       postgres:
-        image: postgres:16
+        # Docker Hub's unauthenticated pull limit stopped three runs in a row; the mirror serves the same image.
+        image: mirror.gcr.io/library/postgres:16
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
