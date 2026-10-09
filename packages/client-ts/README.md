@@ -89,7 +89,8 @@ npm test             # starts examples/slim (installed and set up) and runs regi
 `src/sso.ts`, `src/scim.ts`) are checked in; CI regenerates them and fails on a difference, so a manifest
 change ships with its types. `polaris.php` is the application the client is generated for (core with the
 five plugins that have routes). `POLARIS_URL=http://host:port npm test` runs the test against a server
-you started. Node 20 or later.
+you started. Node 20 or later. Every `v*` tag of the monorepo publishes the package to npm through
+trusted publishing (`.github/workflows/npm-publish.yml`, OIDC, provenance attached, no token).
 
 ## License
 

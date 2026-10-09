@@ -4,6 +4,13 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- `@polaris-auth/client` is published to npm by `.github/workflows/npm-publish.yml` on every `v*` tag,
+  through npm's trusted publishing (OIDC, provenance), after the first publish of 0.6.1 by hand;
+  `repository.url` carries the `git+https://` form npm normalizes it to.
+
 ## [0.6.1] - 2026-09-12
 
 The TypeScript client answers a `polaris/sentinel` captcha challenge with one retry; the root README lists
