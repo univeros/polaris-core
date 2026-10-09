@@ -1,13 +1,15 @@
 import { defineConfig } from "@playwright/test";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 
 /**
  * The browser side of the Slim demo (examples/slim): Chromium with a virtual authenticator against the
- * demo served by PHP's built-in server. `composer install && bin/setup` in examples/slim first.
+ * demo served by PHP's built-in server on its own port (the smoke test holds 8080 for a while).
+ * `composer install && bin/setup` in examples/slim first; run from packages/client-ts (`npm run e2e`).
+ * localhost, not 127.0.0.1: the demo binds its passkeys to the domain.
  */
-const demo = fileURLToPath(new URL("../../examples/slim/", import.meta.url));
-// localhost, not 127.0.0.1: the demo binds its passkeys to the domain.
-const baseURL = process.env["POLARIS_URL"] ?? "http://localhost:8080";
+const demo = resolve(process.cwd(), "../../examples/slim");
+const port = 8090;
+const baseURL = process.env["POLARIS_URL"] ?? `http://localhost:${port}`;
 
 export default defineConfig({
     testDir: "./e2e",
@@ -17,10 +19,12 @@ export default defineConfig({
     use: { baseURL, trace: "retain-on-failure" },
     projects: [{ name: "chromium", use: { browserName: "chromium" } }],
     webServer: process.env["POLARIS_URL"] ? undefined : {
-        command: "php -S 127.0.0.1:8080 -t public",
+        command: `php -S 127.0.0.1:${port} -t "${resolve(demo, "public")}"`,
         cwd: demo,
-        url: "http://127.0.0.1:8080/auth/.well-known/jwks.json",
-        reuseExistingServer: true,
+        // The demo binds its callbacks and passkeys to this origin (its .env does not override the environment).
+        env: { POLARIS_BASE_URL: baseURL },
+        url: `http://127.0.0.1:${port}/auth/.well-known/jwks.json`,
+        reuseExistingServer: false,
         timeout: 30_000,
     },
 });
