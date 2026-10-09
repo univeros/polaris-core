@@ -142,3 +142,10 @@ entries here when a WP confirms or changes them.
   and `POLARIS_SPLIT_TOKEN` must reach them first (owner). Packagist's "Legacy Auto-Update, Needs
   Attention" label on the existing packages is the API-ping path this workflow uses; it clears when the
   owner's Packagist account syncs its GitHub hooks, outside this repository.
+- 2026-10-09 · WP1 · Open for the 1.0 security review: a passwordless sign-in and an MFA factor on the
+  same channel (an email code or magic link, then core's email OTP factor on that address; a phone code,
+  then an SMS factor on that number) pass core's gate with one channel. WP1 leaves core's gate as it is
+  (it accepts any confirmed factor, and `/auth/mfa/verify` is frozen). The options: a plugin-side
+  refusal of passwordless sign-in for a user whose only factors share its channel, or a core seam where
+  the `login_mfa` ticket carries the factors allowed to complete it (a logged core change). TOTP and
+  recovery codes are unaffected.
