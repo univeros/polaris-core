@@ -1,0 +1,40 @@
+# POST /phone/verify: sign in with a phone code.
+endpoint:
+  method: POST
+  path: /phone/verify
+  summary: Sign in with a phone code
+  tags: [passwordless]
+  auth: public
+  rate_limit: token_consume
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    phone: { type: string, rules: [required, "max:32"] }
+    code: { type: string, rules: [required], sensitive: true }
+
+domain:
+  class: Polaris\Passwordless\Http\PhoneVerifyEndpoint
+  description: >
+    Spends a sign-in code and answers core's login envelope (amr ["phone"]), or its mfa_required
+    ticket when the user has a confirmed factor. A wrong, used or expired code and an unknown number
+    answer the same passwordless_code_invalid.
+
+output:
+  status: 200
+  example:
+    data:
+      access_token: "<jwt>"
+      token_type: Bearer
+      expires_in: 900
+      refresh_token: "<opaque>"
+      user: { id: "018f...", email: "ada@example.com", email_verified: true }
+
+errors:
+  - { status: 403, code: passwordless_account_disabled }
+  - { status: 422, code: passwordless_code_invalid }
+  - { status: 422, code: passwordless_invalid_input }
+
+events: [user.logged_in]

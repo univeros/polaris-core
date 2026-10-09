@@ -1,0 +1,40 @@
+# POST /multi-session/switch: a fresh session for another account of the device.
+endpoint:
+  method: POST
+  path: /multi-session/switch
+  summary: Switch to another account signed in on this device
+  tags: [multi-session]
+  auth: bearer
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    session_id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\MultiSession\Http\SwitchEndpoint
+  description: >
+    session_id is one of the device's live sessions (GET /multi-session/list); the bearer's session
+    must be on the device too. Opens a new session for that account with the authentication facts of
+    the old one (amr, mfa, auth_time, organization), without signing in again, and ends the old one.
+    The answer is core's login envelope; the caller's own session stays.
+
+output:
+  status: 200
+  example:
+    data:
+      access_token: "<jwt>"
+      token_type: Bearer
+      expires_in: 900
+      refresh_token: "<opaque>"
+      user: { id: "018f...", email: "grace@example.com", email_verified: true }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: multi_session_device_unknown }
+  - { status: 404, code: multi_session_session_not_found }
+  - { status: 422, code: multi_session_invalid_input }
+
+events: []

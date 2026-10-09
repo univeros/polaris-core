@@ -1,0 +1,38 @@
+# POST /magic-link/exchange: the redirect's code for the session.
+endpoint:
+  method: POST
+  path: /magic-link/exchange
+  summary: Exchange the magic link's code for the session
+  tags: [passwordless]
+  auth: public
+  rate_limit: token_consume
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    code: { type: string, rules: [required], sensitive: true }
+
+domain:
+  class: Polaris\Passwordless\Http\MagicLinkExchangeEndpoint
+  description: >
+    The code GET /magic-link/verify appended to the redirect_uri, valid once for 60 seconds; answers
+    core's login envelope (amr ["magic_link"]), or its mfa_required ticket to complete at
+    /auth/mfa/verify when the user has a confirmed factor.
+
+output:
+  status: 200
+  example:
+    data:
+      access_token: "<jwt>"
+      token_type: Bearer
+      expires_in: 900
+      refresh_token: "<opaque>"
+      user: { id: "018f...", email: "ada@example.com", email_verified: true }
+
+errors:
+  - { status: 422, code: passwordless_invalid_input }
+  - { status: 422, code: passwordless_token_invalid }
+
+events: []

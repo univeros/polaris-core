@@ -40,8 +40,11 @@ final class Normalizer
                 continue;
             }
             $values = is_array($values) ? array_values($values) : [$values];
-            // A plugin's hand-off code in a Location header is minted per run, as a body token is.
-            $headers[$lower] = array_map(static fn(mixed $value): mixed => is_string($value) ? preg_replace('/sso_code=[A-Za-z0-9_-]+/', 'sso_code=<code>', $value) : $value, $values);
+            // A plugin's hand-off code in a Location header (`sso_code=`, `code=`) and multi-session's
+            // device id are minted per run, as a body token is.
+            $headers[$lower] = $lower === 'x-polaris-device'
+                ? ['<device>']
+                : array_map(static fn(mixed $value): mixed => is_string($value) ? preg_replace('/([?&](?:sso_)?code)=[A-Za-z0-9_-]+/', '$1=<code>', $value) : $value, $values);
         }
         ksort($headers);
 

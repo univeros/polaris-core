@@ -1,0 +1,34 @@
+# POST /email-otp/send: emails a one-time code.
+endpoint:
+  method: POST
+  path: /email-otp/send
+  summary: Send an email code
+  tags: [passwordless]
+  auth: public
+  rate_limit: mfa_send
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    email: { type: string, rules: [required, email, "max:320"] }
+    purpose: { type: "?string", rules: [optional, "in:sign-in,verify-email,reset-password"] }
+
+domain:
+  class: Polaris\Passwordless\Http\EmailOtpSendEndpoint
+  description: >
+    Emails a 6-digit code, valid for 5 minutes and 5 attempts, bound to its purpose (sign-in by
+    default; verify-email; reset-password) and to the address. It is sent when the purpose applies: an
+    active user or, to sign in, nobody with sign-up on; an unverified user to verify; an active user to
+    reset. The answer is the same 202 whether or not anything was sent.
+
+output:
+  status: 202
+  example:
+    data: { status: sent }
+
+errors:
+  - { status: 422, code: passwordless_invalid_input }
+
+events: []

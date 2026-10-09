@@ -6,6 +6,33 @@ the project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+Program 4 ("Better Auth for PHP", `docs/better/spec.md`), WP1: four sign-in packages on the plugin
+runtime. Core's 52 routes are unchanged.
+
+### Added
+- `polaris/passwordless`: magic links (`/magic-link/send`, `/magic-link/verify` redirecting with a one-minute
+  `code`, `/magic-link/exchange`), email one-time codes to sign in, verify the email or reset the password
+  (`/email-otp/*`), phone codes for a verified second contact (`/phone/add`, `/phone/confirm`, `/phone/send`,
+  `/phone/verify`) and one-time tokens for session transfer (`/one-time-token/generate`, `/verify`). Each
+  ends in core's login envelope with its own `amr` (`magic_link`, `email_otp`, `phone`; a one-time token
+  inherits the session's), respects core's MFA gate, spends every secret once and answers a known and an
+  unknown identifier alike. Sends go through `polaris/messaging`. Tables `polaris_passwordless_secret`,
+  `polaris_passwordless_phone`.
+- `polaris/username`: `PATCH /username` and `POST /username/sign-in` (a username or an email through core's
+  `LoginService`); usernames are unique without regard to case on PostgreSQL, MySQL and SQLite (a
+  lowercased unique column), with rules from configuration. Table `polaris_username`.
+- `polaris/anonymous`: `POST /anonymous/sign-in` (a guest, `amr: ["anonymous"]`), `POST /anonymous/convert`
+  (the host's `onConvert(guestId, userId)`, then the guest's sessions end and it is disabled) and
+  `polaris anonymous:prune`. Table `polaris_anonymous`.
+- `polaris/multi-session`: a middleware that records every token pair against a server-minted device
+  (`X-Polaris-Device` header, HttpOnly cookie `polaris_ms_device`), `GET /multi-session/list`,
+  `POST /multi-session/switch` (a fresh session with the stored authentication facts, no re-authentication),
+  `DELETE /multi-session/{sessionId}`, `GET /multi-session/last-method`. Table `polaris_multi_session_device`.
+- `PasswordlessPlugin::SENTINEL_ROUTES`, `UsernamePlugin::SENTINEL_ROUTES` and
+  `AnonymousPlugin::SENTINEL_ROUTES`, for `polaris/sentinel`'s `routes` option.
+- `@polaris-auth/client`: `client.passwordless`, `client.username`, `client.anonymous` and
+  `client.multiSession`; the namespace generator camel-cases a plugin id.
+
 ### Changed
 - `@polaris-auth/client` is published to npm by `.github/workflows/npm-publish.yml` on every `v*` tag,
   through npm's trusted publishing (OIDC, provenance), after the first publish of 0.6.1 by hand;

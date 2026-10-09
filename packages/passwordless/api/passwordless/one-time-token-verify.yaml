@@ -1,0 +1,37 @@
+# POST /one-time-token/verify: the token for a session.
+endpoint:
+  method: POST
+  path: /one-time-token/verify
+  summary: Sign in with a one-time token
+  tags: [passwordless]
+  auth: public
+  rate_limit: token_consume
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    token: { type: string, rules: [required], sensitive: true }
+
+domain:
+  class: Polaris\Passwordless\Http\OneTimeTokenVerifyEndpoint
+  description: >
+    Spends the token and answers core's login envelope for a new session with the generating session's
+    authentication facts; the MFA gate is not applied again.
+
+output:
+  status: 200
+  example:
+    data:
+      access_token: "<jwt>"
+      token_type: Bearer
+      expires_in: 900
+      refresh_token: "<opaque>"
+      user: { id: "018f...", email: "ada@example.com", email_verified: true }
+
+errors:
+  - { status: 422, code: passwordless_invalid_input }
+  - { status: 422, code: passwordless_token_invalid }
+
+events: [user.logged_in]

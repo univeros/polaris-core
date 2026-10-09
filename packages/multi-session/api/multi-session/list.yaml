@@ -1,0 +1,36 @@
+# GET /multi-session/list: the accounts signed in on the caller's device.
+endpoint:
+  method: GET
+  path: /multi-session/list
+  summary: List the accounts signed in on this device
+  tags: [multi-session]
+  auth: bearer
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\MultiSession\Http\ListEndpoint
+  description: >
+    The device is the X-Polaris-Device header (or the polaris_ms_device cookie) a sign-in answered; the
+    bearer's session must be one of the device's. Every live session of the device, the most recent
+    sign-in first, with its account, the method it signed in with and whether it is the caller's.
+
+output:
+  status: 200
+  example:
+    data:
+      - session_id: "018f..."
+        user: { id: "018f...", email: "ada@example.com", display_name: "Ada" }
+        last_method: magic_link
+        signed_in_at: "2026-10-09T10:00:00+00:00"
+        last_seen: "2026-10-09T10:05:00+00:00"
+        current: true
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: multi_session_device_unknown }
+
+events: []

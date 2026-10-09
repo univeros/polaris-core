@@ -1,0 +1,28 @@
+# GET /multi-session/last-method: how this device last signed in.
+endpoint:
+  method: GET
+  path: /multi-session/last-method
+  summary: Read the device's last sign-in method
+  tags: [multi-session]
+  auth: public
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\MultiSession\Http\LastMethodEndpoint
+  description: >
+    The amr method (pwd, magic_link, email_otp, phone, sso, anonymous, ...) the device's most recent
+    sign-in used, for the client to pre-select its button; null for a device the server does not know.
+    Carries no personal data.
+
+output:
+  status: 200
+  example:
+    data: { last_method: magic_link }
+
+errors: []
+
+events: []

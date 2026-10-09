@@ -1,0 +1,30 @@
+# POST /one-time-token/generate: a token that hands the caller's session to another device or domain.
+endpoint:
+  method: POST
+  path: /one-time-token/generate
+  summary: Generate a one-time token
+  tags: [passwordless]
+  auth: bearer
+  effect: write
+  receipt: true
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Passwordless\Http\OneTimeTokenGenerateEndpoint
+  description: >
+    A token valid once for 3 minutes; POST /one-time-token/verify turns it into a new session that
+    inherits this one's amr, mfa, auth_time and organization. Only a live session may generate one
+    (an access token without a session, an impersonation, cannot).
+
+output:
+  status: 201
+  example:
+    data: { token: "<opaque>", expires_in: 180 }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: passwordless_session_required }
+
+events: []

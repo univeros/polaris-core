@@ -1,0 +1,38 @@
+# POST /anonymous/convert: the guest becomes the account it signed into or up.
+endpoint:
+  method: POST
+  path: /anonymous/convert
+  summary: Convert the guest into an account
+  tags: [anonymous]
+  auth: bearer
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    access_token: { type: string, rules: [required], sensitive: true }
+
+domain:
+  class: Polaris\Anonymous\Http\ConvertEndpoint
+  description: >
+    The bearer is the guest's; access_token is a live session of the account the guest just signed
+    into or up, by any method. The host's onConvert hook receives both ids and moves its data; then
+    the conversion is recorded, the guest's sessions end and the guest is disabled. Its id stays, so
+    the host can still reach what it kept under it.
+
+output:
+  status: 200
+  example:
+    data:
+      guest_id: "018f..."
+      user_id: "018f..."
+      status: converted
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: anonymous_not_a_guest }
+  - { status: 422, code: anonymous_invalid_input }
+  - { status: 422, code: anonymous_token_invalid }
+
+events: []

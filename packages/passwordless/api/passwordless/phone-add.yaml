@@ -1,0 +1,34 @@
+# POST /phone/add: texts a confirmation code to a number the caller wants to add.
+endpoint:
+  method: POST
+  path: /phone/add
+  summary: Add a phone number
+  tags: [passwordless]
+  auth: bearer
+  step_up: true
+  rate_limit: mfa_send
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    phone: { type: string, rules: [required, "max:32"] }
+
+domain:
+  class: Polaris\Passwordless\Http\PhoneAddEndpoint
+  description: >
+    Texts a confirmation code to the number unless another account has it verified; the answer is the
+    same 202 either way. POST /phone/confirm attaches it.
+
+output:
+  status: 202
+  example:
+    data: { status: sent }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 401, code: step_up_required }   # a user with MFA and a stale auth_time; clear via /auth/mfa/step-up
+  - { status: 422, code: passwordless_invalid_input }
+
+events: []

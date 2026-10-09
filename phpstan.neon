@@ -26,3 +26,11 @@ parameters:
         - packages/sso/tests
         - packages/scim/src
         - packages/scim/tests
+        - packages/passwordless/src
+        - packages/passwordless/tests
+        - packages/username/src
+        - packages/username/tests
+        - packages/anonymous/src
+        - packages/anonymous/tests
+        - packages/multi-session/src
+        - packages/multi-session/tests

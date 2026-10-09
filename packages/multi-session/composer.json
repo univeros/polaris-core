@@ -1,0 +1,36 @@
+{
+    "name": "polaris/multi-session",
+    "description": "Multi-session for Polaris for PHP: several signed-in accounts on one device, switching between them without signing in again, revoking one, and the last sign-in method for the client to pre-select",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "polaris/core": "^0.6",
+        "psr/clock": "^1.0",
+        "psr/http-message": "^1.1 || ^2.0",
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0",
+        "symfony/uid": "^7.0 || ^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\MultiSession\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.6.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

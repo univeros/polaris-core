@@ -1,0 +1,40 @@
+# POST /email-otp/verify: sign in with an email code.
+endpoint:
+  method: POST
+  path: /email-otp/verify
+  summary: Sign in with an email code
+  tags: [passwordless]
+  auth: public
+  rate_limit: token_consume
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    email: { type: string, rules: [required, email, "max:320"] }
+    code: { type: string, rules: [required], sensitive: true }
+
+domain:
+  class: Polaris\Passwordless\Http\EmailOtpVerifyEndpoint
+  description: >
+    Spends a sign-in code and answers core's login envelope (amr ["email_otp"]), or its mfa_required
+    ticket when the user has a confirmed factor. An unknown address signs up when sign-up is on. A
+    wrong, used or expired code and an unknown address answer the same passwordless_code_invalid.
+
+output:
+  status: 200
+  example:
+    data:
+      access_token: "<jwt>"
+      token_type: Bearer
+      expires_in: 900
+      refresh_token: "<opaque>"
+      user: { id: "018f...", email: "ada@example.com", email_verified: true }
+
+errors:
+  - { status: 403, code: passwordless_account_disabled }
+  - { status: 422, code: passwordless_code_invalid }
+  - { status: 422, code: passwordless_invalid_input }
+
+events: [user.logged_in]

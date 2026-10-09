@@ -22,11 +22,14 @@
                 "symlink": true,
                 "versions": {
                     "polaris/admin": "0.6.x-dev",
+                    "polaris/anonymous": "0.6.x-dev",
                     "polaris/audit": "0.6.x-dev",
                     "polaris/cli": "0.6.x-dev",
                     "polaris/core": "0.6.x-dev",
                     "polaris/laravel": "0.6.x-dev",
                     "polaris/messaging": "0.6.x-dev",
+                    "polaris/multi-session": "0.6.x-dev",
+                    "polaris/passwordless": "0.6.x-dev",
                     "polaris/pdo": "0.6.x-dev",
                     "polaris/psr15": "0.6.x-dev",
                     "polaris/scim": "0.6.x-dev",
@@ -34,6 +37,7 @@
                     "polaris/sso": "0.6.x-dev",
                     "polaris/symfony": "0.6.x-dev",
                     "polaris/testing": "0.6.x-dev",
+                    "polaris/username": "0.6.x-dev",
                     "polaris/yii": "0.6.x-dev"
                 }
             }
@@ -42,11 +46,14 @@
     "require": {
         "php": ">=8.3",
         "polaris/admin": "0.6.x-dev",
+        "polaris/anonymous": "0.6.x-dev",
         "polaris/audit": "0.6.x-dev",
         "polaris/cli": "0.6.x-dev",
         "polaris/core": "0.6.x-dev",
         "polaris/laravel": "0.6.x-dev",
         "polaris/messaging": "0.6.x-dev",
+        "polaris/multi-session": "0.6.x-dev",
+        "polaris/passwordless": "0.6.x-dev",
         "polaris/pdo": "0.6.x-dev",
         "polaris/psr15": "0.6.x-dev",
         "polaris/scim": "0.6.x-dev",
@@ -54,6 +61,7 @@
         "polaris/sso": "0.6.x-dev",
         "polaris/symfony": "0.6.x-dev",
         "polaris/testing": "0.6.x-dev",
+        "polaris/username": "0.6.x-dev",
         "polaris/yii": "0.6.x-dev"
     },
     "require-dev": {
@@ -77,14 +85,18 @@
     "autoload-dev": {
         "psr-4": {
             "Polaris\\Admin\\Tests\\": "packages/admin/tests/",
+            "Polaris\\Anonymous\\Tests\\": "packages/anonymous/tests/",
             "Polaris\\Audit\\Tests\\": "packages/audit/tests/",
             "Polaris\\Laravel\\Tests\\": "packages/laravel/tests/",
             "Polaris\\Messaging\\Tests\\": "packages/messaging/tests/",
+            "Polaris\\MultiSession\\Tests\\": "packages/multi-session/tests/",
+            "Polaris\\Passwordless\\Tests\\": "packages/passwordless/tests/",
             "Polaris\\Scim\\Tests\\": "packages/scim/tests/",
             "Polaris\\Sentinel\\Tests\\": "packages/sentinel/tests/",
             "Polaris\\Sso\\Tests\\": "packages/sso/tests/",
             "Polaris\\Symfony\\Tests\\": "packages/symfony/tests/",
             "Polaris\\Tests\\": "packages/core/tests/",
+            "Polaris\\Username\\Tests\\": "packages/username/tests/",
             "Polaris\\Yii\\Tests\\": "packages/yii/tests/"
         }
     },
