@@ -1,0 +1,35 @@
+# POST /social/{provider}/token: a provider access token for the caller.
+endpoint:
+  method: POST
+  path: /social/{provider}/token
+  summary: Get a provider token for the user
+  tags: [social]
+  auth: bearer
+  step_up: true
+  effect: write
+  receipt: true
+
+input:
+  source: path
+  fields:
+    provider: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Social\Http\TokenEndpoint
+  description: >
+    The provider access token the user granted, so the application can call the provider's API on their
+    behalf; refreshed first when it expires within a minute and the provider gave a refresh token.
+    Step-up gated: a stolen access token alone does not read the provider tokens.
+
+output:
+  status: 200
+  example:
+    data: { access_token: "<opaque>", expires_at: "2026-10-09T11:00:00+00:00", scopes: [repo] }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 401, code: step_up_required }
+  - { status: 404, code: social_not_linked }
+  - { status: 409, code: social_no_refresh }
+
+events: []

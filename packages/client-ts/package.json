@@ -22,7 +22,10 @@
         "openapi",
         "openapi-fetch",
         "typescript",
-        "client"
+        "client",
+        "passkey",
+        "webauthn",
+        "social-login"
     ],
     "homepage": "https://github.com/univeros/polaris-core/tree/main/packages/client-ts#readme",
     "bugs": "https://github.com/univeros/polaris-core/issues",
@@ -57,12 +60,14 @@
         "generate": "php ../../bin/polaris manifest --format=openapi --bootstrap=polaris.php > openapi.json && openapi-typescript openapi.json -o src/schema.d.ts && node scripts/generate-namespaces.mjs",
         "typecheck": "tsc --noEmit",
         "build": "tsc -p tsconfig.build.json",
-        "test": "vitest run"
+        "test": "vitest run",
+        "e2e": "playwright test"
     },
     "dependencies": {
         "openapi-fetch": "^0.17.0"
     },
     "devDependencies": {
+        "@playwright/test": "^1.56.1",
         "@types/node": "^22.20.2",
         "openapi-typescript": "^7.13.0",
         "typescript": "^5.9.3",

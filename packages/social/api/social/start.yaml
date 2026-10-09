@@ -1,0 +1,37 @@
+# POST /social/{provider}/start: where the browser goes to sign in with the provider.
+endpoint:
+  method: POST
+  path: /social/{provider}/start
+  summary: Start a social sign-in
+  tags: [social]
+  auth: public
+  rate_limit: login
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    redirect_uri: { type: "?string", rules: [optional] }
+    scopes: { type: "?list", rules: [optional] }
+
+domain:
+  class: Polaris\Social\Http\StartEndpoint
+  description: >
+    The provider's authorization URL for the browser, with a state valid for ten minutes (PKCE and a
+    nonce where the provider takes them). The sign-in ends on redirect_uri (one of the plugin's, the
+    first by default) with a one-time code for POST /social/exchange. scopes replaces the provider's
+    default scopes.
+
+output:
+  status: 200
+  example:
+    data:
+      url: "https://accounts.google.com/o/oauth2/v2/auth?client_id=...&state=..."
+      state: "<opaque>"
+
+errors:
+  - { status: 404, code: social_provider_not_found }
+  - { status: 422, code: social_redirect_not_allowed }
+
+events: []

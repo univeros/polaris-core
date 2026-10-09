@@ -14,6 +14,8 @@ use function json_encode;
 use function ksort;
 use function preg_match;
 use function preg_replace;
+use function preg_replace_callback;
+use function str_contains;
 use function str_starts_with;
 use function strlen;
 use function usort;
@@ -44,7 +46,7 @@ final class Normalizer
             // device id are minted per run, as a body token is.
             $headers[$lower] = $lower === 'x-polaris-device'
                 ? ['<device>']
-                : array_map(static fn(mixed $value): mixed => is_string($value) ? preg_replace('/([?&](?:sso_)?code)=[A-Za-z0-9_-]+/', '$1=<code>', $value) : $value, $values);
+                : array_map(static fn(mixed $value): mixed => is_string($value) ? self::maskQuery($value) : $value, $values);
         }
         ksort($headers);
 
@@ -69,6 +71,15 @@ final class Normalizer
         return true;
     }
 
+    /**
+     * The per-run parameters of a URL (an OAuth state, nonce, PKCE challenge, a hand-off code) collapse
+     * to placeholders; the rest of the URL is contractual.
+     */
+    private static function maskQuery(string $value): string
+    {
+        return (string) preg_replace_callback('/([?&])(sso_code|code|state|nonce|code_challenge)=[A-Za-z0-9_.~%-]+/', static fn(array $m): string => $m[1] . $m[2] . '=<' . ($m[2] === 'sso_code' ? 'code' : $m[2]) . '>', $value);
+    }
+
     public static function value(mixed $value, string $key): mixed
     {
         if (is_array($value)) {
@@ -91,6 +102,9 @@ final class Normalizer
         }
         if (!is_string($value)) {
             return $value;
+        }
+        if (str_contains($value, '://') && str_contains($value, '=')) {
+            $value = self::maskQuery($value);
         }
         if (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $value) === 1) {
             return '<uuid>';

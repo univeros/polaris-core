@@ -1,0 +1,29 @@
+# GET /social/accounts: the caller's linked provider accounts.
+endpoint:
+  method: GET
+  path: /social/accounts
+  summary: List your linked provider accounts
+  tags: [social]
+  auth: bearer
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Social\Http\AccountsEndpoint
+  description: >
+    Every provider account linked to the caller: the provider, its account id, the email it reported and
+    whether it vouched for it, the scopes granted and the public profile. Tokens are never answered here.
+
+output:
+  status: 200
+  example:
+    data:
+      - { id: "018f...", provider: google, provider_account_id: "1029384756", email: "ada@example.com", email_verified: true, scopes: [openid, email, profile], profile: { name: "Ada", picture: "https://..." }, created_at: "2026-10-09T10:00:00+00:00", updated_at: "2026-10-09T10:00:00+00:00" }
+
+errors:
+  - { status: 401, code: unauthorized }
+
+events: []

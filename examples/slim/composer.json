@@ -14,8 +14,10 @@
                     "polaris/audit": "0.7.x-dev",
                     "polaris/cli": "0.7.x-dev",
                     "polaris/core": "0.7.x-dev",
+                    "polaris/passkey": "0.7.x-dev",
                     "polaris/pdo": "0.7.x-dev",
                     "polaris/psr15": "0.7.x-dev",
+                    "polaris/social": "0.7.x-dev",
                     "polaris/testing": "0.7.x-dev"
                 }
             }
@@ -28,8 +30,10 @@
         "polaris/audit": "0.7.x-dev",
         "polaris/cli": "0.7.x-dev",
         "polaris/core": "0.7.x-dev",
+        "polaris/passkey": "0.7.x-dev",
         "polaris/pdo": "0.7.x-dev",
         "polaris/psr15": "0.7.x-dev",
+        "polaris/social": "0.7.x-dev",
         "slim/psr7": "^1.7",
         "slim/slim": "^4.14"
     },

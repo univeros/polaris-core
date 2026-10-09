@@ -24,6 +24,16 @@
             <directory>packages/username/tests/Functional</directory>
             <directory>packages/anonymous/tests/Functional</directory>
             <directory>packages/multi-session/tests/Functional</directory>
+            <directory>packages/passkey/tests/Functional</directory>
+            <directory>packages/social/tests/Functional</directory>
+        </testsuite>
+        <testsuite name="passkey">
+            <directory>packages/passkey/tests</directory>
+            <exclude>packages/passkey/tests/Functional</exclude>
+        </testsuite>
+        <testsuite name="social">
+            <directory>packages/social/tests</directory>
+            <exclude>packages/social/tests/Functional</exclude>
         </testsuite>
         <testsuite name="passwordless">
             <directory>packages/passwordless/tests</directory>
@@ -94,6 +104,8 @@
             <directory>packages/username/src</directory>
             <directory>packages/anonymous/src</directory>
             <directory>packages/multi-session/src</directory>
+            <directory>packages/passkey/src</directory>
+            <directory>packages/social/src</directory>
         </include>
     </source>
 </phpunit>

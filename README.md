@@ -44,10 +44,12 @@ navigates by.
 | `polaris/username` | `Polaris\Username\` | A plugin: usernames unique without regard to case, and sign-in with a username or the email through core's password path. |
 | `polaris/anonymous` | `Polaris\Anonymous\` | A plugin: guest sessions, their conversion into the account the guest signs up for through a host hook, and the pruning of unconverted guests. |
 | `polaris/multi-session` | `Polaris\MultiSession\` | A plugin: several signed-in accounts on one device, switching between them without signing in again, signing one out, the device's last sign-in method. |
-| `@polaris-auth/client` (npm) | `packages/client-ts` | The TypeScript client generated from the manifest: `openapi-fetch` typed by the 52 core endpoints plus the plugins' namespaces (`client.audit`, `client.admin`, `client.sentinel`, `client.sso`, `client.scim`, `client.passwordless`, `client.username`, `client.anonymous`, `client.multiSession`), request bodies, `data` and `error` checked at compile time. |
+| `polaris/social` | `Polaris\Social\` | A plugin: OAuth 2.0 / OpenID Connect sign-in through Google, Apple, Microsoft, GitHub and fifteen more providers or any OAuth 2 server, account linking under a policy, Google One Tap, provider tokens on the user's behalf, an OAuth proxy for preview origins. |
+| `polaris/passkey` | `Polaris\Passkey\` | A plugin: WebAuthn passkeys, registration and discoverable sign-in with conditional UI, each passkey also a core MFA factor verified through core's own MFA routes. |
+| `@polaris-auth/client` (npm) | `packages/client-ts` | The TypeScript client generated from the manifest: `openapi-fetch` typed by the 52 core endpoints plus the plugins' namespaces (`client.audit`, `client.admin`, `client.sentinel`, `client.sso`, `client.scim`, `client.passwordless`, `client.username`, `client.anonymous`, `client.multiSession`, `client.social`, `client.passkey`), request bodies, `data` and `error` checked at compile time. |
 
 This repository is the monorepo; each package is published to its own read-only
-repository for Composer (eighteen `univeros/polaris.*` repositories; the client goes to npm).
+repository for Composer (twenty `univeros/polaris.*` repositories; the client goes to npm).
 
 ---
 
@@ -123,7 +125,7 @@ plugins' routes as namespaces (`client.audit`, `client.admin`, `client.sentinel`
 | **Authorization** | Declarative per-endpoint permissions + a programmatic `Gate` |
 | **Security** | Rate limiting, account lockout, anti-enumeration, audit log, key rotation |
 | **Ops** | PSR-14 domain events, notification fan-out, transient-row pruning, metrics |
-| **Plugins** | Packages on the plugin contract ([`docs/plugins`](docs/plugins/README.md)): the operator API ([`polaris/admin`](packages/admin/README.md)), the audit store and drains ([`polaris/audit`](packages/audit/README.md)), messaging channels and templates ([`polaris/messaging`](packages/messaging/README.md)), the risk engine ([`polaris/sentinel`](packages/sentinel/README.md)), SSO ([`polaris/sso`](packages/sso/README.md)), SCIM ([`polaris/scim`](packages/scim/README.md)), passwordless sign-in ([`polaris/passwordless`](packages/passwordless/README.md)), usernames ([`polaris/username`](packages/username/README.md)), guest sessions ([`polaris/anonymous`](packages/anonymous/README.md)), several accounts per device ([`polaris/multi-session`](packages/multi-session/README.md)) |
+| **Plugins** | Packages on the plugin contract ([`docs/plugins`](docs/plugins/README.md)): the operator API ([`polaris/admin`](packages/admin/README.md)), the audit store and drains ([`polaris/audit`](packages/audit/README.md)), messaging channels and templates ([`polaris/messaging`](packages/messaging/README.md)), the risk engine ([`polaris/sentinel`](packages/sentinel/README.md)), SSO ([`polaris/sso`](packages/sso/README.md)), SCIM ([`polaris/scim`](packages/scim/README.md)), passwordless sign-in ([`polaris/passwordless`](packages/passwordless/README.md)), usernames ([`polaris/username`](packages/username/README.md)), guest sessions ([`polaris/anonymous`](packages/anonymous/README.md)), several accounts per device ([`polaris/multi-session`](packages/multi-session/README.md)), social sign-in ([`polaris/social`](packages/social/README.md)), passkeys ([`polaris/passkey`](packages/passkey/README.md)) |
 
 ---
 

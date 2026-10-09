@@ -1,0 +1,45 @@
+# GET /social/{provider}/callback: the provider's answer.
+endpoint:
+  method: GET
+  path: /social/{provider}/callback
+  summary: The provider's callback
+  tags: [social]
+  auth: public
+  rate_limit: token_consume
+  effect: write
+  receipt: false
+
+input:
+  source: query
+  fields:
+    code: { type: "?string", rules: [optional], sensitive: true }
+    state: { type: string, rules: [required] }
+    error: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\Social\Http\CallbackEndpoint
+  description: >
+    Exchanges the code for the provider's tokens, reads the profile (the id_token verified for an
+    OpenID Connect provider), applies the linking policy (a known account signs in; a trusted provider's
+    verified email links to the existing user; otherwise an existing email is refused; an unknown one
+    signs up, verified when the provider vouches), and answers 302 redirect_uri?code=&state= with a
+    one-minute code for POST /social/exchange and the state the application started with, which it
+    compares before exchanging (a flow it did not start is someone else's). On the OAuth proxy's stable origin, a state signed by a preview
+    deployment is forwarded to that deployment's callback with everything the provider sent.
+
+output:
+  status: 302
+  example: {}
+
+errors:
+  - { status: 403, code: social_provider_error }
+  - { status: 403, code: social_account_disabled }
+  - { status: 403, code: social_email_unverified }
+  - { status: 409, code: social_account_exists }
+  - { status: 409, code: social_account_linked }
+  - { status: 409, code: social_email_mismatch }
+  - { status: 422, code: social_email_required }
+  - { status: 422, code: social_state_invalid }
+  - { status: 404, code: social_provider_not_found }
+
+events: [user.logged_in]

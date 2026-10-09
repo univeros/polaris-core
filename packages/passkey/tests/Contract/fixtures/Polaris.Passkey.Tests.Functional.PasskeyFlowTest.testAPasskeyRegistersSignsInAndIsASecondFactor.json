@@ -1,0 +1,1323 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791579600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "syDd2NZlbWZcXLQEobd5xx3cGNpmQNLPAFwe6b9zqb4"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjAxMjkxMywibmJmIjoxNzkxNTc4NTQ4LjAxMjkxMywiZXhwIjoxNzkxNTc5NDQ4LjAxMjkxMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjcyYy03NDU0LTgyZmUtMjJlMGRjYzgzN2E0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI3MmItN2Y2MS05NjJmLTIyMzY3MWU1NmQzMyIsImF1dGhfdGltZSI6MTc5MTU3ODU0N30.cLypJX4H5ymJP0TpGYyHbiRELfGbHhZ-9wr5MTjQ9sQxGFFzcreCTCjgZTW8ipXHdAFgE5fy8ddGERW1eF_MzMBJ3ROKpuc0Te82HuJltjVBe0OottjiMXasHn16IPc8BWiJ1tTUgNg6zIqJS9qTvQTv3kdvwdloDtpjtCbqVvtIBtTQNYED0v4I-ta9WNtBv0-_Ln6vgIuV-YUJsTLY_5Xc1ZLdGWXO8NoLeDTmnes0w5R3OvZtvD5bO33ktqDj_QbLdSIjcy7pmX69Ur2p9KsFrVWtZitmUAkGTNcvC5d1ay5LQN_hXftZv8LsdeOUZdgKI94dD1UKauuf3xIvIg",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "FBrHpR7qAPtCDXbN47S8xVZx2LoBKyvEFsw3W_xHe2Y",
+                    "user": {
+                        "id": "01a12267-25f6-775b-a0c4-0eb05552a564",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/register/options",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791579600"
+                ]
+            },
+            "body": {
+                "error": "unauthorized",
+                "message": "Authentication is required."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/register/options",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjAxMjkxMywibmJmIjoxNzkxNTc4NTQ4LjAxMjkxMywiZXhwIjoxNzkxNTc5NDQ4LjAxMjkxMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjcyYy03NDU0LTgyZmUtMjJlMGRjYzgzN2E0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI3MmItN2Y2MS05NjJmLTIyMzY3MWU1NmQzMyIsImF1dGhfdGltZSI6MTc5MTU3ODU0N30.cLypJX4H5ymJP0TpGYyHbiRELfGbHhZ-9wr5MTjQ9sQxGFFzcreCTCjgZTW8ipXHdAFgE5fy8ddGERW1eF_MzMBJ3ROKpuc0Te82HuJltjVBe0OottjiMXasHn16IPc8BWiJ1tTUgNg6zIqJS9qTvQTv3kdvwdloDtpjtCbqVvtIBtTQNYED0v4I-ta9WNtBv0-_Ln6vgIuV-YUJsTLY_5Xc1ZLdGWXO8NoLeDTmnes0w5R3OvZtvD5bO33ktqDj_QbLdSIjcy7pmX69Ur2p9KsFrVWtZitmUAkGTNcvC5d1ay5LQN_hXftZv8LsdeOUZdgKI94dD1UKauuf3xIvIg"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791579600"
+                ]
+            },
+            "body": {
+                "data": {
+                    "challenge": "kvyr-Sp1bVIJtVkc4CLLPLDJsxmqHe7qncLxZCZAadY",
+                    "timeout": 60000,
+                    "rp": {
+                        "id": "auth.polaris.test",
+                        "name": "Polaris tests"
+                    },
+                    "user": {
+                        "id": "MDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0",
+                        "name": "ada@example.com",
+                        "displayName": "ada@example.com"
+                    },
+                    "pubKeyCredParams": [
+                        {
+                            "type": "public-key",
+                            "alg": -7
+                        },
+                        {
+                            "type": "public-key",
+                            "alg": -257
+                        }
+                    ],
+                    "authenticatorSelection": {
+                        "requireResidentKey": true,
+                        "userVerification": "preferred",
+                        "residentKey": "required"
+                    },
+                    "attestation": "none",
+                    "excludeCredentials": []
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/register/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjAxMjkxMywibmJmIjoxNzkxNTc4NTQ4LjAxMjkxMywiZXhwIjoxNzkxNTc5NDQ4LjAxMjkxMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjcyYy03NDU0LTgyZmUtMjJlMGRjYzgzN2E0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI3MmItN2Y2MS05NjJmLTIyMzY3MWU1NmQzMyIsImF1dGhfdGltZSI6MTc5MTU3ODU0N30.cLypJX4H5ymJP0TpGYyHbiRELfGbHhZ-9wr5MTjQ9sQxGFFzcreCTCjgZTW8ipXHdAFgE5fy8ddGERW1eF_MzMBJ3ROKpuc0Te82HuJltjVBe0OottjiMXasHn16IPc8BWiJ1tTUgNg6zIqJS9qTvQTv3kdvwdloDtpjtCbqVvtIBtTQNYED0v4I-ta9WNtBv0-_Ln6vgIuV-YUJsTLY_5Xc1ZLdGWXO8NoLeDTmnes0w5R3OvZtvD5bO33ktqDj_QbLdSIjcy7pmX69Ur2p9KsFrVWtZitmUAkGTNcvC5d1ay5LQN_hXftZv8LsdeOUZdgKI94dD1UKauuf3xIvIg"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/passkey/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "credential is required.",
+                "error": "passkey_invalid_input",
+                "message": "credential is required.",
+                "errors": [
+                    "credential is required."
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/register/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjAxMjkxMywibmJmIjoxNzkxNTc4NTQ4LjAxMjkxMywiZXhwIjoxNzkxNTc5NDQ4LjAxMjkxMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjcyYy03NDU0LTgyZmUtMjJlMGRjYzgzN2E0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI3MmItN2Y2MS05NjJmLTIyMzY3MWU1NmQzMyIsImF1dGhfdGltZSI6MTc5MTU3ODU0N30.cLypJX4H5ymJP0TpGYyHbiRELfGbHhZ-9wr5MTjQ9sQxGFFzcreCTCjgZTW8ipXHdAFgE5fy8ddGERW1eF_MzMBJ3ROKpuc0Te82HuJltjVBe0OottjiMXasHn16IPc8BWiJ1tTUgNg6zIqJS9qTvQTv3kdvwdloDtpjtCbqVvtIBtTQNYED0v4I-ta9WNtBv0-_Ln6vgIuV-YUJsTLY_5Xc1ZLdGWXO8NoLeDTmnes0w5R3OvZtvD5bO33ktqDj_QbLdSIjcy7pmX69Ur2p9KsFrVWtZitmUAkGTNcvC5d1ay5LQN_hXftZv8LsdeOUZdgKI94dD1UKauuf3xIvIg"
+                ]
+            },
+            "body": {
+                "credential": {
+                    "id": "Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78",
+                    "rawId": "Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78",
+                    "type": "public-key",
+                    "authenticatorAttachment": "platform",
+                    "clientExtensionResults": [],
+                    "response": {
+                        "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoia3Z5ci1TcDFiVklKdFZrYzRDTExQTERKc3htcUhlN3FuY0x4WkNaQWFkWSIsIm9yaWdpbiI6Imh0dHBzOlwvXC9ldmlsLmV4YW1wbGUiLCJjcm9zc09yaWdpbiI6ZmFsc2V9",
+                        "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikwSeKmKkly84vnnInlN9cqFoX6aMEIOniyPrzecIB11JdAAAAAAAAAAAAAAAAAAAAAAAAAAAAIFrvY25XOPWanXmfuEYM08ru_O3s3AkBMES4WPVo_mu_pQECAyYgASFYINWZr0PSQxWwohtqVCKacIIEW4Pf9okmTc8cegnYa2gwIlgg7D9lhQQ324r6T7ZJAj0rS4G7oyZmSwOKbjprYhGJsBE",
+                        "transports": [
+                            "internal",
+                            "hybrid"
+                        ]
+                    }
+                }
+            }
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/passkey/origin_mismatch",
+                "title": "Origin mismatch",
+                "status": 403,
+                "detail": "The credential was signed for an origin this relying party does not serve.",
+                "error": "passkey_origin_mismatch",
+                "message": "The credential was signed for an origin this relying party does not serve."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/register/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjAxMjkxMywibmJmIjoxNzkxNTc4NTQ4LjAxMjkxMywiZXhwIjoxNzkxNTc5NDQ4LjAxMjkxMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjcyYy03NDU0LTgyZmUtMjJlMGRjYzgzN2E0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI3MmItN2Y2MS05NjJmLTIyMzY3MWU1NmQzMyIsImF1dGhfdGltZSI6MTc5MTU3ODU0N30.cLypJX4H5ymJP0TpGYyHbiRELfGbHhZ-9wr5MTjQ9sQxGFFzcreCTCjgZTW8ipXHdAFgE5fy8ddGERW1eF_MzMBJ3ROKpuc0Te82HuJltjVBe0OottjiMXasHn16IPc8BWiJ1tTUgNg6zIqJS9qTvQTv3kdvwdloDtpjtCbqVvtIBtTQNYED0v4I-ta9WNtBv0-_Ln6vgIuV-YUJsTLY_5Xc1ZLdGWXO8NoLeDTmnes0w5R3OvZtvD5bO33ktqDj_QbLdSIjcy7pmX69Ur2p9KsFrVWtZitmUAkGTNcvC5d1ay5LQN_hXftZv8LsdeOUZdgKI94dD1UKauuf3xIvIg"
+                ]
+            },
+            "body": {
+                "credential": {
+                    "id": "Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78",
+                    "rawId": "Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78",
+                    "type": "public-key",
+                    "authenticatorAttachment": "platform",
+                    "clientExtensionResults": [],
+                    "response": {
+                        "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoia3Z5ci1TcDFiVklKdFZrYzRDTExQTERKc3htcUhlN3FuY0x4WkNaQWFkWSIsIm9yaWdpbiI6Imh0dHBzOlwvXC9hdXRoLnBvbGFyaXMudGVzdCIsImNyb3NzT3JpZ2luIjpmYWxzZX0",
+                        "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikwSeKmKkly84vnnInlN9cqFoX6aMEIOniyPrzecIB11JdAAAAAAAAAAAAAAAAAAAAAAAAAAAAIFrvY25XOPWanXmfuEYM08ru_O3s3AkBMES4WPVo_mu_pQECAyYgASFYINWZr0PSQxWwohtqVCKacIIEW4Pf9okmTc8cegnYa2gwIlgg7D9lhQQ324r6T7ZJAj0rS4G7oyZmSwOKbjprYhGJsBE",
+                        "transports": [
+                            "internal",
+                            "hybrid"
+                        ]
+                    }
+                },
+                "name": "MacBook"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "7"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "passkey": {
+                        "id": "01a12267-2759-73ec-b6ec-2ece6a19e4b0",
+                        "name": "MacBook",
+                        "aaguid": "00000000-0000-0000-0000-000000000000",
+                        "transports": [
+                            "internal",
+                            "hybrid"
+                        ],
+                        "backed_up": true,
+                        "factor_id": "01a12267-2758-7b33-9bc4-5374b0fdc6bd",
+                        "last_used_at": null,
+                        "created_at": "2026-10-09T20:42:28+00:00"
+                    },
+                    "recovery_codes": [
+                        "g3v4r-t3s3h",
+                        "6h2ax-yp2cx",
+                        "byewg-z55hf",
+                        "7k4zm-c5hpt",
+                        "t47w7-b3rg4",
+                        "d2hu4-a2yyy",
+                        "r4zs5-w4xjd",
+                        "45hmb-grypd",
+                        "fr7zd-hcu53",
+                        "ujpx4-bmfmh"
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/register/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjAxMjkxMywibmJmIjoxNzkxNTc4NTQ4LjAxMjkxMywiZXhwIjoxNzkxNTc5NDQ4LjAxMjkxMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjcyYy03NDU0LTgyZmUtMjJlMGRjYzgzN2E0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI3MmItN2Y2MS05NjJmLTIyMzY3MWU1NmQzMyIsImF1dGhfdGltZSI6MTc5MTU3ODU0N30.cLypJX4H5ymJP0TpGYyHbiRELfGbHhZ-9wr5MTjQ9sQxGFFzcreCTCjgZTW8ipXHdAFgE5fy8ddGERW1eF_MzMBJ3ROKpuc0Te82HuJltjVBe0OottjiMXasHn16IPc8BWiJ1tTUgNg6zIqJS9qTvQTv3kdvwdloDtpjtCbqVvtIBtTQNYED0v4I-ta9WNtBv0-_Ln6vgIuV-YUJsTLY_5Xc1ZLdGWXO8NoLeDTmnes0w5R3OvZtvD5bO33ktqDj_QbLdSIjcy7pmX69Ur2p9KsFrVWtZitmUAkGTNcvC5d1ay5LQN_hXftZv8LsdeOUZdgKI94dD1UKauuf3xIvIg"
+                ]
+            },
+            "body": {
+                "credential": {
+                    "id": "Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78",
+                    "rawId": "Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78",
+                    "type": "public-key",
+                    "authenticatorAttachment": "platform",
+                    "clientExtensionResults": [],
+                    "response": {
+                        "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoia3Z5ci1TcDFiVklKdFZrYzRDTExQTERKc3htcUhlN3FuY0x4WkNaQWFkWSIsIm9yaWdpbiI6Imh0dHBzOlwvXC9hdXRoLnBvbGFyaXMudGVzdCIsImNyb3NzT3JpZ2luIjpmYWxzZX0",
+                        "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikwSeKmKkly84vnnInlN9cqFoX6aMEIOniyPrzecIB11JdAAAAAAAAAAAAAAAAAAAAAAAAAAAAIFrvY25XOPWanXmfuEYM08ru_O3s3AkBMES4WPVo_mu_pQECAyYgASFYINWZr0PSQxWwohtqVCKacIIEW4Pf9okmTc8cegnYa2gwIlgg7D9lhQQ324r6T7ZJAj0rS4G7oyZmSwOKbjprYhGJsBE",
+                        "transports": [
+                            "internal",
+                            "hybrid"
+                        ]
+                    }
+                }
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "6"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/passkey/challenge_invalid",
+                "title": "Invalid challenge",
+                "status": 422,
+                "detail": "The challenge is unknown, used or expired.",
+                "error": "passkey_challenge_invalid",
+                "message": "The challenge is unknown, used or expired."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/auth/mfa/factors",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjAxMjkxMywibmJmIjoxNzkxNTc4NTQ4LjAxMjkxMywiZXhwIjoxNzkxNTc5NDQ4LjAxMjkxMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjcyYy03NDU0LTgyZmUtMjJlMGRjYzgzN2E0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI3MmItN2Y2MS05NjJmLTIyMzY3MWU1NmQzMyIsImF1dGhfdGltZSI6MTc5MTU3ODU0N30.cLypJX4H5ymJP0TpGYyHbiRELfGbHhZ-9wr5MTjQ9sQxGFFzcreCTCjgZTW8ipXHdAFgE5fy8ddGERW1eF_MzMBJ3ROKpuc0Te82HuJltjVBe0OottjiMXasHn16IPc8BWiJ1tTUgNg6zIqJS9qTvQTv3kdvwdloDtpjtCbqVvtIBtTQNYED0v4I-ta9WNtBv0-_Ln6vgIuV-YUJsTLY_5Xc1ZLdGWXO8NoLeDTmnes0w5R3OvZtvD5bO33ktqDj_QbLdSIjcy7pmX69Ur2p9KsFrVWtZitmUAkGTNcvC5d1ay5LQN_hXftZv8LsdeOUZdgKI94dD1UKauuf3xIvIg"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "2"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791579600"
+                ]
+            },
+            "body": {
+                "data": {
+                    "factors": [
+                        {
+                            "id": "01a12267-2758-7b33-9bc4-5374b0fdc6bd",
+                            "type": "passkey",
+                            "default": true,
+                            "label": "MacBook",
+                            "confirmed": true
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/passkey/list",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjAxMjkxMywibmJmIjoxNzkxNTc4NTQ4LjAxMjkxMywiZXhwIjoxNzkxNTc5NDQ4LjAxMjkxMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjcyYy03NDU0LTgyZmUtMjJlMGRjYzgzN2E0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI3MmItN2Y2MS05NjJmLTIyMzY3MWU1NmQzMyIsImF1dGhfdGltZSI6MTc5MTU3ODU0N30.cLypJX4H5ymJP0TpGYyHbiRELfGbHhZ-9wr5MTjQ9sQxGFFzcreCTCjgZTW8ipXHdAFgE5fy8ddGERW1eF_MzMBJ3ROKpuc0Te82HuJltjVBe0OottjiMXasHn16IPc8BWiJ1tTUgNg6zIqJS9qTvQTv3kdvwdloDtpjtCbqVvtIBtTQNYED0v4I-ta9WNtBv0-_Ln6vgIuV-YUJsTLY_5Xc1ZLdGWXO8NoLeDTmnes0w5R3OvZtvD5bO33ktqDj_QbLdSIjcy7pmX69Ur2p9KsFrVWtZitmUAkGTNcvC5d1ay5LQN_hXftZv8LsdeOUZdgKI94dD1UKauuf3xIvIg"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "593"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a12267-2759-73ec-b6ec-2ece6a19e4b0",
+                        "name": "MacBook",
+                        "aaguid": "00000000-0000-0000-0000-000000000000",
+                        "transports": [
+                            "internal",
+                            "hybrid"
+                        ],
+                        "backed_up": true,
+                        "factor_id": "01a12267-2758-7b33-9bc4-5374b0fdc6bd",
+                        "last_used_at": null,
+                        "created_at": "2026-10-09T20:42:28+00:00"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "PATCH",
+            "uri": "/passkey/01a12267-2759-73ec-b6ec-2ece6a19e4b0",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjAxMjkxMywibmJmIjoxNzkxNTc4NTQ4LjAxMjkxMywiZXhwIjoxNzkxNTc5NDQ4LjAxMjkxMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjcyYy03NDU0LTgyZmUtMjJlMGRjYzgzN2E0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI3MmItN2Y2MS05NjJmLTIyMzY3MWU1NmQzMyIsImF1dGhfdGltZSI6MTc5MTU3ODU0N30.cLypJX4H5ymJP0TpGYyHbiRELfGbHhZ-9wr5MTjQ9sQxGFFzcreCTCjgZTW8ipXHdAFgE5fy8ddGERW1eF_MzMBJ3ROKpuc0Te82HuJltjVBe0OottjiMXasHn16IPc8BWiJ1tTUgNg6zIqJS9qTvQTv3kdvwdloDtpjtCbqVvtIBtTQNYED0v4I-ta9WNtBv0-_Ln6vgIuV-YUJsTLY_5Xc1ZLdGWXO8NoLeDTmnes0w5R3OvZtvD5bO33ktqDj_QbLdSIjcy7pmX69Ur2p9KsFrVWtZitmUAkGTNcvC5d1ay5LQN_hXftZv8LsdeOUZdgKI94dD1UKauuf3xIvIg"
+                ]
+            },
+            "body": {
+                "name": "Work laptop"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "592"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a12267-2759-73ec-b6ec-2ece6a19e4b0",
+                    "name": "Work laptop",
+                    "aaguid": "00000000-0000-0000-0000-000000000000",
+                    "transports": [
+                        "internal",
+                        "hybrid"
+                    ],
+                    "backed_up": true,
+                    "factor_id": "01a12267-2758-7b33-9bc4-5374b0fdc6bd",
+                    "last_used_at": null,
+                    "created_at": "2026-10-09T20:42:28+00:00"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/authenticate/options",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "59"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": {
+                    "challenge": "Y8TlxghUgYP_SKpn1U-z7ftniyveKPC2T3FRFL0Klps",
+                    "timeout": 60000,
+                    "rpId": "auth.polaris.test",
+                    "allowCredentials": [],
+                    "userVerification": "preferred"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/authenticate/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "credential": "garbage"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/passkey/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "credential must be the PublicKeyCredential JSON the browser produced.",
+                "error": "passkey_invalid_input",
+                "message": "credential must be the PublicKeyCredential JSON the browser produced.",
+                "errors": [
+                    "credential must be the PublicKeyCredential JSON the browser produced."
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/authenticate/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "credential": {
+                    "id": "12dvgX2AAyLcIDA6ub387n1VLu8uFa7G_j2YmJtVO9o",
+                    "rawId": "12dvgX2AAyLcIDA6ub387n1VLu8uFa7G_j2YmJtVO9o",
+                    "type": "public-key",
+                    "authenticatorAttachment": "platform",
+                    "clientExtensionResults": [],
+                    "response": {
+                        "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiWThUbHhnaFVnWVBfU0twbjFVLXo3ZnRuaXl2ZUtQQzJUM0ZSRkwwS2xwcyIsIm9yaWdpbiI6Imh0dHBzOlwvXC9hdXRoLnBvbGFyaXMudGVzdCIsImNyb3NzT3JpZ2luIjpmYWxzZX0",
+                        "authenticatorData": "wSeKmKkly84vnnInlN9cqFoX6aMEIOniyPrzecIB11IdAAAAAA",
+                        "signature": "MEUCIFoLutuoYC8Hs5nS0MZuRsvfiMTFZM0XMCaT7W3kwUZIAiEA-bMXtDVgXF7gbBRE0mvhQKjrN0KVhKXah9F7tBlDVts",
+                        "userHandle": "MDFhMTIyNjctMjc1OS03M2VjLWI2ZWMtMmVjZTZhMTllNGIw"
+                    }
+                }
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "7"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/passkey/credential_invalid",
+                "title": "Invalid credential",
+                "status": 422,
+                "detail": "The credential could not be verified.",
+                "error": "passkey_credential_invalid",
+                "message": "The credential could not be verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/authenticate/options",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "58"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": {
+                    "challenge": "7Y9Y41vryMxMdvSAMvrkHtOwAyd59CJcFr7NgBSVpLQ",
+                    "timeout": 60000,
+                    "rpId": "auth.polaris.test",
+                    "allowCredentials": [],
+                    "userVerification": "preferred"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/auth/me",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjAxMjkxMywibmJmIjoxNzkxNTc4NTQ4LjAxMjkxMywiZXhwIjoxNzkxNTc5NDQ4LjAxMjkxMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjcyYy03NDU0LTgyZmUtMjJlMGRjYzgzN2E0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI3MmItN2Y2MS05NjJmLTIyMzY3MWU1NmQzMyIsImF1dGhfdGltZSI6MTc5MTU3ODU0N30.cLypJX4H5ymJP0TpGYyHbiRELfGbHhZ-9wr5MTjQ9sQxGFFzcreCTCjgZTW8ipXHdAFgE5fy8ddGERW1eF_MzMBJ3ROKpuc0Te82HuJltjVBe0OottjiMXasHn16IPc8BWiJ1tTUgNg6zIqJS9qTvQTv3kdvwdloDtpjtCbqVvtIBtTQNYED0v4I-ta9WNtBv0-_Ln6vgIuV-YUJsTLY_5Xc1ZLdGWXO8NoLeDTmnes0w5R3OvZtvD5bO33ktqDj_QbLdSIjcy7pmX69Ur2p9KsFrVWtZitmUAkGTNcvC5d1ay5LQN_hXftZv8LsdeOUZdgKI94dD1UKauuf3xIvIg"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "591"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a12267-25f6-775b-a0c4-0eb05552a564",
+                    "email": "ada@example.com",
+                    "email_verified": true,
+                    "display_name": null,
+                    "status": "active",
+                    "mfa_enforced": false,
+                    "orgs": [],
+                    "roles": []
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/authenticate/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "credential": {
+                    "id": "Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78",
+                    "rawId": "Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78",
+                    "type": "public-key",
+                    "authenticatorAttachment": "platform",
+                    "clientExtensionResults": [],
+                    "response": {
+                        "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiN1k5WTQxdnJ5TXhNZHZTQU12cmtIdE93QXlkNTlDSmNGcjdOZ0JTVnBMUSIsIm9yaWdpbiI6Imh0dHBzOlwvXC9hdXRoLnBvbGFyaXMudGVzdCIsImNyb3NzT3JpZ2luIjpmYWxzZX0",
+                        "authenticatorData": "wSeKmKkly84vnnInlN9cqFoX6aMEIOniyPrzecIB11IdAAAAAQ",
+                        "signature": "MEQCIB4uwpKY1U8jtE9sJu1rpgp-5mEkS5knZe4GsOqyL-1BAiBD_3DDE4WgLL-p6tTu3-uevAhlyNRbcDoWyV7nzzNOwA",
+                        "userHandle": "MDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0"
+                    }
+                }
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "6"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjA2NjY2OCwibmJmIjoxNzkxNTc4NTQ4LjA2NjY2OCwiZXhwIjoxNzkxNTc5NDQ4LjA2NjY2OCwic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjc2Mi03YTQzLTgzY2EtN2JhODY5NTRkN2JkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOnRydWUsImFtciI6WyJwYXNza2V5Il0sInNpZCI6IjAxYTEyMjY3LTI3NjItNzhlMy04M2NhLTdiYTg2ODhjNDhjMiIsImF1dGhfdGltZSI6MTc5MTU3ODU0OH0.rbIFMmpHTifiJLR6TRhRmra0jExXlyPIllpbRvPqE1ZoQ9ooL32vn_OWr7oG3Z-GBECDSuyB4RkuqW7Lit4nhnxJoOXbmBEWs1DGrjPg6SMTwuGa0Gxu6Tq0PIPP_cKw1hZYDTXV8ZO4GJFMta0BKeZH6V0QRndtTixLu_IB-0WkUKLlFrYQ61HqhmkAj511kF-Lk1lS-KXDru3CZag6D6MzvFBjiQOJyugTFdlf9JTMeJ77e7CEaXMcnPzGMrrUfE-7iD321gXaeOgMrup6NZlidoxAOF5KIDffKgU5vGmI_aFHVC62YdmuGv2I4b1OEMR723CtQqRPx7WsxHEy3A",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "rfr4eEoyyjurw7bh88WDO-o5e3I1brZa2VuWR68T1QY",
+                    "user": {
+                        "id": "01a12267-25f6-775b-a0c4-0eb05552a564",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/authenticate/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "credential": {
+                    "id": "Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78",
+                    "rawId": "Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78",
+                    "type": "public-key",
+                    "authenticatorAttachment": "platform",
+                    "clientExtensionResults": [],
+                    "response": {
+                        "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiN1k5WTQxdnJ5TXhNZHZTQU12cmtIdE93QXlkNTlDSmNGcjdOZ0JTVnBMUSIsIm9yaWdpbiI6Imh0dHBzOlwvXC9hdXRoLnBvbGFyaXMudGVzdCIsImNyb3NzT3JpZ2luIjpmYWxzZX0",
+                        "authenticatorData": "wSeKmKkly84vnnInlN9cqFoX6aMEIOniyPrzecIB11IdAAAAAg",
+                        "signature": "MEUCIGOQTyjnS_faPEWy1QEP40KeEj5zyDpGzC9AHlQc-9iVAiEA1R5yeamuBH5dm-RQ-Xm1pwKgj_PEjTUxGpK5SiOsaTI",
+                        "userHandle": "MDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0"
+                    }
+                }
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "5"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/passkey/challenge_invalid",
+                "title": "Invalid challenge",
+                "status": 422,
+                "detail": "The challenge is unknown, used or expired.",
+                "error": "passkey_challenge_invalid",
+                "message": "The challenge is unknown, used or expired."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "mfa_required": true,
+                    "mfa_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjIyNDAzMywibmJmIjoxNzkxNTc4NTQ4LjIyNDAzMywiZXhwIjoxNzkxNTc4ODQ4LjIyNDAzMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjgwMC03MDI3LWIwYjktMWFiMzEwMDMxMWJlIiwicHVycG9zZSI6ImxvZ2luX21mYSJ9.tY155RvnW2kaN3GoaaVxVqlA_XkW8vs-N_nuE3Xhcxg7rQk0FkN70K0aaFvRyrrSXffelgzEUQXa0DL8bHqTTUiJcKXwfOaL0VWwUyXd-zwmHWC431HcGzNR5jYWOgczb0qlDSt2dLo34FBfI6-PgbYyqnWfQTm-7o8vDQwmKhCVZ8GjcaattMVvwi1nAp35GWfCY8pS8g283g2MC_Gi7ez8k-wKSZsQGk0yDU1rTfa3IOYh1lhIyJcCHuELAZW-vYfzjc85WMTdP_SXhEgX0SD4IogDXAS596_-qJ_WtezUOTVOkaK8w6MzNQOhsbReHO_Ai6JHejlTd1M7ukpyYw",
+                    "factors": [
+                        {
+                            "id": "01a12267-2758-7b33-9bc4-5374b0fdc6bd",
+                            "type": "passkey",
+                            "default": true,
+                            "label": "Work laptop"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/authenticate/options",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "57"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": {
+                    "challenge": "BWNK0Ks38EF94TqyS-UakZX1lIZHwbR136lH80jaqb8",
+                    "timeout": 60000,
+                    "rpId": "auth.polaris.test",
+                    "allowCredentials": [],
+                    "userVerification": "preferred"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/mfa/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjIyNDAzMywibmJmIjoxNzkxNTc4NTQ4LjIyNDAzMywiZXhwIjoxNzkxNTc4ODQ4LjIyNDAzMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjgwMC03MDI3LWIwYjktMWFiMzEwMDMxMWJlIiwicHVycG9zZSI6ImxvZ2luX21mYSJ9.tY155RvnW2kaN3GoaaVxVqlA_XkW8vs-N_nuE3Xhcxg7rQk0FkN70K0aaFvRyrrSXffelgzEUQXa0DL8bHqTTUiJcKXwfOaL0VWwUyXd-zwmHWC431HcGzNR5jYWOgczb0qlDSt2dLo34FBfI6-PgbYyqnWfQTm-7o8vDQwmKhCVZ8GjcaattMVvwi1nAp35GWfCY8pS8g283g2MC_Gi7ez8k-wKSZsQGk0yDU1rTfa3IOYh1lhIyJcCHuELAZW-vYfzjc85WMTdP_SXhEgX0SD4IogDXAS596_-qJ_WtezUOTVOkaK8w6MzNQOhsbReHO_Ai6JHejlTd1M7ukpyYw"
+                ]
+            },
+            "body": {
+                "factor_id": "01a12267-2758-7b33-9bc4-5374b0fdc6bd",
+                "code": "{\"id\":\"yAqXrKxlrAt7yHpCy5SKuHFx0J_eOkz3hgZWA4_vY00\",\"rawId\":\"yAqXrKxlrAt7yHpCy5SKuHFx0J_eOkz3hgZWA4_vY00\",\"type\":\"public-key\",\"authenticatorAttachment\":\"platform\",\"clientExtensionResults\":{},\"response\":{\"clientDataJSON\":\"eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiQldOSzBLczM4RUY5NFRxeVMtVWFrWlgxbElaSHdiUjEzNmxIODBqYXFiOCIsIm9yaWdpbiI6Imh0dHBzOlwvXC9hdXRoLnBvbGFyaXMudGVzdCIsImNyb3NzT3JpZ2luIjpmYWxzZX0\",\"authenticatorData\":\"wSeKmKkly84vnnInlN9cqFoX6aMEIOniyPrzecIB11IdAAAAAA\",\"signature\":\"MEUCIQDs0WFcrCmyAjxnTdaLiLDVBegmJWzrQDZdcR-oTrtCQgIgTnH4Yo8v5EfsoBCV5W_ePqGL_QD3RMtbzzp10SewueE\",\"userHandle\":\"MDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0\"}}"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "5"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "error": "invalid_code",
+                "message": "The verification code is invalid."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/authenticate/options",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "56"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": {
+                    "challenge": "YBey_d_JUzmFoMEQzAiZihPYIs9siibTwTsDaYGpvq0",
+                    "timeout": 60000,
+                    "rpId": "auth.polaris.test",
+                    "allowCredentials": [],
+                    "userVerification": "preferred"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/mfa/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjIyNDAzMywibmJmIjoxNzkxNTc4NTQ4LjIyNDAzMywiZXhwIjoxNzkxNTc4ODQ4LjIyNDAzMywic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjgwMC03MDI3LWIwYjktMWFiMzEwMDMxMWJlIiwicHVycG9zZSI6ImxvZ2luX21mYSJ9.tY155RvnW2kaN3GoaaVxVqlA_XkW8vs-N_nuE3Xhcxg7rQk0FkN70K0aaFvRyrrSXffelgzEUQXa0DL8bHqTTUiJcKXwfOaL0VWwUyXd-zwmHWC431HcGzNR5jYWOgczb0qlDSt2dLo34FBfI6-PgbYyqnWfQTm-7o8vDQwmKhCVZ8GjcaattMVvwi1nAp35GWfCY8pS8g283g2MC_Gi7ez8k-wKSZsQGk0yDU1rTfa3IOYh1lhIyJcCHuELAZW-vYfzjc85WMTdP_SXhEgX0SD4IogDXAS596_-qJ_WtezUOTVOkaK8w6MzNQOhsbReHO_Ai6JHejlTd1M7ukpyYw"
+                ]
+            },
+            "body": {
+                "factor_id": "01a12267-2758-7b33-9bc4-5374b0fdc6bd",
+                "code": "{\"id\":\"Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78\",\"rawId\":\"Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78\",\"type\":\"public-key\",\"authenticatorAttachment\":\"platform\",\"clientExtensionResults\":{},\"response\":{\"clientDataJSON\":\"eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiWUJleV9kX0pVem1Gb01FUXpBaVppaFBZSXM5c2lpYlR3VHNEYVlHcHZxMCIsIm9yaWdpbiI6Imh0dHBzOlwvXC9hdXRoLnBvbGFyaXMudGVzdCIsImNyb3NzT3JpZ2luIjpmYWxzZX0\",\"authenticatorData\":\"wSeKmKkly84vnnInlN9cqFoX6aMEIOniyPrzecIB11IdAAAAAg\",\"signature\":\"MEUCIDFqntmPedLD2xc_tRtF32ouoIeFyVnUTYAI7JL-cu7kAiEA3gwKRGzn-5SeNgYWkyax7RGqYoRETlt38PGhpZOmSLk\",\"userHandle\":\"MDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0\"}}"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjIyNzQxMiwibmJmIjoxNzkxNTc4NTQ4LjIyNzQxMiwiZXhwIjoxNzkxNTc5NDQ4LjIyNzQxMiwic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjgwMy03NjU2LWI2OGItY2M5YjA5NjdmNTM4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOnRydWUsImFtciI6WyJwd2QiLCJvdHAiXSwic2lkIjoiMDFhMTIyNjctMjgwMy03NTZlLWI2OGItY2M5YjA4NTkwZDg1IiwiYXV0aF90aW1lIjoxNzkxNTc4NTQ4fQ.CE1UZqOwSsWYn2uBlv679LdyIh7zAPEP7DAQxP4ktfJgEjny9Xnytqyrc4W6clXdJXzL86-0GsYc-ab2rIVTLTR5HbN5f4jQwcYM2Ot6yIvrdeXdNmBCdWJ5yYPozlV1I5IzuOp9GVaU04ytPzkLLrpEt-bq8H2Gbvj4RJB1a8PZPWSJUne2_XIEZ9GKyPleNpBzszG2mbXTCcbk-UMWzvqAEUjcCqHL78A5CzqoXmQ_twQGEMiYkjxl8aRopoOCCPC20_ChdY_4OIJKYyXtMYltmbmD6Z3P4uOWJ_ZhrgGzJvgw01maFQxnW93pV6MKE6Icl6FsYCXlJBzdhsW3tw",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "XcRZLxkCSYlBj98cL3M6Me8lpWB0abIbhIyH9ZwBURo"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/passkey/authenticate/options",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "55"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": {
+                    "challenge": "pw8UpDFEzLbUSa-LpSEw1UYqlPx1XgPw4tT0RyS0DgA",
+                    "timeout": 60000,
+                    "rpId": "auth.polaris.test",
+                    "allowCredentials": [],
+                    "userVerification": "preferred"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/mfa/step-up",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjIyNzQxMiwibmJmIjoxNzkxNTc4NTQ4LjIyNzQxMiwiZXhwIjoxNzkxNTc5NDQ4LjIyNzQxMiwic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjgwMy03NjU2LWI2OGItY2M5YjA5NjdmNTM4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOnRydWUsImFtciI6WyJwd2QiLCJvdHAiXSwic2lkIjoiMDFhMTIyNjctMjgwMy03NTZlLWI2OGItY2M5YjA4NTkwZDg1IiwiYXV0aF90aW1lIjoxNzkxNTc4NTQ4fQ.CE1UZqOwSsWYn2uBlv679LdyIh7zAPEP7DAQxP4ktfJgEjny9Xnytqyrc4W6clXdJXzL86-0GsYc-ab2rIVTLTR5HbN5f4jQwcYM2Ot6yIvrdeXdNmBCdWJ5yYPozlV1I5IzuOp9GVaU04ytPzkLLrpEt-bq8H2Gbvj4RJB1a8PZPWSJUne2_XIEZ9GKyPleNpBzszG2mbXTCcbk-UMWzvqAEUjcCqHL78A5CzqoXmQ_twQGEMiYkjxl8aRopoOCCPC20_ChdY_4OIJKYyXtMYltmbmD6Z3P4uOWJ_ZhrgGzJvgw01maFQxnW93pV6MKE6Icl6FsYCXlJBzdhsW3tw"
+                ]
+            },
+            "body": {
+                "factor_id": "01a12267-2758-7b33-9bc4-5374b0fdc6bd",
+                "code": "{\"id\":\"Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78\",\"rawId\":\"Wu9jblc49ZqdeZ-4RgzTyu787ezcCQEwRLhY9Wj-a78\",\"type\":\"public-key\",\"authenticatorAttachment\":\"platform\",\"clientExtensionResults\":{},\"response\":{\"clientDataJSON\":\"eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoicHc4VXBERkV6TGJVU2EtTHBTRXcxVVlxbFB4MVhnUHc0dFQwUnlTMERnQSIsIm9yaWdpbiI6Imh0dHBzOlwvXC9hdXRoLnBvbGFyaXMudGVzdCIsImNyb3NzT3JpZ2luIjpmYWxzZX0\",\"authenticatorData\":\"wSeKmKkly84vnnInlN9cqFoX6aMEIOniyPrzecIB11IdAAAAAw\",\"signature\":\"MEYCIQDapscgMg3bA50814bY2lPmhrc9s9RskXZOsVcCzDquGAIhAMr34C7lr-xmfzxoo_SlqQ0iEnBEu3bVtxjRf0b5jcdG\",\"userHandle\":\"MDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0\"}}"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjIzMTIxNiwibmJmIjoxNzkxNTc4NTQ4LjIzMTIxNiwiZXhwIjoxNzkxNTc5NDQ4LjIzMTIxNiwic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjgwNy03MzM0LTk2YjgtMjcwOTM3NjU3NGNhIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOnRydWUsImFtciI6WyJwd2QiLCJvdHAiXSwic2lkIjoiMDFhMTIyNjctMjgwMy03NTZlLWI2OGItY2M5YjA4NTkwZDg1IiwiYXV0aF90aW1lIjoxNzkxNTc4NTQ4fQ.U495qfGT65nJX1hqQF2-MVWoEh31-YmxIyRe9WXe-vjuLWcGLjF3vQFaWOINj10dN3bx8fIIqhugArjGgWOkEEu8CSQhIkERpJvUkAwB2ZJ3aH3UAqA262tU_wmchwaqzMW1UtlQzeB0IfyUZq-vLwDxrBQzM1EuMqiu0GK5kHcVU4qHYswuHfd3uxzi2d024JW_FgifEGKeksAoNunG79N-8Lc7BD58qVF-uEjiSdYY4MmhBetw7GxiLSm_K3pg6bVAsOLCdxVGXIhZ7lvFwPq0-QvppXqsHWPfatp6n4QAViN3lM1ADH0h6E8mIRjBF6AcpTC5ZKB6u0T-bZDWwg",
+                    "token_type": "Bearer"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/passkey/01a12267-25f6-775b-a0c4-0eb05552a564",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjIyNzQxMiwibmJmIjoxNzkxNTc4NTQ4LjIyNzQxMiwiZXhwIjoxNzkxNTc5NDQ4LjIyNzQxMiwic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjgwMy03NjU2LWI2OGItY2M5YjA5NjdmNTM4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOnRydWUsImFtciI6WyJwd2QiLCJvdHAiXSwic2lkIjoiMDFhMTIyNjctMjgwMy03NTZlLWI2OGItY2M5YjA4NTkwZDg1IiwiYXV0aF90aW1lIjoxNzkxNTc4NTQ4fQ.CE1UZqOwSsWYn2uBlv679LdyIh7zAPEP7DAQxP4ktfJgEjny9Xnytqyrc4W6clXdJXzL86-0GsYc-ab2rIVTLTR5HbN5f4jQwcYM2Ot6yIvrdeXdNmBCdWJ5yYPozlV1I5IzuOp9GVaU04ytPzkLLrpEt-bq8H2Gbvj4RJB1a8PZPWSJUne2_XIEZ9GKyPleNpBzszG2mbXTCcbk-UMWzvqAEUjcCqHL78A5CzqoXmQ_twQGEMiYkjxl8aRopoOCCPC20_ChdY_4OIJKYyXtMYltmbmD6Z3P4uOWJ_ZhrgGzJvgw01maFQxnW93pV6MKE6Icl6FsYCXlJBzdhsW3tw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "589"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/passkey/not_found",
+                "title": "Passkey not found",
+                "status": 404,
+                "detail": "No such passkey.",
+                "error": "passkey_not_found",
+                "message": "No such passkey."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/passkey/01a12267-2759-73ec-b6ec-2ece6a19e4b0",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjIyNzQxMiwibmJmIjoxNzkxNTc4NTQ4LjIyNzQxMiwiZXhwIjoxNzkxNTc5NDQ4LjIyNzQxMiwic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjgwMy03NjU2LWI2OGItY2M5YjA5NjdmNTM4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOnRydWUsImFtciI6WyJwd2QiLCJvdHAiXSwic2lkIjoiMDFhMTIyNjctMjgwMy03NTZlLWI2OGItY2M5YjA4NTkwZDg1IiwiYXV0aF90aW1lIjoxNzkxNTc4NTQ4fQ.CE1UZqOwSsWYn2uBlv679LdyIh7zAPEP7DAQxP4ktfJgEjny9Xnytqyrc4W6clXdJXzL86-0GsYc-ab2rIVTLTR5HbN5f4jQwcYM2Ot6yIvrdeXdNmBCdWJ5yYPozlV1I5IzuOp9GVaU04ytPzkLLrpEt-bq8H2Gbvj4RJB1a8PZPWSJUne2_XIEZ9GKyPleNpBzszG2mbXTCcbk-UMWzvqAEUjcCqHL78A5CzqoXmQ_twQGEMiYkjxl8aRopoOCCPC20_ChdY_4OIJKYyXtMYltmbmD6Z3P4uOWJ_ZhrgGzJvgw01maFQxnW93pV6MKE6Icl6FsYCXlJBzdhsW3tw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "588"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "deleted"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/passkey/list",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjIyNzQxMiwibmJmIjoxNzkxNTc4NTQ4LjIyNzQxMiwiZXhwIjoxNzkxNTc5NDQ4LjIyNzQxMiwic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjgwMy03NjU2LWI2OGItY2M5YjA5NjdmNTM4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOnRydWUsImFtciI6WyJwd2QiLCJvdHAiXSwic2lkIjoiMDFhMTIyNjctMjgwMy03NTZlLWI2OGItY2M5YjA4NTkwZDg1IiwiYXV0aF90aW1lIjoxNzkxNTc4NTQ4fQ.CE1UZqOwSsWYn2uBlv679LdyIh7zAPEP7DAQxP4ktfJgEjny9Xnytqyrc4W6clXdJXzL86-0GsYc-ab2rIVTLTR5HbN5f4jQwcYM2Ot6yIvrdeXdNmBCdWJ5yYPozlV1I5IzuOp9GVaU04ytPzkLLrpEt-bq8H2Gbvj4RJB1a8PZPWSJUne2_XIEZ9GKyPleNpBzszG2mbXTCcbk-UMWzvqAEUjcCqHL78A5CzqoXmQ_twQGEMiYkjxl8aRopoOCCPC20_ChdY_4OIJKYyXtMYltmbmD6Z3P4uOWJ_ZhrgGzJvgw01maFQxnW93pV6MKE6Icl6FsYCXlJBzdhsW3tw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "587"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": []
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/auth/mfa/factors",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjIyNzQxMiwibmJmIjoxNzkxNTc4NTQ4LjIyNzQxMiwiZXhwIjoxNzkxNTc5NDQ4LjIyNzQxMiwic3ViIjoiMDFhMTIyNjctMjVmNi03NzViLWEwYzQtMGViMDU1NTJhNTY0IiwianRpIjoiMDFhMTIyNjctMjgwMy03NjU2LWI2OGItY2M5YjA5NjdmNTM4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOnRydWUsImFtciI6WyJwd2QiLCJvdHAiXSwic2lkIjoiMDFhMTIyNjctMjgwMy03NTZlLWI2OGItY2M5YjA4NTkwZDg1IiwiYXV0aF90aW1lIjoxNzkxNTc4NTQ4fQ.CE1UZqOwSsWYn2uBlv679LdyIh7zAPEP7DAQxP4ktfJgEjny9Xnytqyrc4W6clXdJXzL86-0GsYc-ab2rIVTLTR5HbN5f4jQwcYM2Ot6yIvrdeXdNmBCdWJ5yYPozlV1I5IzuOp9GVaU04ytPzkLLrpEt-bq8H2Gbvj4RJB1a8PZPWSJUne2_XIEZ9GKyPleNpBzszG2mbXTCcbk-UMWzvqAEUjcCqHL78A5CzqoXmQ_twQGEMiYkjxl8aRopoOCCPC20_ChdY_4OIJKYyXtMYltmbmD6Z3P4uOWJ_ZhrgGzJvgw01maFQxnW93pV6MKE6Icl6FsYCXlJBzdhsW3tw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "1"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791579600"
+                ]
+            },
+            "body": {
+                "data": {
+                    "factors": []
+                }
+            }
+        }
+    }
+]

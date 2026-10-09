@@ -1,0 +1,38 @@
+# POST /social/exchange: the hand-off code for the outcome.
+endpoint:
+  method: POST
+  path: /social/exchange
+  summary: Exchange the sign-in code for the session
+  tags: [social]
+  auth: public
+  rate_limit: token_consume
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    code: { type: string, rules: [required], sensitive: true }
+
+domain:
+  class: Polaris\Social\Http\ExchangeEndpoint
+  description: >
+    The code the callback appended to redirect_uri, valid once for 60 seconds. After a sign-in it answers
+    core's login envelope (amr ["social:<provider>"]), or core's mfa_required ticket to complete at
+    /auth/mfa/verify when the user has a confirmed factor; after a link, {status: linked, account}.
+
+output:
+  status: 200
+  example:
+    data:
+      access_token: "<jwt>"
+      token_type: Bearer
+      expires_in: 900
+      refresh_token: "<opaque>"
+      user: { id: "018f...", email: "ada@example.com", email_verified: true }
+
+errors:
+  - { status: 422, code: social_code_invalid }
+  - { status: 422, code: social_invalid_input }
+
+events: []

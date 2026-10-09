@@ -2044,6 +2044,246 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/social/accounts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List your linked provider accounts */
+        get: operations["get_social_AccountsEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/social/{provider}/callback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The provider's callback */
+        get: operations["get_social_CallbackEndpoint"];
+        put?: never;
+        /** The provider's callback (form_post) */
+        post: operations["post_social_CallbackPostEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/social/exchange": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Exchange the sign-in code for the session */
+        post: operations["post_social_ExchangeEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/social/{provider}/link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Link a provider to your account */
+        post: operations["post_social_LinkEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/social/google/one-tap": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign in with Google One Tap */
+        post: operations["post_social_OneTapEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/social/{provider}/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start a social sign-in */
+        post: operations["post_social_StartEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/social/{provider}/token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get a provider token for the user */
+        post: operations["post_social_TokenEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/social/{provider}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Unlink a provider */
+        delete: operations["delete_social_UnlinkEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/passkey/authenticate/options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start a passkey sign-in */
+        post: operations["post_passkey_AuthenticateOptionsEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/passkey/authenticate/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign in with a passkey */
+        post: operations["post_passkey_AuthenticateVerifyEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/passkey/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove a passkey */
+        delete: operations["delete_passkey_DeleteEndpoint"];
+        options?: never;
+        head?: never;
+        /** Rename a passkey */
+        patch: operations["patch_passkey_RenameEndpoint"];
+        trace?: never;
+    };
+    "/passkey/list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List your passkeys */
+        get: operations["get_passkey_ListEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/passkey/register/options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start registering a passkey */
+        post: operations["post_passkey_RegisterOptionsEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/passkey/register/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Finish registering a passkey */
+        post: operations["post_passkey_RegisterVerifyEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -12235,6 +12475,1110 @@ export interface operations {
                 };
             };
             /** @description multi_session_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_social_AccountsEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "provider": "google",
+                     *           "provider_account_id": "1029384756",
+                     *           "email": "ada@example.com",
+                     *           "email_verified": true,
+                     *           "scopes": [
+                     *             "openid",
+                     *             "email",
+                     *             "profile"
+                     *           ],
+                     *           "profile": {
+                     *             "name": "Ada",
+                     *             "picture": "https://..."
+                     *           },
+                     *           "created_at": "2026-10-09T10:00:00+00:00",
+                     *           "updated_at": "2026-10-09T10:00:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            provider: string;
+                            provider_account_id: string;
+                            email: string;
+                            email_verified: boolean;
+                            scopes: string[];
+                            profile: {
+                                name: string;
+                                picture: string;
+                            };
+                            created_at: string;
+                            updated_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_social_CallbackEndpoint: {
+        parameters: {
+            query: {
+                code?: string;
+                state: string;
+                error?: string;
+            };
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example [] */
+                    "application/json": [
+                    ];
+                };
+            };
+            /** @description social_provider_error | social_account_disabled | social_email_unverified */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_provider_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_account_exists | social_account_linked | social_email_mismatch */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_email_required | social_state_invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_social_CallbackPostEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: password */
+                    code?: string;
+                    state: string;
+                    error?: string;
+                    user?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example [] */
+                    "application/json": [
+                    ];
+                };
+            };
+            /** @description social_provider_error | social_account_disabled | social_email_unverified */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_provider_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_account_exists | social_account_linked | social_email_mismatch */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_email_required | social_state_invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_social_ExchangeEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: password */
+                    code: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "<jwt>",
+                     *         "token_type": "Bearer",
+                     *         "expires_in": 900,
+                     *         "refresh_token": "<opaque>",
+                     *         "user": {
+                     *           "id": "018f...",
+                     *           "email": "ada@example.com",
+                     *           "email_verified": true
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            token_type: string;
+                            expires_in: number;
+                            refresh_token: string;
+                            user: {
+                                id: string;
+                                email: string;
+                                email_verified: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description social_code_invalid | social_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_social_LinkEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    redirect_uri?: string;
+                    scopes?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "url": "https://github.com/login/oauth/authorize?client_id=...&state=...",
+                     *         "state": "<opaque>"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            url: string;
+                            state: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized | step_up_required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_provider_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_redirect_not_allowed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_social_OneTapEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: password */
+                    credential: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "<jwt>",
+                     *         "token_type": "Bearer",
+                     *         "expires_in": 900,
+                     *         "refresh_token": "<opaque>",
+                     *         "user": {
+                     *           "id": "018f...",
+                     *           "email": "ada@example.com",
+                     *           "email_verified": true
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            token_type: string;
+                            expires_in: number;
+                            refresh_token: string;
+                            user: {
+                                id: string;
+                                email: string;
+                                email_verified: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description social_provider_error | social_account_disabled | social_email_unverified */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_provider_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_account_exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_social_StartEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    redirect_uri?: string;
+                    scopes?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "url": "https://accounts.google.com/o/oauth2/v2/auth?client_id=...&state=...",
+                     *         "state": "<opaque>"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            url: string;
+                            state: string;
+                        };
+                    };
+                };
+            };
+            /** @description social_provider_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_redirect_not_allowed */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_social_TokenEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "<opaque>",
+                     *         "expires_at": "2026-10-09T11:00:00+00:00",
+                     *         "scopes": [
+                     *           "repo"
+                     *         ]
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            expires_at: string;
+                            scopes: string[];
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized | step_up_required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_not_linked */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_no_refresh */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_social_UnlinkEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "unlinked"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized | step_up_required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_not_linked */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description social_last_credential */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passkey_AuthenticateOptionsEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "challenge": "<opaque>",
+                     *         "rpId": "app.example.com",
+                     *         "allowCredentials": [],
+                     *         "userVerification": "preferred",
+                     *         "timeout": 60000
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            challenge: string;
+                            rpId: string;
+                            allowCredentials: [
+                            ];
+                            userVerification: string;
+                            timeout: number;
+                        };
+                    };
+                };
+            };
+        };
+    };
+    post_passkey_AuthenticateVerifyEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    credential: {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "access_token": "<jwt>",
+                     *         "token_type": "Bearer",
+                     *         "expires_in": 900,
+                     *         "refresh_token": "<opaque>",
+                     *         "user": {
+                     *           "id": "018f...",
+                     *           "email": "ada@example.com",
+                     *           "email_verified": true
+                     *         }
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            access_token: string;
+                            token_type: string;
+                            expires_in: number;
+                            refresh_token: string;
+                            user: {
+                                id: string;
+                                email: string;
+                                email_verified: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description passkey_account_disabled | passkey_email_unverified | passkey_user_verification_required | passkey_origin_mismatch */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passkey_challenge_invalid | passkey_credential_invalid | passkey_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_passkey_DeleteEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "deleted"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized | step_up_required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passkey_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passkey_last_factor */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    patch_passkey_RenameEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "name": "Work laptop",
+                     *         "aaguid": "<uuid>",
+                     *         "transports": [
+                     *           "internal"
+                     *         ],
+                     *         "backed_up": true,
+                     *         "factor_id": "018f...",
+                     *         "last_used_at": null,
+                     *         "created_at": "2026-10-09T10:00:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            aaguid: string;
+                            transports: string[];
+                            backed_up: boolean;
+                            factor_id: string;
+                            last_used_at: string | null;
+                            created_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passkey_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passkey_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_passkey_ListEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "name": "MacBook",
+                     *           "aaguid": "<uuid>",
+                     *           "transports": [
+                     *             "internal",
+                     *             "hybrid"
+                     *           ],
+                     *           "backed_up": true,
+                     *           "factor_id": "018f...",
+                     *           "last_used_at": "2026-10-09T10:05:00+00:00",
+                     *           "created_at": "2026-10-09T10:00:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            aaguid: string;
+                            transports: string[];
+                            backed_up: boolean;
+                            factor_id: string;
+                            last_used_at: string;
+                            created_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passkey_RegisterOptionsEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "rp": {
+                     *           "id": "app.example.com",
+                     *           "name": "App"
+                     *         },
+                     *         "user": {
+                     *           "id": "<opaque>",
+                     *           "name": "ada@example.com",
+                     *           "displayName": "Ada"
+                     *         },
+                     *         "challenge": "<opaque>",
+                     *         "pubKeyCredParams": [
+                     *           {
+                     *             "type": "public-key",
+                     *             "alg": -7
+                     *           },
+                     *           {
+                     *             "type": "public-key",
+                     *             "alg": -257
+                     *           }
+                     *         ],
+                     *         "authenticatorSelection": {
+                     *           "residentKey": "required",
+                     *           "userVerification": "preferred"
+                     *         },
+                     *         "attestation": "none",
+                     *         "excludeCredentials": [],
+                     *         "timeout": 60000
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            rp: {
+                                id: string;
+                                name: string;
+                            };
+                            user: {
+                                id: string;
+                                name: string;
+                                displayName: string;
+                            };
+                            challenge: string;
+                            pubKeyCredParams: {
+                                type: string;
+                                alg: number;
+                            }[];
+                            authenticatorSelection: {
+                                residentKey: string;
+                                userVerification: string;
+                            };
+                            attestation: string;
+                            excludeCredentials: [
+                            ];
+                            timeout: number;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized | step_up_required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_passkey_RegisterVerifyEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    credential: {
+                        [key: string]: unknown;
+                    };
+                    name?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "passkey": {
+                     *           "id": "018f...",
+                     *           "name": "MacBook",
+                     *           "aaguid": "<uuid>",
+                     *           "transports": [
+                     *             "internal",
+                     *             "hybrid"
+                     *           ],
+                     *           "backed_up": true,
+                     *           "factor_id": "018f...",
+                     *           "last_used_at": null,
+                     *           "created_at": "2026-10-09T10:00:00+00:00"
+                     *         },
+                     *         "recovery_codes": [
+                     *           "<code>",
+                     *           "<code>"
+                     *         ]
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            passkey: {
+                                id: string;
+                                name: string;
+                                aaguid: string;
+                                transports: string[];
+                                backed_up: boolean;
+                                factor_id: string;
+                                last_used_at: string | null;
+                                created_at: string;
+                            };
+                            recovery_codes: string[];
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized | step_up_required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passkey_origin_mismatch */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description passkey_challenge_invalid | passkey_credential_invalid | passkey_invalid_input */
             422: {
                 headers: {
                     [name: string]: unknown;

@@ -1,0 +1,27 @@
+{
+    "https://accounts.google.com/.well-known/openid-configuration": {
+        "issuer": "https://accounts.google.com",
+        "authorization_endpoint": "https://accounts.google.com/o/oauth2/v2/auth",
+        "token_endpoint": "https://oauth2.googleapis.com/token",
+        "userinfo_endpoint": "https://openidconnect.googleapis.com/v1/userinfo",
+        "jwks_uri": "https://www.googleapis.com/oauth2/v3/certs"
+    },
+    "https://www.googleapis.com/oauth2/v3/certs": "<jwks>",
+    "https://oauth2.googleapis.com/token": {
+        "access_token": "ya29.a0AfB_byC-recorded-google-access-token",
+        "expires_in": 3599,
+        "refresh_token": "1//0g-recorded-google-refresh-token",
+        "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+        "token_type": "Bearer",
+        "id_token": "<minted>"
+    },
+    "https://openidconnect.googleapis.com/v1/userinfo": {
+        "sub": "110169484474386276334",
+        "name": "Ada Lovelace",
+        "given_name": "Ada",
+        "family_name": "Lovelace",
+        "picture": "https://lh3.googleusercontent.com/a/ada",
+        "email": "ada@example.com",
+        "email_verified": true
+    }
+}

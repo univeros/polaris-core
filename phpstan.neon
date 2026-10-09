@@ -34,3 +34,7 @@ parameters:
         - packages/anonymous/tests
         - packages/multi-session/src
         - packages/multi-session/tests
+        - packages/passkey/src
+        - packages/passkey/tests
+        - packages/social/src
+        - packages/social/tests

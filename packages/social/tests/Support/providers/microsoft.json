@@ -1,0 +1,19 @@
+{
+    "https://login.microsoftonline.com/common/oauth2/v2.0/token": {
+        "token_type": "Bearer",
+        "scope": "openid email profile offline_access",
+        "expires_in": 3599,
+        "access_token": "EwB-recorded-microsoft-access-token",
+        "refresh_token": "M.C-recorded-microsoft-refresh-token",
+        "id_token": "<minted>"
+    },
+    "https://login.microsoftonline.com/common/discovery/v2.0/keys": "<jwks>",
+    "https://graph.microsoft.com/oidc/userinfo": {
+        "sub": "AAAAAAAAAAAAAAAAAAAAAIkzqFVrSaSaFHza9xbEXZk",
+        "name": "Linus Torvalds",
+        "family_name": "Torvalds",
+        "given_name": "Linus",
+        "picture": "https://graph.microsoft.com/v1.0/me/photo/$value",
+        "email": "linus@example.com"
+    }
+}

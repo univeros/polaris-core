@@ -70,4 +70,14 @@ The demo registers the `polaris/audit` and `polaris/admin` plugins: `bin/setup` 
 and writes an owner API key to `var/admin.key`, so `curl -H "Authorization: Bearer $(cat var/admin.key)"
 http://127.0.0.1:8080/admin/users` lists the users and the TypeScript client's test exercises `client.admin`.
 
+The demo also registers `polaris/social` and `polaris/passkey`. `src/FakeProvider.php` is its own OAuth 2
+server (`/fake-oauth/authorize`, `/token`, `/me`), configured as the `fake` provider through a
+`Definition`, the way any other OAuth 2 server is; the walkthrough signs in through it (steps 13 to 16).
+`public/passkey.html` registers an account, enrols a passkey, signs in with it alone and passes the MFA
+gate with it; `npm run e2e` in `packages/client-ts` drives that page in Chromium with a virtual
+authenticator. `POLARIS_BASE_URL` (`http://localhost:8080` by default; a domain, not an IP, because passkeys are bound
+to it) is the origin the callbacks derive from; `src/FileCache.php` keeps the plugins' short-lived state
+across `php -S` requests. `bin/setup` creates the tables of a fresh database only: delete `var/polaris.sqlite`
+to rebuild it after adding a plugin.
+
 Polaris for PHP is created and maintained by [2am.tech](https://2am.tech).

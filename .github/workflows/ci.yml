@@ -206,3 +206,9 @@ jobs:
           git diff --exit-code -- openapi.json src
           npm run typecheck
           npm test
+
+      - name: The passkey page of the Slim demo in Chromium with a virtual authenticator
+        working-directory: packages/client-ts
+        run: |
+          npx playwright install --with-deps chromium
+          npm run e2e

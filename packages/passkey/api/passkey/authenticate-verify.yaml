@@ -1,0 +1,46 @@
+# POST /passkey/authenticate/verify: sign in with the assertion.
+endpoint:
+  method: POST
+  path: /passkey/authenticate/verify
+  summary: Sign in with a passkey
+  tags: [passkey]
+  auth: public
+  rate_limit: login
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    credential: { type: object, rules: [required] }   # the PublicKeyCredential JSON (credential.toJSON()), or its string
+
+domain:
+  class: Polaris\Passkey\Http\AuthenticateVerifyEndpoint
+  description: >
+    Verifies the assertion against its challenge, the relying party, the allowed origins, the stored
+    public key and the signature counter, and answers core's login envelope (amr ["passkey"]). An
+    assertion with user verification is itself two factors: the session carries mfa true and core's MFA
+    gate is skipped; without it the gate applies and a user with a confirmed factor gets core's
+    mfa_required ticket. An unknown credential, a bad signature and a replayed challenge answer the same
+    passkey_credential_invalid or passkey_challenge_invalid.
+
+output:
+  status: 200
+  example:
+    data:
+      access_token: "<jwt>"
+      token_type: Bearer
+      expires_in: 900
+      refresh_token: "<opaque>"
+      user: { id: "018f...", email: "ada@example.com", email_verified: true }
+
+errors:
+  - { status: 403, code: passkey_account_disabled }
+  - { status: 403, code: passkey_email_unverified }
+  - { status: 403, code: passkey_user_verification_required }
+  - { status: 403, code: passkey_origin_mismatch }
+  - { status: 422, code: passkey_challenge_invalid }
+  - { status: 422, code: passkey_credential_invalid }
+  - { status: 422, code: passkey_invalid_input }
+
+events: [user.logged_in]

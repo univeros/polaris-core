@@ -1,0 +1,709 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/google/start",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://accounts.google.com/o/oauth2/v2/auth?client_id=google-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgoogle%2Fcallback&response_type=code&scope=openid%20email%20profile&state=cd47893e145c8798acf90bf08bfa761f&access_type=offline&prompt=select_account&code_challenge=BXUB9NAqig0_eXS770WxaHNSg86MFQQ_zguT0_kYUCc&code_challenge_method=S256&nonce=4798495fd96d80934158071ba0987d04",
+                    "state": "cd47893e145c8798acf90bf08bfa761f"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/google/callback?code=good&state=cd47893e145c8798acf90bf08bfa761f",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 302,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Location": [
+                    "https://app.polaris.test/signed-in?code=nbajPFxnMRSFfc-OZ2ptpCAQoxPRyPpHMCdAfXR4MkA&state=cd47893e145c8798acf90bf08bfa761f"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "nbajPFxnMRSFfc-OZ2ptpCAQoxPRyPpHMCdAfXR4MkA"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI3Mjc3NSwibmJmIjoxNzkxNTc4NTQ4LjI3Mjc3NSwiZXhwIjoxNzkxNTc5NDQ4LjI3Mjc3NSwic3ViIjoiMDFhMTIyNjctMjgzMC03OTM0LThmYzQtYWI3ZmEzYTVlMjc2IiwianRpIjoiMDFhMTIyNjctMjgzMC03YzA0LThmYzQtYWI3ZmE2OTM4Yzk1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODMwLTdiNDQtOGZjNC1hYjdmYTUxMDQwMjgiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.AfkfkdRgTwecy9HvR7YXzR-0pNGl6OjyPHk1bNRDlnwlCbucH1ROv8E4w8GbxCnMgrkmMxdWLYX4_JWgm3LAtH3zV_Yh5ctea_6IXF6DMin-DJW-9M_E1QYbOtEJHG572tEzSasqhsMK74mqv-IC5jP0u5X4gVhW-SQLPpKPsjTm8GArgKIHxYwCIxnvuNcXTHvozHkIyMZqW_xPcWPP5SmoSs3D3wkpbQefOBaQ46cIVeA_BM53A305G0q6MwcDVo5BJPk5sLRoGW57fgen2EC-79lOOcOyIkE6hosNE6eeAu9ken2yPBKIa9K_YeM7y9CZd6W-QEpPOtYeKm0ZEA",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "wvtEpguegnv5qRbea_nR-K-5Wlcyh-OpQlXOBG0UIJM",
+                    "user": {
+                        "id": "01a12267-2830-7934-8fc4-ab7fa3a5e276",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/accounts",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer"
+                ]
+            },
+            "body": {
+                "error": "unauthorized",
+                "message": "Authentication is required."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/accounts",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI3Mjc3NSwibmJmIjoxNzkxNTc4NTQ4LjI3Mjc3NSwiZXhwIjoxNzkxNTc5NDQ4LjI3Mjc3NSwic3ViIjoiMDFhMTIyNjctMjgzMC03OTM0LThmYzQtYWI3ZmEzYTVlMjc2IiwianRpIjoiMDFhMTIyNjctMjgzMC03YzA0LThmYzQtYWI3ZmE2OTM4Yzk1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODMwLTdiNDQtOGZjNC1hYjdmYTUxMDQwMjgiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.AfkfkdRgTwecy9HvR7YXzR-0pNGl6OjyPHk1bNRDlnwlCbucH1ROv8E4w8GbxCnMgrkmMxdWLYX4_JWgm3LAtH3zV_Yh5ctea_6IXF6DMin-DJW-9M_E1QYbOtEJHG572tEzSasqhsMK74mqv-IC5jP0u5X4gVhW-SQLPpKPsjTm8GArgKIHxYwCIxnvuNcXTHvozHkIyMZqW_xPcWPP5SmoSs3D3wkpbQefOBaQ46cIVeA_BM53A305G0q6MwcDVo5BJPk5sLRoGW57fgen2EC-79lOOcOyIkE6hosNE6eeAu9ken2yPBKIa9K_YeM7y9CZd6W-QEpPOtYeKm0ZEA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a12267-2830-79a0-8fc4-ab7fa4083633",
+                        "provider": "google",
+                        "provider_account_id": "110169484474386276334",
+                        "email": "ada@example.com",
+                        "email_verified": true,
+                        "scopes": [
+                            "openid",
+                            "https://www.googleapis.com/auth/userinfo.email",
+                            "https://www.googleapis.com/auth/userinfo.profile"
+                        ],
+                        "profile": {
+                            "name": "Ada Lovelace",
+                            "picture": "https://lh3.googleusercontent.com/a/ada"
+                        },
+                        "created_at": "2026-10-09T20:42:28+00:00",
+                        "updated_at": "2026-10-09T20:42:28+00:00"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/google/token",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI3Mjc3NSwibmJmIjoxNzkxNTc4NTQ4LjI3Mjc3NSwiZXhwIjoxNzkxNTc5NDQ4LjI3Mjc3NSwic3ViIjoiMDFhMTIyNjctMjgzMC03OTM0LThmYzQtYWI3ZmEzYTVlMjc2IiwianRpIjoiMDFhMTIyNjctMjgzMC03YzA0LThmYzQtYWI3ZmE2OTM4Yzk1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODMwLTdiNDQtOGZjNC1hYjdmYTUxMDQwMjgiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.AfkfkdRgTwecy9HvR7YXzR-0pNGl6OjyPHk1bNRDlnwlCbucH1ROv8E4w8GbxCnMgrkmMxdWLYX4_JWgm3LAtH3zV_Yh5ctea_6IXF6DMin-DJW-9M_E1QYbOtEJHG572tEzSasqhsMK74mqv-IC5jP0u5X4gVhW-SQLPpKPsjTm8GArgKIHxYwCIxnvuNcXTHvozHkIyMZqW_xPcWPP5SmoSs3D3wkpbQefOBaQ46cIVeA_BM53A305G0q6MwcDVo5BJPk5sLRoGW57fgen2EC-79lOOcOyIkE6hosNE6eeAu9ken2yPBKIa9K_YeM7y9CZd6W-QEpPOtYeKm0ZEA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "ya29.a0AfB_byC-recorded-google-access-token",
+                    "expires_at": "2026-10-09T21:42:27+00:00",
+                    "scopes": [
+                        "openid",
+                        "https://www.googleapis.com/auth/userinfo.email",
+                        "https://www.googleapis.com/auth/userinfo.profile"
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/github/token",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI3Mjc3NSwibmJmIjoxNzkxNTc4NTQ4LjI3Mjc3NSwiZXhwIjoxNzkxNTc5NDQ4LjI3Mjc3NSwic3ViIjoiMDFhMTIyNjctMjgzMC03OTM0LThmYzQtYWI3ZmEzYTVlMjc2IiwianRpIjoiMDFhMTIyNjctMjgzMC03YzA0LThmYzQtYWI3ZmE2OTM4Yzk1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODMwLTdiNDQtOGZjNC1hYjdmYTUxMDQwMjgiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.AfkfkdRgTwecy9HvR7YXzR-0pNGl6OjyPHk1bNRDlnwlCbucH1ROv8E4w8GbxCnMgrkmMxdWLYX4_JWgm3LAtH3zV_Yh5ctea_6IXF6DMin-DJW-9M_E1QYbOtEJHG572tEzSasqhsMK74mqv-IC5jP0u5X4gVhW-SQLPpKPsjTm8GArgKIHxYwCIxnvuNcXTHvozHkIyMZqW_xPcWPP5SmoSs3D3wkpbQefOBaQ46cIVeA_BM53A305G0q6MwcDVo5BJPk5sLRoGW57fgen2EC-79lOOcOyIkE6hosNE6eeAu9ken2yPBKIa9K_YeM7y9CZd6W-QEpPOtYeKm0ZEA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "597"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/not_linked",
+                "title": "Not linked",
+                "status": 404,
+                "detail": "No github account is linked.",
+                "error": "social_not_linked",
+                "message": "No github account is linked."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/social/google",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI3Mjc3NSwibmJmIjoxNzkxNTc4NTQ4LjI3Mjc3NSwiZXhwIjoxNzkxNTc5NDQ4LjI3Mjc3NSwic3ViIjoiMDFhMTIyNjctMjgzMC03OTM0LThmYzQtYWI3ZmEzYTVlMjc2IiwianRpIjoiMDFhMTIyNjctMjgzMC03YzA0LThmYzQtYWI3ZmE2OTM4Yzk1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODMwLTdiNDQtOGZjNC1hYjdmYTUxMDQwMjgiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.AfkfkdRgTwecy9HvR7YXzR-0pNGl6OjyPHk1bNRDlnwlCbucH1ROv8E4w8GbxCnMgrkmMxdWLYX4_JWgm3LAtH3zV_Yh5ctea_6IXF6DMin-DJW-9M_E1QYbOtEJHG572tEzSasqhsMK74mqv-IC5jP0u5X4gVhW-SQLPpKPsjTm8GArgKIHxYwCIxnvuNcXTHvozHkIyMZqW_xPcWPP5SmoSs3D3wkpbQefOBaQ46cIVeA_BM53A305G0q6MwcDVo5BJPk5sLRoGW57fgen2EC-79lOOcOyIkE6hosNE6eeAu9ken2yPBKIa9K_YeM7y9CZd6W-QEpPOtYeKm0ZEA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 409,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "596"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/last_credential",
+                "title": "Last credential",
+                "status": 409,
+                "detail": "This is the only way to sign in to the account; set a password or link another provider first.",
+                "error": "social_last_credential",
+                "message": "This is the only way to sign in to the account; set a password or link another provider first."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/github/link",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791579600"
+                ]
+            },
+            "body": {
+                "error": "unauthorized",
+                "message": "Authentication is required."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/github/link",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI3Mjc3NSwibmJmIjoxNzkxNTc4NTQ4LjI3Mjc3NSwiZXhwIjoxNzkxNTc5NDQ4LjI3Mjc3NSwic3ViIjoiMDFhMTIyNjctMjgzMC03OTM0LThmYzQtYWI3ZmEzYTVlMjc2IiwianRpIjoiMDFhMTIyNjctMjgzMC03YzA0LThmYzQtYWI3ZmE2OTM4Yzk1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODMwLTdiNDQtOGZjNC1hYjdmYTUxMDQwMjgiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.AfkfkdRgTwecy9HvR7YXzR-0pNGl6OjyPHk1bNRDlnwlCbucH1ROv8E4w8GbxCnMgrkmMxdWLYX4_JWgm3LAtH3zV_Yh5ctea_6IXF6DMin-DJW-9M_E1QYbOtEJHG572tEzSasqhsMK74mqv-IC5jP0u5X4gVhW-SQLPpKPsjTm8GArgKIHxYwCIxnvuNcXTHvozHkIyMZqW_xPcWPP5SmoSs3D3wkpbQefOBaQ46cIVeA_BM53A305G0q6MwcDVo5BJPk5sLRoGW57fgen2EC-79lOOcOyIkE6hosNE6eeAu9ken2yPBKIa9K_YeM7y9CZd6W-QEpPOtYeKm0ZEA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791579600"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://github.com/login/oauth/authorize?client_id=github-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgithub%2Fcallback&response_type=code&scope=read%3Auser%20user%3Aemail&state=4b4596f31a8b410f892d7af1a6bd95cf",
+                    "state": "4b4596f31a8b410f892d7af1a6bd95cf"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/github/callback?code=good&state=4b4596f31a8b410f892d7af1a6bd95cf",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 302,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Location": [
+                    "https://app.polaris.test/signed-in?code=b8aJ1CaHu9iXrn5AJXiErgPvz3g8FXd1uZGcIz_UzA8&state=4b4596f31a8b410f892d7af1a6bd95cf"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "7"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "b8aJ1CaHu9iXrn5AJXiErgPvz3g8FXd1uZGcIz_UzA8"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "6"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "linked",
+                    "account": {
+                        "id": "01a12267-2833-722a-8dda-7d9cc6cf4591",
+                        "provider": "github",
+                        "provider_account_id": "583231",
+                        "email": "grace@example.com",
+                        "email_verified": true,
+                        "scopes": [
+                            "read:user",
+                            "user:email"
+                        ],
+                        "profile": {
+                            "name": "Grace Hopper",
+                            "login": "grace",
+                            "picture": "https://avatars.githubusercontent.com/u/583231?v=4"
+                        },
+                        "created_at": "2026-10-09T20:42:28+00:00",
+                        "updated_at": "2026-10-09T20:42:28+00:00"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/accounts",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI3Mjc3NSwibmJmIjoxNzkxNTc4NTQ4LjI3Mjc3NSwiZXhwIjoxNzkxNTc5NDQ4LjI3Mjc3NSwic3ViIjoiMDFhMTIyNjctMjgzMC03OTM0LThmYzQtYWI3ZmEzYTVlMjc2IiwianRpIjoiMDFhMTIyNjctMjgzMC03YzA0LThmYzQtYWI3ZmE2OTM4Yzk1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODMwLTdiNDQtOGZjNC1hYjdmYTUxMDQwMjgiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.AfkfkdRgTwecy9HvR7YXzR-0pNGl6OjyPHk1bNRDlnwlCbucH1ROv8E4w8GbxCnMgrkmMxdWLYX4_JWgm3LAtH3zV_Yh5ctea_6IXF6DMin-DJW-9M_E1QYbOtEJHG572tEzSasqhsMK74mqv-IC5jP0u5X4gVhW-SQLPpKPsjTm8GArgKIHxYwCIxnvuNcXTHvozHkIyMZqW_xPcWPP5SmoSs3D3wkpbQefOBaQ46cIVeA_BM53A305G0q6MwcDVo5BJPk5sLRoGW57fgen2EC-79lOOcOyIkE6hosNE6eeAu9ken2yPBKIa9K_YeM7y9CZd6W-QEpPOtYeKm0ZEA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "594"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a12267-2830-79a0-8fc4-ab7fa4083633",
+                        "provider": "google",
+                        "provider_account_id": "110169484474386276334",
+                        "email": "ada@example.com",
+                        "email_verified": true,
+                        "scopes": [
+                            "openid",
+                            "https://www.googleapis.com/auth/userinfo.email",
+                            "https://www.googleapis.com/auth/userinfo.profile"
+                        ],
+                        "profile": {
+                            "name": "Ada Lovelace",
+                            "picture": "https://lh3.googleusercontent.com/a/ada"
+                        },
+                        "created_at": "2026-10-09T20:42:28+00:00",
+                        "updated_at": "2026-10-09T20:42:28+00:00"
+                    },
+                    {
+                        "id": "01a12267-2833-722a-8dda-7d9cc6cf4591",
+                        "provider": "github",
+                        "provider_account_id": "583231",
+                        "email": "grace@example.com",
+                        "email_verified": true,
+                        "scopes": [
+                            "read:user",
+                            "user:email"
+                        ],
+                        "profile": {
+                            "name": "Grace Hopper",
+                            "login": "grace",
+                            "picture": "https://avatars.githubusercontent.com/u/583231?v=4"
+                        },
+                        "created_at": "2026-10-09T20:42:28+00:00",
+                        "updated_at": "2026-10-09T20:42:28+00:00"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/social/google",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI3Mjc3NSwibmJmIjoxNzkxNTc4NTQ4LjI3Mjc3NSwiZXhwIjoxNzkxNTc5NDQ4LjI3Mjc3NSwic3ViIjoiMDFhMTIyNjctMjgzMC03OTM0LThmYzQtYWI3ZmEzYTVlMjc2IiwianRpIjoiMDFhMTIyNjctMjgzMC03YzA0LThmYzQtYWI3ZmE2OTM4Yzk1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODMwLTdiNDQtOGZjNC1hYjdmYTUxMDQwMjgiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.AfkfkdRgTwecy9HvR7YXzR-0pNGl6OjyPHk1bNRDlnwlCbucH1ROv8E4w8GbxCnMgrkmMxdWLYX4_JWgm3LAtH3zV_Yh5ctea_6IXF6DMin-DJW-9M_E1QYbOtEJHG572tEzSasqhsMK74mqv-IC5jP0u5X4gVhW-SQLPpKPsjTm8GArgKIHxYwCIxnvuNcXTHvozHkIyMZqW_xPcWPP5SmoSs3D3wkpbQefOBaQ46cIVeA_BM53A305G0q6MwcDVo5BJPk5sLRoGW57fgen2EC-79lOOcOyIkE6hosNE6eeAu9ken2yPBKIa9K_YeM7y9CZd6W-QEpPOtYeKm0ZEA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "593"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "unlinked"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/social/google",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI3Mjc3NSwibmJmIjoxNzkxNTc4NTQ4LjI3Mjc3NSwiZXhwIjoxNzkxNTc5NDQ4LjI3Mjc3NSwic3ViIjoiMDFhMTIyNjctMjgzMC03OTM0LThmYzQtYWI3ZmEzYTVlMjc2IiwianRpIjoiMDFhMTIyNjctMjgzMC03YzA0LThmYzQtYWI3ZmE2OTM4Yzk1Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODMwLTdiNDQtOGZjNC1hYjdmYTUxMDQwMjgiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.AfkfkdRgTwecy9HvR7YXzR-0pNGl6OjyPHk1bNRDlnwlCbucH1ROv8E4w8GbxCnMgrkmMxdWLYX4_JWgm3LAtH3zV_Yh5ctea_6IXF6DMin-DJW-9M_E1QYbOtEJHG572tEzSasqhsMK74mqv-IC5jP0u5X4gVhW-SQLPpKPsjTm8GArgKIHxYwCIxnvuNcXTHvozHkIyMZqW_xPcWPP5SmoSs3D3wkpbQefOBaQ46cIVeA_BM53A305G0q6MwcDVo5BJPk5sLRoGW57fgen2EC-79lOOcOyIkE6hosNE6eeAu9ken2yPBKIa9K_YeM7y9CZd6W-QEpPOtYeKm0ZEA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "592"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/not_linked",
+                "title": "Not linked",
+                "status": 404,
+                "detail": "No google account is linked.",
+                "error": "social_not_linked",
+                "message": "No google account is linked."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/google/start",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://accounts.google.com/o/oauth2/v2/auth?client_id=google-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgoogle%2Fcallback&response_type=code&scope=openid%20email%20profile&state=66a7e5c228f284770e83cb2654c8c059&access_type=offline&prompt=select_account&code_challenge=xSvR-tD5H1oMyC6u-B2gu_SYmBRdvDs3qkC6xy0oxMI&code_challenge_method=S256&nonce=390c4e5442f3c3f0168b69f51b247b54",
+                    "state": "66a7e5c228f284770e83cb2654c8c059"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/google/callback?code=good&state=66a7e5c228f284770e83cb2654c8c059",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 302,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Location": [
+                    "https://app.polaris.test/signed-in?code=pL1oA2tONt31Z1F_kNJc3cqgEUzTO7spQw43odyqeo8&state=66a7e5c228f284770e83cb2654c8c059"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "5"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "pL1oA2tONt31Z1F_kNJc3cqgEUzTO7spQw43odyqeo8"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI3NzE4MSwibmJmIjoxNzkxNTc4NTQ4LjI3NzE4MSwiZXhwIjoxNzkxNTc5NDQ4LjI3NzE4MSwic3ViIjoiMDFhMTIyNjctMjgzMC03OTM0LThmYzQtYWI3ZmEzYTVlMjc2IiwianRpIjoiMDFhMTIyNjctMjgzNS03MmMzLTk0YjYtZTVkOWJjZmUyZDAzIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODM1LTcyMGItOTRiNi1lNWQ5YmMwYzk3OTciLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.rz2R1CgRDaVQZbnSDk5Hjn0V1zuJ-9Jms-yvntZg6NJRXRKSxFTRtuVRCFLhrzUyUwgZb2egyUUs6wlybFloh-VOwhBKtQ3nsjlyZ1ElXVamVek4BOCp5XWu4rKoPvvkiHw5ZewWlp_iPhH3P87PjQZkNVg_6wkNyJ7fGxDilFa0rOrSg_2CqYcNfftOdm9hyl7Z7m9ktkAb9xAjjsYkQHZOcTFo1SMYJupAdSTmSKR4Rvdb6vBizL8VoEBHWKaiNHLEZ3HRwDiQsuH-iUrxvWKq8_Cz1x-a2EBdYOgp1uxkKabpuTQRE2ub5gFQSLtAdO12xfmH5yt0yTF-lszkYQ",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "biuSRTQoXvs6E9KKEQhKGBmidvSO0QrgpXXchSThqzM",
+                    "user": {
+                        "id": "01a12267-2830-7934-8fc4-ab7fa3a5e276",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    }
+]

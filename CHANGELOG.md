@@ -4,6 +4,38 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+Program 4 ("Better Auth for PHP"), WP2: social sign-in and passkeys, and the one planned core seam.
+
+### Added
+- `polaris/social`: OAuth 2.0 / OpenID Connect sign-in and sign-up through a catalog of nineteen providers
+  (Google, Apple, Microsoft, GitHub, GitLab, Discord, Facebook, X, LinkedIn, Slack, Twitch, Spotify, Zoom,
+  Notion, Dropbox, Reddit, Kick, TikTok, Hugging Face) or any other OAuth 2 server (a `Definition`, or
+  OpenID Connect discovery); `POST /social/{provider}/start`, the `GET`/`POST` callback with the sso
+  hand-off pattern and `POST /social/exchange`, `POST /social/google/one-tap` (the id_token verified
+  offline), `GET /social/accounts`, `POST /social/{provider}/link` (step-up), `DELETE /social/{provider}`
+  (refused for the last credential), `POST /social/{provider}/token` (refreshed when expiring); the
+  linking policy (`trustedProviders`, `allowDifferentEmails`); the OAuth proxy (`proxy`) forwarding a
+  signed `return_to` from preview origins. Table `polaris_social_account`; the `social.*` audit names.
+- `polaris/passkey`: WebAuthn through `web-auth/webauthn-lib`; `POST /passkey/register/options` and
+  `/verify` from a session, `POST /passkey/authenticate/options` (discoverable, conditional UI) and
+  `/verify` ending in core's envelope with `amr: ["passkey"]` (`mfa: true` and the gate skipped on user
+  verification), `GET /passkey/list`, `PATCH /passkey/{id}`, `DELETE /passkey/{id}` (step-up). Every
+  passkey is also a core MFA factor of type `passkey` (`mfaFactor: true`), verified through core's
+  `/auth/mfa/verify` and `/auth/mfa/step-up` with the assertion as the `code`. Table `polaris_passkey`.
+- `polaris/core`: the MFA factor-type seam (program 4, decision #1): `Polaris\Contract\MfaFactorType`
+  and `MfaFactorTypeProvider`; a plugin implementing the provider adds types `MfaChallengeVerifier`
+  dispatches to, resolved on the first verification. Core's routes, fixtures and types are unchanged.
+- `@polaris-auth/client`: `client.social` and `client.passkey`, and the browser helpers
+  `registerPasskey()`, `signInWithPasskey()` and `passkeyAssertion()` over `navigator.credentials`.
+- The Slim demo: a fake OAuth provider (`/fake-oauth/*`) and a passkey page, exercised by the walkthrough
+  and a Playwright run with a virtual authenticator.
+
+### Changed
+- Core's test normaliser masks the per-run query parameters of a URL (`state`, `nonce`, `code_challenge`,
+  `code`) in bodies and Location headers.
+
 ## [0.7.0] - 2026-10-09
 
 Program 4 ("Better Auth for PHP", `docs/better/spec.md`), WP1: four sign-in packages on the plugin

@@ -1,0 +1,40 @@
+# POST /social/{provider}/link: where the browser goes to link the provider to the caller's account.
+endpoint:
+  method: POST
+  path: /social/{provider}/link
+  summary: Link a provider to your account
+  tags: [social]
+  auth: bearer
+  step_up: true
+  rate_limit: mfa_enroll
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    redirect_uri: { type: "?string", rules: [optional] }
+    scopes: { type: "?list", rules: [optional] }
+
+domain:
+  class: Polaris\Social\Http\LinkEndpoint
+  description: >
+    As POST /social/{provider}/start, for the caller's account: the callback links the provider account
+    instead of signing in, and POST /social/exchange answers the linked account. Step-up gated. A
+    provider account linked to another user is refused; a provider email that is not the account's is
+    refused unless the provider is in allowDifferentEmails.
+
+output:
+  status: 200
+  example:
+    data:
+      url: "https://github.com/login/oauth/authorize?client_id=...&state=..."
+      state: "<opaque>"
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 401, code: step_up_required }
+  - { status: 404, code: social_provider_not_found }
+  - { status: 422, code: social_redirect_not_allowed }
+
+events: []

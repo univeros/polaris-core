@@ -1,0 +1,447 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "grace@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791579600"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "DEUGCk3-DC0uyOYFAp55mj02xTpzVWVM2Jx9mDeA8uU"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "grace@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjYxNTQ0MSwibmJmIjoxNzkxNTc4NTQ4LjYxNTQ0MSwiZXhwIjoxNzkxNTc5NDQ4LjYxNTQ0MSwic3ViIjoiMDFhMTIyNjctMjg0Ny03NjgzLWIxNjEtODMzODM2NTM2NTE4IiwianRpIjoiMDFhMTIyNjctMjk4Ny03NmI2LWEzNDUtYWMzOWE1YjRkZWExIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI5ODctNzRkZS1hMzQ1LWFjMzlhM2Y0Yjg2NSIsImF1dGhfdGltZSI6MTc5MTU3ODU0OH0.HAd2egPqYBugASt9o1vcpxV56ENZO3dWRWSyDTL8EvrP-fzyDllGNDPe63mub-VmOKWdYeDGslfXGGVaqI4hYiGIL3HaglxFDkS0k8aoQwxwOy-4vzkaYXwpRH12Lg-ESXp0H80WE4-VZd4TM_Q8ZyKoMsV2N9FvJ9m9Res_au5Bgwsdi-vfC9QhmvchuwgVkDp030iqNqBwT5pVHynfWdbVDQqb2JbNdml0HdqgNkwu0y8B3E020cGnpBLsKlgJx56-0luU1F1DHKonkiOdTceLVLCHNQR2w7BemyQ2A5pYcc4dsARIW7QtfFcWV5m0N2cbaxfXuDVfBEn-3t4-3g",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "r6RrNVvCrO7BzNGiTJAWWfVg20WBROZ-5PNuOcSojCc",
+                    "user": {
+                        "id": "01a12267-2847-7683-b161-833836536518",
+                        "email": "grace@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/github/start",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://github.com/login/oauth/authorize?client_id=github-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgithub%2Fcallback&response_type=code&scope=read%3Auser%20user%3Aemail&state=570221f956274e2532b0d276cc6ba3cf",
+                    "state": "570221f956274e2532b0d276cc6ba3cf"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/github/callback?code=good&state=570221f956274e2532b0d276cc6ba3cf",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 409,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/account_exists",
+                "title": "Account exists",
+                "status": 409,
+                "detail": "An account with this email exists; sign in and link the provider from your account.",
+                "error": "social_account_exists",
+                "message": "An account with this email exists; sign in and link the provider from your account."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/github/link",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjYxNTQ0MSwibmJmIjoxNzkxNTc4NTQ4LjYxNTQ0MSwiZXhwIjoxNzkxNTc5NDQ4LjYxNTQ0MSwic3ViIjoiMDFhMTIyNjctMjg0Ny03NjgzLWIxNjEtODMzODM2NTM2NTE4IiwianRpIjoiMDFhMTIyNjctMjk4Ny03NmI2LWEzNDUtYWMzOWE1YjRkZWExIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI5ODctNzRkZS1hMzQ1LWFjMzlhM2Y0Yjg2NSIsImF1dGhfdGltZSI6MTc5MTU3ODU0OH0.HAd2egPqYBugASt9o1vcpxV56ENZO3dWRWSyDTL8EvrP-fzyDllGNDPe63mub-VmOKWdYeDGslfXGGVaqI4hYiGIL3HaglxFDkS0k8aoQwxwOy-4vzkaYXwpRH12Lg-ESXp0H80WE4-VZd4TM_Q8ZyKoMsV2N9FvJ9m9Res_au5Bgwsdi-vfC9QhmvchuwgVkDp030iqNqBwT5pVHynfWdbVDQqb2JbNdml0HdqgNkwu0y8B3E020cGnpBLsKlgJx56-0luU1F1DHKonkiOdTceLVLCHNQR2w7BemyQ2A5pYcc4dsARIW7QtfFcWV5m0N2cbaxfXuDVfBEn-3t4-3g"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791579600"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://github.com/login/oauth/authorize?client_id=github-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgithub%2Fcallback&response_type=code&scope=read%3Auser%20user%3Aemail&state=72d22e1c5b4a37d62ebd930807af962d",
+                    "state": "72d22e1c5b4a37d62ebd930807af962d"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/github/callback?code=good&state=72d22e1c5b4a37d62ebd930807af962d",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 302,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Location": [
+                    "https://app.polaris.test/signed-in?code=YGbCrP_7yYP4grwcSJOni1uGHt-t2xaoF3VttdsBmX8&state=72d22e1c5b4a37d62ebd930807af962d"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "7"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "YGbCrP_7yYP4grwcSJOni1uGHt-t2xaoF3VttdsBmX8"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "6"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "linked",
+                    "account": {
+                        "id": "01a12267-2989-7558-9c01-3992103232cb",
+                        "provider": "github",
+                        "provider_account_id": "583231",
+                        "email": "grace@example.com",
+                        "email_verified": true,
+                        "scopes": [
+                            "read:user",
+                            "user:email"
+                        ],
+                        "profile": {
+                            "name": "Grace Hopper",
+                            "login": "grace",
+                            "picture": "https://avatars.githubusercontent.com/u/583231?v=4"
+                        },
+                        "created_at": "2026-10-09T20:42:28+00:00",
+                        "updated_at": "2026-10-09T20:42:28+00:00"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/github/start",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "7"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://github.com/login/oauth/authorize?client_id=github-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgithub%2Fcallback&response_type=code&scope=read%3Auser%20user%3Aemail&state=cf41b6b479331a152fb3ebde107395bc",
+                    "state": "cf41b6b479331a152fb3ebde107395bc"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/github/callback?code=good&state=cf41b6b479331a152fb3ebde107395bc",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 302,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Location": [
+                    "https://app.polaris.test/signed-in?code=aJAC7ruJ1sZ3NTI2Y_LJDwW1G6X3F5urtO4cLANGTNs&state=cf41b6b479331a152fb3ebde107395bc"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "5"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": ""
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/exchange",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "code": "aJAC7ruJ1sZ3NTI2Y_LJDwW1G6X3F5urtO4cLANGTNs"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjYxNzgxOCwibmJmIjoxNzkxNTc4NTQ4LjYxNzgxOCwiZXhwIjoxNzkxNTc5NDQ4LjYxNzgxOCwic3ViIjoiMDFhMTIyNjctMjg0Ny03NjgzLWIxNjEtODMzODM2NTM2NTE4IiwianRpIjoiMDFhMTIyNjctMjk4OS03Y2IwLTljMDEtMzk5MjEyZTkyNDRjIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdpdGh1YiJdLCJzaWQiOiIwMWExMjI2Ny0yOTg5LTdiZTAtOWMwMS0zOTkyMTIyYWVhYWMiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.BYEznCGY-bU2-7B2xs3-dMkHiV2m9uxyikOPI7exInmY632cM2ISJKLSWO_gArQz9Lpa6-As-_lAAuKjKiLb2-ohBqWb-5msxXWOgA8Wkq5QOlJf2CKEXqLihldWvSV9IgKWf8XqVBHL-O2_HH4U39nIvV3rMa_Su1eSWwObnlwPkBDKMNpMHMiy9Kkz387v5hzwX7o2qqQvbBOXLP0CWU9rx0Io3lEKgNOxgQMCo3mxaxnzC7o3KVcXINGgRQvTpD1v5zeOjWg03PveaZgvANBjHVB7mwpclCEEDE8QmqlGxT3m8XzseaJ0_lVCzRD05iGUGq9mTFMsCi0XQP4qag",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "jY2A90nxCC_fT2VLCLeOdeFlPWII7w_0nnHfef8KBTQ",
+                    "user": {
+                        "id": "01a12267-2847-7683-b161-833836536518",
+                        "email": "grace@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/social/github",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjYxNTQ0MSwibmJmIjoxNzkxNTc4NTQ4LjYxNTQ0MSwiZXhwIjoxNzkxNTc5NDQ4LjYxNTQ0MSwic3ViIjoiMDFhMTIyNjctMjg0Ny03NjgzLWIxNjEtODMzODM2NTM2NTE4IiwianRpIjoiMDFhMTIyNjctMjk4Ny03NmI2LWEzNDUtYWMzOWE1YjRkZWExIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyMjY3LTI5ODctNzRkZS1hMzQ1LWFjMzlhM2Y0Yjg2NSIsImF1dGhfdGltZSI6MTc5MTU3ODU0OH0.HAd2egPqYBugASt9o1vcpxV56ENZO3dWRWSyDTL8EvrP-fzyDllGNDPe63mub-VmOKWdYeDGslfXGGVaqI4hYiGIL3HaglxFDkS0k8aoQwxwOy-4vzkaYXwpRH12Lg-ESXp0H80WE4-VZd4TM_Q8ZyKoMsV2N9FvJ9m9Res_au5Bgwsdi-vfC9QhmvchuwgVkDp030iqNqBwT5pVHynfWdbVDQqb2JbNdml0HdqgNkwu0y8B3E020cGnpBLsKlgJx56-0luU1F1DHKonkiOdTceLVLCHNQR2w7BemyQ2A5pYcc4dsARIW7QtfFcWV5m0N2cbaxfXuDVfBEn-3t4-3g"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791578580"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "unlinked"
+                }
+            }
+        }
+    }
+]

@@ -1,0 +1,37 @@
+{
+    "name": "polaris/passkey",
+    "description": "Passkeys for Polaris for PHP: WebAuthn registration and discoverable sign-in with conditional UI, a passkey as a core MFA factor, naming and removal",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "ext-openssl": "*",
+        "polaris/core": "^0.7",
+        "psr/clock": "^1.0",
+        "psr/event-dispatcher": "^1.0",
+        "psr/simple-cache": "^3.0",
+        "symfony/uid": "^7.0 || ^8.0",
+        "web-auth/webauthn-lib": "^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\Passkey\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.7.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
