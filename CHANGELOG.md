@@ -4,10 +4,11 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.7.0] - 2026-10-09
 
 Program 4 ("Better Auth for PHP", `docs/better/spec.md`), WP1: four sign-in packages on the plugin
-runtime. Core's 52 routes are unchanged.
+runtime, `polaris/passwordless`, `polaris/username`, `polaris/anonymous` and `polaris/multi-session`.
+Core's 52 routes are unchanged. The version line moves to 0.7 (`^0.7` between siblings).
 
 ### Added
 - `polaris/passwordless`: magic links (`/magic-link/send`, `/magic-link/verify` redirecting with a one-minute
