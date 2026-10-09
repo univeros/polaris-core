@@ -4,9 +4,11 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.8.0] - 2026-10-09
 
-Program 4 ("Better Auth for PHP"), WP2: social sign-in and passkeys, and the one planned core seam.
+Program 4 ("Better Auth for PHP", `docs/better/spec.md`), WP2: social sign-in and passkeys, `polaris/social`
+and `polaris/passkey`, and the one planned core seam, the MFA factor-type registration. Core's 52 routes are
+unchanged. The version line moves to 0.8 (`^0.8` between siblings).
 
 ### Added
 - `polaris/social`: OAuth 2.0 / OpenID Connect sign-in and sign-up through a catalog of nineteen providers

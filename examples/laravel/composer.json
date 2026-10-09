@@ -10,12 +10,12 @@
             "options": {
                 "symlink": true,
                 "versions": {
-                    "polaris/cli": "0.7.x-dev",
-                    "polaris/core": "0.7.x-dev",
-                    "polaris/laravel": "0.7.x-dev",
-                    "polaris/pdo": "0.7.x-dev",
-                    "polaris/psr15": "0.7.x-dev",
-                    "polaris/testing": "0.7.x-dev"
+                    "polaris/cli": "0.8.x-dev",
+                    "polaris/core": "0.8.x-dev",
+                    "polaris/laravel": "0.8.x-dev",
+                    "polaris/pdo": "0.8.x-dev",
+                    "polaris/psr15": "0.8.x-dev",
+                    "polaris/testing": "0.8.x-dev"
                 }
             }
         }
@@ -24,11 +24,11 @@
         "php": ">=8.3",
         "ext-pdo_sqlite": "*",
         "laravel/framework": "^13.0",
-        "polaris/cli": "0.7.x-dev",
-        "polaris/core": "0.7.x-dev",
-        "polaris/laravel": "0.7.x-dev",
-        "polaris/pdo": "0.7.x-dev",
-        "polaris/psr15": "0.7.x-dev"
+        "polaris/cli": "0.8.x-dev",
+        "polaris/core": "0.8.x-dev",
+        "polaris/laravel": "0.8.x-dev",
+        "polaris/pdo": "0.8.x-dev",
+        "polaris/psr15": "0.8.x-dev"
     },
     "autoload": {
         "psr-4": {
