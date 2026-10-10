@@ -34,7 +34,13 @@ SDKs `polaris/agent` and `@polaris-auth/agent`. No core change; core's 52 routes
   `GET /agents/session`, `GET /agents/capabilities`, `GET /.well-known/agent-configuration`
   (`docs/better/agent-auth-compat.md`), operator routes under `/admin/agents`; every capability is an
   MCP tool. Five tables `polaris_agent*`; the `agent.*` audit names, recorded with `actor_type = agent`.
+- `polaris/agent` and `@polaris-auth/agent` (new): the agent SDKs, PHP (any PSR-18 client) and TypeScript
+  (Node and edge, no dependency): discover, register or enrol, request grants and wait for approval,
+  sign request JWTs and `private_key_jwt` assertions, client credentials and token exchange, execute,
+  verify receipts and their chain; route tables generated from the manifest.
 - `@polaris-auth/client`: `client.mcp` and `client.agents`.
+- The Slim demo: the oauth, mcp and agents plugins, `approve.html` (the agent approval page), and
+  walkthrough steps for an MCP `tools/list` and an agent's enrol-to-receipt run.
 
 ### Changed
 - `polaris/oauth-provider`: the token exchange's `act` names the requesting client by `sub` as well as
