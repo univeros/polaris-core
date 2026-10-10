@@ -4,10 +4,11 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.9.0] - 2026-10-10
 
-Program 4 ("Better Auth for PHP"), WP3: API keys and the OAuth 2.1 / OpenID Connect provider, with two
-core seams.
+Program 4 ("Better Auth for PHP", `docs/better/spec.md`), WP3: `polaris/api-keys` and `polaris/oauth-provider`,
+with two core seams (the bearer resolvers and the delegated authority, decisions #2 and #3). Core's 52
+routes are unchanged. The version line moves to 0.9 (`^0.9` between siblings).
 
 ### Added
 - `polaris/core`: the bearer-resolver seam (program 4, decision #2): `Polaris\Contract\BearerResolver`
