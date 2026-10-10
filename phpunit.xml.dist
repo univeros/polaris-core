@@ -28,6 +28,19 @@
             <directory>packages/social/tests/Functional</directory>
             <directory>packages/api-keys/tests/Functional</directory>
             <directory>packages/oauth-provider/tests/Functional</directory>
+            <directory>packages/mcp/tests/Functional</directory>
+            <directory>packages/agents/tests/Functional</directory>
+        </testsuite>
+        <testsuite name="mcp">
+            <directory>packages/mcp/tests</directory>
+            <exclude>packages/mcp/tests/Functional</exclude>
+        </testsuite>
+        <testsuite name="agents">
+            <directory>packages/agents/tests</directory>
+            <exclude>packages/agents/tests/Functional</exclude>
+        </testsuite>
+        <testsuite name="agent">
+            <directory>packages/agent/tests</directory>
         </testsuite>
         <testsuite name="oauth-provider">
             <directory>packages/oauth-provider/tests</directory>
@@ -118,6 +131,9 @@
             <directory>packages/social/src</directory>
             <directory>packages/api-keys/src</directory>
             <directory>packages/oauth-provider/src</directory>
+            <directory>packages/mcp/src</directory>
+            <directory>packages/agents/src</directory>
+            <directory>packages/agent/src</directory>
         </include>
     </source>
 </phpunit>

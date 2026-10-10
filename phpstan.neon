@@ -42,3 +42,9 @@ parameters:
         - packages/api-keys/tests
         - packages/oauth-provider/src
         - packages/oauth-provider/tests
+        - packages/mcp/src
+        - packages/mcp/tests
+        - packages/agents/src
+        - packages/agents/tests
+        - packages/agent/src
+        - packages/agent/tests
