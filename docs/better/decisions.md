@@ -491,7 +491,7 @@ entries here when a WP confirms or changes them.
   delegable).
 - 2026-10-10 · WP4 · Grants and budgets: a grant request names capabilities and asked constraints; the
   approval's method (`device_authorization`, `ciba`, `in_app`) only changes how the owner finds it (a
-  user code looked up at `GET /agents/approvals/code?user_code=`, an `agent.grant.requested` event the host turns
+  user code looked up at `GET /agents/approvals/{code}`, an `agent.grant.requested` event the host turns
   into a push, the list `GET /agents/approvals`); all decide at `POST /agents/approvals/{id}/decide`,
   which checks the strength the capability's risk requires (`session`, `step_up`: core's step-up
   freshness, `passkey`: a recent `passkey` sign-in) and that the owner holds the capability's
