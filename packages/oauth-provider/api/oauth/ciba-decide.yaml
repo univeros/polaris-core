@@ -1,0 +1,32 @@
+# POST /oauth2/ciba/{id}/decide: the user decides on a backchannel request.
+endpoint:
+  method: POST
+  path: /oauth2/ciba/{id}/decide
+  summary: Approve or refuse a backchannel request
+  tags: [oauth]
+  auth: bearer
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    approve: { type: boolean, rules: [required] }
+
+domain:
+  class: Polaris\OAuth\Http\CibaDecideEndpoint
+  description: >
+    The user approves (the client gets tokens as them at its next poll) or refuses the request
+    addressed to them. Recorded as oauth.ciba_decided.
+
+output:
+  status: 200
+  example:
+    data: { status: approved }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 404, code: not_found }
+  - { status: 409, code: invalid_grant }
+
+events: [oauth.ciba_decided]

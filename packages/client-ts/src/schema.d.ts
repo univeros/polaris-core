@@ -2284,6 +2284,439 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api-keys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List API keys */
+        get: operations["get_api-keys_ListEndpoint"];
+        put?: never;
+        /** Create an API key */
+        post: operations["post_api-keys_CreateEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api-keys/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read an API key */
+        get: operations["get_api-keys_ReadEndpoint"];
+        put?: never;
+        post?: never;
+        /** Revoke an API key */
+        delete: operations["delete_api-keys_DeleteEndpoint"];
+        options?: never;
+        head?: never;
+        /** Update an API key */
+        patch: operations["patch_api-keys_UpdateEndpoint"];
+        trace?: never;
+    };
+    "/api-keys/{id}/rotate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rotate an API key */
+        post: operations["post_api-keys_RotateEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api-keys/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify an API key */
+        post: operations["post_api-keys_VerifyEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/oauth/clients": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List every OAuth client */
+        get: operations["get_oauth_AdminListClientsEndpoint"];
+        put?: never;
+        /** Register an OAuth client as an operator */
+        post: operations["post_oauth_AdminCreateClientEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/oauth/clients/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete an OAuth client as an operator */
+        delete: operations["delete_oauth_AdminDeleteClientEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/.well-known/oauth-authorization-server": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Authorization server metadata */
+        get: operations["get_oauth_AuthorizationServerEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/authorize": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Start an authorization (consent) request */
+        get: operations["get_oauth_AuthorizeEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/ciba/{id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve or refuse a backchannel request */
+        post: operations["post_oauth_CibaDecideEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/ciba/pending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List pending backchannel requests */
+        get: operations["get_oauth_CibaPendingEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/ciba": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Backchannel authentication request */
+        post: operations["post_oauth_CibaEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/consents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List your consents */
+        get: operations["get_oauth_ConsentsListEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/consents/{clientId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Revoke a consent */
+        delete: operations["delete_oauth_ConsentRevokeEndpoint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/authorize/decision": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve or refuse an authorization request */
+        post: operations["post_oauth_DecisionEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/device/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve or refuse a device */
+        post: operations["post_oauth_DeviceApproveEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/device/code": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start the device flow */
+        post: operations["post_oauth_DeviceCodeEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/device/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read the device behind a user code */
+        get: operations["get_oauth_DeviceVerifyEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/introspect": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Introspect a token */
+        post: operations["post_oauth_IntrospectEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/.well-known/openid-configuration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** OpenID Connect Discovery */
+        get: operations["get_oauth_OpenIdConfigurationEndpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orgs/{id}/oauth/clients": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List the organization's OAuth clients */
+        get: operations["get_oauth_ListClientsEndpoint"];
+        put?: never;
+        /** Register an OAuth client for the organization */
+        post: operations["post_oauth_CreateClientEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orgs/{id}/oauth/clients/{clientId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read an OAuth client of the organization */
+        get: operations["get_oauth_ReadClientEndpoint"];
+        put?: never;
+        post?: never;
+        /** Delete an OAuth client of the organization */
+        delete: operations["delete_oauth_DeleteClientEndpoint"];
+        options?: never;
+        head?: never;
+        /** Update an OAuth client of the organization */
+        patch: operations["patch_oauth_UpdateClientEndpoint"];
+        trace?: never;
+    };
+    "/oauth2/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Register a client (RFC 7591) */
+        post: operations["post_oauth_RegisterEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Revoke a token */
+        post: operations["post_oauth_RevokeEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Issue tokens */
+        post: operations["post_oauth_TokenEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/oauth2/userinfo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The user's OpenID claims */
+        get: operations["get_oauth_UserinfoEndpoint"];
+        put?: never;
+        /** The user's OpenID claims (POST) */
+        post: operations["post_oauth_UserinfoPostEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -13580,6 +14013,2687 @@ export interface operations {
             };
             /** @description passkey_challenge_invalid | passkey_credential_invalid | passkey_invalid_input */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "get_api-keys_ListEndpoint": {
+        parameters: {
+            query?: {
+                organization_id?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "name": "CI deploy",
+                     *           "owner_type": "user",
+                     *           "owner_id": "018f...",
+                     *           "organization_id": "018f...",
+                     *           "created_by": "018f...",
+                     *           "environment": "live",
+                     *           "hint": "k9Qz",
+                     *           "permissions": [
+                     *             "org.read",
+                     *             "members.read"
+                     *           ],
+                     *           "rate_limit": {
+                     *             "window": 60,
+                     *             "max": 100
+                     *           },
+                     *           "metadata": [],
+                     *           "status": "active",
+                     *           "rotated_from": null,
+                     *           "grace_until": null,
+                     *           "expires_at": null,
+                     *           "last_used_at": "2026-10-10T10:05:00+00:00",
+                     *           "created_at": "2026-10-10T10:00:00+00:00",
+                     *           "updated_at": "2026-10-10T10:00:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            owner_type: string;
+                            owner_id: string;
+                            organization_id: string;
+                            created_by: string;
+                            environment: string;
+                            hint: string;
+                            permissions: string[];
+                            rate_limit: {
+                                window: number;
+                                max: number;
+                            };
+                            metadata: [
+                            ];
+                            status: string;
+                            rotated_from: string | null;
+                            grace_until: string | null;
+                            expires_at: string | null;
+                            last_used_at: string;
+                            created_at: string;
+                            updated_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "post_api-keys_CreateEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    permissions?: string[];
+                    organization_id?: string;
+                    /** @enum {string} */
+                    environment?: "live" | "test";
+                    rate_limit?: {
+                        [key: string]: unknown;
+                    };
+                    expires_at?: string;
+                    metadata?: {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "name": "CI deploy",
+                     *         "owner_type": "user",
+                     *         "owner_id": "018f...",
+                     *         "organization_id": "018f...",
+                     *         "created_by": "018f...",
+                     *         "environment": "live",
+                     *         "hint": "k9Qz",
+                     *         "permissions": [
+                     *           "org.read",
+                     *           "members.read"
+                     *         ],
+                     *         "rate_limit": {
+                     *           "window": 60,
+                     *           "max": 100
+                     *         },
+                     *         "metadata": [],
+                     *         "status": "active",
+                     *         "rotated_from": null,
+                     *         "grace_until": null,
+                     *         "expires_at": null,
+                     *         "last_used_at": null,
+                     *         "created_at": "2026-10-10T10:00:00+00:00",
+                     *         "updated_at": "2026-10-10T10:00:00+00:00",
+                     *         "key": "pk_live_..."
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            owner_type: string;
+                            owner_id: string;
+                            organization_id: string;
+                            created_by: string;
+                            environment: string;
+                            hint: string;
+                            permissions: string[];
+                            rate_limit: {
+                                window: number;
+                                max: number;
+                            };
+                            metadata: [
+                            ];
+                            status: string;
+                            rotated_from: string | null;
+                            grace_until: string | null;
+                            expires_at: string | null;
+                            last_used_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                            key: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_forbidden | api_keys_permission_not_held */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_too_many */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "get_api-keys_ReadEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "name": "CI deploy",
+                     *         "owner_type": "user",
+                     *         "owner_id": "018f...",
+                     *         "organization_id": "018f...",
+                     *         "created_by": "018f...",
+                     *         "environment": "live",
+                     *         "hint": "k9Qz",
+                     *         "permissions": [
+                     *           "org.read"
+                     *         ],
+                     *         "rate_limit": null,
+                     *         "metadata": [],
+                     *         "status": "active",
+                     *         "rotated_from": null,
+                     *         "grace_until": null,
+                     *         "expires_at": null,
+                     *         "last_used_at": null,
+                     *         "created_at": "2026-10-10T10:00:00+00:00",
+                     *         "updated_at": "2026-10-10T10:00:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            owner_type: string;
+                            owner_id: string;
+                            organization_id: string;
+                            created_by: string;
+                            environment: string;
+                            hint: string;
+                            permissions: string[];
+                            rate_limit: string | null;
+                            metadata: [
+                            ];
+                            status: string;
+                            rotated_from: string | null;
+                            grace_until: string | null;
+                            expires_at: string | null;
+                            last_used_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "delete_api-keys_DeleteEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "revoked"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "patch_api-keys_UpdateEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    permissions?: string[];
+                    rate_limit?: {
+                        [key: string]: unknown;
+                    };
+                    expires_at?: string;
+                    metadata?: {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "name": "CI deploy (renamed)",
+                     *         "owner_type": "user",
+                     *         "owner_id": "018f...",
+                     *         "organization_id": "018f...",
+                     *         "created_by": "018f...",
+                     *         "environment": "live",
+                     *         "hint": "k9Qz",
+                     *         "permissions": [
+                     *           "org.read"
+                     *         ],
+                     *         "rate_limit": null,
+                     *         "metadata": [],
+                     *         "status": "active",
+                     *         "rotated_from": null,
+                     *         "grace_until": null,
+                     *         "expires_at": null,
+                     *         "last_used_at": null,
+                     *         "created_at": "2026-10-10T10:00:00+00:00",
+                     *         "updated_at": "2026-10-10T10:10:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            owner_type: string;
+                            owner_id: string;
+                            organization_id: string;
+                            created_by: string;
+                            environment: string;
+                            hint: string;
+                            permissions: string[];
+                            rate_limit: string | null;
+                            metadata: [
+                            ];
+                            status: string;
+                            rotated_from: string | null;
+                            grace_until: string | null;
+                            expires_at: string | null;
+                            last_used_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_forbidden | api_keys_permission_not_held */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "post_api-keys_RotateEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "name": "CI deploy",
+                     *         "owner_type": "user",
+                     *         "owner_id": "018f...",
+                     *         "organization_id": "018f...",
+                     *         "created_by": "018f...",
+                     *         "environment": "live",
+                     *         "hint": "p2Xw",
+                     *         "permissions": [
+                     *           "org.read"
+                     *         ],
+                     *         "rate_limit": null,
+                     *         "metadata": [],
+                     *         "status": "active",
+                     *         "rotated_from": "018f...",
+                     *         "grace_until": null,
+                     *         "expires_at": null,
+                     *         "last_used_at": null,
+                     *         "created_at": "2026-10-10T11:00:00+00:00",
+                     *         "updated_at": "2026-10-10T11:00:00+00:00",
+                     *         "key": "pk_live_..."
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            owner_type: string;
+                            owner_id: string;
+                            organization_id: string;
+                            created_by: string;
+                            environment: string;
+                            hint: string;
+                            permissions: string[];
+                            rate_limit: string | null;
+                            metadata: [
+                            ];
+                            status: string;
+                            rotated_from: string;
+                            grace_until: string | null;
+                            expires_at: string | null;
+                            last_used_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                            key: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "post_api-keys_VerifyEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    key: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            valid: boolean;
+                            id: string;
+                            name: string;
+                            owner_type: string;
+                            owner_id: string;
+                            organization_id: string;
+                            subject: string;
+                            permissions: string[];
+                            rate_limit: string | null;
+                            metadata: [
+                            ];
+                            status: string;
+                            expires_at: string | null;
+                        };
+                    } | {
+                        data: {
+                            valid: boolean;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_oauth_AdminListClientsEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "client_id": "pcl_...",
+                     *           "organization_id": null,
+                     *           "name": "Acme CLI",
+                     *           "type": "confidential",
+                     *           "redirect_uris": [
+                     *             "https://cli.acme.example/callback"
+                     *           ],
+                     *           "grant_types": [
+                     *             "authorization_code",
+                     *             "refresh_token"
+                     *           ],
+                     *           "scopes": [],
+                     *           "token_endpoint_auth_method": "client_secret_basic",
+                     *           "jwks": null,
+                     *           "jwks_uri": null,
+                     *           "dpop_bound_access_tokens": false,
+                     *           "trusted": true,
+                     *           "logo_uri": null,
+                     *           "client_uri": null,
+                     *           "policy_uri": null,
+                     *           "tos_uri": null,
+                     *           "created_by": "018f...",
+                     *           "disabled_at": null,
+                     *           "created_at": "2026-10-10T10:00:00+00:00",
+                     *           "updated_at": "2026-10-10T10:00:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            client_id: string;
+                            organization_id: string | null;
+                            name: string;
+                            type: string;
+                            redirect_uris: string[];
+                            grant_types: string[];
+                            scopes: [
+                            ];
+                            token_endpoint_auth_method: string;
+                            jwks: string | null;
+                            jwks_uri: string | null;
+                            dpop_bound_access_tokens: boolean;
+                            trusted: boolean;
+                            logo_uri: string | null;
+                            client_uri: string | null;
+                            policy_uri: string | null;
+                            tos_uri: string | null;
+                            created_by: string;
+                            disabled_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_oauth_AdminCreateClientEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    organization_id?: string;
+                    /** @enum {string} */
+                    type?: "confidential" | "public";
+                    redirect_uris?: string[];
+                    grant_types?: string[];
+                    scopes?: string[];
+                    token_endpoint_auth_method?: string;
+                    jwks?: {
+                        [key: string]: unknown;
+                    };
+                    jwks_uri?: string;
+                    dpop_bound_access_tokens?: boolean;
+                    trusted?: boolean;
+                    logo_uri?: string;
+                    client_uri?: string;
+                    policy_uri?: string;
+                    tos_uri?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "client_id": "pcl_...",
+                     *         "organization_id": null,
+                     *         "name": "First-party web",
+                     *         "type": "public",
+                     *         "redirect_uris": [
+                     *           "https://app.example/callback"
+                     *         ],
+                     *         "grant_types": [
+                     *           "authorization_code",
+                     *           "refresh_token"
+                     *         ],
+                     *         "scopes": [],
+                     *         "token_endpoint_auth_method": "none",
+                     *         "jwks": null,
+                     *         "jwks_uri": null,
+                     *         "dpop_bound_access_tokens": false,
+                     *         "trusted": true,
+                     *         "logo_uri": null,
+                     *         "client_uri": null,
+                     *         "policy_uri": null,
+                     *         "tos_uri": null,
+                     *         "created_by": "018f...",
+                     *         "disabled_at": null,
+                     *         "created_at": "2026-10-10T10:00:00+00:00",
+                     *         "updated_at": "2026-10-10T10:00:00+00:00",
+                     *         "client_secret": null
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            client_id: string;
+                            organization_id: string | null;
+                            name: string;
+                            type: string;
+                            redirect_uris: string[];
+                            grant_types: string[];
+                            scopes: [
+                            ];
+                            token_endpoint_auth_method: string;
+                            jwks: string | null;
+                            jwks_uri: string | null;
+                            dpop_bound_access_tokens: boolean;
+                            trusted: boolean;
+                            logo_uri: string | null;
+                            client_uri: string | null;
+                            policy_uri: string | null;
+                            tos_uri: string | null;
+                            created_by: string;
+                            disabled_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                            client_secret: string | null;
+                        };
+                    };
+                };
+            };
+            /** @description invalid_client_metadata */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_oauth_AdminDeleteClientEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "deleted"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description admin_unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description admin_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_oauth_AuthorizationServerEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "issuer": "https://auth.example",
+                     *       "authorization_endpoint": "https://auth.example/oauth2/authorize",
+                     *       "token_endpoint": "https://auth.example/oauth2/token",
+                     *       "jwks_uri": "https://auth.example/auth/.well-known/jwks.json",
+                     *       "scopes_supported": [
+                     *         "openid",
+                     *         "profile",
+                     *         "email"
+                     *       ],
+                     *       "response_types_supported": [
+                     *         "code"
+                     *       ],
+                     *       "grant_types_supported": [
+                     *         "authorization_code",
+                     *         "refresh_token"
+                     *       ],
+                     *       "code_challenge_methods_supported": [
+                     *         "S256"
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        issuer: string;
+                        authorization_endpoint: string;
+                        token_endpoint: string;
+                        jwks_uri: string;
+                        scopes_supported: string[];
+                        response_types_supported: string[];
+                        grant_types_supported: string[];
+                        code_challenge_methods_supported: string[];
+                    };
+                };
+            };
+        };
+    };
+    get_oauth_AuthorizeEndpoint: {
+        parameters: {
+            query?: {
+                response_type?: string;
+                client_id?: string;
+                redirect_uri?: string;
+                scope?: string;
+                state?: string;
+                code_challenge?: string;
+                code_challenge_method?: string;
+                nonce?: string;
+                resource?: string;
+                dpop_jkt?: string;
+                prompt?: string;
+                request?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "request": "<opaque>",
+                     *         "client": {
+                     *           "client_id": "pcl_...",
+                     *           "name": "Acme CLI",
+                     *           "logo_uri": null,
+                     *           "client_uri": null,
+                     *           "policy_uri": null,
+                     *           "tos_uri": null,
+                     *           "trusted": false
+                     *         },
+                     *         "scopes": [
+                     *           {
+                     *             "name": "openid",
+                     *             "description": "Sign in with OpenID Connect (an ID token)"
+                     *           },
+                     *           {
+                     *             "name": "org.read",
+                     *             "description": "View the organization profile"
+                     *           }
+                     *         ],
+                     *         "redirect_uri": "https://cli.acme.example/callback",
+                     *         "state": "xyz",
+                     *         "prompt": null,
+                     *         "decision_endpoint": "/oauth2/authorize/decision"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            request: string;
+                            client: {
+                                client_id: string;
+                                name: string;
+                                logo_uri: string | null;
+                                client_uri: string | null;
+                                policy_uri: string | null;
+                                tos_uri: string | null;
+                                trusted: boolean;
+                            };
+                            scopes: {
+                                name: string;
+                                description: string;
+                            }[];
+                            redirect_uri: string;
+                            state: string;
+                            prompt: string | null;
+                            decision_endpoint: string;
+                        };
+                    };
+                };
+            };
+            /** @description Error */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description invalid_request | invalid_client | invalid_scope | unauthorized_client | unsupported_response_type */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_oauth_CibaDecideEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    approve: boolean;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "approved"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description invalid_grant */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_oauth_CibaPendingEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "client_id": "pcl_...",
+                     *           "scopes": [
+                     *             "org.read"
+                     *           ],
+                     *           "binding_message": "Deploy to production?",
+                     *           "status": "pending",
+                     *           "expires_at": "2026-10-10T10:10:00+00:00",
+                     *           "created_at": "2026-10-10T10:00:00+00:00",
+                     *           "client": {
+                     *             "client_id": "pcl_...",
+                     *             "name": "Acme bot",
+                     *             "logo_uri": null,
+                     *             "client_uri": null,
+                     *             "policy_uri": null,
+                     *             "tos_uri": null,
+                     *             "trusted": false
+                     *           }
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            client_id: string;
+                            scopes: string[];
+                            binding_message: string;
+                            status: string;
+                            expires_at: string;
+                            created_at: string;
+                            client: {
+                                client_id: string;
+                                name: string;
+                                logo_uri: string | null;
+                                client_uri: string | null;
+                                policy_uri: string | null;
+                                tos_uri: string | null;
+                                trusted: boolean;
+                            };
+                        }[];
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_oauth_CibaEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    client_id?: string;
+                    client_secret?: string;
+                    client_assertion_type?: string;
+                    client_assertion?: string;
+                    scope?: string;
+                    login_hint: string;
+                    binding_message?: string;
+                    resource?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "auth_req_id": "018f...",
+                     *       "expires_in": 600,
+                     *       "interval": 5
+                     *     }
+                     */
+                    "application/json": {
+                        auth_req_id: string;
+                        expires_in: number;
+                        interval: number;
+                    };
+                };
+            };
+            /** @description unauthorized_client | invalid_request | unknown_user_id | invalid_scope */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description invalid_client */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_oauth_ConsentsListEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "client_id": "pcl_...",
+                     *           "organization_id": null,
+                     *           "scopes": [
+                     *             "openid",
+                     *             "org.read"
+                     *           ],
+                     *           "granted_at": "2026-10-10T10:00:00+00:00",
+                     *           "updated_at": "2026-10-10T10:00:00+00:00",
+                     *           "client": {
+                     *             "client_id": "pcl_...",
+                     *             "name": "Acme CLI",
+                     *             "logo_uri": null,
+                     *             "client_uri": null,
+                     *             "policy_uri": null,
+                     *             "tos_uri": null,
+                     *             "trusted": false
+                     *           }
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            client_id: string;
+                            organization_id: string | null;
+                            scopes: string[];
+                            granted_at: string;
+                            updated_at: string;
+                            client: {
+                                client_id: string;
+                                name: string;
+                                logo_uri: string | null;
+                                client_uri: string | null;
+                                policy_uri: string | null;
+                                tos_uri: string | null;
+                                trusted: boolean;
+                            };
+                        }[];
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_oauth_ConsentRevokeEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clientId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "revoked",
+                     *         "tokens_revoked": 2
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                            tokens_revoked: number;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description oauth_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_oauth_DecisionEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    request: string;
+                    approve?: boolean;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "redirect_to": "https://cli.acme.example/callback?code=...&state=xyz&iss=https%3A%2F%2Fauth.example",
+                     *         "approved": true
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            redirect_to: string;
+                            approved: boolean;
+                        };
+                    };
+                };
+            };
+            /** @description invalid_request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description consent_required */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_oauth_DeviceApproveEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    user_code: string;
+                    approve: boolean;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "approved"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description invalid_grant */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description invalid_grant */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_oauth_DeviceCodeEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    client_id?: string;
+                    client_secret?: string;
+                    scope?: string;
+                    resource?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "device_code": "<opaque>",
+                     *       "user_code": "BCDF-GHJK",
+                     *       "verification_uri": "https://app.example/device",
+                     *       "verification_uri_complete": "https://app.example/device?user_code=BCDF-GHJK",
+                     *       "expires_in": 1800,
+                     *       "interval": 5
+                     *     }
+                     */
+                    "application/json": {
+                        device_code: string;
+                        user_code: string;
+                        verification_uri: string;
+                        verification_uri_complete: string;
+                        expires_in: number;
+                        interval: number;
+                    };
+                };
+            };
+            /** @description unauthorized_client | invalid_scope */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description invalid_client */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_oauth_DeviceVerifyEndpoint: {
+        parameters: {
+            query: {
+                user_code: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "user_code": "BCDFGHJK",
+                     *         "client": {
+                     *           "client_id": "pcl_...",
+                     *           "name": "Acme TV",
+                     *           "logo_uri": null,
+                     *           "client_uri": null,
+                     *           "policy_uri": null,
+                     *           "tos_uri": null,
+                     *           "trusted": false
+                     *         },
+                     *         "scopes": [
+                     *           {
+                     *             "name": "org.read",
+                     *             "description": "View the organization profile"
+                     *           }
+                     *         ],
+                     *         "expires_at": "2026-10-10T10:30:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            user_code: string;
+                            client: {
+                                client_id: string;
+                                name: string;
+                                logo_uri: string | null;
+                                client_uri: string | null;
+                                policy_uri: string | null;
+                                tos_uri: string | null;
+                                trusted: boolean;
+                            };
+                            scopes: {
+                                name: string;
+                                description: string;
+                            }[];
+                            expires_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description invalid_grant */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_oauth_IntrospectEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    token: string;
+                    token_type_hint?: string;
+                    client_id?: string;
+                    client_secret?: string;
+                    client_assertion_type?: string;
+                    client_assertion?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        active: boolean;
+                        client_id: string;
+                        token_type: string;
+                        scope: string;
+                        sub: string;
+                        iss: string;
+                        iat: number;
+                        exp: number;
+                        jti: string;
+                    } | {
+                        active: boolean;
+                    };
+                };
+            };
+            /** @description invalid_request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description invalid_client */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_oauth_OpenIdConfigurationEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "issuer": "https://auth.example",
+                     *       "authorization_endpoint": "https://auth.example/oauth2/authorize",
+                     *       "token_endpoint": "https://auth.example/oauth2/token",
+                     *       "jwks_uri": "https://auth.example/auth/.well-known/jwks.json",
+                     *       "userinfo_endpoint": "https://auth.example/oauth2/userinfo",
+                     *       "scopes_supported": [
+                     *         "openid",
+                     *         "profile",
+                     *         "email"
+                     *       ],
+                     *       "response_types_supported": [
+                     *         "code"
+                     *       ],
+                     *       "grant_types_supported": [
+                     *         "authorization_code",
+                     *         "refresh_token"
+                     *       ],
+                     *       "code_challenge_methods_supported": [
+                     *         "S256"
+                     *       ],
+                     *       "subject_types_supported": [
+                     *         "public"
+                     *       ],
+                     *       "id_token_signing_alg_values_supported": [
+                     *         "RS256"
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        issuer: string;
+                        authorization_endpoint: string;
+                        token_endpoint: string;
+                        jwks_uri: string;
+                        userinfo_endpoint: string;
+                        scopes_supported: string[];
+                        response_types_supported: string[];
+                        grant_types_supported: string[];
+                        code_challenge_methods_supported: string[];
+                        subject_types_supported: string[];
+                        id_token_signing_alg_values_supported: string[];
+                    };
+                };
+            };
+        };
+    };
+    get_oauth_ListClientsEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "client_id": "pcl_...",
+                     *           "organization_id": "018f...",
+                     *           "name": "Acme CLI",
+                     *           "type": "confidential",
+                     *           "redirect_uris": [
+                     *             "https://cli.acme.example/callback"
+                     *           ],
+                     *           "grant_types": [
+                     *             "authorization_code",
+                     *             "refresh_token"
+                     *           ],
+                     *           "scopes": [],
+                     *           "token_endpoint_auth_method": "client_secret_basic",
+                     *           "jwks": null,
+                     *           "jwks_uri": null,
+                     *           "dpop_bound_access_tokens": false,
+                     *           "trusted": false,
+                     *           "logo_uri": null,
+                     *           "client_uri": null,
+                     *           "policy_uri": null,
+                     *           "tos_uri": null,
+                     *           "created_by": "018f...",
+                     *           "disabled_at": null,
+                     *           "created_at": "2026-10-10T10:00:00+00:00",
+                     *           "updated_at": "2026-10-10T10:00:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            client_id: string;
+                            organization_id: string;
+                            name: string;
+                            type: string;
+                            redirect_uris: string[];
+                            grant_types: string[];
+                            scopes: [
+                            ];
+                            token_endpoint_auth_method: string;
+                            jwks: string | null;
+                            jwks_uri: string | null;
+                            dpop_bound_access_tokens: boolean;
+                            trusted: boolean;
+                            logo_uri: string | null;
+                            client_uri: string | null;
+                            policy_uri: string | null;
+                            tos_uri: string | null;
+                            created_by: string;
+                            disabled_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | oauth_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_oauth_CreateClientEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    /** @enum {string} */
+                    type?: "confidential" | "public";
+                    redirect_uris?: string[];
+                    grant_types?: string[];
+                    scopes?: string[];
+                    token_endpoint_auth_method?: string;
+                    jwks?: {
+                        [key: string]: unknown;
+                    };
+                    jwks_uri?: string;
+                    dpop_bound_access_tokens?: boolean;
+                    logo_uri?: string;
+                    client_uri?: string;
+                    policy_uri?: string;
+                    tos_uri?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "client_id": "pcl_...",
+                     *         "organization_id": "018f...",
+                     *         "name": "Acme CLI",
+                     *         "type": "confidential",
+                     *         "redirect_uris": [
+                     *           "https://cli.acme.example/callback"
+                     *         ],
+                     *         "grant_types": [
+                     *           "authorization_code",
+                     *           "refresh_token"
+                     *         ],
+                     *         "scopes": [],
+                     *         "token_endpoint_auth_method": "client_secret_basic",
+                     *         "jwks": null,
+                     *         "jwks_uri": null,
+                     *         "dpop_bound_access_tokens": false,
+                     *         "trusted": false,
+                     *         "logo_uri": null,
+                     *         "client_uri": null,
+                     *         "policy_uri": null,
+                     *         "tos_uri": null,
+                     *         "created_by": "018f...",
+                     *         "disabled_at": null,
+                     *         "created_at": "2026-10-10T10:00:00+00:00",
+                     *         "updated_at": "2026-10-10T10:00:00+00:00",
+                     *         "client_secret": "pcs_..."
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            client_id: string;
+                            organization_id: string;
+                            name: string;
+                            type: string;
+                            redirect_uris: string[];
+                            grant_types: string[];
+                            scopes: [
+                            ];
+                            token_endpoint_auth_method: string;
+                            jwks: string | null;
+                            jwks_uri: string | null;
+                            dpop_bound_access_tokens: boolean;
+                            trusted: boolean;
+                            logo_uri: string | null;
+                            client_uri: string | null;
+                            policy_uri: string | null;
+                            tos_uri: string | null;
+                            created_by: string;
+                            disabled_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                            client_secret: string;
+                        };
+                    };
+                };
+            };
+            /** @description invalid_client_metadata */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | oauth_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_oauth_ReadClientEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                clientId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "client_id": "pcl_...",
+                     *         "organization_id": "018f...",
+                     *         "name": "Acme CLI",
+                     *         "type": "confidential",
+                     *         "redirect_uris": [
+                     *           "https://cli.acme.example/callback"
+                     *         ],
+                     *         "grant_types": [
+                     *           "authorization_code",
+                     *           "refresh_token"
+                     *         ],
+                     *         "scopes": [],
+                     *         "token_endpoint_auth_method": "client_secret_basic",
+                     *         "jwks": null,
+                     *         "jwks_uri": null,
+                     *         "dpop_bound_access_tokens": false,
+                     *         "trusted": false,
+                     *         "logo_uri": null,
+                     *         "client_uri": null,
+                     *         "policy_uri": null,
+                     *         "tos_uri": null,
+                     *         "created_by": "018f...",
+                     *         "disabled_at": null,
+                     *         "created_at": "2026-10-10T10:00:00+00:00",
+                     *         "updated_at": "2026-10-10T10:00:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            client_id: string;
+                            organization_id: string;
+                            name: string;
+                            type: string;
+                            redirect_uris: string[];
+                            grant_types: string[];
+                            scopes: [
+                            ];
+                            token_endpoint_auth_method: string;
+                            jwks: string | null;
+                            jwks_uri: string | null;
+                            dpop_bound_access_tokens: boolean;
+                            trusted: boolean;
+                            logo_uri: string | null;
+                            client_uri: string | null;
+                            policy_uri: string | null;
+                            tos_uri: string | null;
+                            created_by: string;
+                            disabled_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | oauth_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description oauth_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_oauth_DeleteClientEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                clientId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "deleted"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | oauth_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description oauth_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    patch_oauth_UpdateClientEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                clientId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    redirect_uris?: string[];
+                    grant_types?: string[];
+                    scopes?: string[];
+                    token_endpoint_auth_method?: string;
+                    jwks?: {
+                        [key: string]: unknown;
+                    };
+                    jwks_uri?: string;
+                    dpop_bound_access_tokens?: boolean;
+                    logo_uri?: string;
+                    client_uri?: string;
+                    policy_uri?: string;
+                    tos_uri?: string;
+                    disabled?: boolean;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "client_id": "pcl_...",
+                     *         "organization_id": "018f...",
+                     *         "name": "Acme CLI (renamed)",
+                     *         "type": "confidential",
+                     *         "redirect_uris": [
+                     *           "https://cli.acme.example/callback"
+                     *         ],
+                     *         "grant_types": [
+                     *           "authorization_code",
+                     *           "refresh_token"
+                     *         ],
+                     *         "scopes": [],
+                     *         "token_endpoint_auth_method": "client_secret_basic",
+                     *         "jwks": null,
+                     *         "jwks_uri": null,
+                     *         "dpop_bound_access_tokens": false,
+                     *         "trusted": false,
+                     *         "logo_uri": null,
+                     *         "client_uri": null,
+                     *         "policy_uri": null,
+                     *         "tos_uri": null,
+                     *         "created_by": "018f...",
+                     *         "disabled_at": null,
+                     *         "created_at": "2026-10-10T10:00:00+00:00",
+                     *         "updated_at": "2026-10-10T10:10:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            client_id: string;
+                            organization_id: string;
+                            name: string;
+                            type: string;
+                            redirect_uris: string[];
+                            grant_types: string[];
+                            scopes: [
+                            ];
+                            token_endpoint_auth_method: string;
+                            jwks: string | null;
+                            jwks_uri: string | null;
+                            dpop_bound_access_tokens: boolean;
+                            trusted: boolean;
+                            logo_uri: string | null;
+                            client_uri: string | null;
+                            policy_uri: string | null;
+                            tos_uri: string | null;
+                            created_by: string;
+                            disabled_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description invalid_client_metadata */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description forbidden | oauth_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description oauth_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_oauth_RegisterEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    client_name: string;
+                    redirect_uris?: string[];
+                    grant_types?: string[];
+                    token_endpoint_auth_method?: string;
+                    scope?: string;
+                    jwks?: {
+                        [key: string]: unknown;
+                    };
+                    jwks_uri?: string;
+                    dpop_bound_access_tokens?: boolean;
+                    logo_uri?: string;
+                    client_uri?: string;
+                    policy_uri?: string;
+                    tos_uri?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "client_id": "pcl_...",
+                     *       "client_name": "Acme CLI",
+                     *       "name": "Acme CLI",
+                     *       "type": "confidential",
+                     *       "redirect_uris": [
+                     *         "https://cli.acme.example/callback"
+                     *       ],
+                     *       "grant_types": [
+                     *         "authorization_code",
+                     *         "refresh_token"
+                     *       ],
+                     *       "scopes": [],
+                     *       "token_endpoint_auth_method": "client_secret_basic",
+                     *       "jwks": null,
+                     *       "jwks_uri": null,
+                     *       "dpop_bound_access_tokens": false,
+                     *       "logo_uri": null,
+                     *       "client_uri": null,
+                     *       "policy_uri": null,
+                     *       "tos_uri": null,
+                     *       "created_at": "2026-10-10T10:00:00+00:00",
+                     *       "updated_at": "2026-10-10T10:00:00+00:00",
+                     *       "client_secret": "pcs_...",
+                     *       "client_secret_expires_at": 0
+                     *     }
+                     */
+                    "application/json": {
+                        client_id: string;
+                        client_name: string;
+                        name: string;
+                        type: string;
+                        redirect_uris: string[];
+                        grant_types: string[];
+                        scopes: [
+                        ];
+                        token_endpoint_auth_method: string;
+                        jwks: string | null;
+                        jwks_uri: string | null;
+                        dpop_bound_access_tokens: boolean;
+                        logo_uri: string | null;
+                        client_uri: string | null;
+                        policy_uri: string | null;
+                        tos_uri: string | null;
+                        created_at: string;
+                        updated_at: string;
+                        client_secret: string;
+                        client_secret_expires_at: number;
+                    };
+                };
+            };
+            /** @description invalid_client_metadata */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description registration_disabled */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_oauth_RevokeEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    token: string;
+                    token_type_hint?: string;
+                    client_id?: string;
+                    client_secret?: string;
+                    client_assertion_type?: string;
+                    client_assertion?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "revoked"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description invalid_request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description invalid_client */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_oauth_TokenEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    grant_type: string;
+                    client_id?: string;
+                    client_secret?: string;
+                    client_assertion_type?: string;
+                    client_assertion?: string;
+                    code?: string;
+                    redirect_uri?: string;
+                    code_verifier?: string;
+                    refresh_token?: string;
+                    scope?: string;
+                    resource?: string;
+                    device_code?: string;
+                    auth_req_id?: string;
+                    subject_token?: string;
+                    subject_token_type?: string;
+                    actor_token?: string;
+                    actor_token_type?: string;
+                    audience?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "access_token": "<jwt>",
+                     *       "token_type": "Bearer",
+                     *       "expires_in": 3600,
+                     *       "scope": "openid org.read",
+                     *       "refresh_token": "prt_...",
+                     *       "id_token": "<jwt>"
+                     *     }
+                     */
+                    "application/json": {
+                        access_token: string;
+                        token_type: string;
+                        expires_in: number;
+                        scope: string;
+                        refresh_token: string;
+                        id_token: string;
+                    };
+                };
+            };
+            /** @description invalid_request | invalid_grant | unauthorized_client | unsupported_grant_type | invalid_scope | invalid_target | invalid_dpop_proof | authorization_pending | slow_down | access_denied | expired_token */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description invalid_client */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_oauth_UserinfoEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "sub": "018f...",
+                     *       "email": "ada@example.com",
+                     *       "email_verified": true,
+                     *       "name": "Ada",
+                     *       "updated_at": 1760090000
+                     *     }
+                     */
+                    "application/json": {
+                        sub: string;
+                        email: string;
+                        email_verified: boolean;
+                        name: string;
+                        updated_at: number;
+                    };
+                };
+            };
+            /** @description unauthorized | invalid_token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_oauth_UserinfoPostEndpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "sub": "018f...",
+                     *       "email": "ada@example.com",
+                     *       "email_verified": true,
+                     *       "name": "Ada",
+                     *       "updated_at": 1760090000
+                     *     }
+                     */
+                    "application/json": {
+                        sub: string;
+                        email: string;
+                        email_verified: boolean;
+                        name: string;
+                        updated_at: number;
+                    };
+                };
+            };
+            /** @description unauthorized | invalid_token */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };

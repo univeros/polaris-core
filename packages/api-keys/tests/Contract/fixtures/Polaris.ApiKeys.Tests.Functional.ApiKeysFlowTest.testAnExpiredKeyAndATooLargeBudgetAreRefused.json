@@ -1,0 +1,434 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "Hz8feQ432FUzTxB_KZ2rDIuNq-hND7UtbyVfuOwm7w8"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjA1NWQ2ZGE1MDQxN2RhMzJiMTZmMzIxMmJlYTY0YzhlOTAzNzUzMGYzMDk2MGM3ZmFiNTdkYTA3ZmI5YWE4M2MifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjAxMTU3LjA1Njc1NywibmJmIjoxNzkxNjAxMTU3LjA1Njc1NywiZXhwIjoxNzkxNjAyMDU3LjA1Njc1Nywic3ViIjoiMDFhMTIzYzAtMjI5Yi03MjcyLWI1MjEtZWVmZTk0OGFjZTFlIiwianRpIjoiMDFhMTIzYzAtMjNjMC03YmFmLWE0ZjQtMGRjZWYwZmIzYTliIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyM2MwLTIzYzAtN2EwYi1hNGY0LTBkY2VlZmNjY2ZkYSIsImF1dGhfdGltZSI6MTc5MTYwMTE1Nn0.cUyfRMF29LU2owlZKuGzMH-x1yPPvqMX26pAvfYKE85XjH7q_bQGVnLpZGlg3F2-XOwfqZAyScNE-gBs7xpKYl0eo8O4sULQyZ4yJ1qGtfnsKvBTETFKzF7qs9m2bx8uuhqnNnu-Bg1VjPXLuEdXOQpiwyAH5xVdYe-knjGpADUl5PFhSr-Vhk22k7fX1pb0BxmUvj1-FdWb-NeRHabBM00xae_uEo2q46JltUxRAELy_yM1bmZRh9-JfwUqJIOhZ6Zufx095qmb_ud1abtyl4LcMrW-yKz2TQnRtBHH6qYfWWMrUg2IgTj1Tkx1tdJ64YYDzrRjCzPSpM4cHrUHsA",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "oORTjgpOSfhQ8DHqUemmXDbSMvhpmlMlPjzHnyMaddc",
+                    "user": {
+                        "id": "01a123c0-229b-7272-b521-eefe948ace1e",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/api-keys",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjA1NWQ2ZGE1MDQxN2RhMzJiMTZmMzIxMmJlYTY0YzhlOTAzNzUzMGYzMDk2MGM3ZmFiNTdkYTA3ZmI5YWE4M2MifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjAxMTU3LjA1Njc1NywibmJmIjoxNzkxNjAxMTU3LjA1Njc1NywiZXhwIjoxNzkxNjAyMDU3LjA1Njc1Nywic3ViIjoiMDFhMTIzYzAtMjI5Yi03MjcyLWI1MjEtZWVmZTk0OGFjZTFlIiwianRpIjoiMDFhMTIzYzAtMjNjMC03YmFmLWE0ZjQtMGRjZWYwZmIzYTliIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyM2MwLTIzYzAtN2EwYi1hNGY0LTBkY2VlZmNjY2ZkYSIsImF1dGhfdGltZSI6MTc5MTYwMTE1Nn0.cUyfRMF29LU2owlZKuGzMH-x1yPPvqMX26pAvfYKE85XjH7q_bQGVnLpZGlg3F2-XOwfqZAyScNE-gBs7xpKYl0eo8O4sULQyZ4yJ1qGtfnsKvBTETFKzF7qs9m2bx8uuhqnNnu-Bg1VjPXLuEdXOQpiwyAH5xVdYe-knjGpADUl5PFhSr-Vhk22k7fX1pb0BxmUvj1-FdWb-NeRHabBM00xae_uEo2q46JltUxRAELy_yM1bmZRh9-JfwUqJIOhZ6Zufx095qmb_ud1abtyl4LcMrW-yKz2TQnRtBHH6qYfWWMrUg2IgTj1Tkx1tdJ64YYDzrRjCzPSpM4cHrUHsA"
+                ]
+            },
+            "body": {
+                "name": "old",
+                "expires_at": "2020-01-01T00:00:00+00:00"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/api-keys/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "expires_at must be in the future.",
+                "error": "api_keys_invalid_input",
+                "message": "expires_at must be in the future.",
+                "errors": [
+                    "expires_at must be in the future."
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/api-keys",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjA1NWQ2ZGE1MDQxN2RhMzJiMTZmMzIxMmJlYTY0YzhlOTAzNzUzMGYzMDk2MGM3ZmFiNTdkYTA3ZmI5YWE4M2MifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjAxMTU3LjA1Njc1NywibmJmIjoxNzkxNjAxMTU3LjA1Njc1NywiZXhwIjoxNzkxNjAyMDU3LjA1Njc1Nywic3ViIjoiMDFhMTIzYzAtMjI5Yi03MjcyLWI1MjEtZWVmZTk0OGFjZTFlIiwianRpIjoiMDFhMTIzYzAtMjNjMC03YmFmLWE0ZjQtMGRjZWYwZmIzYTliIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyM2MwLTIzYzAtN2EwYi1hNGY0LTBkY2VlZmNjY2ZkYSIsImF1dGhfdGltZSI6MTc5MTYwMTE1Nn0.cUyfRMF29LU2owlZKuGzMH-x1yPPvqMX26pAvfYKE85XjH7q_bQGVnLpZGlg3F2-XOwfqZAyScNE-gBs7xpKYl0eo8O4sULQyZ4yJ1qGtfnsKvBTETFKzF7qs9m2bx8uuhqnNnu-Bg1VjPXLuEdXOQpiwyAH5xVdYe-knjGpADUl5PFhSr-Vhk22k7fX1pb0BxmUvj1-FdWb-NeRHabBM00xae_uEo2q46JltUxRAELy_yM1bmZRh9-JfwUqJIOhZ6Zufx095qmb_ud1abtyl4LcMrW-yKz2TQnRtBHH6qYfWWMrUg2IgTj1Tkx1tdJ64YYDzrRjCzPSpM4cHrUHsA"
+                ]
+            },
+            "body": {
+                "name": "old",
+                "rate_limit": {
+                    "window": 0,
+                    "max": 1
+                }
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/api-keys/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "rate_limit needs window (1 to 86400 seconds) and max (at least 1).",
+                "error": "api_keys_invalid_input",
+                "message": "rate_limit needs window (1 to 86400 seconds) and max (at least 1).",
+                "errors": [
+                    "rate_limit needs window (1 to 86400 seconds) and max (at least 1)."
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/api-keys",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjA1NWQ2ZGE1MDQxN2RhMzJiMTZmMzIxMmJlYTY0YzhlOTAzNzUzMGYzMDk2MGM3ZmFiNTdkYTA3ZmI5YWE4M2MifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjAxMTU3LjA1Njc1NywibmJmIjoxNzkxNjAxMTU3LjA1Njc1NywiZXhwIjoxNzkxNjAyMDU3LjA1Njc1Nywic3ViIjoiMDFhMTIzYzAtMjI5Yi03MjcyLWI1MjEtZWVmZTk0OGFjZTFlIiwianRpIjoiMDFhMTIzYzAtMjNjMC03YmFmLWE0ZjQtMGRjZWYwZmIzYTliIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyM2MwLTIzYzAtN2EwYi1hNGY0LTBkY2VlZmNjY2ZkYSIsImF1dGhfdGltZSI6MTc5MTYwMTE1Nn0.cUyfRMF29LU2owlZKuGzMH-x1yPPvqMX26pAvfYKE85XjH7q_bQGVnLpZGlg3F2-XOwfqZAyScNE-gBs7xpKYl0eo8O4sULQyZ4yJ1qGtfnsKvBTETFKzF7qs9m2bx8uuhqnNnu-Bg1VjPXLuEdXOQpiwyAH5xVdYe-knjGpADUl5PFhSr-Vhk22k7fX1pb0BxmUvj1-FdWb-NeRHabBM00xae_uEo2q46JltUxRAELy_yM1bmZRh9-JfwUqJIOhZ6Zufx095qmb_ud1abtyl4LcMrW-yKz2TQnRtBHH6qYfWWMrUg2IgTj1Tkx1tdJ64YYDzrRjCzPSpM4cHrUHsA"
+                ]
+            },
+            "body": {
+                "name": "",
+                "permissions": []
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "597"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/api-keys/invalid_input",
+                "title": "Invalid input",
+                "status": 422,
+                "detail": "name is required and at most 80 characters.",
+                "error": "api_keys_invalid_input",
+                "message": "name is required and at most 80 characters.",
+                "errors": [
+                    "name is required and at most 80 characters."
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/api-keys",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjA1NWQ2ZGE1MDQxN2RhMzJiMTZmMzIxMmJlYTY0YzhlOTAzNzUzMGYzMDk2MGM3ZmFiNTdkYTA3ZmI5YWE4M2MifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjAxMTU3LjA1Njc1NywibmJmIjoxNzkxNjAxMTU3LjA1Njc1NywiZXhwIjoxNzkxNjAyMDU3LjA1Njc1Nywic3ViIjoiMDFhMTIzYzAtMjI5Yi03MjcyLWI1MjEtZWVmZTk0OGFjZTFlIiwianRpIjoiMDFhMTIzYzAtMjNjMC03YmFmLWE0ZjQtMGRjZWYwZmIzYTliIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyM2MwLTIzYzAtN2EwYi1hNGY0LTBkY2VlZmNjY2ZkYSIsImF1dGhfdGltZSI6MTc5MTYwMTE1Nn0.cUyfRMF29LU2owlZKuGzMH-x1yPPvqMX26pAvfYKE85XjH7q_bQGVnLpZGlg3F2-XOwfqZAyScNE-gBs7xpKYl0eo8O4sULQyZ4yJ1qGtfnsKvBTETFKzF7qs9m2bx8uuhqnNnu-Bg1VjPXLuEdXOQpiwyAH5xVdYe-knjGpADUl5PFhSr-Vhk22k7fX1pb0BxmUvj1-FdWb-NeRHabBM00xae_uEo2q46JltUxRAELy_yM1bmZRh9-JfwUqJIOhZ6Zufx095qmb_ud1abtyl4LcMrW-yKz2TQnRtBHH6qYfWWMrUg2IgTj1Tkx1tdJ64YYDzrRjCzPSpM4cHrUHsA"
+                ]
+            },
+            "body": {
+                "name": "short-lived",
+                "expires_at": "2099-01-01T00:00:00+00:00"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "596"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a123c0-23c2-7d34-b89e-af858b0a9886",
+                    "name": "short-lived",
+                    "owner_type": "user",
+                    "owner_id": "01a123c0-229b-7272-b521-eefe948ace1e",
+                    "organization_id": null,
+                    "created_by": "01a123c0-229b-7272-b521-eefe948ace1e",
+                    "environment": "live",
+                    "hint": "IRtk",
+                    "permissions": [],
+                    "rate_limit": null,
+                    "metadata": [],
+                    "status": "active",
+                    "rotated_from": null,
+                    "grace_until": null,
+                    "expires_at": "2099-01-01T00:00:00+00:00",
+                    "last_used_at": null,
+                    "created_at": "2026-10-10T02:59:17+00:00",
+                    "updated_at": "2026-10-10T02:59:17+00:00",
+                    "key": "pk_live_vuTt7m42UUrjPNsgU16lqiK-scl217jucEwaWdpIRtk"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/auth/me",
+            "headers": {
+                "Authorization": [
+                    "Bearer pk_live_vuTt7m42UUrjPNsgU16lqiK-scl217jucEwaWdpIRtk"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "595"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a123c0-229b-7272-b521-eefe948ace1e",
+                    "email": "ada@example.com",
+                    "email_verified": true,
+                    "display_name": null,
+                    "status": "active",
+                    "mfa_enforced": false,
+                    "orgs": [],
+                    "roles": []
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/auth/me",
+            "headers": {
+                "Authorization": [
+                    "Bearer pk_live_vuTt7m42UUrjPNsgU16lqiK-scl217jucEwaWdpIRtk"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer"
+                ]
+            },
+            "body": {
+                "error": "unauthorized",
+                "message": "Authentication is required."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/api-keys/01a123c0-23c2-7d34-b89e-af858b0a9886",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjA1NWQ2ZGE1MDQxN2RhMzJiMTZmMzIxMmJlYTY0YzhlOTAzNzUzMGYzMDk2MGM3ZmFiNTdkYTA3ZmI5YWE4M2MifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjAxMTU3LjA1Njc1NywibmJmIjoxNzkxNjAxMTU3LjA1Njc1NywiZXhwIjoxNzkxNjAyMDU3LjA1Njc1Nywic3ViIjoiMDFhMTIzYzAtMjI5Yi03MjcyLWI1MjEtZWVmZTk0OGFjZTFlIiwianRpIjoiMDFhMTIzYzAtMjNjMC03YmFmLWE0ZjQtMGRjZWYwZmIzYTliIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyM2MwLTIzYzAtN2EwYi1hNGY0LTBkY2VlZmNjY2ZkYSIsImF1dGhfdGltZSI6MTc5MTYwMTE1Nn0.cUyfRMF29LU2owlZKuGzMH-x1yPPvqMX26pAvfYKE85XjH7q_bQGVnLpZGlg3F2-XOwfqZAyScNE-gBs7xpKYl0eo8O4sULQyZ4yJ1qGtfnsKvBTETFKzF7qs9m2bx8uuhqnNnu-Bg1VjPXLuEdXOQpiwyAH5xVdYe-knjGpADUl5PFhSr-Vhk22k7fX1pb0BxmUvj1-FdWb-NeRHabBM00xae_uEo2q46JltUxRAELy_yM1bmZRh9-JfwUqJIOhZ6Zufx095qmb_ud1abtyl4LcMrW-yKz2TQnRtBHH6qYfWWMrUg2IgTj1Tkx1tdJ64YYDzrRjCzPSpM4cHrUHsA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "594"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a123c0-23c2-7d34-b89e-af858b0a9886",
+                    "name": "short-lived",
+                    "owner_type": "user",
+                    "owner_id": "01a123c0-229b-7272-b521-eefe948ace1e",
+                    "organization_id": null,
+                    "created_by": "01a123c0-229b-7272-b521-eefe948ace1e",
+                    "environment": "live",
+                    "hint": "IRtk",
+                    "permissions": [],
+                    "rate_limit": null,
+                    "metadata": [],
+                    "status": "expired",
+                    "rotated_from": null,
+                    "grace_until": null,
+                    "expires_at": "2020-01-01T00:00:00+00:00",
+                    "last_used_at": "2026-10-10T02:59:17+00:00",
+                    "created_at": "2026-10-10T02:59:17+00:00",
+                    "updated_at": "2026-10-10T02:59:17+00:00"
+                }
+            }
+        }
+    }
+]

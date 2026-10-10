@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd327691ff899434d39679de06389e89",
+    "content-hash": "fae0d3951b41a2ff362aef4ec8a10a7c",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3354,7 +3354,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/admin",
-                "reference": "7d722903882842632e1e80ada2fc2c13426ee400"
+                "reference": "e2907f51938155b14d733cfec207e9edf4ca4d3b"
             },
             "require": {
                 "php": ">=8.3",
@@ -3400,7 +3400,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/anonymous",
-                "reference": "7c1b080cd8b7a808c94f30ab65949dac9a700748"
+                "reference": "ffe0e154c470708469660b19b1079aefee80f5f1"
             },
             "require": {
                 "php": ">=8.3",
@@ -3438,12 +3438,67 @@
             }
         },
         {
+            "name": "polaris/api-keys",
+            "version": "0.8.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/api-keys",
+                "reference": "0b1fd1f856d2630cc8cd17fde3c4867db34b3a2a"
+            },
+            "require": {
+                "php": ">=8.3",
+                "polaris/audit": "^0.8",
+                "polaris/core": "^0.8",
+                "psr/clock": "^1.0",
+                "psr/event-dispatcher": "^1.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0",
+                "psr/http-server-middleware": "^1.0",
+                "symfony/uid": "^7.0 || ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\ApiKeys\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
+            "description": "API keys for Polaris for PHP: keys owned by users and organizations with a permission subset, rate limit, expiry and rotation, accepted as a principal on every Polaris route",
+            "keywords": [
+                "api-key",
+                "api-keys",
+                "authentication",
+                "bearer",
+                "php",
+                "polaris",
+                "rate-limit",
+                "rbac"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "polaris/audit",
             "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/audit",
-                "reference": "c1aaebd2b5c936493e99f2eb0a4343f047410892"
+                "reference": "7972f4e278d99ec4f134070dbc7d3c80f5e7c9f0"
             },
             "require": {
                 "php": ">=8.3",
@@ -3490,7 +3545,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/cli",
-                "reference": "37bb1c1b48215a3baabb51b3811e825741749011"
+                "reference": "be8d4e3b72b998bd5b36fd14d7da90d202c34f7f"
             },
             "require": {
                 "php": ">=8.3",
@@ -3534,7 +3589,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/core",
-                "reference": "7c8c08c4665673f2bffe1a302d578b8b19c7d123"
+                "reference": "316c0b95165eb5347cb99d713167aec7b52d725c"
             },
             "require": {
                 "endroid/qr-code": "^6.0",
@@ -3605,7 +3660,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/laravel",
-                "reference": "4d54a45606c9d5783a36464d9edd607cc862696a"
+                "reference": "64770796068b09de4d6efdeff7b6c07f90133f47"
             },
             "require": {
                 "laravel/framework": "^13.0",
@@ -3654,7 +3709,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/messaging",
-                "reference": "fb9019b1e17015f6b89913a8c0c52bc582c75613"
+                "reference": "67e05c02cc68db6e25a341973bba9e0572e21e35"
             },
             "require": {
                 "php": ">=8.3",
@@ -3705,7 +3760,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/multi-session",
-                "reference": "c71c2207c523e719d46c21bd69f8cf031068674e"
+                "reference": "6e7ecebe4ac58fb5c3ce394b7c628fdb6fa28808"
             },
             "require": {
                 "php": ">=8.3",
@@ -3743,12 +3798,78 @@
             }
         },
         {
+            "name": "polaris/oauth-provider",
+            "version": "0.8.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/oauth-provider",
+                "reference": "b82340ec1354b053d4612a4024dd410b715b4e17"
+            },
+            "require": {
+                "ext-openssl": "*",
+                "firebase/php-jwt": "^7.0",
+                "lcobucci/jwt": "^5.6",
+                "php": ">=8.3",
+                "polaris/admin": "^0.8",
+                "polaris/audit": "^0.8",
+                "polaris/core": "^0.8",
+                "psr/clock": "^1.0",
+                "psr/event-dispatcher": "^1.0",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0",
+                "psr/http-server-middleware": "^1.0",
+                "psr/simple-cache": "^3.0",
+                "symfony/uid": "^7.0 || ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\OAuth\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
+            "description": "Polaris for PHP as an OAuth 2.1 and OpenID Connect provider: authorization code with PKCE, refresh rotation, client credentials, device flow, CIBA, token exchange, DPoP, dynamic registration and client ID metadata documents, discovery",
+            "keywords": [
+                "authorization-server",
+                "ciba",
+                "device-flow",
+                "dpop",
+                "oauth2",
+                "oauth2-provider",
+                "oauth2-server",
+                "oidc",
+                "openid-connect",
+                "php",
+                "pkce",
+                "polaris",
+                "token-exchange"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "polaris/passkey",
             "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/passkey",
-                "reference": "b0a19da0bf2d1743f61cb4f8011f7c6e5e70a611"
+                "reference": "b0f083461e894e5c0185e3747fd23cf35ccf7432"
             },
             "require": {
                 "ext-openssl": "*",
@@ -3792,7 +3913,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/passwordless",
-                "reference": "d5bbb6d5464228de9a1b70f72abd069f03e24c65"
+                "reference": "190887b2598d428c3dd23f94e75ddca0aa72ee11"
             },
             "require": {
                 "php": ">=8.3",
@@ -3835,7 +3956,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/pdo",
-                "reference": "0fbd54abe451d80cb291ddf0a8f0ae12ceccd029"
+                "reference": "f6b8f479d37789b95927db913c77d92e8c196c85"
             },
             "require": {
                 "ext-pdo": "*",
@@ -3874,7 +3995,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/psr15",
-                "reference": "c86fa3ddfe331ac1203637a0e0a2112f8235754c"
+                "reference": "34fe4eb240d506925dfc535af3fbea62ac1c646b"
             },
             "require": {
                 "php": ">=8.3",
@@ -3917,7 +4038,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/scim",
-                "reference": "43e711aaf45aa1ae2b6f200788b4c8e44238a59f"
+                "reference": "0f254d20e03d8b5af776c1762d9600f3b59b9e13"
             },
             "require": {
                 "php": ">=8.3",
@@ -3963,7 +4084,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/sentinel",
-                "reference": "8d798d69708a1d418a2e9bb10ea342020e2fbcb6"
+                "reference": "3249b0e451bda0c63c508e198876a39eb864ef04"
             },
             "require": {
                 "php": ">=8.3",
@@ -4019,7 +4140,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/social",
-                "reference": "1ba9bfc4c0d47a3b78f28af1232eda039ef9ae17"
+                "reference": "56c33b33f15e2366d3f6c862f9575fb352839f15"
             },
             "require": {
                 "ext-openssl": "*",
@@ -4067,7 +4188,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/sso",
-                "reference": "ba82f9721f1ff683239c4dd2a7f0e6020671730c"
+                "reference": "ae1ee8c2593ea282792980e25e2c36190443abc5"
             },
             "require": {
                 "ext-dom": "*",
@@ -4118,7 +4239,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/symfony",
-                "reference": "a82f2624ee4c387e65582c07cdf689e647083e05"
+                "reference": "f3a1a9b5d3898b1e3635e3705f18d2602951fea3"
             },
             "require": {
                 "nyholm/psr7": "^1.8",
@@ -4166,7 +4287,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/testing",
-                "reference": "c5bd64a04d267a3ea2f238482df53447f231daed"
+                "reference": "5935e56d6963c30242cf369a689ec5571d3135e3"
             },
             "require": {
                 "php": ">=8.3",
@@ -4204,7 +4325,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/username",
-                "reference": "8e71e108c6df033ae2a7529b9f5a7ca3d1915ba8"
+                "reference": "e8b3481b10e040bb7043b6f61bf2a87d6e3bb20f"
             },
             "require": {
                 "ext-mbstring": "*",
@@ -4244,7 +4365,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/yii",
-                "reference": "2fa6b2fd40ffdc70fb458eb5412fed044884f8e7"
+                "reference": "cc456d48434ed4756c164bd6f0642b4f58769a20"
             },
             "require": {
                 "php": ">=8.3",
@@ -9756,12 +9877,12 @@
             "version": "v5.7.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/vlucas/phpdotenv.git",
+                "url": "https://github.com/phpdotenv/phpdotenv.git",
                 "reference": "301c07936b16d88628b126b01d082ba153cf4c40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/301c07936b16d88628b126b01d082ba153cf4c40",
+                "url": "https://api.github.com/repos/phpdotenv/phpdotenv/zipball/301c07936b16d88628b126b01d082ba153cf4c40",
                 "reference": "301c07936b16d88628b126b01d082ba153cf4c40",
                 "shasum": ""
             },
@@ -13741,12 +13862,14 @@
     "stability-flags": {
         "polaris/admin": 20,
         "polaris/anonymous": 20,
+        "polaris/api-keys": 20,
         "polaris/audit": 20,
         "polaris/cli": 20,
         "polaris/core": 20,
         "polaris/laravel": 20,
         "polaris/messaging": 20,
         "polaris/multi-session": 20,
+        "polaris/oauth-provider": 20,
         "polaris/passkey": 20,
         "polaris/passwordless": 20,
         "polaris/pdo": 20,

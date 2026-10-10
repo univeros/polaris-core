@@ -123,6 +123,57 @@ describe("the plugin namespaces", () => {
         expect(requests[2]?.headers.get("Authorization")).toBe("Bearer pst_secret");
     });
 
+    it("maps the oauth methods onto their routes", async () => {
+        const { requests, fetch } = recording(200, { data: { request: "r1" } });
+        const client = createClient({ baseUrl: "https://polaris.example", fetch });
+
+        await client.oauth.authorize({ params: { query: { response_type: "code", client_id: "c1", redirect_uri: "https://app/cb", code_challenge: "x", code_challenge_method: "S256" } } });
+        await client.withToken("access").oauth.decision({ body: { request: "r1", approve: true } });
+        await client.oauth.token({ body: { grant_type: "authorization_code", code: "c", code_verifier: "v", client_id: "c1" } });
+        await client.withToken("at").oauth.userinfo();
+        await client.oauth.deviceCode({ body: { client_id: "c1" } });
+        await client.withToken("access").oauth.cibaPending();
+        await client.withToken("access").oauth.consentRevoke({ params: { path: { clientId: "c1" } } });
+        await client.oauth.openIdConfiguration();
+        await client.withToken("access").oauth.createClient({ params: { path: { id: "o1" } }, body: { name: "CLI" } });
+
+        expect(requests.map((request) => `${request.method} ${new URL(request.url).pathname}`)).toEqual([
+            "GET /oauth2/authorize",
+            "POST /oauth2/authorize/decision",
+            "POST /oauth2/token",
+            "GET /oauth2/userinfo",
+            "POST /oauth2/device/code",
+            "GET /oauth2/ciba/pending",
+            "DELETE /oauth2/consents/c1",
+            "GET /.well-known/openid-configuration",
+            "POST /orgs/o1/oauth/clients",
+        ]);
+    });
+
+    it("maps the api-keys methods onto their routes", async () => {
+        const { requests, fetch } = recording(200, { data: { valid: false } });
+        const client = createClient({ baseUrl: "https://polaris.example", fetch });
+
+        await client.withToken("access").apiKeys.list({ params: { query: { organization_id: "o1" } } });
+        await client.withToken("access").apiKeys.create({ body: { name: "CI", permissions: ["org.read"] } });
+        await client.withToken("access").apiKeys.read({ params: { path: { id: "k1" } } });
+        await client.withToken("access").apiKeys.update({ params: { path: { id: "k1" } }, body: { name: "CI 2" } });
+        await client.withToken("access").apiKeys.rotate({ params: { path: { id: "k1" } } });
+        await client.withToken("access").apiKeys.delete({ params: { path: { id: "k1" } } });
+        await client.withToken("pk_live_secret").apiKeys.verify({ body: { key: "pk_live_other" } });
+
+        expect(requests.map((request) => `${request.method} ${new URL(request.url).pathname}${new URL(request.url).search}`)).toEqual([
+            "GET /api-keys?organization_id=o1",
+            "POST /api-keys",
+            "GET /api-keys/k1",
+            "PATCH /api-keys/k1",
+            "POST /api-keys/k1/rotate",
+            "DELETE /api-keys/k1",
+            "POST /api-keys/verify",
+        ]);
+        expect(requests[6]?.headers.get("Authorization")).toBe("Bearer pk_live_secret");
+    });
+
     it("maps the passwordless, username, anonymous and multi-session methods onto their routes", async () => {
         const { requests, fetch } = recording(200, { data: { status: "sent" } });
         const client = createClient({ baseUrl: "https://polaris.example", fetch });

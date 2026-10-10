@@ -1,0 +1,34 @@
+# GET /orgs/{id}/oauth/clients/{clientId}: one client.
+endpoint:
+  method: GET
+  path: /orgs/{id}/oauth/clients/{clientId}
+  summary: Read an OAuth client of the organization
+  tags: [oauth, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: read
+  receipt: false
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    clientId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\OAuth\Http\Organization\ReadClientEndpoint
+  description: >
+    One client of the organization, by its record id.
+
+output:
+  status: 200
+  example:
+    data: { id: "018f...", client_id: "pcl_...", organization_id: "018f...", name: "Acme CLI", type: confidential, redirect_uris: ["https://cli.acme.example/callback"], grant_types: [authorization_code, refresh_token], scopes: [], token_endpoint_auth_method: client_secret_basic, jwks: null, jwks_uri: null, dpop_bound_access_tokens: false, trusted: false, logo_uri: null, client_uri: null, policy_uri: null, tos_uri: null, created_by: "018f...", disabled_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00" }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: oauth_forbidden }
+  - { status: 404, code: oauth_not_found }
+
+events: []

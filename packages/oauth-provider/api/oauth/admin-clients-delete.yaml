@@ -1,0 +1,32 @@
+# DELETE /admin/oauth/clients/{id}: an operator removes a client.
+endpoint:
+  method: DELETE
+  path: /admin/oauth/clients/{id}
+  summary: Delete an OAuth client as an operator
+  tags: [admin, oauth]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\OAuth\Http\Admin\AdminDeleteClientEndpoint
+  description: >
+    The client and its tokens go. Needs own on the client's organization (or the instance). Recorded as
+    oauth.client_deleted.
+
+output:
+  status: 200
+  example:
+    data: { status: deleted }
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 404, code: admin_not_found }
+
+events: [oauth.client_deleted]

@@ -25,7 +25,17 @@
         "client",
         "passkey",
         "webauthn",
-        "social-login"
+        "social-login",
+        "api-keys",
+        "oauth2",
+        "oauth2-server",
+        "oidc",
+        "openid-connect",
+        "pkce",
+        "dpop",
+        "device-flow",
+        "ciba",
+        "token-exchange"
     ],
     "homepage": "https://github.com/univeros/polaris-core/tree/main/packages/client-ts#readme",
     "bugs": "https://github.com/univeros/polaris-core/issues",

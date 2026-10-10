@@ -1,0 +1,29 @@
+# GET /oauth2/userinfo: the OpenID claims the token allows.
+endpoint:
+  method: GET
+  path: /oauth2/userinfo
+  summary: The user's OpenID claims
+  tags: [oauth]
+  auth: bearer
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\OAuth\Http\UserinfoEndpoint
+  description: >
+    For one of this provider's access tokens with the openid scope (verified by core's bearer resolver,
+    DPoP binding included): sub, and email and email_verified with the email scope, name and
+    updated_at with profile. Any other bearer is 401 invalid_token.
+
+output:
+  status: 200
+  example: { sub: "018f...", email: "ada@example.com", email_verified: true, name: "Ada", updated_at: 1760090000 }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 401, code: invalid_token }
+
+events: []

@@ -1,0 +1,33 @@
+# POST /oauth2/device/approve: the user decides on a device.
+endpoint:
+  method: POST
+  path: /oauth2/device/approve
+  summary: Approve or refuse a device
+  tags: [oauth]
+  auth: bearer
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    user_code: { type: string, rules: [required] }
+    approve: { type: boolean, rules: [required] }
+
+domain:
+  class: Polaris\OAuth\Http\DeviceApproveEndpoint
+  description: >
+    The signed-in user approves (the device gets tokens as them at its next poll) or refuses. Recorded
+    as oauth.device_decided.
+
+output:
+  status: 200
+  example:
+    data: { status: approved }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 404, code: invalid_grant }
+  - { status: 409, code: invalid_grant }
+
+events: [oauth.device_decided]

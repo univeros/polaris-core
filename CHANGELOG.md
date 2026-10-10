@@ -4,6 +4,48 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+Program 4 ("Better Auth for PHP"), WP3: API keys and the OAuth 2.1 / OpenID Connect provider, with two
+core seams.
+
+### Added
+- `polaris/core`: the bearer-resolver seam (program 4, decision #2): `Polaris\Contract\BearerResolver`
+  and `BearerResolverProvider`; a plugin's resolvers authenticate their own credential on core's
+  `auth: bearer` routes before the JWT parse (`Graph::bearerResolvers()`, consulted by psr15's
+  `TokenAuthenticationMiddleware`). The delegated authority (decision #3): a token carrying `delegated`
+  makes `Gate::authority()` intersect the owner's permissions with that list.
+- `polaris/api-keys`: keys owned by users and organizations (`pk_live_`, `pk_test_`), each with a subset
+  of the owner's permissions, an optional rate limit, expiry, rotation with a grace window and
+  revocation; `GET|POST /api-keys`, `GET|PATCH|DELETE /api-keys/{id}`, `POST /api-keys/{id}/rotate`,
+  `POST /api-keys/verify`; a key in `Authorization: Bearer` or `x-api-key` authenticates every Polaris
+  route as its owner, step-up routes excepted. Table `polaris_api_key`; the `api_keys.*` audit names.
+- `polaris/oauth-provider` (plugin id `oauth`): Polaris as an OAuth 2.1 and OpenID Connect provider.
+  `GET /oauth2/authorize` (PKCE S256 required; a browser goes to the host's consent page, an XHR client
+  gets JSON), `POST /oauth2/authorize/decision`, `POST /oauth2/token` (authorization_code,
+  refresh_token with rotation and family revocation, client_credentials, device_code, CIBA, token
+  exchange with `act`; client_secret_basic, client_secret_post, private_key_jwt, none; DPoP-bound tokens
+  with `cnf.jkt`), `GET|POST /oauth2/userinfo`, `POST /oauth2/revoke`, `POST /oauth2/introspect`,
+  `POST /oauth2/register` (RFC 7591, off by default), the device flow (`/oauth2/device/code`, `verify`,
+  `approve`), CIBA (`/oauth2/ciba`, `pending`, `{id}/decide`), the consents (`/oauth2/consents`),
+  `/.well-known/openid-configuration` and `/.well-known/oauth-authorization-server`, the organizations'
+  clients (`/orgs/{id}/oauth/clients`) and the operators' (`/admin/oauth/clients`); client ID metadata
+  documents (`https` client ids) fetched, validated and cached. Access tokens are RFC 9068 JWTs signed
+  with core's key, verified by `/auth/jwks` unchanged, and accepted on every Polaris route within their
+  scopes. Six tables `polaris_oauth_*`; the `oauth.*` audit names.
+- `@polaris-auth/client`: `client.apiKeys` and `client.oauth`.
+- The Slim demo: `consent.html` and `device.html`, the reference consent and device pages.
+
+### Changed
+- `polaris/core`: the session parser refuses a JWT whose header `typ` is not `JWT`, and a token naming an
+  audience when none is configured (the provider's access and ID tokens are signed with core's key); a
+  delegated credential (an API key, an OAuth access token) is refused by the authorization middleware on a
+  write or destructive route that needs no permission and on every step-up route, and a delegated
+  authority drops the `superadmin` role.
+- Core's test normaliser masks the two packages' per-run values (`hint`, `client_id`, `client_secret`,
+  `user_code`, `device_code`, `request`, `id_token`, `auth_req_id`; the `request` and `user_code` query
+  parameters; integer `exp`, `iat`, `nbf`, `auth_time`, `updated_at`).
+
 ## [0.8.0] - 2026-10-09
 
 Program 4 ("Better Auth for PHP", `docs/better/spec.md`), WP2: social sign-in and passkeys, `polaris/social`

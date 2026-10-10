@@ -1,0 +1,31 @@
+# GET /api-keys/{id}: one key.
+endpoint:
+  method: GET
+  path: /api-keys/{id}
+  summary: Read an API key
+  tags: [api-keys]
+  auth: bearer
+  effect: read
+  receipt: false
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\ApiKeys\Http\ReadEndpoint
+  description: >
+    A key of the caller's, or of their active organization when they may update it. A revoked key, or
+    another owner's, does not exist here.
+
+output:
+  status: 200
+  example:
+    data: { id: "018f...", name: "CI deploy", owner_type: user, owner_id: "018f...", organization_id: "018f...", created_by: "018f...", environment: live, hint: "k9Qz", permissions: [org.read], rate_limit: null, metadata: {}, status: active, rotated_from: null, grace_until: null, expires_at: null, last_used_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00" }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 404, code: api_keys_not_found }
+
+events: []

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consent</title>
+  <style>
+    body { font: 16px/1.5 system-ui, sans-serif; max-width: 32rem; margin: 3rem auto; padding: 0 1rem; color: #222; }
+    button { font: inherit; padding: .5rem 1rem; margin-right: .5rem; }
+    ul { padding-left: 1.25rem; }
+    .muted { color: #666; }
+  </style>
+</head>
+<body>
+  <!--
+    The reference consent page of the OAuth provider (polaris/oauth-provider): the authorization
+    endpoint sends the browser here with ?request=<id>; the page signs the user in when it has no session, loads the request and posts the decision,
+    then follows redirect_to. Replace it with your own page; the three calls are the contract.
+  -->
+  <h1>Allow access?</h1>
+  <p id="client" class="muted">Loading the request…</p>
+  <ul id="scopes"></ul>
+  <p id="actions" hidden>
+    <button id="approve">Allow</button>
+    <button id="deny">Deny</button>
+  </p>
+  <form id="signin" hidden>
+    <p class="muted">Sign in to continue.</p>
+    <label>Email <input id="email" type="email" required></label>
+    <label>Password <input id="password" type="password" required></label>
+    <button>Sign in</button>
+  </form>
+  <p id="error" class="muted" hidden></p>
+  <script>
+    const request = new URLSearchParams(location.search).get('request');
+    const base = '';
+    let token = sessionStorage.getItem('polaris_access_token');
+    const say = (text) => { const e = document.getElementById('error'); e.textContent = text; e.hidden = false; };
+    const signin = document.getElementById('signin');
+    signin.onsubmit = async (event) => {
+      event.preventDefault();
+      const response = await fetch(base + '/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: document.getElementById('email').value, password: document.getElementById('password').value }) });
+      const body = await response.json();
+      if (!response.ok || !body.data?.access_token) { say(body.message ?? 'Sign-in failed'); return; }
+      token = body.data.access_token;
+      sessionStorage.setItem('polaris_access_token', token);
+      signin.hidden = true;
+      start();
+    };
+    const decide = async (approve) => {
+      const response = await fetch(base + '/oauth2/authorize/decision', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+        body: JSON.stringify({ request, approve }),
+      });
+      const body = await response.json();
+      if (!response.ok) { say(body.detail ?? body.error ?? 'Refused'); return; }
+      location.assign(body.data.redirect_to);
+    };
+    const start = () => (async () => {
+      if (!request) { say('No request to decide on.'); return; }
+      if (!token) { signin.hidden = false; return; }
+      const response = await fetch(base + '/oauth2/authorize?request=' + encodeURIComponent(request), { headers: { Accept: 'application/json' } });
+      const body = await response.json();
+      if (!response.ok) { say(body.detail ?? body.error ?? 'Unknown request'); return; }
+      const { client, scopes } = body.data;
+      document.getElementById('client').textContent = (client.name || client.client_id) + ' asks for:';
+      for (const scope of scopes) {
+        const item = document.createElement('li');
+        item.textContent = scope.description + ' (' + scope.name + ')';
+        document.getElementById('scopes').append(item);
+      }
+      document.getElementById('actions').hidden = false;
+      document.getElementById('approve').onclick = () => decide(true);
+      document.getElementById('deny').onclick = () => decide(false);
+    })().catch((error) => say(String(error)));
+    start();
+  </script>
+</body>
+</html>

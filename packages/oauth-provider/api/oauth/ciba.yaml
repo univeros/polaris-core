@@ -1,0 +1,44 @@
+# POST /oauth2/ciba: a client asks a user to approve a sign-in.
+endpoint:
+  method: POST
+  path: /oauth2/ciba
+  summary: Backchannel authentication request
+  tags: [oauth]
+  auth: public
+  rate_limit: mfa_send
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    client_id: { type: "?string", rules: [optional] }
+    client_secret: { type: "?string", rules: [optional] }
+    client_assertion_type: { type: "?string", rules: [optional] }
+    client_assertion: { type: "?string", rules: [optional] }
+    scope: { type: "?string", rules: [optional] }
+    login_hint: { type: string, rules: [required] }
+    binding_message: { type: "?string", rules: [optional] }
+    resource: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\OAuth\Http\CibaEndpoint
+  description: >
+    OpenID CIBA, poll mode, for a client with the ciba grant: login_hint is the user's email,
+    binding_message short text the user sees; the client polls the token endpoint with auth_req_id at
+    the interval. The user decides from their session (GET /oauth2/ciba/pending, POST
+    /oauth2/ciba/{id}/decide); the host notifies them from oauth.ciba_requested. An unknown hint is
+    unknown_user_id.
+
+output:
+  status: 200
+  example: { auth_req_id: "018f...", expires_in: 600, interval: 5 }
+
+errors:
+  - { status: 401, code: invalid_client }
+  - { status: 400, code: unauthorized_client }
+  - { status: 400, code: invalid_request }
+  - { status: 400, code: unknown_user_id }
+  - { status: 400, code: invalid_scope }
+
+events: [oauth.ciba_requested]

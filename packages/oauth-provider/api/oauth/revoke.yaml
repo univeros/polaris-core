@@ -1,0 +1,37 @@
+# POST /oauth2/revoke: a client ends one of its tokens.
+endpoint:
+  method: POST
+  path: /oauth2/revoke
+  summary: Revoke a token
+  tags: [oauth]
+  auth: public
+  rate_limit: token_refresh
+  effect: destructive
+  receipt: true
+
+input:
+  source: body
+  fields:
+    token: { type: string, rules: [required] }
+    token_type_hint: { type: "?string", rules: [optional] }
+    client_id: { type: "?string", rules: [optional] }
+    client_secret: { type: "?string", rules: [optional] }
+    client_assertion_type: { type: "?string", rules: [optional] }
+    client_assertion: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\OAuth\Http\RevokeEndpoint
+  description: >
+    RFC 7009: the authenticated client's own access token (by its jti) or refresh token (its family
+    with it) stops; an unknown token is not an error. Recorded as oauth.token_revoked.
+
+output:
+  status: 200
+  example:
+    data: { status: revoked }
+
+errors:
+  - { status: 400, code: invalid_request }
+  - { status: 401, code: invalid_client }
+
+events: [oauth.token_revoked]

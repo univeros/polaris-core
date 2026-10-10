@@ -1,0 +1,31 @@
+# DELETE /oauth2/consents/{clientId}: take a client's consent back.
+endpoint:
+  method: DELETE
+  path: /oauth2/consents/{clientId}
+  summary: Revoke a consent
+  tags: [oauth]
+  auth: bearer
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    clientId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\OAuth\Http\ConsentRevokeEndpoint
+  description: >
+    The consent goes, and every access and refresh token the client holds for the caller is revoked.
+    Recorded as oauth.consent_revoked.
+
+output:
+  status: 200
+  example:
+    data: { status: revoked, tokens_revoked: 2 }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 404, code: oauth_not_found }
+
+events: [oauth.consent_revoked]

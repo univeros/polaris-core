@@ -1,0 +1,63 @@
+# POST /oauth2/register: dynamic client registration (off by default).
+endpoint:
+  method: POST
+  path: /oauth2/register
+  summary: Register a client (RFC 7591)
+  tags: [oauth]
+  auth: public
+  rate_limit: register
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    client_name: { type: string, rules: [required] }
+    redirect_uris: { type: "list<string>", rules: [optional] }
+    grant_types: { type: "?list<string>", rules: [optional] }
+    token_endpoint_auth_method: { type: "?string", rules: [optional] }
+    scope: { type: "?string", rules: [optional] }
+    jwks: { type: "?object", rules: [optional] }
+    jwks_uri: { type: "?string", rules: [optional] }
+    dpop_bound_access_tokens: { type: "?boolean", rules: [optional] }
+    logo_uri: { type: "?string", rules: [optional] }
+    client_uri: { type: "?string", rules: [optional] }
+    policy_uri: { type: "?string", rules: [optional] }
+    tos_uri: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\OAuth\Http\RegisterEndpoint
+  description: >
+    With dynamicRegistration on, anyone registers a client: a public one (token_endpoint_auth_method
+    none) or a confidential one (a secret, in this response only, or private_key_jwt with jwks or
+    jwks_uri). Never trusted. Off by default: 403 oauth/registration_disabled. Recorded as
+    oauth.client_created.
+
+output:
+  status: 201
+  example:
+    client_id: "pcl_..."
+    client_name: "Acme CLI"
+    name: "Acme CLI"
+    type: "confidential"
+    redirect_uris: ["https://cli.acme.example/callback"]
+    grant_types: [authorization_code, refresh_token]
+    scopes: []
+    token_endpoint_auth_method: "client_secret_basic"
+    jwks: null
+    jwks_uri: null
+    dpop_bound_access_tokens: false
+    logo_uri: null
+    client_uri: null
+    policy_uri: null
+    tos_uri: null
+    created_at: "2026-10-10T10:00:00+00:00"
+    updated_at: "2026-10-10T10:00:00+00:00"
+    client_secret: "pcs_..."
+    client_secret_expires_at: 0
+
+errors:
+  - { status: 403, code: registration_disabled }
+  - { status: 400, code: invalid_client_metadata }
+
+events: [oauth.client_created]

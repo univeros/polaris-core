@@ -12,6 +12,14 @@ use Polaris\Token\LcobucciTokenParser;
 use Override;
 use Psr\Clock\ClockInterface;
 
+use function base64_decode;
+use function explode;
+use function is_array;
+use function is_string;
+use function json_decode;
+use function strtoupper;
+use function strtr;
+
 /**
  * Parses and validates access tokens, delegating signature/issuer/audience/time checks
  * to the framework {@see LcobucciTokenParser}, then enforcing two Polaris-specific rules:
@@ -31,7 +39,7 @@ final class PolarisTokenParser implements TokenParserInterface
 
     private readonly LcobucciTokenParser $delegate;
 
-    public function __construct(TokenConfigurationInterface $config, ?ClockInterface $clock = null)
+    public function __construct(private readonly TokenConfigurationInterface $config, ?ClockInterface $clock = null)
     {
         $this->delegate = new LcobucciTokenParser($config, $clock);
     }
@@ -51,6 +59,18 @@ final class PolarisTokenParser implements TokenParserInterface
             throw new InvalidTokenException('A single-purpose token cannot be used as an access token.');
         }
 
+        // A JWT this server signed for another purpose (an OAuth access token `at+jwt`, an ID token, a
+        // DPoP proof) is not a session: the header's `typ` must be JWT, and a token may name an
+        // audience only when the server is configured with one (program 4, decision #3).
+        $typ = self::typ($token);
+        if ($typ !== null && strtoupper($typ) !== 'JWT') {
+            throw new InvalidTokenException('A ' . $typ . ' token cannot be used as an access token.');
+        }
+        $audience = $this->config->getAudience();
+        if (($audience === null || $audience === '') && $parsed->getMetadata('aud') !== null) {
+            throw new InvalidTokenException('A token for an audience cannot be used as an access token here.');
+        }
+
         foreach (self::REQUIRED_TIME_CLAIMS as $claim) {
             if ($parsed->getMetadata($claim) === null) {
                 throw new InvalidTokenException("Access token is missing the required '$claim' claim.");
@@ -58,5 +78,18 @@ final class PolarisTokenParser implements TokenParserInterface
         }
 
         return $parsed;
+    }
+
+    /**
+     * The `typ` of a JWT's header, read without verifying it; null when absent or unreadable.
+     */
+    private static function typ(string $token): ?string
+    {
+        $segments = explode('.', $token);
+        $decoded = base64_decode(strtr($segments[0], '-_', '+/'), true);
+        $header = $decoded === false ? null : json_decode($decoded, true);
+        $typ = is_array($header) ? ($header['typ'] ?? null) : null;
+
+        return is_string($typ) && $typ !== '' ? $typ : null;
     }
 }

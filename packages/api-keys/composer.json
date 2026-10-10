@@ -1,0 +1,39 @@
+{
+    "name": "polaris/api-keys",
+    "description": "API keys for Polaris for PHP: keys owned by users and organizations with a permission subset, rate limit, expiry and rotation, accepted as a principal on every Polaris route",
+    "type": "library",
+    "keywords": ["polaris", "authentication", "api-keys", "api-key", "bearer", "rate-limit", "rbac", "php"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "polaris/audit": "^0.8",
+        "polaris/core": "^0.8",
+        "psr/clock": "^1.0",
+        "psr/event-dispatcher": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.1 || ^2.0",
+        "psr/http-server-middleware": "^1.0",
+        "symfony/uid": "^7.0 || ^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\ApiKeys\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.8.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

@@ -268,3 +268,151 @@ entries here when a WP confirms or changes them.
   unauthenticated pull-rate limit on the shared runner addresses before a single test ran, and a rerun
   does not clear it. The mirror serves the same image without that limit. · Rejected: a Docker Hub
   login step (a secret for a public image); waiting out the limit (hours per occurrence).
+- 2026-10-10 · WP3 · Spec §9.4: `polaris/oauth-provider` is written fresh behind the plugin contract, not
+  `league/oauth2-server`: the library's repository interfaces fight the plugin schema contract (it
+  wants its own entities and storage for clients, scopes, codes and tokens), its entity model duplicates
+  core's users, and what WP3 adds on top (DPoP, CIBA, token exchange, CIMD, device flow data pages) is
+  not in it, so it would be an adaptation layer plus forks. `lcobucci/jwt` (core's) mints the access
+  tokens with core's signing key and `kid`; `firebase/php-jwt` (sso's and social's) verifies client
+  assertions and DPoP proofs from JWKs. Plugin ids: `api-keys` (`Polaris\ApiKeys\`, `api/api-keys/`,
+  `client.apiKeys`, problems `api-keys/*`) and `oauth` for the `polaris/oauth-provider` package
+  (`Polaris\OAuth\`, `api/oauth/`, `client.oauth` as spec §5 names it, problems `oauth/*` as §7).
+  · Rejected: `league/oauth2-server` adapted to the schema contract (see above); plugin id
+  `oauth-provider` (`client.oauthProvider`, problems `oauth-provider/*`, against §5 and §7).
+- 2026-10-10 · WP3 · Decision #2, a core seam (spec §3.5 "the plugin middleware accepts `Authorization:
+  Bearer pk_...` or `x-api-key` on every Polaris route"): a plugin middleware cannot do that, because
+  core's `TokenAuthenticationMiddleware` answers 401 on every `auth: bearer` route before the plugins'
+  middleware runs. So core gains `Polaris\Contract\BearerResolver` (`resolve(ServerRequestInterface):
+  ?TokenInterface`, null for a request it does not recognise, `AuthorizationTokenException` to refuse
+  one it does) and `Polaris\Contract\BearerResolverProvider` (`bearerResolvers(Graph)`, implemented by
+  the plugin as `MfaFactorTypeProvider` is), collected by `Graph::bearerResolvers()`; psr15's
+  `TokenAuthenticationMiddleware` asks the resolvers first, on `auth: bearer` routes only, and parses
+  the core JWT when none answers. The seam is in the middleware, not in `TokenFactoryInterface`, so
+  `polaris/admin`'s principals, scim, the host guards and every other caller of
+  `tokenFactory()->fromTokenString()` keep seeing core sessions only (an API key is never an admin
+  principal by accident). No route, fixture or existing behaviour changes. · Rejected: running the
+  plugins' middleware before token authentication (the contract says "after the bearer token was
+  parsed"); a `TokenFactoryInterface` port (one plugin at a time, and every consumer would accept keys).
+- 2026-10-10 · WP3 · Decision #3, a core seam: a token that carries the metadata `delegated` (a list of
+  permission names, set in-process by a bearer resolver and never read from the wire) makes
+  `Gate::authority()` answer the database-resolved authority with its `scope` intersected with that
+  list; roles stay (they describe the owner). Core's own access tokens never carry it. This is "the
+  key's permissions intersected with the owner's" of §3.5 and "scopes = permissions" of §3.6 in one
+  place; WP4's agent tokens will carry it too. · Rejected: the plugin middleware re-checking the
+  route's permissions against the key (the `AUTHORITY` attribute would still carry the owner's full
+  authority into the endpoints); trusting `scope` on core tokens (a behaviour change of the 52 routes).
+- 2026-10-10 · WP3 · `polaris/api-keys`: one table `polaris_api_key` (owner type and id, the organization
+  the key acts in, the creating member, name, environment, the secret's last four characters as `hint`,
+  the keyed hash under pepper context `api_key`, permissions, rate limit, metadata, rotation and
+  revocation state). A user's key acts as the user in the organization that was active when it was
+  created; an organization's key (`organization_id` on create: the caller's active organization, with
+  `org.update`) acts as the member who created it, in that organization, so "the key's permissions
+  intersected with the owner's" is core's resolution of that member at call time (decision #3), and a
+  member who leaves takes the organization's keys with them. The permissions a key is given must be
+  held by the caller in that organization at creation and at every change (`api-keys/permission_not_held`)
+  and exist in the permission catalog. A key is presented as `Authorization: Bearer pk_...` or
+  `x-api-key`, authenticates as `amr: ["api_key"]` with `jti` = the key id and `iat` = now (a logout
+  everywhere does not end a key; revocation does), has no session, and is refused on every `step_up`
+  route (`403 api-keys/not_allowed`: it cannot re-authenticate, and a stolen key must not add
+  credentials). Rotation mints a successor row (`rotated_from`) and gives the predecessor a
+  `grace_until` (`rotationGrace`, a day); rotating a rotated key is refused. Revocation is a soft
+  `revoked_at`; `DELETE` answers `{status: revoked}`. The key's own `rate_limit` is counted on
+  `RateStore` under `api_keys.key.<id>` by the plugin's middleware with core's `X-RateLimit-*` headers;
+  core's per-user budget applies as well. An owner holds at most `maxPerOwner` (50) live keys; the
+  secret is `pk_<live|test>_` plus 256 random bits (base64url). `polaris/audit` is required
+  (`api_keys.created|updated|rotated|revoked`). `POST /api-keys/verify` is for applications that proxy;
+  any session may ask, the key itself being the secret, and the check counts as a use. Core's test
+  normaliser masks a `hint` key. · Rejected: `/orgs/{id}/api-keys` routes (one route set with
+  `organization_id` is the same surface); keys bound to a user independent of any organization context
+  (such a key could do nothing core guards with a permission); an `admin`-style principal for keys
+  (the whole point of decision #2 is that a key is the owner, so every endpoint already knows it).
+- 2026-10-10 · WP3 · `polaris/oauth-provider` (plugin id `oauth`): six tables, `polaris_oauth_client`
+  (a UUID `client_id`, so a client id in a path reads like every other id; secrets `pcs_` plus 256 bits
+  as keyed hashes under pepper context `oauth_client`), `_consent` (one row per user and client, scopes
+  merged), `_code` (keyed hash, spent by an update conditioned on `used_at IS NULL`, bound to the client,
+  the redirect URI, the S256 challenge, the nonce and a `dpop_jkt`), `_token` (every access token by
+  `jti`, every refresh token `prt_` as a keyed hash, both in a rotation family; a spent refresh token
+  presented again revokes the family, RFC 9700 §4.14), `_device_code` and `_ciba_request` (status
+  machines, spent once, polls throttled by `last_polled_at`). Access tokens are RFC 9068 JWTs (`typ:
+  at+jwt`) minted by the plugin's own lcobucci builder with core's signing key and `kid` (core's
+  generator owns `aud` and `exp`), `aud` = the `resource` asked or the issuer; the plugin's bearer
+  resolver (decision #2) accepts them on every route when `aud` names this server, they are live in the
+  token table and presented as bound (a `cnf.jkt` token with the `DPoP` scheme and a proof carrying
+  `ath`; a bearer one with `Bearer`), as the user with `delegated` = the permission scopes (decision
+  #3); a client's own token clears no permission check. Scopes are the permission catalog plus
+  `openid`, `profile`, `email`, `offline_access` and the host's extras (`scopes:`); a refresh or an
+  exchange narrows, never widens. The authorization endpoint parks a validated request in the cache
+  for ten minutes and sends a browser to the host's `consentUrl?request=`, answers JSON to `Accept:
+  application/json` (or always, without a consentUrl); the decision route is the bearer's; a trusted
+  client (operator-set or `trustedClients`) or a prior consent needs no screen, `prompt=consent` always
+  asks; the authorization response carries `iss` (RFC 9207). Client authentication: secret basic or
+  post, `private_key_jwt` (firebase/php-jwt against the client's `jwks` or a cached `jwks_uri`, `aud`
+  the endpoint or the issuer, `jti` once), `none` for public clients. DPoP (RFC 9449): proofs verified
+  with the server clock (`JWT::$timestamp`), five minutes of freshness, `jti` once in the cache, `htu`
+  without query; `dpop: off|optional|required`, a client may demand it (`dpop_bound_access_tokens`).
+  Token exchange (RFC 8693) takes a session's access token (core's parser) or one of the provider's,
+  issues `act` naming the requesting client (and an actor token's subject), chained. CIBA is poll mode
+  only; the host notifies from `oauth.ciba_requested`. DCR (RFC 7591) off by default, never trusted.
+  CIMD: an `https` client id is fetched once an hour over the host's PSR-18 client (64 KiB), must name
+  itself, is validated as a registration limited to `none` or `private_key_jwt`; loopback, private,
+  link-local and mapped addresses and the RFC 6761 names (`localhost`, `.local`, `.internal`,
+  `.home.arpa`, `.onion`, `.test`, `.example`, `.invalid`, `.arpa`) are refused; the name is not
+  resolved. The well-known documents live under the mount (`<baseUrl>/.well-known/...`, OpenID-conformant
+  for a path issuer). Rate groups: the client-facing routes (`/oauth2/token`, `revoke`, `introspect`,
+  `device/code`, `authorize`) use `token_refresh` (60 a minute per IP: clients poll and SPAs start
+  flows), `ciba` `mfa_send` (it reaches a person), `register` `register`. Organizations manage their
+  clients under `org.update` and cannot trust them; operators (`polaris/admin`, `own`) can.
+  `polaris/audit` and `polaris/admin` are required. · Rejected: storing access tokens (a `jti` row is
+  enough to revoke and introspect); a nonce-based DPoP server challenge (`use_dpop_nonce`, a second
+  round trip every client must implement; the five-minute window and the replay cache cover the same
+  risk at this scale); `/.well-known` at the host root (the adapters would register a route outside the
+  mount for one document; the OpenID form is conformant); a `pollInterval` of 1 second in the fixtures
+  (a throttle a replay cannot time; zero turns it off and the throttle is unit-tested with a clock).
+- 2026-10-10 · WP3 · Core's test normaliser masks, for the two packages' fixtures: the keys `hint`,
+  `client_id`, `client_secret`, `user_code`, `device_code`, `request`, `id_token`, `auth_req_id`; the query
+  parameters `request` and `user_code`; and the epoch claims `exp`, `iat`, `nbf`, `auth_time`,
+  `updated_at` when integers. The hosts rewrite `Cache-Control` (Laravel answers `no-store, private`), a
+  transport header the harnesses already ignore; the tests assert the directive, not the value.
+- 2026-10-10 · WP3 · Security review of the two packages and the seams (before the PR), fixed: (1) core's
+  session parser (`PolarisTokenParser`) refuses a JWT whose header `typ` is not `JWT` and, when no
+  audience is configured, any token naming one: the provider's access tokens (`at+jwt`) and ID tokens
+  (`aud` = the client) are signed with core's key and would otherwise have parsed as sessions, with the
+  user's full authority, everywhere `tokenFactory()` is used (the admin principals, the host guards,
+  multi-session, anonymous, the exchange) — a logged core change that no valid session is affected by;
+  (2) a delegated credential (a token carrying `delegated`: an API key, an OAuth access token) may read
+  and may do what a permission it holds allows, but core's authorization middleware refuses it on a
+  write or destructive route that needs no permission (the self-service ones: enrolling a factor,
+  creating an organization, logging out everywhere, deciding a consent or a device, minting or rotating
+  a key) and on every `step_up` route — so a stolen key or token cannot turn itself into a wider,
+  durable grant, nor add credentials; (3) `Gate::authority()` drops the `superadmin` role from a
+  delegated authority (the escalation and cross-organization exemptions do not follow a key or a
+  token); (4) the provider's resolver drops `auth_time` (a client never passes a step-up gate as the
+  person); (5) CIMD and `jwks_uri` share one validator: https on port 443 only, no credentials in the
+  URL, a trailing dot stripped, numeric hosts in any spelling refused, and the fetch error answered
+  generically (the reason is not an oracle for internal hosts); the metadata document is cached only
+  once it validated; a metadata client may only act for a user (no `client_credentials`, no exchange);
+  (6) a redirect URI's custom scheme must be a reverse-domain name (`com.example.app`), never
+  `javascript`, `data`, `vbscript`, `file`, `blob` or `about`; (7) the backchannel grant (CIBA) is
+  granted by an operator only: it reaches people by their email, so an organization cannot give it to
+  itself; (8) an authorization code presented twice revokes the tokens its first redemption issued (the
+  family is the code, RFC 9700 §4.5); (9) a DPoP-bound subject token cannot be unbound through an
+  exchange (the proof is required and the exchanged token stays bound); (10) introspection is for
+  clients that authenticate (RFC 7662 §2.1); (11) the DPoP replay key is the thumbprint and the `jti`
+  (a client cannot burn another's), the assertion replay entry is capped at ten minutes, the
+  authorization request's parameters are bounded and its id validated before the cache is asked, the
+  fetched body is read up to the limit rather than whole; (12) a member who leaves takes the
+  organization's keys they act for (`MemberRemoved`), and another admin rotates a creator's key only
+  within what they hold themselves. · Kept as residual risks, with the reason: the metadata host name is
+  not resolved (a public name that resolves to a private address is the host network's egress policy;
+  the PSR-18 client is the host's); the one-use reads on the PSR-16 cache are a get then a set (as sso's
+  and the WP2 entry; an atomic `add` where the cache offers one is the upgrade); device user codes are
+  stored in clear and have no attempt counter (2.6e10 of space behind the authenticated budget); refresh
+  and exchange do not recheck the user's status (the resolver does at every use); a consent is keyed by
+  the client id, so a CIMD client inherits its earlier consent after a document change (the host's
+  consent page shows the host name); the CIBA `unknown_user_id` answer is the standard's and now needs
+  an operator's client; API keys survive a password change or a logout everywhere (revocation is the
+  control, as decided); `resource` is accepted verbatim (an `aud` for any URL, as RFC 8707 allows).
+  · Rejected: a `delegable: true` opt-in per route (every self-service write would have to be audited
+  for it; the effect-based rule needs no annotation and the permissioned routes stay delegable);
+  refusing delegated tokens on every permissionless route (`/auth/me`, the reads, are what a key is for);
+  a DPoP server nonce (as before).

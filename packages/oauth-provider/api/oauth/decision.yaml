@@ -1,0 +1,37 @@
+# POST /oauth2/authorize/decision: the user's answer to a parked request.
+endpoint:
+  method: POST
+  path: /oauth2/authorize/decision
+  summary: Approve or refuse an authorization request
+  tags: [oauth]
+  auth: bearer
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    request: { type: string, rules: [required] }
+    approve: { type: "?boolean", rules: [optional] }
+
+domain:
+  class: Polaris\OAuth\Http\DecisionEndpoint
+  description: >
+    The signed-in user decides on the parked request: approve true records the consent (scopes
+    remembered for the client), mints the code and answers the redirect URI with code, state and iss
+    for the browser to follow; approve false answers the redirect with error=access_denied. Without
+    approve, a trusted client or scopes already granted get the code at once, otherwise 409
+    oauth/consent_required says a screen is needed. Recorded as oauth.consent_granted or
+    oauth.consent_denied.
+
+output:
+  status: 200
+  example:
+    data: { redirect_to: "https://cli.acme.example/callback?code=...&state=xyz&iss=https%3A%2F%2Fauth.example", approved: true }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 400, code: invalid_request }
+  - { status: 409, code: consent_required }
+
+events: [oauth.consent_granted, oauth.consent_denied]

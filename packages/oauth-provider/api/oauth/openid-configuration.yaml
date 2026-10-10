@@ -1,0 +1,27 @@
+# GET /.well-known/openid-configuration: OpenID Connect Discovery.
+endpoint:
+  method: GET
+  path: /.well-known/openid-configuration
+  summary: OpenID Connect Discovery
+  tags: [oauth]
+  auth: public
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\OAuth\Http\OpenIdConfigurationEndpoint
+  description: >
+    The provider's metadata, exactly what is enabled: the endpoints under the mount, the scopes, the
+    grants (the device grant when a deviceUrl is set, registration when it is on), the client
+    authentication methods, PKCE S256, DPoP algorithms when DPoP is on, the ID token algorithm.
+
+output:
+  status: 200
+  example: { issuer: "https://auth.example", authorization_endpoint: "https://auth.example/oauth2/authorize", token_endpoint: "https://auth.example/oauth2/token", jwks_uri: "https://auth.example/auth/.well-known/jwks.json", userinfo_endpoint: "https://auth.example/oauth2/userinfo", scopes_supported: [openid, profile, email], response_types_supported: [code], grant_types_supported: [authorization_code, refresh_token], code_challenge_methods_supported: [S256], subject_types_supported: [public], id_token_signing_alg_values_supported: [RS256] }
+
+errors: []
+
+events: []

@@ -1,0 +1,53 @@
+# POST /api-keys/{id}/rotate: a new secret for a key.
+endpoint:
+  method: POST
+  path: /api-keys/{id}/rotate
+  summary: Rotate an API key
+  tags: [api-keys]
+  auth: bearer
+  effect: write
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\ApiKeys\Http\RotateEndpoint
+  description: >
+    A successor key with the same owner, name, permissions, rate limit, expiry and metadata and a new
+    secret (in this response only); the key named keeps authenticating for the grace window
+    (rotationGrace, a day by default), then stops. Rotating a key already rotated is refused: rotate its
+    successor. Recorded as api_keys.rotated.
+
+output:
+  status: 201
+  example:
+    data:
+      id: "018f..."
+      name: "CI deploy"
+      owner_type: user
+      owner_id: "018f..."
+      organization_id: "018f..."
+      created_by: "018f..."
+      environment: live
+      hint: "p2Xw"
+      permissions: [org.read]
+      rate_limit: null
+      metadata: {}
+      status: active
+      rotated_from: "018f..."
+      grace_until: null
+      expires_at: null
+      last_used_at: null
+      created_at: "2026-10-10T11:00:00+00:00"
+      updated_at: "2026-10-10T11:00:00+00:00"
+      key: "pk_live_..."
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: api_keys_forbidden }
+  - { status: 404, code: api_keys_not_found }
+
+events: [api_keys.rotated]

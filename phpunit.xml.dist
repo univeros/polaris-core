@@ -26,6 +26,16 @@
             <directory>packages/multi-session/tests/Functional</directory>
             <directory>packages/passkey/tests/Functional</directory>
             <directory>packages/social/tests/Functional</directory>
+            <directory>packages/api-keys/tests/Functional</directory>
+            <directory>packages/oauth-provider/tests/Functional</directory>
+        </testsuite>
+        <testsuite name="oauth-provider">
+            <directory>packages/oauth-provider/tests</directory>
+            <exclude>packages/oauth-provider/tests/Functional</exclude>
+        </testsuite>
+        <testsuite name="api-keys">
+            <directory>packages/api-keys/tests</directory>
+            <exclude>packages/api-keys/tests/Functional</exclude>
         </testsuite>
         <testsuite name="passkey">
             <directory>packages/passkey/tests</directory>
@@ -106,6 +116,8 @@
             <directory>packages/multi-session/src</directory>
             <directory>packages/passkey/src</directory>
             <directory>packages/social/src</directory>
+            <directory>packages/api-keys/src</directory>
+            <directory>packages/oauth-provider/src</directory>
         </include>
     </source>
 </phpunit>

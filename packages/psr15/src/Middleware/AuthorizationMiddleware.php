@@ -38,10 +38,13 @@ final class AuthorizationMiddleware implements MiddlewareInterface
     {
         $spec = $request->getAttribute(Attributes::ROUTE);
         $required = $spec instanceof EndpointSpec ? self::requiredPermissions($spec) : [];
+        $token = $request->getAttribute(Attributes::TOKEN);
+        if ($spec instanceof EndpointSpec && $token instanceof TokenInterface && self::deniesDelegate($spec, $required, $token)) {
+            return $this->json->error(403, 'forbidden', 'This action is for the account holder, not for a delegated credential.');
+        }
         if ($required === []) {
             return $handler->handle($request);
         }
-        $token = $request->getAttribute(Attributes::TOKEN);
         if (!$token instanceof TokenInterface) {
             return $this->unauthorized->respond();
         }
@@ -51,6 +54,24 @@ final class AuthorizationMiddleware implements MiddlewareInterface
         }
 
         return $handler->handle($request->withAttribute(Attributes::AUTHORITY, $authority));
+    }
+
+    /**
+     * A delegated credential (an API key, an OAuth access token: a token carrying
+     * {@see Gate::DELEGATED}) may read, and may do what a permission it holds allows; it may not call a
+     * write or destructive route that needs no permission (self-service: enrolling a factor, creating an
+     * organization, deciding a consent, minting a key) nor a step-up route (it cannot re-authenticate,
+     * and a stolen credential must not add credentials). Program 4, decision #3.
+     *
+     * @param list<string> $required
+     */
+    public static function deniesDelegate(EndpointSpec $spec, array $required, TokenInterface $token): bool
+    {
+        if ($token->getMetadata(Gate::DELEGATED) === null) {
+            return false;
+        }
+
+        return $spec->stepUp || ($required === [] && $spec->effect !== 'read');
     }
 
     /**
