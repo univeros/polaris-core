@@ -1,0 +1,665 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/oauth2/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "client_name": "Acme bot",
+                "redirect_uris": [
+                    "https://bot.acme.test/cb"
+                ],
+                "grant_types": [
+                    "client_credentials",
+                    "authorization_code"
+                ],
+                "scope": "org.read deploy"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "client_id": "01a123ab-dcdc-7711-b90f-14438fecb881",
+                "client_name": "Acme bot",
+                "name": "Acme bot",
+                "type": "confidential",
+                "redirect_uris": [
+                    "https://bot.acme.test/cb"
+                ],
+                "grant_types": [
+                    "client_credentials",
+                    "authorization_code"
+                ],
+                "scopes": [
+                    "org.read",
+                    "deploy"
+                ],
+                "token_endpoint_auth_method": "client_secret_basic",
+                "jwks": null,
+                "jwks_uri": null,
+                "dpop_bound_access_tokens": false,
+                "logo_uri": null,
+                "client_uri": null,
+                "policy_uri": null,
+                "tos_uri": null,
+                "created_at": "2026-10-10T02:37:08+00:00",
+                "updated_at": "2026-10-10T02:37:08+00:00",
+                "client_secret": "pcs_0wwtgImaCjpM2FxaMoKJqmIETNcvD-baY_CSAV1P1i0",
+                "client_secret_expires_at": 0
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "https://auth.polaris.test/oauth2/token",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Content-Type": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "Authorization": [
+                    "Basic MDFhMTIzYWItZGNkYy03NzExLWI5MGYtMTQ0MzhmZWNiODgxOnBjc18wd3d0Z0ltYUNqcE0yRnhhTW9LSnFtSUVUTmN2RC1iYVlfQ1NBVjFQMWkw"
+                ]
+            },
+            "body": "grant_type=client_credentials&scope=deploy"
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "59"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791599880"
+                ]
+            },
+            "body": {
+                "access_token": "eyJ0eXAiOiJhdCtqd3QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjY5Zjc2YTQxMGQwMjY4OWRkZmE5NzUzYTBhMGFmZGZmY2EzNjUzYTYzMTQ0YmEzZWVmMTE5NWQ0YTNlMjQ3MGIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTk5ODI4LjE4ODY4OCwibmJmIjoxNzkxNTk5ODI4LjE4ODY4OCwiZXhwIjoxNzkxNjAzNDI4LjE4ODY2NCwic3ViIjoiMDFhMTIzYWItZGNkYy03NzExLWI5MGYtMTQ0MzhmZWNiODgxIiwianRpIjoiMDFhMTIzYWItZGNkYy03YTY5LWI5MGYtMTQ0MzkwNjlmN2ViIiwiYXVkIjoiaHR0cHM6Ly9hdXRoLnBvbGFyaXMudGVzdCIsImNsaWVudF9pZCI6IjAxYTEyM2FiLWRjZGMtNzcxMS1iOTBmLTE0NDM4ZmVjYjg4MSIsInNjb3BlIjoiZGVwbG95In0.jsbsYDUBdGREAv9eZfdrD85iXjmyMnYFjQSIHNk4i8zmYH2QRN1RnpLmn6pi45Eq3VzunHy24OGKVt5GJh4B-Dg0rd4Vl_xjprdzxYvD9a6FzB5vCC6kAAxLfRdirdAg59MkmdmolvqLFYWhb56XbgBjC2GGuYiHIBse2IdONcYTXUK_04ctRbvgPO0BZk_BlUJKtsmaX4zisCIS0zXEGO0UXMMcAdi5KAdl5wFIdlbfS41P8tkXDVjvW3uVOR6mIk5mtO-fDcdm_uvblIkjLCcPmKDN2hRAJNEKgsOirsWcfyFNzN7ZcvpVZKUJHMszt5Yk2sweCxQ2ybwdW90fGA",
+                "token_type": "Bearer",
+                "expires_in": 3600,
+                "scope": "deploy"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "https://auth.polaris.test/oauth2/token",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Content-Type": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "Authorization": [
+                    "Basic MDFhMTIzYWItZGNkYy03NzExLWI5MGYtMTQ0MzhmZWNiODgxOnBjc18wd3d0Z0ltYUNqcE0yRnhhTW9LSnFtSUVUTmN2RC1iYVlfQ1NBVjFQMWkw"
+                ]
+            },
+            "body": "grant_type=client_credentials&scope=members.read"
+        },
+        "response": {
+            "status": 400,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "58"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791599880"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/oauth/invalid_scope",
+                "title": "Invalid Scope",
+                "status": 400,
+                "detail": "The client may not ask for \"members.read\".",
+                "error": "invalid_scope",
+                "error_description": "The client may not ask for \"members.read\".",
+                "message": "The client may not ask for \"members.read\"."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/oauth2/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "client_name": "Bad",
+                "redirect_uris": [
+                    "http://evil.example/cb"
+                ]
+            }
+        },
+        "response": {
+            "status": 400,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/oauth/invalid_client_metadata",
+                "title": "Invalid Client Metadata",
+                "status": 400,
+                "detail": "redirect_uris: http is accepted for loopback only; use https.",
+                "error": "invalid_client_metadata",
+                "error_description": "redirect_uris: http is accepted for loopback only; use https.",
+                "message": "redirect_uris: http is accepted for loopback only; use https."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/oauth2/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "client_name": "Bad",
+                "token_endpoint_auth_method": "none",
+                "grant_types": [
+                    "client_credentials"
+                ]
+            }
+        },
+        "response": {
+            "status": 400,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "2"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/oauth/invalid_client_metadata",
+                "title": "Invalid Client Metadata",
+                "status": 400,
+                "detail": "A public client cannot use client_credentials.",
+                "error": "invalid_client_metadata",
+                "error_description": "A public client cannot use client_credentials.",
+                "message": "A public client cannot use client_credentials."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/.well-known/oauth-authorization-server",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "public, max-age=3600"
+                ]
+            },
+            "body": {
+                "issuer": "https://auth.polaris.test",
+                "authorization_endpoint": "https://auth.polaris.test/oauth2/authorize",
+                "token_endpoint": "https://auth.polaris.test/oauth2/token",
+                "jwks_uri": "https://auth.polaris.test/auth/.well-known/jwks.json",
+                "revocation_endpoint": "https://auth.polaris.test/oauth2/revoke",
+                "introspection_endpoint": "https://auth.polaris.test/oauth2/introspect",
+                "backchannel_authentication_endpoint": "https://auth.polaris.test/oauth2/ciba",
+                "scopes_supported": [
+                    "openid",
+                    "profile",
+                    "email",
+                    "offline_access",
+                    "org.read",
+                    "org.update",
+                    "org.delete",
+                    "members.read",
+                    "members.invite",
+                    "members.update",
+                    "members.remove",
+                    "roles.read",
+                    "roles.manage",
+                    "users.read",
+                    "users.manage",
+                    "audit.read",
+                    "deploy"
+                ],
+                "response_types_supported": [
+                    "code"
+                ],
+                "response_modes_supported": [
+                    "query"
+                ],
+                "grant_types_supported": [
+                    "authorization_code",
+                    "refresh_token",
+                    "client_credentials",
+                    "urn:openid:params:grant-type:ciba",
+                    "urn:ietf:params:oauth:grant-type:token-exchange",
+                    "urn:ietf:params:oauth:grant-type:device_code"
+                ],
+                "token_endpoint_auth_methods_supported": [
+                    "client_secret_basic",
+                    "client_secret_post",
+                    "private_key_jwt",
+                    "none"
+                ],
+                "token_endpoint_auth_signing_alg_values_supported": [
+                    "RS256",
+                    "RS384",
+                    "RS512",
+                    "PS256",
+                    "PS384",
+                    "PS512",
+                    "ES256",
+                    "ES384",
+                    "ES512",
+                    "EdDSA"
+                ],
+                "revocation_endpoint_auth_methods_supported": [
+                    "client_secret_basic",
+                    "client_secret_post",
+                    "private_key_jwt",
+                    "none"
+                ],
+                "introspection_endpoint_auth_methods_supported": [
+                    "client_secret_basic",
+                    "client_secret_post",
+                    "private_key_jwt",
+                    "none"
+                ],
+                "code_challenge_methods_supported": [
+                    "S256"
+                ],
+                "backchannel_token_delivery_modes_supported": [
+                    "poll"
+                ],
+                "backchannel_user_code_parameter_supported": false,
+                "authorization_response_iss_parameter_supported": true,
+                "client_id_metadata_document_supported": true,
+                "device_authorization_endpoint": "https://auth.polaris.test/oauth2/device/code",
+                "registration_endpoint": "https://auth.polaris.test/oauth2/register",
+                "dpop_signing_alg_values_supported": [
+                    "ES256",
+                    "ES384",
+                    "ES512",
+                    "RS256",
+                    "RS384",
+                    "RS512",
+                    "PS256",
+                    "PS384",
+                    "PS512",
+                    "EdDSA"
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/oauth2/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "client_name": "Keyed",
+                "token_endpoint_auth_method": "private_key_jwt",
+                "jwks": {
+                    "keys": [
+                        {
+                            "kty": "RSA",
+                            "kid": "client-1",
+                            "use": "sig",
+                            "alg": "RS256",
+                            "n": "tW_0i8RP2Y4ZdpwGqS1uMJ0Ju3oRzrW39R2bDAVNH97nXFB-r52BYc025xjjquzKFQ01mvy3zxhTshMu103q54uC-3yk7dIbxG6zdnIWkxpqAExwxRpRJdUppcBjrdGCbPC_lcEqoxnDEPb35PBzinL88VAi2ISlyeftCPhGrQf-u8g7HM4eenQzodmWxZ1xC_Oa2nayZV21bfyar56kMomkkH2WloBndFYYsGI337wrb0mexpxUrXYjhHzO-9BzmqGB_2eBnAZtC71AckB9YiGZVswsHn8qZUNjQZUEgjg6OfB4LFTuozXNTdKzfszOCrStUogYGaKnHZw-H39vrQ",
+                            "e": "AQAB"
+                        }
+                    ]
+                },
+                "grant_types": [
+                    "client_credentials"
+                ]
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "1"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791601200"
+                ]
+            },
+            "body": {
+                "client_id": "01a123ab-dcde-7104-b75b-ef0c6ae0cca6",
+                "client_name": "Keyed",
+                "name": "Keyed",
+                "type": "confidential",
+                "redirect_uris": [],
+                "grant_types": [
+                    "client_credentials"
+                ],
+                "scopes": [],
+                "token_endpoint_auth_method": "private_key_jwt",
+                "jwks": {
+                    "keys": [
+                        {
+                            "kty": "RSA",
+                            "kid": "client-1",
+                            "use": "sig",
+                            "alg": "RS256",
+                            "n": "tW_0i8RP2Y4ZdpwGqS1uMJ0Ju3oRzrW39R2bDAVNH97nXFB-r52BYc025xjjquzKFQ01mvy3zxhTshMu103q54uC-3yk7dIbxG6zdnIWkxpqAExwxRpRJdUppcBjrdGCbPC_lcEqoxnDEPb35PBzinL88VAi2ISlyeftCPhGrQf-u8g7HM4eenQzodmWxZ1xC_Oa2nayZV21bfyar56kMomkkH2WloBndFYYsGI337wrb0mexpxUrXYjhHzO-9BzmqGB_2eBnAZtC71AckB9YiGZVswsHn8qZUNjQZUEgjg6OfB4LFTuozXNTdKzfszOCrStUogYGaKnHZw-H39vrQ",
+                            "e": "AQAB"
+                        }
+                    ]
+                },
+                "jwks_uri": null,
+                "dpop_bound_access_tokens": false,
+                "logo_uri": null,
+                "client_uri": null,
+                "policy_uri": null,
+                "tos_uri": null,
+                "created_at": "2026-10-10T02:37:08+00:00",
+                "updated_at": "2026-10-10T02:37:08+00:00"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "https://auth.polaris.test/oauth2/token",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Content-Type": [
+                    "application/x-www-form-urlencoded"
+                ]
+            },
+            "body": "grant_type=client_credentials&client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer&client_assertion=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImNsaWVudC0xIn0.eyJpc3MiOiIwMWExMjNhYi1kY2RlLTcxMDQtYjc1Yi1lZjBjNmFlMGNjYTYiLCJzdWIiOiIwMWExMjNhYi1kY2RlLTcxMDQtYjc1Yi1lZjBjNmFlMGNjYTYiLCJhdWQiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0L29hdXRoMi90b2tlbiIsImp0aSI6ImdCaTJsdjd6blJjNjZVY0ozb1pObkEiLCJpYXQiOjE3OTE1OTk4MjgsImV4cCI6MTc5MTYwMDEyOH0.UWE9k0aQZVRnMvhPv8sD8L1jV2EiLUeyqp1Ul2BtFAd1l0ymTATzPVLDljzxBupoLob0qK9CPcoZE56XTRDQXadBvRK7oRzckSrAV4LVd6axWH1mtSAipwqp4O_Ipho9PzMxZ2eYbk9Izk8b7p_qJuWgNEfucd1EmzzcE9JhymxZJ7JG_OyBk218InVrpJCFKn1h5scVWnkgC0sckwg7hiFHblgR_f5zNKGnXdWAxxhVIqF9ZGWbl9nQZHc9U-Sa0dvxD4FFI2_-p3zik63V9DNgIfbGhFsjkrZENnZxeYp2CZMhPDDPDhrQEVpBGuSEcCaDqTnuYcgNa74eJfpK3A"
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "57"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791599880"
+                ]
+            },
+            "body": {
+                "access_token": "eyJ0eXAiOiJhdCtqd3QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjY5Zjc2YTQxMGQwMjY4OWRkZmE5NzUzYTBhMGFmZGZmY2EzNjUzYTYzMTQ0YmEzZWVmMTE5NWQ0YTNlMjQ3MGIifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTk5ODI4LjE5MTMyNCwibmJmIjoxNzkxNTk5ODI4LjE5MTMyNCwiZXhwIjoxNzkxNjAzNDI4LjE5MTMwMiwic3ViIjoiMDFhMTIzYWItZGNkZS03MTA0LWI3NWItZWYwYzZhZTBjY2E2IiwianRpIjoiMDFhMTIzYWItZGNkZi03NGJkLWI3NjgtYTA5YTg2NDU4M2QzIiwiYXVkIjoiaHR0cHM6Ly9hdXRoLnBvbGFyaXMudGVzdCIsImNsaWVudF9pZCI6IjAxYTEyM2FiLWRjZGUtNzEwNC1iNzViLWVmMGM2YWUwY2NhNiIsInNjb3BlIjoiIn0.HhyYqzKa6hbU8neG_parj96cjHGa3vx_V5oRolr-V7RZ4DxNnW8jlOcv-d9WZRNggf_6PH4yOOWAas-gF0pVBOayq0KjRYCfgPPJC_33YmKJ0P6aWc2iCZbclErgpH-0ptDmAISgpxxa97Kiys_2wRO93zZ23ZcjFsMhBK07zeNLwc2G7E0Y45yaXi7jCnWG30dSxTv9GtycbkDDdSHzZadjWGnf1_CtUtQXzKhEyZZ4mVwRd4jQ9153Znf_2Z38kq-MjN7TWB_rpfWNwxDrLYr5jFdYEwRraJeI04ZlBljjFLRtMk8T-MGtlNMp3lfm4D_nG2x3IQCalvnCUW9CQQ",
+                "token_type": "Bearer",
+                "expires_in": 3600,
+                "scope": ""
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "https://auth.polaris.test/oauth2/token",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Content-Type": [
+                    "application/x-www-form-urlencoded"
+                ]
+            },
+            "body": "grant_type=client_credentials&client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer&client_assertion=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImNsaWVudC0xIn0.eyJpc3MiOiIwMWExMjNhYi1kY2RlLTcxMDQtYjc1Yi1lZjBjNmFlMGNjYTYiLCJzdWIiOiIwMWExMjNhYi1kY2RlLTcxMDQtYjc1Yi1lZjBjNmFlMGNjYTYiLCJhdWQiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0L29hdXRoMi90b2tlbiIsImp0aSI6ImdCaTJsdjd6blJjNjZVY0ozb1pObkEiLCJpYXQiOjE3OTE1OTk4MjgsImV4cCI6MTc5MTYwMDEyOH0.UWE9k0aQZVRnMvhPv8sD8L1jV2EiLUeyqp1Ul2BtFAd1l0ymTATzPVLDljzxBupoLob0qK9CPcoZE56XTRDQXadBvRK7oRzckSrAV4LVd6axWH1mtSAipwqp4O_Ipho9PzMxZ2eYbk9Izk8b7p_qJuWgNEfucd1EmzzcE9JhymxZJ7JG_OyBk218InVrpJCFKn1h5scVWnkgC0sckwg7hiFHblgR_f5zNKGnXdWAxxhVIqF9ZGWbl9nQZHc9U-Sa0dvxD4FFI2_-p3zik63V9DNgIfbGhFsjkrZENnZxeYp2CZMhPDDPDhrQEVpBGuSEcCaDqTnuYcgNa74eJfpK3A"
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "WWW-Authenticate": [
+                    "Basic realm=\"oauth\""
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "56"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791599880"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/oauth/invalid_client",
+                "title": "Invalid Client",
+                "status": 401,
+                "detail": "The client assertion needs a jti, and one not used before.",
+                "error": "invalid_client",
+                "error_description": "The client assertion needs a jti, and one not used before.",
+                "message": "The client assertion needs a jti, and one not used before."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "https://auth.polaris.test/oauth2/token",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Content-Type": [
+                    "application/x-www-form-urlencoded"
+                ]
+            },
+            "body": "grant_type=client_credentials&client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer&client_assertion=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImNsaWVudC0xIn0.eyJpc3MiOiIwMWExMjNhYi1kY2RlLTcxMDQtYjc1Yi1lZjBjNmFlMGNjYTYiLCJzdWIiOiIwMWExMjNhYi1kY2RlLTcxMDQtYjc1Yi1lZjBjNmFlMGNjYTYiLCJhdWQiOiJodHRwczovL290aGVyLmV4YW1wbGUvdG9rZW4iLCJqdGkiOiJiejdsTmJPS2FfbGVERFdMY0l6S3RnIiwiaWF0IjoxNzkxNTk5ODI4LCJleHAiOjE3OTE2MDAxMjh9.GvmPQm9DSyHjda9GmQnSu_ixxFJSN_9Mu1qX1xoI6ytgE2OuJ4wPmYKz5xmSLfutbxdSAhrSgJJanqjnR1Z3gmuLRQK5_gxTjGoLlYYXeNOOpILYBWRsSb2ZQP5UcjUg394I_iOffezKczPT_MadrvhVM4HHtH_iDWl9G3um4oHg5lefsllhWZROZkWn0tOKjvcEPJAAX7kMtYLAVkXhiP7qcROypBHiBBr5qDrgm883OxXJ1iH9qc8RniYA9mBJh7GKs4D_s16L-ec_G-DfiLOXJehxE3iHioeE0L2Fgu4ykrHFN69qSiBdqD8HC6schJVObm67U4yM-c8fznKUoA"
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "WWW-Authenticate": [
+                    "Basic realm=\"oauth\""
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "55"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791599880"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/oauth/invalid_client",
+                "title": "Invalid Client",
+                "status": 401,
+                "detail": "The client assertion needs sub = the client, aud = this endpoint or issuer, and exp.",
+                "error": "invalid_client",
+                "error_description": "The client assertion needs sub = the client, aud = this endpoint or issuer, and exp.",
+                "message": "The client assertion needs sub = the client, aud = this endpoint or issuer, and exp."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "https://auth.polaris.test/oauth2/token",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Content-Type": [
+                    "application/x-www-form-urlencoded"
+                ]
+            },
+            "body": "grant_type=client_credentials&client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer&client_assertion=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImNsaWVudC0xIn0.eyJpc3MiOiIwMWExMjNhYi1kY2RlLTcxMDQtYjc1Yi1lZjBjNmFlMGNjYTYiLCJzdWIiOiIwMWExMjNhYi1kY2RlLTcxMDQtYjc1Yi1lZjBjNmFlMGNjYTYiLCJhdWQiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0L29hdXRoMi90b2tlbiIsImp0aSI6Im4yUnVnU2YtOFd4c1UyRDRLMjREUUEiLCJpYXQiOjE3OTE1OTk4MjgsImV4cCI6MTc5MTYwMDEyOH0.oosC1spUnzyR67uV_OsLG_ILzJZTvghgmHe4nMsm3tWUIEo76Al9PvndtFEA3d0guOCQp0T0C3iFxuCW0O9Ohmk4P8-64jwqa7-EmRaak1hsmgHzvnCkP22SLaYy8Gix9EnVEanTXTz1nVnfJV_rdG8QUkHB2NEsg7GKOkVkc_i88vKLkFwWOONJiixT4pVTq6DVhXzY5Jb0y5melqW12yITfPtCCP1a7Df0Uk90cL2easpk-laMozrHtuWxx4noK7CnsDFAnOnBcwQfPAG3c0UwxoojGUPfqcxRKTeExoLFBbJBcB_rwCDWvkS7X425ogvybKL2WAoA8WAClEhK9g"
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "WWW-Authenticate": [
+                    "Basic realm=\"oauth\""
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "54"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791599880"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/oauth/invalid_client",
+                "title": "Invalid Client",
+                "status": 401,
+                "detail": "The client assertion does not verify: Signature verification failed",
+                "error": "invalid_client",
+                "error_description": "The client assertion does not verify: Signature verification failed",
+                "message": "The client assertion does not verify: Signature verification failed"
+            }
+        }
+    }
+]

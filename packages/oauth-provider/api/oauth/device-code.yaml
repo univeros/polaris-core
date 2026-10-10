@@ -1,0 +1,36 @@
+# POST /oauth2/device/code: a device asks for its codes.
+endpoint:
+  method: POST
+  path: /oauth2/device/code
+  summary: Start the device flow
+  tags: [oauth]
+  auth: public
+  rate_limit: token_refresh
+  effect: write
+  receipt: false
+
+input:
+  source: body
+  fields:
+    client_id: { type: "?string", rules: [optional] }
+    client_secret: { type: "?string", rules: [optional] }
+    scope: { type: "?string", rules: [optional] }
+    resource: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\OAuth\Http\DeviceCodeEndpoint
+  description: >
+    RFC 8628 §3.1, for a client with the device grant on a server with a deviceUrl: the device code the
+    device polls the token endpoint with, the user code the person types on the host's page
+    (verification_uri; verification_uri_complete carries it), the lifetime and the poll interval.
+
+output:
+  status: 200
+  example: { device_code: "<opaque>", user_code: "BCDF-GHJK", verification_uri: "https://app.example/device", verification_uri_complete: "https://app.example/device?user_code=BCDF-GHJK", expires_in: 1800, interval: 5 }
+
+errors:
+  - { status: 401, code: invalid_client }
+  - { status: 400, code: unauthorized_client }
+  - { status: 400, code: invalid_scope }
+
+events: []

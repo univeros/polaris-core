@@ -1,0 +1,26 @@
+# GET /.well-known/oauth-authorization-server: RFC 8414 metadata.
+endpoint:
+  method: GET
+  path: /.well-known/oauth-authorization-server
+  summary: Authorization server metadata
+  tags: [oauth]
+  auth: public
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\OAuth\Http\AuthorizationServerEndpoint
+  description: >
+    RFC 8414: the same metadata without the OpenID members. Under the mount; a host whose issuer has a
+    path may alias the root form RFC 8414 derives.
+
+output:
+  status: 200
+  example: { issuer: "https://auth.example", authorization_endpoint: "https://auth.example/oauth2/authorize", token_endpoint: "https://auth.example/oauth2/token", jwks_uri: "https://auth.example/auth/.well-known/jwks.json", scopes_supported: [openid, profile, email], response_types_supported: [code], grant_types_supported: [authorization_code, refresh_token], code_challenge_methods_supported: [S256] }
+
+errors: []
+
+events: []

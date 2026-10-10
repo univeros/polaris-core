@@ -40,3 +40,5 @@ parameters:
         - packages/social/tests
         - packages/api-keys/src
         - packages/api-keys/tests
+        - packages/oauth-provider/src
+        - packages/oauth-provider/tests

@@ -1,0 +1,47 @@
+# POST /admin/oauth/clients: an operator registers a client.
+endpoint:
+  method: POST
+  path: /admin/oauth/clients
+  summary: Register an OAuth client as an operator
+  tags: [admin, oauth]
+  auth: public   # the admin middleware resolves the principal (an admin user or an API key)
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    name: { type: string, rules: [required, "max:160"] }
+    organization_id: { type: "?string", rules: [optional] }
+    type: { type: "?string", rules: [optional, "in:confidential,public"] }
+    redirect_uris: { type: "?list<string>", rules: [optional] }
+    grant_types: { type: "?list<string>", rules: [optional] }
+    scopes: { type: "?list<string>", rules: [optional] }
+    token_endpoint_auth_method: { type: "?string", rules: [optional] }
+    jwks: { type: "?object", rules: [optional] }
+    jwks_uri: { type: "?string", rules: [optional] }
+    dpop_bound_access_tokens: { type: "?boolean", rules: [optional] }
+    trusted: { type: "?boolean", rules: [optional] }
+    logo_uri: { type: "?string", rules: [optional] }
+    client_uri: { type: "?string", rules: [optional] }
+    policy_uri: { type: "?string", rules: [optional] }
+    tos_uri: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\OAuth\Http\Admin\AdminCreateClientEndpoint
+  description: >
+    Like the organization's route, instance-wide (organization_id null) or for an organization the
+    principal covers, and the operator may mark the client trusted: its users are not asked for
+    consent. Needs own. Recorded as oauth.client_created.
+
+output:
+  status: 201
+  example:
+    data: { id: "018f...", client_id: "pcl_...", organization_id: null, name: "First-party web", type: public, redirect_uris: ["https://app.example/callback"], grant_types: [authorization_code, refresh_token], scopes: [], token_endpoint_auth_method: none, jwks: null, jwks_uri: null, dpop_bound_access_tokens: false, trusted: true, logo_uri: null, client_uri: null, policy_uri: null, tos_uri: null, created_by: "018f...", disabled_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00", client_secret: null }
+
+errors:
+  - { status: 401, code: admin_unauthorized }
+  - { status: 403, code: admin_forbidden }
+  - { status: 400, code: invalid_client_metadata }
+
+events: [oauth.client_created]

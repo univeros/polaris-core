@@ -1,0 +1,59 @@
+# GET /oauth2/authorize: start an authorization-code flow.
+endpoint:
+  method: GET
+  path: /oauth2/authorize
+  summary: Start an authorization (consent) request
+  tags: [oauth]
+  auth: public
+  rate_limit: token_refresh
+  effect: write
+  receipt: false
+
+input:
+  source: query
+  fields:
+    response_type: { type: "?string", rules: [optional] }
+    client_id: { type: "?string", rules: [optional] }
+    redirect_uri: { type: "?string", rules: [optional] }
+    scope: { type: "?string", rules: [optional] }
+    state: { type: "?string", rules: [optional] }
+    code_challenge: { type: "?string", rules: [optional] }
+    code_challenge_method: { type: "?string", rules: [optional] }
+    nonce: { type: "?string", rules: [optional] }
+    resource: { type: "?string", rules: [optional] }
+    dpop_jkt: { type: "?string", rules: [optional] }
+    prompt: { type: "?string", rules: [optional] }
+    request: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\OAuth\Http\AuthorizeEndpoint
+  description: >
+    Validates the request (a known client, one of its redirect URIs, response_type=code, PKCE S256,
+    known scopes) and parks it for ten minutes. A browser is sent to the host's consent page
+    (consentUrl?request=<id>); an XHR client with Accept: application/json, or a server without a
+    consentUrl, gets the request's data: the client, the scopes with their descriptions, the id for
+    POST /oauth2/authorize/decision. With request=<id> alone, the data of a parked request (what the
+    consent page loads). Errors that cannot be trusted to a redirect URI (an unknown client or
+    redirect) are answered here as oauth/* problems.
+
+output:
+  status: 200
+  example:
+    data:
+      request: "<opaque>"
+      client: { client_id: "pcl_...", name: "Acme CLI", logo_uri: null, client_uri: null, policy_uri: null, tos_uri: null, trusted: false }
+      scopes: [{ name: openid, description: "Sign in with OpenID Connect (an ID token)" }, { name: org.read, description: "View the organization profile" }]
+      redirect_uri: "https://cli.acme.example/callback"
+      state: "xyz"
+      prompt: null
+      decision_endpoint: "/oauth2/authorize/decision"
+
+errors:
+  - { status: 302, code: null }
+  - { status: 400, code: invalid_request }
+  - { status: 400, code: invalid_client }
+  - { status: 400, code: invalid_scope }
+  - { status: 400, code: unauthorized_client }
+  - { status: 400, code: unsupported_response_type }
+
+events: []

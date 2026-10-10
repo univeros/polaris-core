@@ -1,0 +1,34 @@
+# DELETE /orgs/{id}/oauth/clients/{clientId}: remove a client.
+endpoint:
+  method: DELETE
+  path: /orgs/{id}/oauth/clients/{clientId}
+  summary: Delete an OAuth client of the organization
+  tags: [oauth, orgs]
+  auth: bearer
+  requires_permissions: [org.update]
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+    clientId: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\OAuth\Http\Organization\DeleteClientEndpoint
+  description: >
+    The client and every token it holds go. Recorded as oauth.client_deleted.
+
+output:
+  status: 200
+  example:
+    data: { status: deleted }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: forbidden }
+  - { status: 403, code: oauth_forbidden }
+  - { status: 404, code: oauth_not_found }
+
+events: [oauth.client_deleted]

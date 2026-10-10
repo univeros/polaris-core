@@ -9,6 +9,7 @@ use function array_values;
 use function count;
 use function in_array;
 use function is_array;
+use function is_int;
 use function is_string;
 use function json_encode;
 use function ksort;
@@ -77,7 +78,7 @@ final class Normalizer
      */
     private static function maskQuery(string $value): string
     {
-        return (string) preg_replace_callback('/([?&])(sso_code|code|state|nonce|code_challenge)=[A-Za-z0-9_.~%-]+/', static fn(array $m): string => $m[1] . $m[2] . '=<' . ($m[2] === 'sso_code' ? 'code' : $m[2]) . '>', $value);
+        return (string) preg_replace_callback('/([?&])(sso_code|code|state|nonce|code_challenge|request|user_code)=[A-Za-z0-9_.~%-]+/', static fn(array $m): string => $m[1] . $m[2] . '=<' . ($m[2] === 'sso_code' ? 'code' : $m[2]) . '>', $value);
     }
 
     public static function value(mixed $value, string $key): mixed
@@ -99,6 +100,10 @@ final class Normalizer
             }
 
             return $out;
+        }
+        if (is_int($value) && in_array($key, ['exp', 'iat', 'nbf', 'auth_time', 'updated_at'], true)) {
+            // A token's epoch claims are minted per run (an OAuth introspection, a userinfo document).
+            return '<timestamp>';
         }
         if (!is_string($value)) {
             return $value;
@@ -123,7 +128,7 @@ final class Normalizer
         if (str_starts_with($value, 'data:image/') || str_starts_with($value, '<svg')) {
             return '<image>';
         }
-        if (in_array($key, ['refresh_token', 'token', 'secret', 'code', 'mfa_token', 'access_token', 'invite_token', 'kid', 'n', 'e', 'x', 'y', 'qr', 'qr_code', 'qr_svg', 'otpauth_uri', 'uri', 'hint'], true)) {
+        if (in_array($key, ['refresh_token', 'token', 'secret', 'code', 'mfa_token', 'access_token', 'invite_token', 'kid', 'n', 'e', 'x', 'y', 'qr', 'qr_code', 'qr_svg', 'otpauth_uri', 'uri', 'hint', 'client_id', 'client_secret', 'user_code', 'device_code', 'request', 'id_token', 'auth_req_id'], true)) {
             return '<' . $key . '>';
         }
         if (preg_match('/^[A-Za-z0-9_\-+\/=]{32,}$/', $value) === 1) {

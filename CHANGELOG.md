@@ -20,10 +20,26 @@ core seams.
   revocation; `GET|POST /api-keys`, `GET|PATCH|DELETE /api-keys/{id}`, `POST /api-keys/{id}/rotate`,
   `POST /api-keys/verify`; a key in `Authorization: Bearer` or `x-api-key` authenticates every Polaris
   route as its owner, step-up routes excepted. Table `polaris_api_key`; the `api_keys.*` audit names.
-- `@polaris-auth/client`: `client.apiKeys`.
+- `polaris/oauth-provider` (plugin id `oauth`): Polaris as an OAuth 2.1 and OpenID Connect provider.
+  `GET /oauth2/authorize` (PKCE S256 required; a browser goes to the host's consent page, an XHR client
+  gets JSON), `POST /oauth2/authorize/decision`, `POST /oauth2/token` (authorization_code,
+  refresh_token with rotation and family revocation, client_credentials, device_code, CIBA, token
+  exchange with `act`; client_secret_basic, client_secret_post, private_key_jwt, none; DPoP-bound tokens
+  with `cnf.jkt`), `GET|POST /oauth2/userinfo`, `POST /oauth2/revoke`, `POST /oauth2/introspect`,
+  `POST /oauth2/register` (RFC 7591, off by default), the device flow (`/oauth2/device/code`, `verify`,
+  `approve`), CIBA (`/oauth2/ciba`, `pending`, `{id}/decide`), the consents (`/oauth2/consents`),
+  `/.well-known/openid-configuration` and `/.well-known/oauth-authorization-server`, the organizations'
+  clients (`/orgs/{id}/oauth/clients`) and the operators' (`/admin/oauth/clients`); client ID metadata
+  documents (`https` client ids) fetched, validated and cached. Access tokens are RFC 9068 JWTs signed
+  with core's key, verified by `/auth/jwks` unchanged, and accepted on every Polaris route within their
+  scopes. Six tables `polaris_oauth_*`; the `oauth.*` audit names.
+- `@polaris-auth/client`: `client.apiKeys` and `client.oauth`.
+- The Slim demo: `consent.html` and `device.html`, the reference consent and device pages.
 
 ### Changed
-- Core's test normaliser masks a `hint` key.
+- Core's test normaliser masks the two packages' per-run values (`hint`, `client_id`, `client_secret`,
+  `user_code`, `device_code`, `request`, `id_token`, `auth_req_id`; the `request` and `user_code` query
+  parameters; integer `exp`, `iat`, `nbf`, `auth_time`, `updated_at`).
 
 ## [0.8.0] - 2026-10-09
 

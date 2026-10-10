@@ -1,0 +1,27 @@
+# POST /oauth2/userinfo: the same as the GET.
+endpoint:
+  method: POST
+  path: /oauth2/userinfo
+  summary: The user's OpenID claims (POST)
+  tags: [oauth]
+  auth: bearer
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\OAuth\Http\UserinfoPostEndpoint
+  description: >
+    OpenID Connect Core allows POST as well; the answer is the GET's.
+
+output:
+  status: 200
+  example: { sub: "018f...", email: "ada@example.com", email_verified: true, name: "Ada", updated_at: 1760090000 }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 401, code: invalid_token }
+
+events: []

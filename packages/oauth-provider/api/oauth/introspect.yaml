@@ -1,0 +1,37 @@
+# POST /oauth2/introspect: whether a token is live.
+endpoint:
+  method: POST
+  path: /oauth2/introspect
+  summary: Introspect a token
+  tags: [oauth]
+  auth: public
+  rate_limit: token_refresh
+  effect: read
+  receipt: false
+
+input:
+  source: body
+  fields:
+    token: { type: string, rules: [required] }
+    token_type_hint: { type: "?string", rules: [optional] }
+    client_id: { type: "?string", rules: [optional] }
+    client_secret: { type: "?string", rules: [optional] }
+    client_assertion_type: { type: "?string", rules: [optional] }
+    client_assertion: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\OAuth\Http\IntrospectEndpoint
+  description: >
+    RFC 7662, for an authenticated client: active false, or active true with client_id, token_type,
+    scope, sub, iss, iat, exp, jti, and aud, org, cnf, act when the token carries them.
+
+output:
+  status: 200
+  example: { active: true, client_id: "pcl_...", token_type: "Bearer", scope: "openid org.read", sub: "018f...", iss: "https://auth.example", iat: 1760090000, exp: 1760093600, jti: "018f..." }
+  example_inactive: { active: false }
+
+errors:
+  - { status: 400, code: invalid_request }
+  - { status: 401, code: invalid_client }
+
+events: []

@@ -1,0 +1,70 @@
+# POST /oauth2/token: every grant.
+endpoint:
+  method: POST
+  path: /oauth2/token
+  summary: Issue tokens
+  tags: [oauth]
+  auth: public
+  rate_limit: token_refresh
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    grant_type: { type: string, rules: [required] }
+    client_id: { type: "?string", rules: [optional] }
+    client_secret: { type: "?string", rules: [optional] }
+    client_assertion_type: { type: "?string", rules: [optional] }
+    client_assertion: { type: "?string", rules: [optional] }
+    code: { type: "?string", rules: [optional] }
+    redirect_uri: { type: "?string", rules: [optional] }
+    code_verifier: { type: "?string", rules: [optional] }
+    refresh_token: { type: "?string", rules: [optional] }
+    scope: { type: "?string", rules: [optional] }
+    resource: { type: "?string", rules: [optional] }
+    device_code: { type: "?string", rules: [optional] }
+    auth_req_id: { type: "?string", rules: [optional] }
+    subject_token: { type: "?string", rules: [optional] }
+    subject_token_type: { type: "?string", rules: [optional] }
+    actor_token: { type: "?string", rules: [optional] }
+    actor_token_type: { type: "?string", rules: [optional] }
+    audience: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\OAuth\Http\TokenEndpoint
+  description: >
+    The client authenticates as registered (client_secret_basic, client_secret_post, private_key_jwt
+    or none) and names the grant: authorization_code (code, code_verifier, redirect_uri),
+    refresh_token (rotated; a spent token presented again revokes its family), client_credentials,
+    urn:ietf:params:oauth:grant-type:device_code (polled), urn:openid:params:grant-type:ciba
+    (auth_req_id, polled), urn:ietf:params:oauth:grant-type:token-exchange (subject_token, optional
+    actor_token, resource or audience; the token carries act). A DPoP proof binds the tokens to the
+    client's key (cnf.jkt, token_type DPoP). The response is an RFC 6749 token response, never cached;
+    a refusal is an RFC 9457 problem whose error is the RFC 6749 code. Accepts a form or JSON body.
+
+output:
+  status: 200
+  example:
+    access_token: "<jwt>"
+    token_type: "Bearer"
+    expires_in: 3600
+    scope: "openid org.read"
+    refresh_token: "prt_..."
+    id_token: "<jwt>"
+
+errors:
+  - { status: 400, code: invalid_request }
+  - { status: 401, code: invalid_client }
+  - { status: 400, code: invalid_grant }
+  - { status: 400, code: unauthorized_client }
+  - { status: 400, code: unsupported_grant_type }
+  - { status: 400, code: invalid_scope }
+  - { status: 400, code: invalid_target }
+  - { status: 400, code: invalid_dpop_proof }
+  - { status: 400, code: authorization_pending }
+  - { status: 400, code: slow_down }
+  - { status: 400, code: access_denied }
+  - { status: 400, code: expired_token }
+
+events: [oauth.token_issued, oauth.token_refused, oauth.refresh_reused]

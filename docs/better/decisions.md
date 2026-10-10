@@ -326,3 +326,50 @@ entries here when a WP confirms or changes them.
   `organization_id` is the same surface); keys bound to a user independent of any organization context
   (such a key could do nothing core guards with a permission); an `admin`-style principal for keys
   (the whole point of decision #2 is that a key is the owner, so every endpoint already knows it).
+- 2026-10-10 · WP3 · `polaris/oauth-provider` (plugin id `oauth`): six tables, `polaris_oauth_client`
+  (a UUID `client_id`, so a client id in a path reads like every other id; secrets `pcs_` plus 256 bits
+  as keyed hashes under pepper context `oauth_client`), `_consent` (one row per user and client, scopes
+  merged), `_code` (keyed hash, spent by an update conditioned on `used_at IS NULL`, bound to the client,
+  the redirect URI, the S256 challenge, the nonce and a `dpop_jkt`), `_token` (every access token by
+  `jti`, every refresh token `prt_` as a keyed hash, both in a rotation family; a spent refresh token
+  presented again revokes the family, RFC 9700 §4.14), `_device_code` and `_ciba_request` (status
+  machines, spent once, polls throttled by `last_polled_at`). Access tokens are RFC 9068 JWTs (`typ:
+  at+jwt`) minted by the plugin's own lcobucci builder with core's signing key and `kid` (core's
+  generator owns `aud` and `exp`), `aud` = the `resource` asked or the issuer; the plugin's bearer
+  resolver (decision #2) accepts them on every route when `aud` names this server, they are live in the
+  token table and presented as bound (a `cnf.jkt` token with the `DPoP` scheme and a proof carrying
+  `ath`; a bearer one with `Bearer`), as the user with `delegated` = the permission scopes (decision
+  #3); a client's own token clears no permission check. Scopes are the permission catalog plus
+  `openid`, `profile`, `email`, `offline_access` and the host's extras (`scopes:`); a refresh or an
+  exchange narrows, never widens. The authorization endpoint parks a validated request in the cache
+  for ten minutes and sends a browser to the host's `consentUrl?request=`, answers JSON to `Accept:
+  application/json` (or always, without a consentUrl); the decision route is the bearer's; a trusted
+  client (operator-set or `trustedClients`) or a prior consent needs no screen, `prompt=consent` always
+  asks; the authorization response carries `iss` (RFC 9207). Client authentication: secret basic or
+  post, `private_key_jwt` (firebase/php-jwt against the client's `jwks` or a cached `jwks_uri`, `aud`
+  the endpoint or the issuer, `jti` once), `none` for public clients. DPoP (RFC 9449): proofs verified
+  with the server clock (`JWT::$timestamp`), five minutes of freshness, `jti` once in the cache, `htu`
+  without query; `dpop: off|optional|required`, a client may demand it (`dpop_bound_access_tokens`).
+  Token exchange (RFC 8693) takes a session's access token (core's parser) or one of the provider's,
+  issues `act` naming the requesting client (and an actor token's subject), chained. CIBA is poll mode
+  only; the host notifies from `oauth.ciba_requested`. DCR (RFC 7591) off by default, never trusted.
+  CIMD: an `https` client id is fetched once an hour over the host's PSR-18 client (64 KiB), must name
+  itself, is validated as a registration limited to `none` or `private_key_jwt`; loopback, private,
+  link-local and mapped addresses and the RFC 6761 names (`localhost`, `.local`, `.internal`,
+  `.home.arpa`, `.onion`, `.test`, `.example`, `.invalid`, `.arpa`) are refused; the name is not
+  resolved. The well-known documents live under the mount (`<baseUrl>/.well-known/...`, OpenID-conformant
+  for a path issuer). Rate groups: the client-facing routes (`/oauth2/token`, `revoke`, `introspect`,
+  `device/code`, `authorize`) use `token_refresh` (60 a minute per IP: clients poll and SPAs start
+  flows), `ciba` `mfa_send` (it reaches a person), `register` `register`. Organizations manage their
+  clients under `org.update` and cannot trust them; operators (`polaris/admin`, `own`) can.
+  `polaris/audit` and `polaris/admin` are required. · Rejected: storing access tokens (a `jti` row is
+  enough to revoke and introspect); a nonce-based DPoP server challenge (`use_dpop_nonce`, a second
+  round trip every client must implement; the five-minute window and the replay cache cover the same
+  risk at this scale); `/.well-known` at the host root (the adapters would register a route outside the
+  mount for one document; the OpenID form is conformant); a `pollInterval` of 1 second in the fixtures
+  (a throttle a replay cannot time; zero turns it off and the throttle is unit-tested with a clock).
+- 2026-10-10 · WP3 · Core's test normaliser masks, for the two packages' fixtures: the keys `hint`,
+  `client_id`, `client_secret`, `user_code`, `device_code`, `request`, `id_token`, `auth_req_id`; the query
+  parameters `request` and `user_code`; and the epoch claims `exp`, `iat`, `nbf`, `auth_time`,
+  `updated_at` when integers. The hosts rewrite `Cache-Control` (Laravel answers `no-store, private`), a
+  transport header the harnesses already ignore; the tests assert the directive, not the value.

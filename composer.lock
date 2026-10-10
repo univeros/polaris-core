@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a15c3054ba138f5a60f5163565acc4c",
+    "content-hash": "fae0d3951b41a2ff362aef4ec8a10a7c",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3354,7 +3354,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/admin",
-                "reference": "9cf47055f5c2dbe6cbb3db58837c9bc54fbce4c1"
+                "reference": "e2907f51938155b14d733cfec207e9edf4ca4d3b"
             },
             "require": {
                 "php": ">=8.3",
@@ -3400,7 +3400,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/anonymous",
-                "reference": "8e7a1702f7a7d6b7a1a55556b9de5ea48508506f"
+                "reference": "ffe0e154c470708469660b19b1079aefee80f5f1"
             },
             "require": {
                 "php": ">=8.3",
@@ -3443,7 +3443,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/api-keys",
-                "reference": "d3d9a263e7cf165901fd8448dd29b77e31b12375"
+                "reference": "0b1fd1f856d2630cc8cd17fde3c4867db34b3a2a"
             },
             "require": {
                 "php": ">=8.3",
@@ -3498,7 +3498,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/audit",
-                "reference": "64cec4ddc2dce672edd573b0388d5cd99c7d4bd5"
+                "reference": "7972f4e278d99ec4f134070dbc7d3c80f5e7c9f0"
             },
             "require": {
                 "php": ">=8.3",
@@ -3545,7 +3545,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/cli",
-                "reference": "5ef8b11d644a0862c2bf586b78f47a230a301aa3"
+                "reference": "be8d4e3b72b998bd5b36fd14d7da90d202c34f7f"
             },
             "require": {
                 "php": ">=8.3",
@@ -3589,7 +3589,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/core",
-                "reference": "6738184f417b5944a16824822a728eff33affdf6"
+                "reference": "316c0b95165eb5347cb99d713167aec7b52d725c"
             },
             "require": {
                 "endroid/qr-code": "^6.0",
@@ -3660,7 +3660,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/laravel",
-                "reference": "67df9c260046efc04ae5cfdbad9120fe7cb23b51"
+                "reference": "64770796068b09de4d6efdeff7b6c07f90133f47"
             },
             "require": {
                 "laravel/framework": "^13.0",
@@ -3709,7 +3709,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/messaging",
-                "reference": "29a83dffbbeb514e61cef7163c58499de14e7f2b"
+                "reference": "67e05c02cc68db6e25a341973bba9e0572e21e35"
             },
             "require": {
                 "php": ">=8.3",
@@ -3760,7 +3760,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/multi-session",
-                "reference": "86625630abef1330ba26660ecdfa8f7bd9ce0081"
+                "reference": "6e7ecebe4ac58fb5c3ce394b7c628fdb6fa28808"
             },
             "require": {
                 "php": ">=8.3",
@@ -3798,12 +3798,78 @@
             }
         },
         {
+            "name": "polaris/oauth-provider",
+            "version": "0.8.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/oauth-provider",
+                "reference": "b82340ec1354b053d4612a4024dd410b715b4e17"
+            },
+            "require": {
+                "ext-openssl": "*",
+                "firebase/php-jwt": "^7.0",
+                "lcobucci/jwt": "^5.6",
+                "php": ">=8.3",
+                "polaris/admin": "^0.8",
+                "polaris/audit": "^0.8",
+                "polaris/core": "^0.8",
+                "psr/clock": "^1.0",
+                "psr/event-dispatcher": "^1.0",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0",
+                "psr/http-server-middleware": "^1.0",
+                "psr/simple-cache": "^3.0",
+                "symfony/uid": "^7.0 || ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Polaris\\OAuth\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "2am.tech",
+                    "homepage": "https://2am.tech"
+                }
+            ],
+            "description": "Polaris for PHP as an OAuth 2.1 and OpenID Connect provider: authorization code with PKCE, refresh rotation, client credentials, device flow, CIBA, token exchange, DPoP, dynamic registration and client ID metadata documents, discovery",
+            "keywords": [
+                "authorization-server",
+                "ciba",
+                "device-flow",
+                "dpop",
+                "oauth2",
+                "oauth2-provider",
+                "oauth2-server",
+                "oidc",
+                "openid-connect",
+                "php",
+                "pkce",
+                "polaris",
+                "token-exchange"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "polaris/passkey",
             "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "packages/passkey",
-                "reference": "ad5dab9ab7efece307bf1be59c14350a1a3b41b8"
+                "reference": "b0f083461e894e5c0185e3747fd23cf35ccf7432"
             },
             "require": {
                 "ext-openssl": "*",
@@ -3847,7 +3913,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/passwordless",
-                "reference": "56b1e8e6770651255cfa5ac9e7ab03861e29c74a"
+                "reference": "190887b2598d428c3dd23f94e75ddca0aa72ee11"
             },
             "require": {
                 "php": ">=8.3",
@@ -3890,7 +3956,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/pdo",
-                "reference": "316b2c3435cea776503b8dbe68860720ec090838"
+                "reference": "f6b8f479d37789b95927db913c77d92e8c196c85"
             },
             "require": {
                 "ext-pdo": "*",
@@ -3929,7 +3995,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/psr15",
-                "reference": "68dcfa970e8327576720effb79f64b2180d4047e"
+                "reference": "34fe4eb240d506925dfc535af3fbea62ac1c646b"
             },
             "require": {
                 "php": ">=8.3",
@@ -3972,7 +4038,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/scim",
-                "reference": "6f84531ffbdf3b2cb2769ca776004c8d4d9faf35"
+                "reference": "0f254d20e03d8b5af776c1762d9600f3b59b9e13"
             },
             "require": {
                 "php": ">=8.3",
@@ -4018,7 +4084,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/sentinel",
-                "reference": "a7bad094d32029041e6f9c52886ffc5781098e91"
+                "reference": "3249b0e451bda0c63c508e198876a39eb864ef04"
             },
             "require": {
                 "php": ">=8.3",
@@ -4074,7 +4140,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/social",
-                "reference": "c0adf3e501032029feb54d990720468565f96fe6"
+                "reference": "56c33b33f15e2366d3f6c862f9575fb352839f15"
             },
             "require": {
                 "ext-openssl": "*",
@@ -4122,7 +4188,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/sso",
-                "reference": "4742ca9a4db465ac9a823ad0a4ded63e92e45bd1"
+                "reference": "ae1ee8c2593ea282792980e25e2c36190443abc5"
             },
             "require": {
                 "ext-dom": "*",
@@ -4173,7 +4239,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/symfony",
-                "reference": "f46ff53b45e465487a2094d928686dba6879a391"
+                "reference": "f3a1a9b5d3898b1e3635e3705f18d2602951fea3"
             },
             "require": {
                 "nyholm/psr7": "^1.8",
@@ -4221,7 +4287,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/testing",
-                "reference": "21a178a6b5c27fb618ad26096d7af6169fb9eea2"
+                "reference": "5935e56d6963c30242cf369a689ec5571d3135e3"
             },
             "require": {
                 "php": ">=8.3",
@@ -4259,7 +4325,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/username",
-                "reference": "657903357ee3fe9a99640d2b4a3d782561fdbbf0"
+                "reference": "e8b3481b10e040bb7043b6f61bf2a87d6e3bb20f"
             },
             "require": {
                 "ext-mbstring": "*",
@@ -4299,7 +4365,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/yii",
-                "reference": "8e2a780ae71e206c6c5d6cc3ba15150eabf4939e"
+                "reference": "cc456d48434ed4756c164bd6f0642b4f58769a20"
             },
             "require": {
                 "php": ">=8.3",
@@ -13803,6 +13869,7 @@
         "polaris/laravel": 20,
         "polaris/messaging": 20,
         "polaris/multi-session": 20,
+        "polaris/oauth-provider": 20,
         "polaris/passkey": 20,
         "polaris/passwordless": 20,
         "polaris/pdo": 20,
