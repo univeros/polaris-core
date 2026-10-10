@@ -15,6 +15,7 @@ use Polaris\Token\Token;
 use Psr\Clock\ClockInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function array_intersect;
 use function in_array;
 use function is_array;
 use function is_string;
@@ -22,8 +23,8 @@ use function preg_match;
 
 /**
  * Authenticates the provider's own access tokens (`typ: at+jwt`) on core's bearer routes: verified
- * with core's keys, meant for this server (`aud` includes the issuer), live in the token table, and
- * presented the way they were bound (a DPoP-bound token with the `DPoP` scheme and a valid proof for
+ * with core's keys, meant for this server (`aud` includes the issuer, or one of the further `audiences`
+ * naming this server, such as its `/mcp` resource), live in the token table, and presented the way they were bound (a DPoP-bound token with the `DPoP` scheme and a valid proof for
  * this request, a bearer one with `Bearer`). The request then acts as the token's user, in its
  * organization, with the permission scopes as the delegated authority ({@see Gate::DELEGATED}); a
  * client-credentials token has no user and clears no permission check.
@@ -43,6 +44,8 @@ final class OAuthResolver implements BearerResolver
         private readonly Settings $settings,
         private readonly UserRepository $users,
         private readonly ClockInterface $clock,
+        /** @var list<string> */
+        private readonly array $audiences = [],
     ) {
     }
 
@@ -99,7 +102,7 @@ final class OAuthResolver implements BearerResolver
     {
         $aud = $claims['aud'] ?? null;
         $audiences = is_array($aud) ? $aud : [$aud];
-        if (!in_array($this->jwt->issuer(), $audiences, true)) {
+        if (!in_array($this->jwt->issuer(), $audiences, true) && array_intersect($this->audiences, $audiences) === []) {
             throw new OAuthException(OAuthException::INVALID_TOKEN, 'The token is meant for another resource.', 401);
         }
     }

@@ -56,7 +56,8 @@ final class Exchange
             throw new OAuthException(OAuthException::INVALID_DPOP_PROOF, 'The subject token is bound to a DPoP key; prove it, and the exchanged token stays bound to it.');
         }
         $scopes = $requested === null ? $subject['scopes'] : ($subject['scopes'] === null ? $this->scopes->parse(Scopes::join($requested), $client) : Scopes::within($requested, $subject['scopes']));
-        $actor = ['client_id' => $client->clientId];
+        // RFC 8693 §4.1 names the actor by `sub`; for the requesting client that is its client id (an agent's id).
+        $actor = ['sub' => $client->clientId, 'client_id' => $client->clientId];
         if ($actorToken !== null) {
             if (!in_array($actorTokenType, [self::TYPE_ACCESS_TOKEN, self::TYPE_JWT], true)) {
                 throw new OAuthException(OAuthException::INVALID_REQUEST, 'actor_token_type must be access_token or jwt.');

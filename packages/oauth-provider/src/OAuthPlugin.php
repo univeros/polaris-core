@@ -42,6 +42,7 @@ final class OAuthPlugin extends AbstractPlugin implements BearerResolverProvider
      * @param array<string, string> $scopes extra scopes (name => description) beyond the permission catalog
      * @param list<string> $trustedClients client ids whose users are not asked for consent
      * @param 'off'|'optional'|'required' $dpop
+     * @param list<string> $audiences further `aud` values that name this server (`<baseUrl>/mcp` for polaris/mcp), accepted as the issuer is
      */
     public function __construct(
         string $baseUrl,
@@ -60,6 +61,7 @@ final class OAuthPlugin extends AbstractPlugin implements BearerResolverProvider
         int $deviceCodeTtl = 1800,
         int $pollInterval = 5,
         int $cibaTtl = 600,
+        private readonly array $audiences = [],
     ) {
         if (preg_match('~^https?://[^/\s]+~', $baseUrl) !== 1) {
             throw new LogicException('baseUrl must be an absolute http(s) URL, where Polaris is mounted.');
@@ -130,7 +132,7 @@ final class OAuthPlugin extends AbstractPlugin implements BearerResolverProvider
     #[Override]
     public function bearerResolvers(Graph $graph): array
     {
-        return [new OAuthResolver($graph->get(Jwt::class), $graph->get(Tokens::class), $graph->get(Scopes::class), $graph->get(Dpop::class), $this->settings, $graph->users(), $graph->clock())];
+        return [new OAuthResolver($graph->get(Jwt::class), $graph->get(Tokens::class), $graph->get(Scopes::class), $graph->get(Dpop::class), $this->settings, $graph->users(), $graph->clock(), $this->audiences)];
     }
 
     #[Override]

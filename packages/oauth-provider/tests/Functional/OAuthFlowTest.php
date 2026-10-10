@@ -197,11 +197,11 @@ final class OAuthFlowTest extends OAuthTestCase
         $exchanged = $this->json($this->form('/oauth2/token', [...$auth, 'grant_type' => Clients::GRANT_EXCHANGE, 'subject_token' => $session, 'subject_token_type' => Exchange::TYPE_ACCESS_TOKEN, 'scope' => 'org.read members.read']));
         self::assertSame(Exchange::TYPE_ACCESS_TOKEN, $exchanged['issued_token_type']);
         $claims = self::claims($exchanged['access_token']);
-        self::assertSame([$userId, $orgId, ['client_id' => $client['client_id']]], [$claims['sub'], $claims['org'], $claims['act']]);
+        self::assertSame([$userId, $orgId, ['sub' => $client['client_id'], 'client_id' => $client['client_id']]], [$claims['sub'], $claims['org'], $claims['act']]);
         self::assertSame(200, $this->authedGet('/orgs/' . $orgId . '/members', (string) $exchanged['access_token'])->getStatusCode());
         $narrowed = $this->json($this->form('/oauth2/token', [...$auth, 'grant_type' => Clients::GRANT_EXCHANGE, 'subject_token' => $exchanged['access_token'], 'subject_token_type' => Exchange::TYPE_ACCESS_TOKEN, 'scope' => 'org.read', 'resource' => 'https://api.acme.test']));
         self::assertSame(['org.read', 'https://api.acme.test'], [$narrowed['scope'], self::claims($narrowed['access_token'])['aud']]);
-        self::assertSame(['client_id' => $client['client_id'], 'act' => ['client_id' => $client['client_id']]], self::claims($narrowed['access_token'])['act'], 'the chain of actors');
+        self::assertSame(['sub' => $client['client_id'], 'client_id' => $client['client_id'], 'act' => ['sub' => $client['client_id'], 'client_id' => $client['client_id']]], self::claims($narrowed['access_token'])['act'], 'the chain of actors');
         $this->problem($this->form('/oauth2/token', [...$auth, 'grant_type' => Clients::GRANT_EXCHANGE, 'subject_token' => $exchanged['access_token'], 'subject_token_type' => Exchange::TYPE_ACCESS_TOKEN, 'scope' => 'org.read users.manage']), 400, 'invalid_scope', 'never wider than the subject');
         $this->problem($this->form('/oauth2/token', [...$auth, 'grant_type' => Clients::GRANT_EXCHANGE, 'subject_token' => 'garbage', 'subject_token_type' => Exchange::TYPE_ACCESS_TOKEN]), 400, 'invalid_grant');
     }
