@@ -1,0 +1,29 @@
+# GET /agents/approvals: the owner's pending approvals.
+endpoint:
+  method: GET
+  path: /agents/approvals
+  summary: List pending approvals
+  tags: [agents]
+  auth: bearer
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Agents\Http\ListApprovalsEndpoint
+  description: >
+    The in_app method: the pending approvals of the agents the caller manages, each with the agent, the
+    grants asked (capability, constraints, budget) and the strength needed to approve.
+
+output:
+  status: 200
+  example:
+    data:
+      - { id: "018f...", agent_id: "018f...", grant_ids: ["018f..."], method: in_app, strength: step_up, user_code: "BCDF-GHJK", binding_message: null, status: pending, decided_by: null, expires_at: "2026-10-10T10:10:00+00:00", created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00", verification_uri: "https://app.example.com/agents/approve", verification_uri_complete: "https://app.example.com/agents/approve?user_code=BCDF-GHJK", expires_in: 600, interval: 5, agent: { id: "018f...", owner_type: user, owner_id: "018f...", organization_id: "018f...", name: "Deploy bot", mode: autonomous, host_id: null, auth: private_key_jwt, public_jwk: { kty: EC, crv: P-256, x: "...", y: "...", alg: ES256, kid: "...", use: sig }, status: active, created_by: "018f...", sealed_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00" }, grants: [{ id: "018f...", agent_id: "018f...", capability: "deploy.staging", constraints: {}, budget: { kind: count, total: 100, remaining: 100, field: null }, status: active, granted_by: null, approved_via: auto, approval_id: null, expires_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00" }] }
+
+errors:
+  - { status: 401, code: unauthorized }
+
+events: []

@@ -1,0 +1,46 @@
+# POST /agents/grants/request: an agent asks for capabilities.
+endpoint:
+  method: POST
+  path: /agents/grants/request
+  summary: Request capability grants
+  tags: [agents]
+  auth: public   # the agent authenticates itself: a signed request JWT or its access token
+  rate_limit: token_refresh
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    capabilities: { type: "list<mixed>", rules: [required] }
+    reason: { type: "?string", rules: [optional, "max:500"] }
+    preferred_method: { type: "?string", rules: [optional, "in:device_authorization,ciba,in_app"] }
+    binding_message: { type: "?string", rules: [optional, "max:160"] }
+
+domain:
+  class: Polaris\Agents\Http\RequestGrantsEndpoint
+  description: >
+    capabilities names them (a name, or {name, constraints} with max, min, in, not_in, pattern per
+    argument and budget: {count} or {amount, field}, window). What the policy auto-approves (the risk
+    tier in autoApprove, the owner holding the permission) is active at once with the default budget;
+    the rest waits in one approval of the strength the riskiest capability needs, found by its user code
+    on the host's approval page, pushed by the host from agent.grant.requested (ciba, with the binding
+    message), or listed by the owner's client (in_app). AAP's answer shape.
+
+output:
+  status: 200
+  example:
+    agent_id: "018f..."
+    agent_capability_grants: [{ id: "018f...", agent_id: "018f...", capability: "deploy.staging", constraints: {}, budget: { kind: count, total: 100, remaining: 100, field: null }, status: active, granted_by: null, approved_via: auto, approval_id: null, expires_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00" }]
+    approval: { id: "018f...", method: device_authorization, strength: step_up, user_code: "BCDF-GHJK", verification_uri: "https://app.example.com/agents/approve", verification_uri_complete: "https://app.example.com/agents/approve?user_code=BCDF-GHJK", expires_in: 600, interval: 5, binding_message: null }
+
+errors:
+  - { status: 401, code: agents_unauthorized }
+  - { status: 401, code: invalid_jwt }
+  - { status: 401, code: aud_mismatch }
+  - { status: 401, code: agent_inactive }
+  - { status: 404, code: capability_not_found }
+  - { status: 400, code: unknown_constraint_operator }
+  - { status: 422, code: agents_invalid_input }
+
+events: [agent.grant.requested, agent.grant.approved]

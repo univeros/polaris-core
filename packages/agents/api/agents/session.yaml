@@ -1,0 +1,32 @@
+# GET /agents/session: the agent's own status.
+endpoint:
+  method: GET
+  path: /agents/session
+  summary: The agent's session
+  tags: [agents]
+  auth: public   # the agent authenticates itself: a signed request JWT or its access token
+  rate_limit: token_refresh
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Agents\Http\SessionEndpoint
+  description: >
+    AAP's status: the agent, its mode and owner, its host, how it authenticated, and its grants with
+    their status and remaining budget (an agent polls it while an approval is pending).
+
+output:
+  status: 200
+  example:
+    data: { agent: { id: "018f...", owner_type: user, owner_id: "018f...", organization_id: "018f...", name: "Deploy bot", mode: autonomous, host_id: null, auth: private_key_jwt, public_jwk: { kty: EC, crv: P-256, x: "...", y: "...", alg: ES256, kid: "...", use: sig }, status: active, created_by: "018f...", sealed_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00" }, mode: autonomous, owner: { type: user, id: "018f..." }, organization_id: "018f...", host: null, authenticated_via: jwt, grants: [{ id: "018f...", agent_id: "018f...", capability: "deploy.staging", constraints: {}, budget: { kind: count, total: 100, remaining: 100, field: null }, status: active, granted_by: null, approved_via: auto, approval_id: null, expires_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00" }] }
+
+errors:
+  - { status: 401, code: agents_unauthorized }
+  - { status: 401, code: invalid_jwt }
+  - { status: 401, code: aud_mismatch }
+  - { status: 401, code: agent_inactive }
+
+events: []

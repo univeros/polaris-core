@@ -1,0 +1,36 @@
+# POST /agents/enroll: a host enrols an agent with its enrolment token.
+endpoint:
+  method: POST
+  path: /agents/enroll
+  summary: Enrol an agent through a host
+  tags: [agents]
+  auth: public   # the host's enrolment token (peh_...) is the bearer; the endpoint checks it
+  rate_limit: token_refresh
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    name: { type: string, rules: [required, "max:160"] }
+    mode: { type: string, rules: [required, "in:delegated,autonomous"] }
+    auth: { type: string, rules: [required, "in:private_key_jwt,client_secret,delegated_token"] }
+    jwk: { type: "?object", rules: [optional] }
+
+domain:
+  class: Polaris\Agents\Http\EnrollEndpoint
+  description: >
+    With Authorization: Bearer peh_... (a live host enrolment token), creates an agent under the host's
+    owner, registered by the host's creator, and asks for the host's default capabilities at once (the
+    policy auto-approves what it may; the rest waits for the owner). Recorded as agent.enrolled.
+
+output:
+  status: 201
+  example:
+    data: { id: "018f...", owner_type: user, owner_id: "018f...", organization_id: "018f...", name: "Claude Code", mode: delegated, host_id: "018f...", auth: private_key_jwt, public_jwk: { kty: EC, crv: P-256, x: "...", y: "...", alg: ES256, kid: "...", use: sig }, status: active, created_by: "018f...", sealed_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00", grants: [{ id: "018f...", agent_id: "018f...", capability: "deploy.staging", constraints: {}, budget: { kind: count, total: 100, remaining: 100, field: null }, status: active, granted_by: null, approved_via: auto, approval_id: null, expires_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00" }], approval: { id: "018f...", method: device_authorization, strength: step_up, user_code: "BCDF-GHJK", verification_uri: "https://app.example.com/agents/approve", verification_uri_complete: "https://app.example.com/agents/approve?user_code=BCDF-GHJK", expires_in: 600, interval: 5, binding_message: null } }
+
+errors:
+  - { status: 401, code: agents_unauthorized }
+  - { status: 422, code: agents_invalid_input }
+
+events: [agent.enrolled, agent.grant.requested, agent.grant.approved]

@@ -229,6 +229,14 @@ final class Tokens
         return $this->database->update(Schema::TOKENS, ['user_id' => $userId, 'client_id' => $clientId, 'revoked_at' => null], ['revoked_at' => $this->clock->now()]);
     }
 
+    /**
+     * Every live token of a client revoked (an agent's kill switch, polaris/agents).
+     */
+    public function revokeForClient(string $clientId): int
+    {
+        return $this->database->update(Schema::TOKENS, ['client_id' => $clientId, 'revoked_at' => null], ['revoked_at' => $this->clock->now()]);
+    }
+
     public function revokeFamily(string $familyId): int
     {
         return $this->database->update(Schema::TOKENS, ['family_id' => $familyId, 'revoked_at' => null], ['revoked_at' => $this->clock->now()]);

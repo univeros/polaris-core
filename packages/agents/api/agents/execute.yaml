@@ -1,0 +1,46 @@
+# POST /agents/execute: execute a capability.
+endpoint:
+  method: POST
+  path: /agents/execute
+  summary: Execute a capability
+  tags: [agents]
+  auth: public   # the agent authenticates itself: a signed request JWT or its access token
+  rate_limit: token_refresh
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    capability: { type: string, rules: [required] }
+    arguments: { type: "?object", rules: [optional] }
+    input: { type: "?object", rules: [optional] }
+
+domain:
+  class: Polaris\Agents\Http\ExecuteEndpoint
+  description: >
+    The agent must hold a live grant for the capability (named by its JWT's capabilities claim when it
+    restricts them; carried as a permission by its access token's scopes), its owner must still hold the
+    permission, the arguments (input is an alias) must match the capability's JSON Schema and the grant's
+    constraints; then, in one transaction, the budget is spent by a conditional update, the configured
+    handler runs and a receipt is appended. A capability with a location is executed at the location,
+    not here. Recorded as agent.executed, a refusal as agent.execution_denied.
+
+output:
+  status: 200
+  example:
+    data: { deployed: true }
+    receipt: { id: "018f...", seq: 1, hash: "2c26..." }
+
+errors:
+  - { status: 401, code: agents_unauthorized }
+  - { status: 401, code: invalid_jwt }
+  - { status: 401, code: aud_mismatch }
+  - { status: 401, code: agent_inactive }
+  - { status: 404, code: capability_not_found }
+  - { status: 403, code: capability_not_granted }
+  - { status: 403, code: constraint_violated }
+  - { status: 403, code: budget_exhausted }
+  - { status: 422, code: agents_invalid_arguments }
+
+events: [agent.executed, agent.execution_denied, agent.grant.exhausted]

@@ -491,7 +491,7 @@ entries here when a WP confirms or changes them.
   delegable).
 - 2026-10-10 · WP4 · Grants and budgets: a grant request names capabilities and asked constraints; the
   approval's method (`device_authorization`, `ciba`, `in_app`) only changes how the owner finds it (a
-  user code looked up at `GET /agents/approvals/{code}`, an `agent.grant.requested` event the host turns
+  user code looked up at `GET /agents/approvals/code?user_code=`, an `agent.grant.requested` event the host turns
   into a push, the list `GET /agents/approvals`); all decide at `POST /agents/approvals/{id}/decide`,
   which checks the strength the capability's risk requires (`session`, `step_up`: core's step-up
   freshness, `passkey`: a recent `passkey` sign-in) and that the owner holds the capability's
@@ -553,3 +553,27 @@ entries here when a WP confirms or changes them.
   declares for that code. The protected-resource metadata of Polaris's own `/mcp` advertises the required
   scopes and the permission catalog. The functional fixture freezes the whole `tools/list` of core,
   audit, admin and oauth, so a changed summary or field there re-records it (the contract freeze working).
+- 2026-10-10 · WP4 · `polaris/agents` as built: 23 routes (the owner's `auth: bearer` routes, the agent's
+  public self-authenticated ones, `/admin/agents` list and revoke for operators). The device page's data
+  is `GET /agents/approvals/code?user_code=` rather than `/agents/approvals/{code}`: the fixtures mask
+  only UUIDs in paths (oauth's device verify takes `?user_code=` for the same reason). `/agents/enroll`
+  uses the `token_refresh` group (a host enrols many agents; `register` is five an hour per IP, shared
+  with `/auth/register`), `/agents/register` `register`, decide `mfa_confirm`. OAuth reads an empty
+  client scope list as "any scope", so an agent without a live grant keeps the harmless `profile` scope
+  and can mint only a token for its own routes. The stored JWK carries `alg` and `kid` (the agent's, or
+  its RFC 7638 thumbprint), which the SDKs sign with. Receipt signatures have no `exp` (a receipt stays
+  verifiable) and are checked through the oauth plugin's `Jwt::verify`, so a key rotation keeps them
+  valid; `verify` compares the signature and the successor's link against the recomputed hash, so a
+  receipt edited in the database fails its own check and the next one's. Capabilities asked at
+  registration or enrolment go through the same policy; what is not auto-approved waits as an `in_app`
+  approval. An absent constrained argument is a violation; budgets are integers (amounts round up); a
+  grant is `exhausted` when its remainder reaches zero, a call it cannot cover answers
+  `budget_exhausted` without changing it. A handler that throws rolls the execution back and leaves no
+  receipt. The kill switch emits one `agent.revoked` (with the number of grants ended) and
+  `agent.receipt.sealed`; a member who leaves takes the organization's agents they registered with them
+  (revoked and sealed, by `system`); an erased user or organization erases its agents, their clients and
+  tokens, grants, approvals, receipts and hosts. MCP: a tool per capability with a handler (location
+  capabilities run at the host), `destructive` for `risk: high`. Problem types beyond the protocol
+  document's table: `agents/unauthorized`, `invalid_arguments` (422), `invalid_input`, `not_found`,
+  `forbidden`, `conflict`, `step_up_required`, `permission_not_held`, `sealed`. `polaris/oauth-provider`
+  gains `Tokens::revokeForClient()`; disabling the client and syncing its scopes use `Clients::update`.

@@ -1,0 +1,34 @@
+# GET /agents/capabilities: the capabilities this server declares.
+endpoint:
+  method: GET
+  path: /agents/capabilities
+  summary: List the capabilities
+  tags: [agents]
+  auth: public
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Agents\Http\CapabilitiesEndpoint
+  description: >
+    Every capability as the discovery document describes it (name, description, input schema, location
+    when it runs at a host URL) plus the permission it requires and its risk tier; with grant_status
+    (active, pending, none) when an agent authenticates.
+
+output:
+  status: 200
+  example:
+    data:
+      capabilities:
+        - { name: "deploy.staging", description: "Deploy a build to staging", input: { type: object, properties: { build: { type: string } }, required: [build] }, permission: "deploy.staging", risk: low, grant_status: active }
+      next_cursor: null
+      has_more: false
+
+errors:
+  - { status: 401, code: invalid_jwt }
+  - { status: 401, code: agent_inactive }
+
+events: []

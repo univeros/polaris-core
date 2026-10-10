@@ -1,0 +1,33 @@
+# DELETE /agents/grants/{id}: revoke a grant.
+endpoint:
+  method: DELETE
+  path: /agents/grants/{id}
+  summary: Revoke a grant
+  tags: [agents]
+  auth: bearer
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Agents\Http\DeleteGrantEndpoint
+  description: >
+    The owner revokes an active or pending grant of an agent they manage; it takes effect at the agent's
+    next request (its tokens' permissions are intersected with its live grants on every route).
+    Recorded as agent.grant.revoked.
+
+output:
+  status: 200
+  example:
+    data: { id: "018f...", agent_id: "018f...", capability: "deploy.staging", constraints: {}, budget: { kind: count, total: 100, remaining: 97, field: null }, status: revoked, granted_by: null, approved_via: auto, approval_id: null, expires_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00" }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 404, code: agents_not_found }
+  - { status: 409, code: agents_conflict }
+
+events: [agent.grant.revoked]

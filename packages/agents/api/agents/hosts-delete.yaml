@@ -1,0 +1,30 @@
+# DELETE /agents/hosts/{id}: revoke a host's enrolment token.
+endpoint:
+  method: DELETE
+  path: /agents/hosts/{id}
+  summary: Revoke a host
+  tags: [agents]
+  auth: bearer
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Agents\Http\DeleteHostEndpoint
+  description: >
+    The enrolment token stops working; the agents the host enrolled stay (revoke them one by one).
+
+output:
+  status: 200
+  example:
+    data: { status: revoked }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 404, code: agents_not_found }
+
+events: []

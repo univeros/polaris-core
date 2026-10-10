@@ -124,6 +124,10 @@ approval carries `id`, `method`, `user_code`, `verification_uri`, `verification_
 Constraints use AAP's operators per argument (`max`, `min`, `in`, `not_in`) plus `pattern`, and
 `budget: {count | amount, window?}`; an unknown operator is `400 agents/unknown_constraint_operator`.
 
+The owner finds a `device_authorization` approval by its user code at
+`GET /agents/approvals/code?user_code=` (the data of the host's device page), lists `in_app` ones at
+`GET /agents/approvals`, and decides any of them at `POST /agents/approvals/{id}/decide`.
+
 ## Sessions and hosts
 
 AAP's `GET /agent/status` is Polaris's `GET /agents/session` (the agent, its mode and owner, its grants with

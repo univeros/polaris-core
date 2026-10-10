@@ -1,0 +1,33 @@
+# POST /agents/{id}/revoke: the kill switch.
+endpoint:
+  method: POST
+  path: /agents/{id}/revoke
+  summary: Revoke an agent
+  tags: [agents]
+  auth: bearer
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\Agents\Http\RevokeEndpoint
+  description: >
+    The agent is revoked for good: its OAuth client is disabled and every token of it revoked, its
+    grants revoked, its pending approvals cancelled, and its receipt chain sealed with a final receipt
+    (outcome sealed) nothing is chained after. Recorded as agent.revoked and agent.receipt.sealed.
+
+output:
+  status: 200
+  example:
+    data: { id: "018f...", owner_type: user, owner_id: "018f...", organization_id: "018f...", name: "Deploy bot", mode: autonomous, host_id: null, auth: private_key_jwt, public_jwk: null, status: revoked, created_by: "018f...", sealed_at: "2026-10-10T10:00:00+00:00", created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00", sealed_receipt: { id: "018f...", agent_id: "018f...", seq: 2, grant_id: null, capability: null, input_hash: "4f53...", outcome: sealed, budget_before: null, budget_after: null, prev_hash: "2c26...", hash: "a1b2...", signature: "<jwt>", created_at: "2026-10-10T10:00:00+00:00" } }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 404, code: agents_not_found }
+  - { status: 409, code: agents_conflict }
+
+events: [agent.revoked, agent.receipt.sealed]

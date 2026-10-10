@@ -1,0 +1,45 @@
+# POST /agents/register: the owner registers an agent.
+endpoint:
+  method: POST
+  path: /agents/register
+  summary: Register an agent
+  tags: [agents]
+  auth: bearer
+  rate_limit: register
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    name: { type: string, rules: [required, "max:160"] }
+    mode: { type: string, rules: [required, "in:delegated,autonomous"] }
+    auth: { type: string, rules: [required, "in:private_key_jwt,client_secret,delegated_token"] }
+    jwk: { type: "?object", rules: [optional] }
+    organization_id: { type: "?string", rules: [optional] }
+    capabilities: { type: "?list<mixed>", rules: [optional] }
+
+domain:
+  class: Polaris\Agents\Http\RegisterEndpoint
+  description: >
+    An agent for the caller (acting in their active organization), or for the organization
+    organization_id names when it is the caller's active one and they hold org.update in it (checked by
+    the endpoint: a self-service write no delegated credential can call). The agent is an OAuth client
+    by the same id: an autonomous agent uses client_credentials, a delegated one the token exchange;
+    private_key_jwt stores the public JWK (EC P-256 or OKP Ed25519) for assertions and request JWTs,
+    client_secret answers a pcs_ secret in this response only, delegated_token is a public client
+    limited to the exchange. capabilities asks for grants at once: what the policy auto-approves is
+    active, the rest waits in an in_app approval. Recorded as agent.registered.
+
+output:
+  status: 201
+  example:
+    data: { id: "018f...", owner_type: user, owner_id: "018f...", organization_id: "018f...", name: "Deploy bot", mode: autonomous, host_id: null, auth: client_secret, public_jwk: null, status: active, created_by: "018f...", sealed_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00", client_secret: "pcs_...", grants: [{ id: "018f...", agent_id: "018f...", capability: "deploy.staging", constraints: {}, budget: { kind: count, total: 100, remaining: 100, field: null }, status: active, granted_by: null, approved_via: auto, approval_id: null, expires_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00" }], approval: null }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: agents_forbidden }
+  - { status: 404, code: capability_not_found }
+  - { status: 422, code: agents_invalid_input }
+
+events: [agent.registered, agent.grant.requested, agent.grant.approved]

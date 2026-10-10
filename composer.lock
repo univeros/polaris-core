@@ -3817,11 +3817,13 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agents",
-                "reference": "b556b3f8407866fb8940097c27a8614111673372"
+                "reference": "7758753a954618f1f5500da79313b543e9eb9014"
             },
             "require": {
                 "ext-openssl": "*",
                 "firebase/php-jwt": "^7.0",
+                "lcobucci/jwt": "^5.0",
+                "opis/json-schema": "^2.4",
                 "php": ">=8.3",
                 "polaris/admin": "^0.9",
                 "polaris/audit": "^0.9",

@@ -1,0 +1,40 @@
+# POST /agents/approvals/{id}/decide: the owner decides.
+endpoint:
+  method: POST
+  path: /agents/approvals/{id}/decide
+  summary: Approve or deny a grant request
+  tags: [agents]
+  auth: bearer
+  rate_limit: mfa_confirm
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    id: { type: string, rules: [required] }
+    decision: { type: string, rules: [required, "in:approve,deny"] }
+    constraints: { type: "?object", rules: [optional] }
+
+domain:
+  class: Polaris\Agents\Http\DecideApprovalEndpoint
+  description: >
+    Once. Approving needs a session of the approval's strength (session: any; step_up: core's step-up
+    freshness; passkey: a recent passkey sign-in) and the owner must hold every capability's permission
+    now; constraints replaces what the agent asked (narrowing it). The agent's OAuth client scopes follow.
+    Recorded as agent.grant.approved or agent.grant.denied per grant.
+
+output:
+  status: 200
+  example:
+    data: { id: "018f...", agent_id: "018f...", grant_ids: ["018f..."], method: device_authorization, strength: step_up, user_code: "BCDFGHJK", binding_message: null, status: approved, decided_by: "018f...", expires_at: "2026-10-10T10:10:00+00:00", created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00", grants: [{ id: "018f...", agent_id: "018f...", capability: "deploy.staging", constraints: {}, budget: { kind: count, total: 100, remaining: 100, field: null }, status: active, granted_by: null, approved_via: auto, approval_id: null, expires_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00" }] }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: agents_step_up_required }
+  - { status: 403, code: agents_permission_not_held }
+  - { status: 404, code: agents_not_found }
+  - { status: 409, code: agents_conflict }
+  - { status: 422, code: agents_invalid_input }
+
+events: [agent.grant.approved, agent.grant.denied]

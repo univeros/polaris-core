@@ -1,0 +1,28 @@
+# GET /.well-known/agent-configuration: the agent protocol's discovery document.
+endpoint:
+  method: GET
+  path: /.well-known/agent-configuration
+  summary: Agent protocol discovery
+  tags: [agents]
+  auth: public
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Agents\Http\ConfigurationEndpoint
+  description: >
+    docs/better/agent-auth-compat.md: the provider, the issuer, the absolute endpoints under the mount
+    (register, enroll, capabilities, execute, request_capability, status, revoke, grants, approvals,
+    receipts, token, and mcp when polaris/mcp is registered), the algorithms (EdDSA, ES256), the modes,
+    the approval methods and strengths, the OAuth token endpoint. Cached for an hour.
+
+output:
+  status: 200
+  example: { version: "1.0-draft", provider_name: "Polaris", description: "Polaris for PHP agent provider", issuer: "https://auth.example", default_location: "https://auth.example/agents/execute", algorithms: [ES256, EdDSA], modes: [delegated, autonomous], approval_methods: [device_authorization, ciba, in_app], approval_strengths: { low: session, medium: session, high: step_up }, endpoints: { register: "https://auth.example/agents/register", enroll: "https://auth.example/agents/enroll", capabilities: "https://auth.example/agents/capabilities", execute: "https://auth.example/agents/execute", request_capability: "https://auth.example/agents/grants/request", status: "https://auth.example/agents/session", revoke: "https://auth.example/agents", grants: "https://auth.example/agents/grants", approvals: "https://auth.example/agents/approvals", receipts: "https://auth.example/agents/receipts", token: "https://auth.example/oauth2/token" }, token_endpoint: "https://auth.example/oauth2/token", agent_sdk_versions: { "@polaris-auth/agent": "0.10.0", "polaris/agent": "0.10.0" } }
+
+errors: []
+
+events: []

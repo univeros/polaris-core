@@ -1,0 +1,1766 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791612000"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "y4vvqsGsYiVYkB6Fr9PNPIVz-5rtnQ9aypGaqtyIF-Q"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611400"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "ada@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611400"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMDgzNCwibmJmIjoxNzkxNjExMzE2LjcxMDgzNCwiZXhwIjoxNzkxNjEyMjE2LjcxMDgzNCwic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllNi03Y2Q5LWJhNzQtZTYyZmU2MjAyMThkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyNDViLTI5ZTYtN2I3MS1iYTc0LWU2MmZlNTFjMmU0YiIsImF1dGhfdGltZSI6MTc5MTYxMTMxNn0.PKF_1Y0QXJaEPMkuDd9SX2MhzP08piW5hubcj_BZEs73Sk-U4jdfYaExwHM0ZCujWN--4ZLxJIgg1bgf6f7sI8GI3qffr6HDAHOmMar5N2ChpoSLrqLzcRjVO4j8AVkIGS0LEHhgINeiusO-cY5ensJnkQv60RDiZm-SuHwUrgM-TYfhoUX6RSsgkSdT0POkarEhEnp8xsjq07gMqgvsHA5FrkuCCucRMIfpEpIp5D6mVhF3mPI7XCzsORE46WDqpQpAMB7JI01JAjk30C0n7Wf0nFuJYxskdjWQ5hbcSs9SSO4hRxyiFw66gvjysihy_A-N7InDgf5_unw_2N9CIg",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "zis1_PYJSrFaePDk0d60FABMl0514NP5nrk44k9XFKE",
+                    "user": {
+                        "id": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                        "email": "ada@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/orgs",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMDgzNCwibmJmIjoxNzkxNjExMzE2LjcxMDgzNCwiZXhwIjoxNzkxNjEyMjE2LjcxMDgzNCwic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllNi03Y2Q5LWJhNzQtZTYyZmU2MjAyMThkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyNDViLTI5ZTYtN2I3MS1iYTc0LWU2MmZlNTFjMmU0YiIsImF1dGhfdGltZSI6MTc5MTYxMTMxNn0.PKF_1Y0QXJaEPMkuDd9SX2MhzP08piW5hubcj_BZEs73Sk-U4jdfYaExwHM0ZCujWN--4ZLxJIgg1bgf6f7sI8GI3qffr6HDAHOmMar5N2ChpoSLrqLzcRjVO4j8AVkIGS0LEHhgINeiusO-cY5ensJnkQv60RDiZm-SuHwUrgM-TYfhoUX6RSsgkSdT0POkarEhEnp8xsjq07gMqgvsHA5FrkuCCucRMIfpEpIp5D6mVhF3mPI7XCzsORE46WDqpQpAMB7JI01JAjk30C0n7Wf0nFuJYxskdjWQ5hbcSs9SSO4hRxyiFw66gvjysihy_A-N7InDgf5_unw_2N9CIg"
+                ]
+            },
+            "body": {
+                "name": "Acme"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "599"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                    "name": "Acme",
+                    "slug": "acme",
+                    "role": "owner"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/switch-org",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMDgzNCwibmJmIjoxNzkxNjExMzE2LjcxMDgzNCwiZXhwIjoxNzkxNjEyMjE2LjcxMDgzNCwic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllNi03Y2Q5LWJhNzQtZTYyZmU2MjAyMThkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTEyNDViLTI5ZTYtN2I3MS1iYTc0LWU2MmZlNTFjMmU0YiIsImF1dGhfdGltZSI6MTc5MTYxMTMxNn0.PKF_1Y0QXJaEPMkuDd9SX2MhzP08piW5hubcj_BZEs73Sk-U4jdfYaExwHM0ZCujWN--4ZLxJIgg1bgf6f7sI8GI3qffr6HDAHOmMar5N2ChpoSLrqLzcRjVO4j8AVkIGS0LEHhgINeiusO-cY5ensJnkQv60RDiZm-SuHwUrgM-TYfhoUX6RSsgkSdT0POkarEhEnp8xsjq07gMqgvsHA5FrkuCCucRMIfpEpIp5D6mVhF3mPI7XCzsORE46WDqpQpAMB7JI01JAjk30C0n7Wf0nFuJYxskdjWQ5hbcSs9SSO4hRxyiFw66gvjysihy_A-N7InDgf5_unw_2N9CIg"
+                ]
+            },
+            "body": {
+                "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "598"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "org": "01a1245b-29e8-7377-863a-3c5ef29518da"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/agents/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": {
+                "name": "Deploy bot",
+                "mode": "autonomous",
+                "auth": "client_secret",
+                "capabilities": [
+                    "members.list"
+                ]
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791612000"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a1245b-29ea-7a80-b9bf-acdcfc11c107",
+                    "owner_type": "user",
+                    "owner_id": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                    "name": "Deploy bot",
+                    "mode": "autonomous",
+                    "host_id": null,
+                    "auth": "client_secret",
+                    "public_jwk": null,
+                    "status": "active",
+                    "created_by": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "sealed_at": null,
+                    "created_at": "2026-10-10T05:48:36+00:00",
+                    "updated_at": "2026-10-10T05:48:36+00:00",
+                    "client_secret": "pcs_138vTiRbQTnhLdbsEWQlfgAZOttn11tE_zwXR0BZ7U0",
+                    "grants": [
+                        {
+                            "id": "01a1245b-29ea-7bbc-b9bf-acdcfceb2a69",
+                            "agent_id": "01a1245b-29ea-7a80-b9bf-acdcfc11c107",
+                            "capability": "members.list",
+                            "constraints": [],
+                            "budget": {
+                                "kind": "count",
+                                "total": 100,
+                                "remaining": 100,
+                                "field": null
+                            },
+                            "status": "active",
+                            "granted_by": null,
+                            "approved_via": "auto",
+                            "approval_id": null,
+                            "expires_at": null,
+                            "created_at": "2026-10-10T05:48:36+00:00",
+                            "updated_at": "2026-10-10T05:48:36+00:00"
+                        }
+                    ],
+                    "approval": null
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/agents/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": {
+                "name": "Reviewer",
+                "mode": "delegated",
+                "auth": "private_key_jwt",
+                "jwk": {
+                    "kty": "EC",
+                    "crv": "P-256",
+                    "x": "N4pxieQzCQ2drlr5us5r4KkGzStF1RMbDPVpBMybdeE",
+                    "y": "vTBmh2KXHh7lvY0mkZCIWc_FJOkVGeCrYt7GI5m54Lw"
+                },
+                "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da"
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "2"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791612000"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a1245b-29eb-74fd-b675-663cdd884fce",
+                    "owner_type": "organization",
+                    "owner_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                    "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                    "name": "Reviewer",
+                    "mode": "delegated",
+                    "host_id": null,
+                    "auth": "private_key_jwt",
+                    "public_jwk": {
+                        "kty": "EC",
+                        "crv": "P-256",
+                        "x": "N4pxieQzCQ2drlr5us5r4KkGzStF1RMbDPVpBMybdeE",
+                        "y": "vTBmh2KXHh7lvY0mkZCIWc_FJOkVGeCrYt7GI5m54Lw",
+                        "alg": "ES256",
+                        "kid": "ECJWfhHile1x5oD96Lzap-13-fJmjahVMKDa3WIW26I",
+                        "use": "sig"
+                    },
+                    "status": "active",
+                    "created_by": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "sealed_at": null,
+                    "created_at": "2026-10-10T05:48:36+00:00",
+                    "updated_at": "2026-10-10T05:48:36+00:00",
+                    "grants": [],
+                    "approval": null
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/agents/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": {
+                "name": "X",
+                "mode": "delegated",
+                "auth": "client_secret",
+                "organization_id": "01a1245b-29eb-76a1-b675-663cdf1edec0"
+            }
+        },
+        "response": {
+            "status": 403,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "1"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791612000"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/agents/forbidden",
+                "title": "Forbidden",
+                "status": 403,
+                "detail": "Managing an organization's agents needs it as your active organization and the org.update permission in it.",
+                "error": "forbidden",
+                "message": "Managing an organization's agents needs it as your active organization and the org.update permission in it."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/agents/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": {
+                "name": "X",
+                "mode": "autonomous",
+                "auth": "delegated_token"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "0"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791612000"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/agents/invalid_input",
+                "title": "Invalid Input",
+                "status": 422,
+                "detail": "delegated_token authenticates a delegated agent only: an autonomous agent needs a key or a secret.",
+                "error": "invalid_input",
+                "message": "delegated_token authenticates a delegated agent only: an autonomous agent needs a key or a secret."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/agents",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "593"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a1245b-29ea-7a80-b9bf-acdcfc11c107",
+                        "owner_type": "user",
+                        "owner_id": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                        "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                        "name": "Deploy bot",
+                        "mode": "autonomous",
+                        "host_id": null,
+                        "auth": "client_secret",
+                        "public_jwk": null,
+                        "status": "active",
+                        "created_by": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                        "sealed_at": null,
+                        "created_at": "2026-10-10T05:48:36+00:00",
+                        "updated_at": "2026-10-10T05:48:36+00:00"
+                    },
+                    {
+                        "id": "01a1245b-29eb-74fd-b675-663cdd884fce",
+                        "owner_type": "organization",
+                        "owner_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                        "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                        "name": "Reviewer",
+                        "mode": "delegated",
+                        "host_id": null,
+                        "auth": "private_key_jwt",
+                        "public_jwk": {
+                            "kty": "EC",
+                            "crv": "P-256",
+                            "x": "N4pxieQzCQ2drlr5us5r4KkGzStF1RMbDPVpBMybdeE",
+                            "y": "vTBmh2KXHh7lvY0mkZCIWc_FJOkVGeCrYt7GI5m54Lw",
+                            "alg": "ES256",
+                            "kid": "ECJWfhHile1x5oD96Lzap-13-fJmjahVMKDa3WIW26I",
+                            "use": "sig"
+                        },
+                        "status": "active",
+                        "created_by": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                        "sealed_at": null,
+                        "created_at": "2026-10-10T05:48:36+00:00",
+                        "updated_at": "2026-10-10T05:48:36+00:00"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/agents/01a1245b-29ea-7a80-b9bf-acdcfc11c107",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "592"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a1245b-29ea-7a80-b9bf-acdcfc11c107",
+                    "owner_type": "user",
+                    "owner_id": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                    "name": "Deploy bot",
+                    "mode": "autonomous",
+                    "host_id": null,
+                    "auth": "client_secret",
+                    "public_jwk": null,
+                    "status": "active",
+                    "created_by": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "sealed_at": null,
+                    "created_at": "2026-10-10T05:48:36+00:00",
+                    "updated_at": "2026-10-10T05:48:36+00:00",
+                    "grants": [
+                        {
+                            "id": "01a1245b-29ea-7bbc-b9bf-acdcfceb2a69",
+                            "agent_id": "01a1245b-29ea-7a80-b9bf-acdcfc11c107",
+                            "capability": "members.list",
+                            "constraints": [],
+                            "budget": {
+                                "kind": "count",
+                                "total": 100,
+                                "remaining": 100,
+                                "field": null
+                            },
+                            "status": "active",
+                            "granted_by": null,
+                            "approved_via": "auto",
+                            "approval_id": null,
+                            "expires_at": null,
+                            "created_at": "2026-10-10T05:48:36+00:00",
+                            "updated_at": "2026-10-10T05:48:36+00:00"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/agents/01a1245b-29ec-7538-adb8-8ce2b5eda157",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 404,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "591"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/agents/not_found",
+                "title": "Not Found",
+                "status": 404,
+                "detail": "The agent does not exist.",
+                "error": "not_found",
+                "message": "The agent does not exist."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/agents/hosts",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": {
+                "name": "Laptop",
+                "default_capabilities": [
+                    "members.list"
+                ]
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "590"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a1245b-29ee-7116-844f-a51069f7d687",
+                    "owner_type": "user",
+                    "owner_id": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                    "name": "Laptop",
+                    "default_capabilities": [
+                        "members.list"
+                    ],
+                    "created_by": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "revoked_at": null,
+                    "created_at": "2026-10-10T05:48:36+00:00",
+                    "enrollment_token": "peh_g8Vtk9M5JsKOHn89aLogwn6nCx0ER_aiJln96h9tCOw"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/agents/hosts",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "589"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "data": [
+                    {
+                        "id": "01a1245b-29ee-7116-844f-a51069f7d687",
+                        "owner_type": "user",
+                        "owner_id": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                        "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                        "name": "Laptop",
+                        "default_capabilities": [
+                            "members.list"
+                        ],
+                        "created_by": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                        "revoked_at": null,
+                        "created_at": "2026-10-10T05:48:36+00:00"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "https://auth.polaris.test/agents/enroll",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer peh_g8Vtk9M5JsKOHn89aLogwn6nCx0ER_aiJln96h9tCOw"
+                ]
+            },
+            "body": {
+                "name": "Claude Code",
+                "mode": "delegated",
+                "auth": "private_key_jwt",
+                "jwk": {
+                    "kty": "OKP",
+                    "crv": "Ed25519",
+                    "x": "-Fc0Tzd3kJnrJQkgrshJlbcXM6tJOtrYCSAmxkgUBBU"
+                }
+            }
+        },
+        "response": {
+            "status": 201,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "59"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a1245b-29ee-7a9e-844f-a5106bc13e75",
+                    "owner_type": "user",
+                    "owner_id": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                    "name": "Claude Code",
+                    "mode": "delegated",
+                    "host_id": "01a1245b-29ee-7116-844f-a51069f7d687",
+                    "auth": "private_key_jwt",
+                    "public_jwk": {
+                        "kty": "OKP",
+                        "crv": "Ed25519",
+                        "x": "-Fc0Tzd3kJnrJQkgrshJlbcXM6tJOtrYCSAmxkgUBBU",
+                        "alg": "EdDSA",
+                        "kid": "3QJe-RX4JWwszZgjmFO94i8sxPnxcPeIhFgeNd9NkGA",
+                        "use": "sig"
+                    },
+                    "status": "active",
+                    "created_by": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "sealed_at": null,
+                    "created_at": "2026-10-10T05:48:36+00:00",
+                    "updated_at": "2026-10-10T05:48:36+00:00",
+                    "grants": [
+                        {
+                            "id": "01a1245b-29ee-7ba6-844f-a5106cbe8886",
+                            "agent_id": "01a1245b-29ee-7a9e-844f-a5106bc13e75",
+                            "capability": "members.list",
+                            "constraints": [],
+                            "budget": {
+                                "kind": "count",
+                                "total": 100,
+                                "remaining": 100,
+                                "field": null
+                            },
+                            "status": "active",
+                            "granted_by": null,
+                            "approved_via": "auto",
+                            "approval_id": null,
+                            "expires_at": null,
+                            "created_at": "2026-10-10T05:48:36+00:00",
+                            "updated_at": "2026-10-10T05:48:36+00:00"
+                        }
+                    ],
+                    "approval": null
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "https://auth.polaris.test/agents/enroll",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer peh_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                ]
+            },
+            "body": {
+                "name": "X",
+                "mode": "delegated",
+                "auth": "client_secret"
+            }
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer error=\"unauthorized\""
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "58"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/agents/unauthorized",
+                "title": "Unauthorized",
+                "status": 401,
+                "detail": "A live host enrolment token (peh_...) is required as the bearer.",
+                "error": "unauthorized",
+                "message": "A live host enrolment token (peh_...) is required as the bearer."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "https://auth.polaris.test/agents/enroll",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer peh_g8Vtk9M5JsKOHn89aLogwn6nCx0ER_aiJln96h9tCOw"
+                ]
+            },
+            "body": {
+                "name": "",
+                "mode": "delegated",
+                "auth": "client_secret"
+            }
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "57"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/agents/invalid_input",
+                "title": "Invalid Input",
+                "status": 422,
+                "detail": "name is required, at most 160 characters.",
+                "error": "invalid_input",
+                "message": "name is required, at most 160 characters."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "https://auth.polaris.test/agents/session",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJhZ2VudCtqd3QiLCJhbGciOiJFZERTQSJ9.eyJzdWIiOiIwMWExMjQ1Yi0yOWVlLTdhOWUtODQ0Zi1hNTEwNmJjMTNlNzUiLCJhdWQiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0L2FnZW50cy9zZXNzaW9uIiwiaWF0IjoxNzkxNjExMzE2LCJleHAiOjE3OTE2MTE0MzYsImp0aSI6Im5FdW9kMEl0c3RrYndaYTlSeER2MHcifQ.KC5umPQB-ymI7enCUc3WmY7cuZYifetZNQ0BJf7_g6kxa7EYlE55Y9JcWgEw9_o09AhnqEIJN4FIpYychd9LCA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "56"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "data": {
+                    "agent": {
+                        "id": "01a1245b-29ee-7a9e-844f-a5106bc13e75",
+                        "owner_type": "user",
+                        "owner_id": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                        "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                        "name": "Claude Code",
+                        "mode": "delegated",
+                        "host_id": "01a1245b-29ee-7116-844f-a51069f7d687",
+                        "auth": "private_key_jwt",
+                        "public_jwk": {
+                            "kty": "OKP",
+                            "crv": "Ed25519",
+                            "x": "-Fc0Tzd3kJnrJQkgrshJlbcXM6tJOtrYCSAmxkgUBBU",
+                            "alg": "EdDSA",
+                            "kid": "3QJe-RX4JWwszZgjmFO94i8sxPnxcPeIhFgeNd9NkGA",
+                            "use": "sig"
+                        },
+                        "status": "active",
+                        "created_by": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                        "sealed_at": null,
+                        "created_at": "2026-10-10T05:48:36+00:00",
+                        "updated_at": "2026-10-10T05:48:36+00:00"
+                    },
+                    "mode": "delegated",
+                    "owner": {
+                        "type": "user",
+                        "id": "01a1245b-28be-7ede-8972-35dff24f1ffa"
+                    },
+                    "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                    "host": {
+                        "id": "01a1245b-29ee-7116-844f-a51069f7d687",
+                        "name": "Laptop"
+                    },
+                    "authenticated_via": "jwt",
+                    "grants": [
+                        {
+                            "id": "01a1245b-29ee-7ba6-844f-a5106cbe8886",
+                            "agent_id": "01a1245b-29ee-7a9e-844f-a5106bc13e75",
+                            "capability": "members.list",
+                            "constraints": [],
+                            "budget": {
+                                "kind": "count",
+                                "total": 100,
+                                "remaining": 100,
+                                "field": null
+                            },
+                            "status": "active",
+                            "granted_by": null,
+                            "approved_via": "auto",
+                            "approval_id": null,
+                            "expires_at": null,
+                            "created_at": "2026-10-10T05:48:36+00:00",
+                            "updated_at": "2026-10-10T05:48:36+00:00"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "uri": "/agents/hosts/01a1245b-29ee-7116-844f-a51069f7d687",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "588"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "data": {
+                    "status": "revoked"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "https://auth.polaris.test/agents/enroll",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer peh_g8Vtk9M5JsKOHn89aLogwn6nCx0ER_aiJln96h9tCOw"
+                ]
+            },
+            "body": {
+                "name": "X",
+                "mode": "delegated",
+                "auth": "client_secret"
+            }
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer error=\"unauthorized\""
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "55"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/agents/unauthorized",
+                "title": "Unauthorized",
+                "status": 401,
+                "detail": "A live host enrolment token (peh_...) is required as the bearer.",
+                "error": "unauthorized",
+                "message": "A live host enrolment token (peh_...) is required as the bearer."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/agents/01a1245b-29ee-7a9e-844f-a5106bc13e75/suspend",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "587"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a1245b-29ee-7a9e-844f-a5106bc13e75",
+                    "owner_type": "user",
+                    "owner_id": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                    "name": "Claude Code",
+                    "mode": "delegated",
+                    "host_id": "01a1245b-29ee-7116-844f-a51069f7d687",
+                    "auth": "private_key_jwt",
+                    "public_jwk": {
+                        "kty": "OKP",
+                        "crv": "Ed25519",
+                        "x": "-Fc0Tzd3kJnrJQkgrshJlbcXM6tJOtrYCSAmxkgUBBU",
+                        "alg": "EdDSA",
+                        "kid": "3QJe-RX4JWwszZgjmFO94i8sxPnxcPeIhFgeNd9NkGA",
+                        "use": "sig"
+                    },
+                    "status": "suspended",
+                    "created_by": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "sealed_at": null,
+                    "created_at": "2026-10-10T05:48:36+00:00",
+                    "updated_at": "2026-10-10T05:48:36+00:00"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "https://auth.polaris.test/agents/session",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJhZ2VudCtqd3QiLCJhbGciOiJFZERTQSJ9.eyJzdWIiOiIwMWExMjQ1Yi0yOWVlLTdhOWUtODQ0Zi1hNTEwNmJjMTNlNzUiLCJhdWQiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0L2FnZW50cy9zZXNzaW9uIiwiaWF0IjoxNzkxNjExMzE2LCJleHAiOjE3OTE2MTE0MzYsImp0aSI6IjNqN29VWnhoMGpMaktodl82SlI0LXcifQ.Ea3SFsp-vFTt7EfW6xfkChCQ0w9G5qEFTG_z0bhEG68qzzG3Pb3kt1pNLteUFoBKrNU_iGp41RnhMWnnh-k0AA"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 401,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "WWW-Authenticate": [
+                    "Bearer error=\"agent_suspended\""
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "54"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/agents/agent_inactive",
+                "title": "Agent Inactive",
+                "status": 401,
+                "detail": "The agent is suspended.",
+                "error": "agent_suspended",
+                "message": "The agent is suspended."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/agents/01a1245b-29ee-7a9e-844f-a5106bc13e75/suspend",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 409,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "586"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/agents/conflict",
+                "title": "Conflict",
+                "status": 409,
+                "detail": "Only an active agent can be suspended.",
+                "error": "conflict",
+                "message": "Only an active agent can be suspended."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/agents/01a1245b-29ee-7a9e-844f-a5106bc13e75/resume",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjFkZThlMDhmMDE1MGNiNjE0ZDQwMGFmOTBjYjM5ZWUwNzE2ODcxZGJjY2I3OWY2ZWU1ZmQ3YmM1M2YxOTdkZmEifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNjExMzE2LjcxMjgxNywibmJmIjoxNzkxNjExMzE2LjcxMjgxNywiZXhwIjoxNzkxNjEyMjE2LjcxMjgxNywic3ViIjoiMDFhMTI0NWItMjhiZS03ZWRlLTg5NzItMzVkZmYyNGYxZmZhIiwianRpIjoiMDFhMTI0NWItMjllOC03Y2IzLTg2M2EtM2M1ZWY1MmMyM2ZkIiwib3JnIjoiMDFhMTI0NWItMjllOC03Mzc3LTg2M2EtM2M1ZWYyOTUxOGRhIiwicm9sZXMiOlsib3duZXIiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm1mYSI6ZmFsc2UsImFtciI6WyJwd2QiXSwic2lkIjoiMDFhMTI0NWItMjllNi03YjcxLWJhNzQtZTYyZmU1MWMyZTRiIiwiYXV0aF90aW1lIjoxNzkxNjExMzE2fQ.g1xJNvDPOHDVa9Rfkrf321CzfUkEcvQjF1FTLOuho4aJxuAbG7QQIfttK1UCGwSKop5MrsT9MRwEXNb_Zd2LgzTvNLRa69oHgs3jtJirRrwrjBm1aLurhBJjhV85f_ZWUEJahof55DAMiLTy7qxRscjIlaKtat-fDp3xjzsA8q0GkH7y9M-vDoNc_U1KlbfdJXEwumSyYeO83b1nwVNZr0fnkexE7EM0Uqk4PFOUnDWGEF3T3okA_8CQrOILl964Dk6Hq495i435HfEbv8Hlq2YjRFSMl1pT0CN3Ovr3m6KI2VheEGbcP2sOtO6sg2OaZjUgDVaGni47RacKsblKDw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "585"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "data": {
+                    "id": "01a1245b-29ee-7a9e-844f-a5106bc13e75",
+                    "owner_type": "user",
+                    "owner_id": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                    "name": "Claude Code",
+                    "mode": "delegated",
+                    "host_id": "01a1245b-29ee-7116-844f-a51069f7d687",
+                    "auth": "private_key_jwt",
+                    "public_jwk": {
+                        "kty": "OKP",
+                        "crv": "Ed25519",
+                        "x": "-Fc0Tzd3kJnrJQkgrshJlbcXM6tJOtrYCSAmxkgUBBU",
+                        "alg": "EdDSA",
+                        "kid": "3QJe-RX4JWwszZgjmFO94i8sxPnxcPeIhFgeNd9NkGA",
+                        "use": "sig"
+                    },
+                    "status": "active",
+                    "created_by": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                    "sealed_at": null,
+                    "created_at": "2026-10-10T05:48:36+00:00",
+                    "updated_at": "2026-10-10T05:48:36+00:00"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "https://auth.polaris.test/agents/session",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJhZ2VudCtqd3QiLCJhbGciOiJFZERTQSJ9.eyJzdWIiOiIwMWExMjQ1Yi0yOWVlLTdhOWUtODQ0Zi1hNTEwNmJjMTNlNzUiLCJhdWQiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0L2FnZW50cy9zZXNzaW9uIiwiaWF0IjoxNzkxNjExMzE2LCJleHAiOjE3OTE2MTE0MzYsImp0aSI6IkJUV2k3VzQzX2thZGVHR1JVb0FDY3cifQ.BLqqNBcW0Jghee5HqlJH8h-GkFZjoMdBwDBDSdPsNzUDMuHYQDLyppBe4YmOEesBujeYOWTTeIjfISbmVMFsDw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ],
+                "X-RateLimit-Limit": [
+                    "60"
+                ],
+                "X-RateLimit-Remaining": [
+                    "53"
+                ],
+                "X-RateLimit-Reset": [
+                    "1791611340"
+                ]
+            },
+            "body": {
+                "data": {
+                    "agent": {
+                        "id": "01a1245b-29ee-7a9e-844f-a5106bc13e75",
+                        "owner_type": "user",
+                        "owner_id": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                        "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                        "name": "Claude Code",
+                        "mode": "delegated",
+                        "host_id": "01a1245b-29ee-7116-844f-a51069f7d687",
+                        "auth": "private_key_jwt",
+                        "public_jwk": {
+                            "kty": "OKP",
+                            "crv": "Ed25519",
+                            "x": "-Fc0Tzd3kJnrJQkgrshJlbcXM6tJOtrYCSAmxkgUBBU",
+                            "alg": "EdDSA",
+                            "kid": "3QJe-RX4JWwszZgjmFO94i8sxPnxcPeIhFgeNd9NkGA",
+                            "use": "sig"
+                        },
+                        "status": "active",
+                        "created_by": "01a1245b-28be-7ede-8972-35dff24f1ffa",
+                        "sealed_at": null,
+                        "created_at": "2026-10-10T05:48:36+00:00",
+                        "updated_at": "2026-10-10T05:48:36+00:00"
+                    },
+                    "mode": "delegated",
+                    "owner": {
+                        "type": "user",
+                        "id": "01a1245b-28be-7ede-8972-35dff24f1ffa"
+                    },
+                    "organization_id": "01a1245b-29e8-7377-863a-3c5ef29518da",
+                    "host": {
+                        "id": "01a1245b-29ee-7116-844f-a51069f7d687",
+                        "name": "Laptop"
+                    },
+                    "authenticated_via": "jwt",
+                    "grants": [
+                        {
+                            "id": "01a1245b-29ee-7ba6-844f-a5106cbe8886",
+                            "agent_id": "01a1245b-29ee-7a9e-844f-a5106bc13e75",
+                            "capability": "members.list",
+                            "constraints": [],
+                            "budget": {
+                                "kind": "count",
+                                "total": 100,
+                                "remaining": 100,
+                                "field": null
+                            },
+                            "status": "active",
+                            "granted_by": null,
+                            "approved_via": "auto",
+                            "approval_id": null,
+                            "expires_at": null,
+                            "created_at": "2026-10-10T05:48:36+00:00",
+                            "updated_at": "2026-10-10T05:48:36+00:00"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/.well-known/agent-configuration",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "public, max-age=3600"
+                ]
+            },
+            "body": {
+                "version": "1.0-draft",
+                "provider_name": "Polaris test",
+                "description": "The agents functional suite",
+                "issuer": "https://auth.polaris.test",
+                "default_location": "https://auth.polaris.test/agents/execute",
+                "algorithms": [
+                    "ES256",
+                    "EdDSA"
+                ],
+                "modes": [
+                    "delegated",
+                    "autonomous"
+                ],
+                "approval_methods": [
+                    "device_authorization",
+                    "ciba",
+                    "in_app"
+                ],
+                "approval_strengths": {
+                    "low": "session",
+                    "medium": "session",
+                    "high": "step_up"
+                },
+                "endpoints": {
+                    "register": "https://auth.polaris.test/agents/register",
+                    "enroll": "https://auth.polaris.test/agents/enroll",
+                    "capabilities": "https://auth.polaris.test/agents/capabilities",
+                    "execute": "https://auth.polaris.test/agents/execute",
+                    "request_capability": "https://auth.polaris.test/agents/grants/request",
+                    "status": "https://auth.polaris.test/agents/session",
+                    "revoke": "https://auth.polaris.test/agents",
+                    "grants": "https://auth.polaris.test/agents/grants",
+                    "approvals": "https://auth.polaris.test/agents/approvals",
+                    "receipts": "https://auth.polaris.test/agents/receipts",
+                    "token": "https://auth.polaris.test/oauth2/token"
+                },
+                "token_endpoint": "https://auth.polaris.test/oauth2/token",
+                "agent_sdk_versions": {
+                    "@polaris-auth/agent": "0.10.0",
+                    "polaris/agent": "0.10.0"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/.well-known/agent-configuration",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "public, max-age=3600"
+                ]
+            },
+            "body": {
+                "version": "1.0-draft",
+                "provider_name": "Polaris test",
+                "description": "The agents functional suite",
+                "issuer": "https://auth.polaris.test",
+                "default_location": "https://auth.polaris.test/agents/execute",
+                "algorithms": [
+                    "ES256",
+                    "EdDSA"
+                ],
+                "modes": [
+                    "delegated",
+                    "autonomous"
+                ],
+                "approval_methods": [
+                    "device_authorization",
+                    "ciba",
+                    "in_app"
+                ],
+                "approval_strengths": {
+                    "low": "session",
+                    "medium": "session",
+                    "high": "step_up"
+                },
+                "endpoints": {
+                    "register": "https://auth.polaris.test/agents/register",
+                    "enroll": "https://auth.polaris.test/agents/enroll",
+                    "capabilities": "https://auth.polaris.test/agents/capabilities",
+                    "execute": "https://auth.polaris.test/agents/execute",
+                    "request_capability": "https://auth.polaris.test/agents/grants/request",
+                    "status": "https://auth.polaris.test/agents/session",
+                    "revoke": "https://auth.polaris.test/agents",
+                    "grants": "https://auth.polaris.test/agents/grants",
+                    "approvals": "https://auth.polaris.test/agents/approvals",
+                    "receipts": "https://auth.polaris.test/agents/receipts",
+                    "token": "https://auth.polaris.test/oauth2/token"
+                },
+                "token_endpoint": "https://auth.polaris.test/oauth2/token",
+                "agent_sdk_versions": {
+                    "@polaris-auth/agent": "0.10.0",
+                    "polaris/agent": "0.10.0"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "https://auth.polaris.test/agents/capabilities",
+            "headers": {
+                "Host": [
+                    "auth.polaris.test"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJhZ2VudCtqd3QiLCJhbGciOiJFZERTQSJ9.eyJzdWIiOiIwMWExMjQ1Yi0yOWVlLTdhOWUtODQ0Zi1hNTEwNmJjMTNlNzUiLCJhdWQiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0L2FnZW50cy9jYXBhYmlsaXRpZXMiLCJpYXQiOjE3OTE2MTEzMTYsImV4cCI6MTc5MTYxMTQzNiwianRpIjoiR0dQUDZsbjZSVjNjLUVPekFLdHhOZyJ9.Eo_2L-DD0esXRxNUbA7slOZqmVth-BINrSQKSRWFpYeFPlapFcR_H0XSAwNeeIjNpZj0fwFqpaHsRsrakD6fBw"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "no-store"
+                ]
+            },
+            "body": {
+                "data": {
+                    "capabilities": [
+                        {
+                            "name": "members.list",
+                            "description": "Count the members",
+                            "input": {
+                                "type": "object",
+                                "properties": [],
+                                "required": [],
+                                "additionalProperties": false
+                            },
+                            "permission": "members.read",
+                            "risk": "low",
+                            "grant_status": "active"
+                        },
+                        {
+                            "name": "org.rename",
+                            "description": "Rename the organization",
+                            "input": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ],
+                                "additionalProperties": false
+                            },
+                            "permission": "org.update",
+                            "risk": "high",
+                            "grant_status": "none"
+                        },
+                        {
+                            "name": "audit.export",
+                            "description": "Export the audit log",
+                            "input": {
+                                "type": "object",
+                                "properties": {
+                                    "format": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                            },
+                            "permission": "audit.read",
+                            "risk": "medium",
+                            "grant_status": "none"
+                        },
+                        {
+                            "name": "credits.spend",
+                            "description": "Spend credits",
+                            "input": {
+                                "type": "object",
+                                "properties": {
+                                    "amount": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [
+                                    "amount"
+                                ],
+                                "additionalProperties": false
+                            },
+                            "permission": "roles.manage",
+                            "risk": "medium",
+                            "grant_status": "none"
+                        },
+                        {
+                            "name": "invite",
+                            "description": "Invite a member at the host",
+                            "input": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "email"
+                                ],
+                                "additionalProperties": false
+                            },
+                            "permission": "members.invite",
+                            "risk": "medium",
+                            "location": "https://host.polaris.test/invite",
+                            "grant_status": "none"
+                        }
+                    ],
+                    "next_cursor": null,
+                    "has_more": false
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/agents/capabilities",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Cache-Control": [
+                    "public, max-age=300"
+                ]
+            },
+            "body": {
+                "data": {
+                    "capabilities": [
+                        {
+                            "name": "members.list",
+                            "description": "Count the members",
+                            "input": {
+                                "type": "object",
+                                "properties": [],
+                                "required": [],
+                                "additionalProperties": false
+                            },
+                            "permission": "members.read",
+                            "risk": "low"
+                        },
+                        {
+                            "name": "org.rename",
+                            "description": "Rename the organization",
+                            "input": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ],
+                                "additionalProperties": false
+                            },
+                            "permission": "org.update",
+                            "risk": "high"
+                        },
+                        {
+                            "name": "audit.export",
+                            "description": "Export the audit log",
+                            "input": {
+                                "type": "object",
+                                "properties": {
+                                    "format": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                            },
+                            "permission": "audit.read",
+                            "risk": "medium"
+                        },
+                        {
+                            "name": "credits.spend",
+                            "description": "Spend credits",
+                            "input": {
+                                "type": "object",
+                                "properties": {
+                                    "amount": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [
+                                    "amount"
+                                ],
+                                "additionalProperties": false
+                            },
+                            "permission": "roles.manage",
+                            "risk": "medium"
+                        },
+                        {
+                            "name": "invite",
+                            "description": "Invite a member at the host",
+                            "input": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "email"
+                                ],
+                                "additionalProperties": false
+                            },
+                            "permission": "members.invite",
+                            "risk": "medium",
+                            "location": "https://host.polaris.test/invite"
+                        }
+                    ],
+                    "next_cursor": null,
+                    "has_more": false
+                }
+            }
+        }
+    }
+]
