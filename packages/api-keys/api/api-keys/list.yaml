@@ -1,0 +1,35 @@
+# GET /api-keys: the caller's keys, or an organization's.
+endpoint:
+  method: GET
+  path: /api-keys
+  summary: List API keys
+  tags: [api-keys]
+  auth: bearer
+  effect: read
+  receipt: false
+
+input:
+  source: query
+  fields:
+    organization_id: { type: "?string", rules: [optional] }
+
+domain:
+  class: Polaris\ApiKeys\Http\ListEndpoint
+  description: >
+    Every key of the caller that is not revoked, newest first: its name, owner, the organization it acts
+    in, the last four characters of its secret, permissions, rate limit, status (active, rotated while
+    its successor's grace runs, expired), expiry and last use. With organization_id, the keys of that
+    organization, which must be the caller's active organization and one they may update (org.update).
+    Secrets are never answered here.
+
+output:
+  status: 200
+  example:
+    data:
+      - { id: "018f...", name: "CI deploy", owner_type: user, owner_id: "018f...", organization_id: "018f...", created_by: "018f...", environment: live, hint: "k9Qz", permissions: [org.read, members.read], rate_limit: { window: 60, max: 100 }, metadata: {}, status: active, rotated_from: null, grace_until: null, expires_at: null, last_used_at: "2026-10-10T10:05:00+00:00", created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:00:00+00:00" }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: api_keys_forbidden }
+
+events: []

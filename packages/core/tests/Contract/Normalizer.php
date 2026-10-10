@@ -123,7 +123,7 @@ final class Normalizer
         if (str_starts_with($value, 'data:image/') || str_starts_with($value, '<svg')) {
             return '<image>';
         }
-        if (in_array($key, ['refresh_token', 'token', 'secret', 'code', 'mfa_token', 'access_token', 'invite_token', 'kid', 'n', 'e', 'x', 'y', 'qr', 'qr_code', 'qr_svg', 'otpauth_uri', 'uri'], true)) {
+        if (in_array($key, ['refresh_token', 'token', 'secret', 'code', 'mfa_token', 'access_token', 'invite_token', 'kid', 'n', 'e', 'x', 'y', 'qr', 'qr_code', 'qr_svg', 'otpauth_uri', 'uri', 'hint'], true)) {
             return '<' . $key . '>';
         }
         if (preg_match('/^[A-Za-z0-9_\-+\/=]{32,}$/', $value) === 1) {

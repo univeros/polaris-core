@@ -301,3 +301,28 @@ entries here when a WP confirms or changes them.
   place; WP4's agent tokens will carry it too. · Rejected: the plugin middleware re-checking the
   route's permissions against the key (the `AUTHORITY` attribute would still carry the owner's full
   authority into the endpoints); trusting `scope` on core tokens (a behaviour change of the 52 routes).
+- 2026-10-10 · WP3 · `polaris/api-keys`: one table `polaris_api_key` (owner type and id, the organization
+  the key acts in, the creating member, name, environment, the secret's last four characters as `hint`,
+  the keyed hash under pepper context `api_key`, permissions, rate limit, metadata, rotation and
+  revocation state). A user's key acts as the user in the organization that was active when it was
+  created; an organization's key (`organization_id` on create: the caller's active organization, with
+  `org.update`) acts as the member who created it, in that organization, so "the key's permissions
+  intersected with the owner's" is core's resolution of that member at call time (decision #3), and a
+  member who leaves takes the organization's keys with them. The permissions a key is given must be
+  held by the caller in that organization at creation and at every change (`api-keys/permission_not_held`)
+  and exist in the permission catalog. A key is presented as `Authorization: Bearer pk_...` or
+  `x-api-key`, authenticates as `amr: ["api_key"]` with `jti` = the key id and `iat` = now (a logout
+  everywhere does not end a key; revocation does), has no session, and is refused on every `step_up`
+  route (`403 api-keys/not_allowed`: it cannot re-authenticate, and a stolen key must not add
+  credentials). Rotation mints a successor row (`rotated_from`) and gives the predecessor a
+  `grace_until` (`rotationGrace`, a day); rotating a rotated key is refused. Revocation is a soft
+  `revoked_at`; `DELETE` answers `{status: revoked}`. The key's own `rate_limit` is counted on
+  `RateStore` under `api_keys.key.<id>` by the plugin's middleware with core's `X-RateLimit-*` headers;
+  core's per-user budget applies as well. An owner holds at most `maxPerOwner` (50) live keys; the
+  secret is `pk_<live|test>_` plus 256 random bits (base64url). `polaris/audit` is required
+  (`api_keys.created|updated|rotated|revoked`). `POST /api-keys/verify` is for applications that proxy;
+  any session may ask, the key itself being the secret, and the check counts as a use. Core's test
+  normaliser masks a `hint` key. · Rejected: `/orgs/{id}/api-keys` routes (one route set with
+  `organization_id` is the same surface); keys bound to a user independent of any organization context
+  (such a key could do nothing core guards with a permission); an `admin`-style principal for keys
+  (the whole point of decision #2 is that a key is the owner, so every endpoint already knows it).

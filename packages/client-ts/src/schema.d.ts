@@ -2284,6 +2284,77 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api-keys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List API keys */
+        get: operations["get_api-keys_ListEndpoint"];
+        put?: never;
+        /** Create an API key */
+        post: operations["post_api-keys_CreateEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api-keys/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read an API key */
+        get: operations["get_api-keys_ReadEndpoint"];
+        put?: never;
+        post?: never;
+        /** Revoke an API key */
+        delete: operations["delete_api-keys_DeleteEndpoint"];
+        options?: never;
+        head?: never;
+        /** Update an API key */
+        patch: operations["patch_api-keys_UpdateEndpoint"];
+        trace?: never;
+    };
+    "/api-keys/{id}/rotate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rotate an API key */
+        post: operations["post_api-keys_RotateEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api-keys/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify an API key */
+        post: operations["post_api-keys_VerifyEndpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -13579,6 +13650,655 @@ export interface operations {
                 };
             };
             /** @description passkey_challenge_invalid | passkey_credential_invalid | passkey_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "get_api-keys_ListEndpoint": {
+        parameters: {
+            query?: {
+                organization_id?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": [
+                     *         {
+                     *           "id": "018f...",
+                     *           "name": "CI deploy",
+                     *           "owner_type": "user",
+                     *           "owner_id": "018f...",
+                     *           "organization_id": "018f...",
+                     *           "created_by": "018f...",
+                     *           "environment": "live",
+                     *           "hint": "k9Qz",
+                     *           "permissions": [
+                     *             "org.read",
+                     *             "members.read"
+                     *           ],
+                     *           "rate_limit": {
+                     *             "window": 60,
+                     *             "max": 100
+                     *           },
+                     *           "metadata": [],
+                     *           "status": "active",
+                     *           "rotated_from": null,
+                     *           "grace_until": null,
+                     *           "expires_at": null,
+                     *           "last_used_at": "2026-10-10T10:05:00+00:00",
+                     *           "created_at": "2026-10-10T10:00:00+00:00",
+                     *           "updated_at": "2026-10-10T10:00:00+00:00"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            owner_type: string;
+                            owner_id: string;
+                            organization_id: string;
+                            created_by: string;
+                            environment: string;
+                            hint: string;
+                            permissions: string[];
+                            rate_limit: {
+                                window: number;
+                                max: number;
+                            };
+                            metadata: [
+                            ];
+                            status: string;
+                            rotated_from: string | null;
+                            grace_until: string | null;
+                            expires_at: string | null;
+                            last_used_at: string;
+                            created_at: string;
+                            updated_at: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "post_api-keys_CreateEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    permissions?: string[];
+                    organization_id?: string;
+                    /** @enum {string} */
+                    environment?: "live" | "test";
+                    rate_limit?: {
+                        [key: string]: unknown;
+                    };
+                    expires_at?: string;
+                    metadata?: {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "name": "CI deploy",
+                     *         "owner_type": "user",
+                     *         "owner_id": "018f...",
+                     *         "organization_id": "018f...",
+                     *         "created_by": "018f...",
+                     *         "environment": "live",
+                     *         "hint": "k9Qz",
+                     *         "permissions": [
+                     *           "org.read",
+                     *           "members.read"
+                     *         ],
+                     *         "rate_limit": {
+                     *           "window": 60,
+                     *           "max": 100
+                     *         },
+                     *         "metadata": [],
+                     *         "status": "active",
+                     *         "rotated_from": null,
+                     *         "grace_until": null,
+                     *         "expires_at": null,
+                     *         "last_used_at": null,
+                     *         "created_at": "2026-10-10T10:00:00+00:00",
+                     *         "updated_at": "2026-10-10T10:00:00+00:00",
+                     *         "key": "pk_live_..."
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            owner_type: string;
+                            owner_id: string;
+                            organization_id: string;
+                            created_by: string;
+                            environment: string;
+                            hint: string;
+                            permissions: string[];
+                            rate_limit: {
+                                window: number;
+                                max: number;
+                            };
+                            metadata: [
+                            ];
+                            status: string;
+                            rotated_from: string | null;
+                            grace_until: string | null;
+                            expires_at: string | null;
+                            last_used_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                            key: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_forbidden | api_keys_permission_not_held */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_too_many */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "get_api-keys_ReadEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "name": "CI deploy",
+                     *         "owner_type": "user",
+                     *         "owner_id": "018f...",
+                     *         "organization_id": "018f...",
+                     *         "created_by": "018f...",
+                     *         "environment": "live",
+                     *         "hint": "k9Qz",
+                     *         "permissions": [
+                     *           "org.read"
+                     *         ],
+                     *         "rate_limit": null,
+                     *         "metadata": [],
+                     *         "status": "active",
+                     *         "rotated_from": null,
+                     *         "grace_until": null,
+                     *         "expires_at": null,
+                     *         "last_used_at": null,
+                     *         "created_at": "2026-10-10T10:00:00+00:00",
+                     *         "updated_at": "2026-10-10T10:00:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            owner_type: string;
+                            owner_id: string;
+                            organization_id: string;
+                            created_by: string;
+                            environment: string;
+                            hint: string;
+                            permissions: string[];
+                            rate_limit: string | null;
+                            metadata: [
+                            ];
+                            status: string;
+                            rotated_from: string | null;
+                            grace_until: string | null;
+                            expires_at: string | null;
+                            last_used_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "delete_api-keys_DeleteEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "status": "revoked"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            status: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "patch_api-keys_UpdateEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    permissions?: string[];
+                    rate_limit?: {
+                        [key: string]: unknown;
+                    };
+                    expires_at?: string;
+                    metadata?: {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "name": "CI deploy (renamed)",
+                     *         "owner_type": "user",
+                     *         "owner_id": "018f...",
+                     *         "organization_id": "018f...",
+                     *         "created_by": "018f...",
+                     *         "environment": "live",
+                     *         "hint": "k9Qz",
+                     *         "permissions": [
+                     *           "org.read"
+                     *         ],
+                     *         "rate_limit": null,
+                     *         "metadata": [],
+                     *         "status": "active",
+                     *         "rotated_from": null,
+                     *         "grace_until": null,
+                     *         "expires_at": null,
+                     *         "last_used_at": null,
+                     *         "created_at": "2026-10-10T10:00:00+00:00",
+                     *         "updated_at": "2026-10-10T10:10:00+00:00"
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            owner_type: string;
+                            owner_id: string;
+                            organization_id: string;
+                            created_by: string;
+                            environment: string;
+                            hint: string;
+                            permissions: string[];
+                            rate_limit: string | null;
+                            metadata: [
+                            ];
+                            status: string;
+                            rotated_from: string | null;
+                            grace_until: string | null;
+                            expires_at: string | null;
+                            last_used_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_forbidden | api_keys_permission_not_held */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_invalid_input */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "post_api-keys_RotateEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "id": "018f...",
+                     *         "name": "CI deploy",
+                     *         "owner_type": "user",
+                     *         "owner_id": "018f...",
+                     *         "organization_id": "018f...",
+                     *         "created_by": "018f...",
+                     *         "environment": "live",
+                     *         "hint": "p2Xw",
+                     *         "permissions": [
+                     *           "org.read"
+                     *         ],
+                     *         "rate_limit": null,
+                     *         "metadata": [],
+                     *         "status": "active",
+                     *         "rotated_from": "018f...",
+                     *         "grace_until": null,
+                     *         "expires_at": null,
+                     *         "last_used_at": null,
+                     *         "created_at": "2026-10-10T11:00:00+00:00",
+                     *         "updated_at": "2026-10-10T11:00:00+00:00",
+                     *         "key": "pk_live_..."
+                     *       }
+                     *     }
+                     */
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            owner_type: string;
+                            owner_id: string;
+                            organization_id: string;
+                            created_by: string;
+                            environment: string;
+                            hint: string;
+                            permissions: string[];
+                            rate_limit: string | null;
+                            metadata: [
+                            ];
+                            status: string;
+                            rotated_from: string;
+                            grace_until: string | null;
+                            expires_at: string | null;
+                            last_used_at: string | null;
+                            created_at: string;
+                            updated_at: string;
+                            key: string;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    "post_api-keys_VerifyEndpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    key: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            valid: boolean;
+                            id: string;
+                            name: string;
+                            owner_type: string;
+                            owner_id: string;
+                            organization_id: string;
+                            subject: string;
+                            permissions: string[];
+                            rate_limit: string | null;
+                            metadata: [
+                            ];
+                            status: string;
+                            expires_at: string | null;
+                        };
+                    } | {
+                        data: {
+                            valid: boolean;
+                        };
+                    };
+                };
+            };
+            /** @description unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description api_keys_invalid_input */
             422: {
                 headers: {
                     [name: string]: unknown;

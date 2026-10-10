@@ -1,0 +1,35 @@
+# POST /api-keys/verify: check a key server-side.
+endpoint:
+  method: POST
+  path: /api-keys/verify
+  summary: Verify an API key
+  tags: [api-keys]
+  auth: bearer
+  effect: read
+  receipt: false
+
+input:
+  source: body
+  fields:
+    key: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\ApiKeys\Http\VerifyEndpoint
+  description: >
+    For an application that proxies requests and checks keys itself: whether the key authenticates right
+    now (not revoked, expired or past its rotation grace), and when it does, its owner, the user it acts
+    as, the organization, the permissions, the rate limit and the metadata. The check counts as a use.
+    Any session may ask; the key itself is the secret.
+
+output:
+  status: 200
+  example:
+    data: { valid: true, id: "018f...", name: "CI deploy", owner_type: user, owner_id: "018f...", organization_id: "018f...", subject: "018f...", permissions: [org.read], rate_limit: null, metadata: {}, status: active, expires_at: null }
+  example_invalid:
+    data: { valid: false }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 422, code: api_keys_invalid_input }
+
+events: []

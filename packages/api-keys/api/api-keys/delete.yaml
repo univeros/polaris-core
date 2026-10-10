@@ -1,0 +1,30 @@
+# DELETE /api-keys/{id}: revoke a key.
+endpoint:
+  method: DELETE
+  path: /api-keys/{id}
+  summary: Revoke an API key
+  tags: [api-keys]
+  auth: bearer
+  effect: destructive
+  receipt: true
+
+input:
+  source: path
+  fields:
+    id: { type: string, rules: [required] }
+
+domain:
+  class: Polaris\ApiKeys\Http\DeleteEndpoint
+  description: >
+    The key stops authenticating at once and leaves the list. Recorded as api_keys.revoked.
+
+output:
+  status: 200
+  example:
+    data: { status: revoked }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 404, code: api_keys_not_found }
+
+events: [api_keys.revoked]

@@ -38,3 +38,5 @@ parameters:
         - packages/passkey/tests
         - packages/social/src
         - packages/social/tests
+        - packages/api-keys/src
+        - packages/api-keys/tests

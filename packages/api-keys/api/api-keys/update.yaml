@@ -1,0 +1,39 @@
+# PATCH /api-keys/{id}: change a key.
+endpoint:
+  method: PATCH
+  path: /api-keys/{id}
+  summary: Update an API key
+  tags: [api-keys]
+  auth: bearer
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    name: { type: "?string", rules: [optional, "max:80"] }
+    permissions: { type: "?list<string>", rules: [optional] }
+    rate_limit: { type: "?object", rules: [optional] }
+    expires_at: { type: "?string", rules: [optional] }
+    metadata: { type: "?object", rules: [optional] }
+
+domain:
+  class: Polaris\ApiKeys\Http\UpdateEndpoint
+  description: >
+    A field left out keeps its value; rate_limit null and expires_at null clear them. New permissions
+    are bounded by what the caller holds in the key's organization, which must be their active one.
+    Recorded as api_keys.updated with what changed.
+
+output:
+  status: 200
+  example:
+    data: { id: "018f...", name: "CI deploy (renamed)", owner_type: user, owner_id: "018f...", organization_id: "018f...", created_by: "018f...", environment: live, hint: "k9Qz", permissions: [org.read], rate_limit: null, metadata: {}, status: active, rotated_from: null, grace_until: null, expires_at: null, last_used_at: null, created_at: "2026-10-10T10:00:00+00:00", updated_at: "2026-10-10T10:10:00+00:00" }
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: api_keys_forbidden }
+  - { status: 403, code: api_keys_permission_not_held }
+  - { status: 404, code: api_keys_not_found }
+  - { status: 422, code: api_keys_invalid_input }
+
+events: [api_keys.updated]

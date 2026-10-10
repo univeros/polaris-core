@@ -123,6 +123,30 @@ describe("the plugin namespaces", () => {
         expect(requests[2]?.headers.get("Authorization")).toBe("Bearer pst_secret");
     });
 
+    it("maps the api-keys methods onto their routes", async () => {
+        const { requests, fetch } = recording(200, { data: { valid: false } });
+        const client = createClient({ baseUrl: "https://polaris.example", fetch });
+
+        await client.withToken("access").apiKeys.list({ params: { query: { organization_id: "o1" } } });
+        await client.withToken("access").apiKeys.create({ body: { name: "CI", permissions: ["org.read"] } });
+        await client.withToken("access").apiKeys.read({ params: { path: { id: "k1" } } });
+        await client.withToken("access").apiKeys.update({ params: { path: { id: "k1" } }, body: { name: "CI 2" } });
+        await client.withToken("access").apiKeys.rotate({ params: { path: { id: "k1" } } });
+        await client.withToken("access").apiKeys.delete({ params: { path: { id: "k1" } } });
+        await client.withToken("pk_live_secret").apiKeys.verify({ body: { key: "pk_live_other" } });
+
+        expect(requests.map((request) => `${request.method} ${new URL(request.url).pathname}${new URL(request.url).search}`)).toEqual([
+            "GET /api-keys?organization_id=o1",
+            "POST /api-keys",
+            "GET /api-keys/k1",
+            "PATCH /api-keys/k1",
+            "POST /api-keys/k1/rotate",
+            "DELETE /api-keys/k1",
+            "POST /api-keys/verify",
+        ]);
+        expect(requests[6]?.headers.get("Authorization")).toBe("Bearer pk_live_secret");
+    });
+
     it("maps the passwordless, username, anonymous and multi-session methods onto their routes", async () => {
         const { requests, fetch } = recording(200, { data: { status: "sent" } });
         const client = createClient({ baseUrl: "https://polaris.example", fetch });

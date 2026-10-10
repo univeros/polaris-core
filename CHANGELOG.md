@@ -4,6 +4,27 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+Program 4 ("Better Auth for PHP"), WP3: API keys and the OAuth 2.1 / OpenID Connect provider, with two
+core seams.
+
+### Added
+- `polaris/core`: the bearer-resolver seam (program 4, decision #2): `Polaris\Contract\BearerResolver`
+  and `BearerResolverProvider`; a plugin's resolvers authenticate their own credential on core's
+  `auth: bearer` routes before the JWT parse (`Graph::bearerResolvers()`, consulted by psr15's
+  `TokenAuthenticationMiddleware`). The delegated authority (decision #3): a token carrying `delegated`
+  makes `Gate::authority()` intersect the owner's permissions with that list.
+- `polaris/api-keys`: keys owned by users and organizations (`pk_live_`, `pk_test_`), each with a subset
+  of the owner's permissions, an optional rate limit, expiry, rotation with a grace window and
+  revocation; `GET|POST /api-keys`, `GET|PATCH|DELETE /api-keys/{id}`, `POST /api-keys/{id}/rotate`,
+  `POST /api-keys/verify`; a key in `Authorization: Bearer` or `x-api-key` authenticates every Polaris
+  route as its owner, step-up routes excepted. Table `polaris_api_key`; the `api_keys.*` audit names.
+- `@polaris-auth/client`: `client.apiKeys`.
+
+### Changed
+- Core's test normaliser masks a `hint` key.
+
 ## [0.8.0] - 2026-10-09
 
 Program 4 ("Better Auth for PHP", `docs/better/spec.md`), WP2: social sign-in and passkeys, `polaris/social`

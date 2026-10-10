@@ -9,6 +9,7 @@ import { passwordless, type PasswordlessApi } from "./passwordless.js";
 import { sentinel, type SentinelApi } from "./sentinel.js";
 import { scim, type ScimApi } from "./scim.js";
 import { social, type SocialApi } from "./social.js";
+import { apiKeys, type ApiKeysApi } from "./api-keys.js";
 import { sso, type SsoApi } from "./sso.js";
 import { username, type UsernameApi } from "./username.js";
 import type { components, paths } from "./schema.js";
@@ -24,6 +25,7 @@ export { passwordless, type PasswordlessApi } from "./passwordless.js";
 export { sentinel, type SentinelApi } from "./sentinel.js";
 export { scim, type ScimApi } from "./scim.js";
 export { social, type SocialApi } from "./social.js";
+export { apiKeys, type ApiKeysApi } from "./api-keys.js";
 export { sso, type SsoApi } from "./sso.js";
 export { username, type UsernameApi } from "./username.js";
 export { registerPasskey, signInWithPasskey, passkeyAssertion, passkeyAutofillAvailable, type SignInWithPasskeyOptions } from "./webauthn.js";
@@ -32,7 +34,7 @@ export { registerPasskey, signInWithPasskey, passkeyAssertion, passkeyAutofillAv
 export type ErrorBody = components["schemas"]["Error"];
 /** The `{ errors: [...] }` envelope of a core route's 422. */
 export type ValidationErrorBody = components["schemas"]["ValidationError"];
-/** The RFC 9457 problem document every non-2xx response of a plugin route (`audit`, `admin`, `sentinel`, `sso`, `scim`, `passwordless`, `username`, `anonymous`, `multi-session`, `social`, `passkey`) carries. */
+/** The RFC 9457 problem document every non-2xx response of a plugin route (`audit`, `admin`, `sentinel`, `sso`, `scim`, `passwordless`, `username`, `anonymous`, `multi-session`, `social`, `passkey`, `api-keys`) carries. */
 export type ProblemBody = components["schemas"]["Problem"];
 
 export interface PolarisClientOptions extends ClientOptions {
@@ -76,6 +78,8 @@ export interface PolarisClient extends Client<paths> {
     readonly social: SocialApi;
     /** The `polaris/passkey` routes (`registerOptions()`, `registerVerify()`, `authenticateOptions()`, `authenticateVerify()`, `list()`, `rename()`, `delete()`); `registerPasskey()` and `signInWithPasskey()` run the browser ceremonies. */
     readonly passkey: PasskeyApi;
+    /** The `polaris/api-keys` routes: `client.apiKeys.list()`, `create()`, `read()`, `update()`, `delete()`, `rotate()`, `verify()`. A key goes in `Authorization: Bearer pk_...` like a session token. */
+    readonly apiKeys: ApiKeysApi;
     /** A new client on the same options bound to another token (null for anonymous); this one is unchanged. */
     withToken(token: string | null): PolarisClient;
 }
@@ -84,7 +88,7 @@ export interface PolarisClient extends Client<paths> {
  * An `openapi-fetch` client typed by `paths` (generated from `polaris manifest --format=openapi`), so
  * `client.POST("/auth/login", { body })` checks the body and types `data` and `error`; the plugins' routes
  * are also methods of `client.audit`, `client.admin`, `client.sentinel`, `client.sso`, `client.scim`, `client.passwordless`,
- * `client.username`, `client.anonymous`, `client.multiSession`, `client.social` and `client.passkey`; `challenge.captcha`
+ * `client.username`, `client.anonymous`, `client.multiSession`, `client.social`, `client.passkey` and `client.apiKeys`; `challenge.captcha`
  * answers a sentinel captcha challenge with one retry. No refresh loop and no storage: when to refresh
  * and where to keep tokens is the application's policy.
  */
@@ -117,6 +121,7 @@ export function createClient(options: PolarisClientOptions): PolarisClient {
         multiSession: multiSession(client),
         social: social(client),
         passkey: passkey(client),
+        apiKeys: apiKeys(client),
         withToken: (next: string | null) => createClient({ ...options, token: next }),
     };
 }

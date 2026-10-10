@@ -1,0 +1,65 @@
+# POST /api-keys: create a key.
+endpoint:
+  method: POST
+  path: /api-keys
+  summary: Create an API key
+  tags: [api-keys]
+  auth: bearer
+  effect: write
+  receipt: true
+
+input:
+  source: body
+  fields:
+    name: { type: string, rules: [required, "max:80"] }
+    permissions: { type: "list<string>", rules: [optional] }
+    organization_id: { type: "?string", rules: [optional] }
+    environment: { type: "?string", rules: [optional, "in:live,test"] }
+    rate_limit: { type: "?object", rules: [optional] }
+    expires_at: { type: "?string", rules: [optional] }
+    metadata: { type: "?object", rules: [optional] }
+
+domain:
+  class: Polaris\ApiKeys\Http\CreateEndpoint
+  description: >
+    The key (pk_live_ or pk_test_ and 256 random bits) is in this response only; stored as a keyed
+    hash. permissions is a subset of what the caller holds in their active organization (each name from
+    the permission catalog); without an active organization only an empty list is possible, and the
+    key reaches the routes that need no permission. organization_id makes it the organization's key
+    (the caller's active organization, org.update needed): it acts as the caller in that organization.
+    rate_limit is { window: seconds, max: requests } for the key alone; expires_at a future date;
+    metadata an object the application keeps on the key. An owner holds at most fifty live keys.
+    Recorded as api_keys.created.
+
+output:
+  status: 201
+  example:
+    data:
+      id: "018f..."
+      name: "CI deploy"
+      owner_type: user
+      owner_id: "018f..."
+      organization_id: "018f..."
+      created_by: "018f..."
+      environment: live
+      hint: "k9Qz"
+      permissions: [org.read, members.read]
+      rate_limit: { window: 60, max: 100 }
+      metadata: {}
+      status: active
+      rotated_from: null
+      grace_until: null
+      expires_at: null
+      last_used_at: null
+      created_at: "2026-10-10T10:00:00+00:00"
+      updated_at: "2026-10-10T10:00:00+00:00"
+      key: "pk_live_..."
+
+errors:
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: api_keys_forbidden }
+  - { status: 403, code: api_keys_permission_not_held }
+  - { status: 409, code: api_keys_too_many }
+  - { status: 422, code: api_keys_invalid_input }
+
+events: [api_keys.created]

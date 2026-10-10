@@ -18898,6 +18898,1353 @@
                     }
                 }
             }
+        },
+        "/api-keys": {
+            "post": {
+                "operationId": "post_api-keys_CreateEndpoint",
+                "summary": "Create an API key",
+                "tags": [
+                    "api-keys"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "api-keys",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 80
+                                    },
+                                    "permissions": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "organization_id": {
+                                        "type": "string"
+                                    },
+                                    "environment": {
+                                        "type": "string",
+                                        "enum": [
+                                            "live",
+                                            "test"
+                                        ]
+                                    },
+                                    "rate_limit": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    },
+                                    "expires_at": {
+                                        "type": "string"
+                                    },
+                                    "metadata": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "owner_type": {
+                                                    "type": "string"
+                                                },
+                                                "owner_id": {
+                                                    "type": "string"
+                                                },
+                                                "organization_id": {
+                                                    "type": "string"
+                                                },
+                                                "created_by": {
+                                                    "type": "string"
+                                                },
+                                                "environment": {
+                                                    "type": "string"
+                                                },
+                                                "hint": {
+                                                    "type": "string"
+                                                },
+                                                "permissions": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "rate_limit": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "window": {
+                                                            "type": "integer"
+                                                        },
+                                                        "max": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "window",
+                                                        "max"
+                                                    ]
+                                                },
+                                                "metadata": {
+                                                    "type": "array",
+                                                    "items": []
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "rotated_from": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "grace_until": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "expires_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "last_used_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string"
+                                                },
+                                                "key": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "name",
+                                                "owner_type",
+                                                "owner_id",
+                                                "organization_id",
+                                                "created_by",
+                                                "environment",
+                                                "hint",
+                                                "permissions",
+                                                "rate_limit",
+                                                "metadata",
+                                                "status",
+                                                "rotated_from",
+                                                "grace_until",
+                                                "expires_at",
+                                                "last_used_at",
+                                                "created_at",
+                                                "updated_at",
+                                                "key"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "name": "CI deploy",
+                                        "owner_type": "user",
+                                        "owner_id": "018f...",
+                                        "organization_id": "018f...",
+                                        "created_by": "018f...",
+                                        "environment": "live",
+                                        "hint": "k9Qz",
+                                        "permissions": [
+                                            "org.read",
+                                            "members.read"
+                                        ],
+                                        "rate_limit": {
+                                            "window": 60,
+                                            "max": 100
+                                        },
+                                        "metadata": [],
+                                        "status": "active",
+                                        "rotated_from": null,
+                                        "grace_until": null,
+                                        "expires_at": null,
+                                        "last_used_at": null,
+                                        "created_at": "2026-10-10T10:00:00+00:00",
+                                        "updated_at": "2026-10-10T10:00:00+00:00",
+                                        "key": "pk_live_..."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "api_keys_forbidden | api_keys_permission_not_held",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "api_keys_too_many",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "api_keys_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "get_api-keys_ListEndpoint",
+                "summary": "List API keys",
+                "tags": [
+                    "api-keys"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "api-keys",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "owner_type": {
+                                                        "type": "string"
+                                                    },
+                                                    "owner_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "organization_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_by": {
+                                                        "type": "string"
+                                                    },
+                                                    "environment": {
+                                                        "type": "string"
+                                                    },
+                                                    "hint": {
+                                                        "type": "string"
+                                                    },
+                                                    "permissions": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "rate_limit": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "window": {
+                                                                "type": "integer"
+                                                            },
+                                                            "max": {
+                                                                "type": "integer"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "window",
+                                                            "max"
+                                                        ]
+                                                    },
+                                                    "metadata": {
+                                                        "type": "array",
+                                                        "items": []
+                                                    },
+                                                    "status": {
+                                                        "type": "string"
+                                                    },
+                                                    "rotated_from": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "grace_until": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "expires_at": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    },
+                                                    "last_used_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "name",
+                                                    "owner_type",
+                                                    "owner_id",
+                                                    "organization_id",
+                                                    "created_by",
+                                                    "environment",
+                                                    "hint",
+                                                    "permissions",
+                                                    "rate_limit",
+                                                    "metadata",
+                                                    "status",
+                                                    "rotated_from",
+                                                    "grace_until",
+                                                    "expires_at",
+                                                    "last_used_at",
+                                                    "created_at",
+                                                    "updated_at"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "018f...",
+                                            "name": "CI deploy",
+                                            "owner_type": "user",
+                                            "owner_id": "018f...",
+                                            "organization_id": "018f...",
+                                            "created_by": "018f...",
+                                            "environment": "live",
+                                            "hint": "k9Qz",
+                                            "permissions": [
+                                                "org.read",
+                                                "members.read"
+                                            ],
+                                            "rate_limit": {
+                                                "window": 60,
+                                                "max": 100
+                                            },
+                                            "metadata": [],
+                                            "status": "active",
+                                            "rotated_from": null,
+                                            "grace_until": null,
+                                            "expires_at": null,
+                                            "last_used_at": "2026-10-10T10:05:00+00:00",
+                                            "created_at": "2026-10-10T10:00:00+00:00",
+                                            "updated_at": "2026-10-10T10:00:00+00:00"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "api_keys_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api-keys/{id}": {
+            "delete": {
+                "operationId": "delete_api-keys_DeleteEndpoint",
+                "summary": "Revoke an API key",
+                "tags": [
+                    "api-keys"
+                ],
+                "x-polaris-effect": "destructive",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "api-keys",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "status": "revoked"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "api_keys_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "get_api-keys_ReadEndpoint",
+                "summary": "Read an API key",
+                "tags": [
+                    "api-keys"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "api-keys",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "owner_type": {
+                                                    "type": "string"
+                                                },
+                                                "owner_id": {
+                                                    "type": "string"
+                                                },
+                                                "organization_id": {
+                                                    "type": "string"
+                                                },
+                                                "created_by": {
+                                                    "type": "string"
+                                                },
+                                                "environment": {
+                                                    "type": "string"
+                                                },
+                                                "hint": {
+                                                    "type": "string"
+                                                },
+                                                "permissions": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "rate_limit": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "metadata": {
+                                                    "type": "array",
+                                                    "items": []
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "rotated_from": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "grace_until": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "expires_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "last_used_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "name",
+                                                "owner_type",
+                                                "owner_id",
+                                                "organization_id",
+                                                "created_by",
+                                                "environment",
+                                                "hint",
+                                                "permissions",
+                                                "rate_limit",
+                                                "metadata",
+                                                "status",
+                                                "rotated_from",
+                                                "grace_until",
+                                                "expires_at",
+                                                "last_used_at",
+                                                "created_at",
+                                                "updated_at"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "name": "CI deploy",
+                                        "owner_type": "user",
+                                        "owner_id": "018f...",
+                                        "organization_id": "018f...",
+                                        "created_by": "018f...",
+                                        "environment": "live",
+                                        "hint": "k9Qz",
+                                        "permissions": [
+                                            "org.read"
+                                        ],
+                                        "rate_limit": null,
+                                        "metadata": [],
+                                        "status": "active",
+                                        "rotated_from": null,
+                                        "grace_until": null,
+                                        "expires_at": null,
+                                        "last_used_at": null,
+                                        "created_at": "2026-10-10T10:00:00+00:00",
+                                        "updated_at": "2026-10-10T10:00:00+00:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "api_keys_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "patch_api-keys_UpdateEndpoint",
+                "summary": "Update an API key",
+                "tags": [
+                    "api-keys"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "api-keys",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 80
+                                    },
+                                    "permissions": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "rate_limit": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    },
+                                    "expires_at": {
+                                        "type": "string"
+                                    },
+                                    "metadata": {
+                                        "type": "object",
+                                        "additionalProperties": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "owner_type": {
+                                                    "type": "string"
+                                                },
+                                                "owner_id": {
+                                                    "type": "string"
+                                                },
+                                                "organization_id": {
+                                                    "type": "string"
+                                                },
+                                                "created_by": {
+                                                    "type": "string"
+                                                },
+                                                "environment": {
+                                                    "type": "string"
+                                                },
+                                                "hint": {
+                                                    "type": "string"
+                                                },
+                                                "permissions": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "rate_limit": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "metadata": {
+                                                    "type": "array",
+                                                    "items": []
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "rotated_from": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "grace_until": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "expires_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "last_used_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "name",
+                                                "owner_type",
+                                                "owner_id",
+                                                "organization_id",
+                                                "created_by",
+                                                "environment",
+                                                "hint",
+                                                "permissions",
+                                                "rate_limit",
+                                                "metadata",
+                                                "status",
+                                                "rotated_from",
+                                                "grace_until",
+                                                "expires_at",
+                                                "last_used_at",
+                                                "created_at",
+                                                "updated_at"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "name": "CI deploy (renamed)",
+                                        "owner_type": "user",
+                                        "owner_id": "018f...",
+                                        "organization_id": "018f...",
+                                        "created_by": "018f...",
+                                        "environment": "live",
+                                        "hint": "k9Qz",
+                                        "permissions": [
+                                            "org.read"
+                                        ],
+                                        "rate_limit": null,
+                                        "metadata": [],
+                                        "status": "active",
+                                        "rotated_from": null,
+                                        "grace_until": null,
+                                        "expires_at": null,
+                                        "last_used_at": null,
+                                        "created_at": "2026-10-10T10:00:00+00:00",
+                                        "updated_at": "2026-10-10T10:10:00+00:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "api_keys_forbidden | api_keys_permission_not_held",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "api_keys_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "api_keys_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api-keys/{id}/rotate": {
+            "post": {
+                "operationId": "post_api-keys_RotateEndpoint",
+                "summary": "Rotate an API key",
+                "tags": [
+                    "api-keys"
+                ],
+                "x-polaris-effect": "write",
+                "x-polaris-receipt": true,
+                "x-polaris-plugin": "api-keys",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "owner_type": {
+                                                    "type": "string"
+                                                },
+                                                "owner_id": {
+                                                    "type": "string"
+                                                },
+                                                "organization_id": {
+                                                    "type": "string"
+                                                },
+                                                "created_by": {
+                                                    "type": "string"
+                                                },
+                                                "environment": {
+                                                    "type": "string"
+                                                },
+                                                "hint": {
+                                                    "type": "string"
+                                                },
+                                                "permissions": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "rate_limit": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "metadata": {
+                                                    "type": "array",
+                                                    "items": []
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "rotated_from": {
+                                                    "type": "string"
+                                                },
+                                                "grace_until": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "expires_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "last_used_at": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string"
+                                                },
+                                                "key": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "name",
+                                                "owner_type",
+                                                "owner_id",
+                                                "organization_id",
+                                                "created_by",
+                                                "environment",
+                                                "hint",
+                                                "permissions",
+                                                "rate_limit",
+                                                "metadata",
+                                                "status",
+                                                "rotated_from",
+                                                "grace_until",
+                                                "expires_at",
+                                                "last_used_at",
+                                                "created_at",
+                                                "updated_at",
+                                                "key"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                },
+                                "example": {
+                                    "data": {
+                                        "id": "018f...",
+                                        "name": "CI deploy",
+                                        "owner_type": "user",
+                                        "owner_id": "018f...",
+                                        "organization_id": "018f...",
+                                        "created_by": "018f...",
+                                        "environment": "live",
+                                        "hint": "p2Xw",
+                                        "permissions": [
+                                            "org.read"
+                                        ],
+                                        "rate_limit": null,
+                                        "metadata": [],
+                                        "status": "active",
+                                        "rotated_from": "018f...",
+                                        "grace_until": null,
+                                        "expires_at": null,
+                                        "last_used_at": null,
+                                        "created_at": "2026-10-10T11:00:00+00:00",
+                                        "updated_at": "2026-10-10T11:00:00+00:00",
+                                        "key": "pk_live_..."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "api_keys_forbidden",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "api_keys_not_found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api-keys/verify": {
+            "post": {
+                "operationId": "post_api-keys_VerifyEndpoint",
+                "summary": "Verify an API key",
+                "tags": [
+                    "api-keys"
+                ],
+                "x-polaris-effect": "read",
+                "x-polaris-receipt": false,
+                "x-polaris-plugin": "api-keys",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "key": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "key"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "valid": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "owner_type": {
+                                                            "type": "string"
+                                                        },
+                                                        "owner_id": {
+                                                            "type": "string"
+                                                        },
+                                                        "organization_id": {
+                                                            "type": "string"
+                                                        },
+                                                        "subject": {
+                                                            "type": "string"
+                                                        },
+                                                        "permissions": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "rate_limit": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "metadata": {
+                                                            "type": "array",
+                                                            "items": []
+                                                        },
+                                                        "status": {
+                                                            "type": "string"
+                                                        },
+                                                        "expires_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "valid",
+                                                        "id",
+                                                        "name",
+                                                        "owner_type",
+                                                        "owner_id",
+                                                        "organization_id",
+                                                        "subject",
+                                                        "permissions",
+                                                        "rate_limit",
+                                                        "metadata",
+                                                        "status",
+                                                        "expires_at"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "data"
+                                            ]
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "valid": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "valid"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "data"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "examples": {
+                                    "example": {
+                                        "value": {
+                                            "data": {
+                                                "valid": true,
+                                                "id": "018f...",
+                                                "name": "CI deploy",
+                                                "owner_type": "user",
+                                                "owner_id": "018f...",
+                                                "organization_id": "018f...",
+                                                "subject": "018f...",
+                                                "permissions": [
+                                                    "org.read"
+                                                ],
+                                                "rate_limit": null,
+                                                "metadata": [],
+                                                "status": "active",
+                                                "expires_at": null
+                                            }
+                                        }
+                                    },
+                                    "example_invalid": {
+                                        "value": {
+                                            "data": {
+                                                "valid": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "api_keys_invalid_input",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
