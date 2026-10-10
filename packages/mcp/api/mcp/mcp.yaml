@@ -1,0 +1,40 @@
+# POST /mcp: Polaris as an MCP server (the 2026-07-28 stateless profile; the 2025 handshake with legacy: allow).
+endpoint:
+  method: POST
+  path: /mcp
+  summary: Serve an MCP message
+  tags: [mcp]
+  auth: public   # the endpoint is the protected resource: a token for <baseUrl>/mcp; each tool call is then checked by its own route
+  rate_limit: token_refresh
+  effect: read   # a tool call's effect is its route's
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Mcp\Http\McpEndpoint
+  description: >
+    One JSON-RPC request per HTTP request (tools/list, tools/call, resources/list, resources/read,
+    resources/templates/list, server/discover), with the MCP-Protocol-Version, Mcp-Method and Mcp-Name
+    headers the profile requires. The access token (Bearer, or DPoP with a proof for this URL when
+    bound) must be issued by core's issuer for this resource (or the issuer) and hold the configured
+    scopes; it then resolves, through the bearer resolvers, to the principal whose tools are listed:
+    every route the principal may call, named polaris.<route>, answering {status, body} as the route
+    would. Without a token 401 with WWW-Authenticate: Bearer resource_metadata="..."; short of a scope
+    403 insufficient_scope with the missing scopes; the session-based protocol 400 when rejected.
+
+output:
+  status: 200
+  example:
+    jsonrpc: "2.0"
+    id: 1
+    result:
+      tools: []
+
+errors:
+  - { status: 400, code: legacy_protocol }
+  - { status: 401, code: unauthorized }
+  - { status: 403, code: insufficient_scope }
+
+events: []

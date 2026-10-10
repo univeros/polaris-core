@@ -536,3 +536,20 @@ entries here when a WP confirms or changes them.
   own small DPoP proof check (`polaris/mcp` does not require `polaris/oauth-provider`). · Rejected:
   re-sending the bearer on inner calls (a DPoP proof is bound to `/mcp`'s URL); a tool per HTTP method
   and path (the spec names tools by route).
+- 2026-10-10 · WP4 · `polaris/mcp` as built: the SDK's builder is assembled per principal (per HTTP
+  request; once per stdio process) with explicit tools and handlers, so the SDK lists them, validates
+  the arguments against the input schema and runs them (no custom `tools/list`/`tools/call` handlers).
+  Over HTTP, `/mcp` accepts only JWTs whose `aud` is `<baseUrl>/mcp` or the issuer (OAuth access
+  tokens); a session token or an API key is `invalid_token` there and is a stdio credential
+  (`--token`, `POLARIS_MCP_TOKEN`). The SDK's stdio transport speaks the 2025 handshake (every stdio
+  client sends `initialize`); HTTP serves 2026-07-28 by default and the handshake with `legacy: allow`
+  (sessions in the PSR-16 cache under `polaris.mcp.session.`). The SDK's own HTTP middleware (CORS, DNS
+  rebinding: localhost only) is off: the host owns those. Admin-tagged routes are listed for an operator
+  (admin's `Principals`, when the admin plugin is registered) and only for them the inner request carries
+  the credential as `Authorization: Bearer`, because the admin middleware authenticates from the header
+  and its principals are never DPoP-bound; every other inner call carries the attribute only. CLI tools
+  run through a fresh `Polaris\Cli\Application` (no bootstrap, so no recursion), answering
+  `{status: 200|500, body: <output>}`. `polaris://problems/{plugin}/{name}` answers what the manifest
+  declares for that code. The protected-resource metadata of Polaris's own `/mcp` advertises the required
+  scopes and the permission catalog. The functional fixture freezes the whole `tools/list` of core,
+  audit, admin and oauth, so a changed summary or field there re-records it (the contract freeze working).

@@ -1,0 +1,34 @@
+# GET /.well-known/oauth-protected-resource/mcp: the RFC 9728 metadata of /mcp.
+endpoint:
+  method: GET
+  path: /.well-known/oauth-protected-resource/mcp
+  summary: Protected resource metadata of /mcp
+  tags: [mcp]
+  auth: public
+  effect: read
+  receipt: false
+
+input:
+  source: none
+
+domain:
+  class: Polaris\Mcp\Http\ProtectedResourceEndpoint
+  description: >
+    Where a client sent here by the WWW-Authenticate challenge of /mcp finds the authorization server
+    (core's issuer, whose /.well-known/oauth-authorization-server the oauth plugin serves), the scopes
+    it may ask for (the permission catalog, plus what /mcp requires), the bearer method and the DPoP
+    algorithms. Cacheable for an hour.
+
+output:
+  status: 200
+  example:
+    resource: "https://auth.example/mcp"
+    authorization_servers: ["https://auth.example"]
+    scopes_supported: [org.read, members.read]
+    bearer_methods_supported: [header]
+    dpop_signing_alg_values_supported: [ES256, RS256]
+    resource_name: "Polaris"
+
+errors: []
+
+events: []

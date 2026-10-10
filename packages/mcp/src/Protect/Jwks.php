@@ -1,0 +1,99 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Polaris\Mcp\Protect;
+
+use Polaris\Mcp\McpException;
+use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\SimpleCache\CacheInterface;
+
+use function hash;
+use function is_array;
+use function json_decode;
+use function str_starts_with;
+use function strlen;
+
+/**
+ * A remote issuer's JWK Set, fetched from the configured `jwksUri` alone (never a URL a token names)
+ * over the host's PSR-18 client, bounded in size and cached in the PSR-16 cache; an unknown `kid`
+ * fetches it once more, which is how a key rotation reaches a resource server.
+ */
+final class Jwks
+{
+    private const int MAX_BYTES = 65536;
+    private const string CACHE_PREFIX = 'polaris.mcp.jwks.';
+
+    public function __construct(
+        private readonly string $uri,
+        private readonly ClientInterface $http,
+        private readonly RequestFactoryInterface $requests,
+        private readonly CacheInterface $cache,
+        private readonly int $ttl = 3600,
+    ) {
+        if (!str_starts_with($uri, 'https://')) {
+            throw new \LogicException('jwksUri must be an https URL.');
+        }
+    }
+
+    /**
+     * The key set, cached; `$fresh` bypasses the cache (an unknown kid).
+     *
+     * @return array{keys: list<array<string, mixed>>}
+     * @throws McpException `unauthorized`
+     */
+    public function keys(bool $fresh = false): array
+    {
+        $key = self::CACHE_PREFIX . hash('sha256', $this->uri);
+        $cached = $fresh ? null : $this->cache->get($key);
+        if (is_array($cached) && isset($cached['keys'])) {
+            /** @var array{keys: list<array<string, mixed>>} $cached */
+            return $cached;
+        }
+        $set = $this->fetch();
+        $this->cache->set($key, $set, $this->ttl);
+
+        return $set;
+    }
+
+    /**
+     * @return array{keys: list<array<string, mixed>>}
+     */
+    private function fetch(): array
+    {
+        try {
+            $response = $this->http->sendRequest($this->requests->createRequest('GET', $this->uri)->withHeader('Accept', 'application/json'));
+        } catch (ClientExceptionInterface) {
+            // The reason stays on the server: a client is told only that the token could not be verified.
+            throw $this->unavailable();
+        }
+        $stream = $response->getBody();
+        $body = '';
+        while (!$stream->eof() && strlen($body) <= self::MAX_BYTES) {
+            $chunk = $stream->read(8192);
+            if ($chunk === '') {
+                break;
+            }
+            $body .= $chunk;
+        }
+        $decoded = $response->getStatusCode() === 200 && strlen($body) <= self::MAX_BYTES ? json_decode($body, true) : null;
+        if (!is_array($decoded) || !is_array($decoded['keys'] ?? null)) {
+            throw $this->unavailable();
+        }
+        $keys = [];
+        foreach ($decoded['keys'] as $jwk) {
+            if (is_array($jwk)) {
+                $keys[] = $jwk;
+            }
+        }
+
+        return ['keys' => $keys];
+    }
+
+    private function unavailable(): McpException
+    {
+        return new McpException(McpException::UNAUTHORIZED, 'The token could not be verified against the issuer\'s keys.', 401);
+    }
+}
