@@ -64,7 +64,7 @@ with `error_description`.
 | `refresh_token` | Rotated at every use; `scope` may narrow, never widen; a spent token presented again revokes its whole family (RFC 9700 §4.14). |
 | `client_credentials` | A confidential client's own token, no user, no refresh. |
 | `urn:ietf:params:oauth:grant-type:device_code` | RFC 8628: `POST /oauth2/device/code` answers the device and user codes, the user types the code on the host's device page (`GET /oauth2/device/verify?user_code=` shows the client, `POST /oauth2/device/approve` decides), the device polls with `device_code` (`authorization_pending`, `slow_down`, `access_denied`, `expired_token`). |
-| `urn:openid:params:grant-type:ciba` | OpenID CIBA, poll mode: `POST /oauth2/ciba` with `login_hint` (the user's email) and a `binding_message`; the user sees it in `GET /oauth2/ciba/pending` and decides with `POST /oauth2/ciba/{id}/decide`; the client polls with `auth_req_id`. The host notifies the user from the `oauth.ciba_requested` event. |
+| `urn:openid:params:grant-type:ciba` | OpenID CIBA, poll mode: `POST /oauth2/ciba` with `login_hint` (the user's email) and a `binding_message`; the user sees it in `GET /oauth2/ciba/pending` and decides with `POST /oauth2/ciba/{id}/decide`; the client polls with `auth_req_id`. The host notifies the user from the `oauth.ciba_requested` event. Because it reaches people by their email, only an operator grants it to a client. |
 | `urn:ietf:params:oauth:grant-type:token-exchange` | RFC 8693: `subject_token` (a Polaris session's access token, or one of this provider's), optional `actor_token`, `resource` or `audience`, `scope` within the subject's; the token carries `act` naming the client (and the actor), chained through further exchanges. |
 
 **Access tokens** are JWTs (`typ: at+jwt`, RFC 9068) signed with core's key and `kid`, so
@@ -86,9 +86,13 @@ OpenID ones (`openid`, `profile`, `email`, `offline_access`), or an extra the ho
 On a Polaris route, one of these access tokens authenticates as its user, in the token's organization,
 with the permission scopes as the *delegated* authority (core's bearer-resolver seam): the authorization
 middleware resolves the user's permissions from the database as always and intersects them with the
-scopes, so a token never does more than its user may, and loses what the user loses. A token for
-another resource (`aud` elsewhere) or for the client itself clears no permission check here. The user's
-own session is untouched by any of it.
+scopes, so a token never does more than its user may, and loses what the user loses. A delegate reads
+and uses its permissions; it may not call a write route that needs no permission (the person's own
+self-service: enrolling a factor, creating an organization, deciding a consent, minting a key) nor a
+step-up route, and a superadmin's token carries no override. A token for another resource (`aud`
+elsewhere) or for the client itself clears no permission check here. The user's own session is
+untouched by any of it, and core's session parser never takes one of these tokens, nor an ID token, for
+a session.
 
 ## Consent
 
@@ -112,16 +116,18 @@ client registered with `dpop_bound_access_tokens` must prove a key.
 
 | Route | What |
 | --- | --- |
-| `GET|POST /orgs/{id}/oauth/clients`, `GET|PATCH|DELETE /orgs/{id}/oauth/clients/{clientId}` | An organization's clients, by a member with `org.update` in it. Confidential (a secret shown once, or a key) or public (`none`, PKCE); `redirect_uris` (https, http on loopback, or a custom scheme), `grant_types`, `scopes`, `jwks` or `jwks_uri`, `dpop_bound_access_tokens`, `logo_uri`, `client_uri`, `policy_uri`, `tos_uri`; `disabled` stops it. Never trusted. |
+| `GET|POST /orgs/{id}/oauth/clients`, `GET|PATCH|DELETE /orgs/{id}/oauth/clients/{clientId}` | An organization's clients, by a member with `org.update` in it. Confidential (a secret shown once, or a key) or public (`none`, PKCE); `redirect_uris` (https, http on loopback, or a reverse-domain custom scheme such as `com.example.app`), `grant_types` (CIBA excepted), `scopes`, `jwks` or `jwks_uri`, `dpop_bound_access_tokens`, `logo_uri`, `client_uri`, `policy_uri`, `tos_uri`; `disabled` stops it. Never trusted. |
 | `GET|POST /admin/oauth/clients`, `DELETE /admin/oauth/clients/{id}` | The operators' view (the admin plugin's roles): instance-wide or organization clients, `trusted` allowed. |
 | `POST /oauth2/register` | RFC 7591 dynamic registration, off by default (`403 oauth/registration_disabled`); on, anyone registers a client, never trusted. |
 
 **Client ID metadata documents** (`clientIdMetadata`, on by default, the MCP 2026 profile): a
 `client_id` that is an `https` URL is fetched (over the PSR-18 client, at most 64 KiB), must carry
 itself as `client_id`, is validated like a registration (`none` or `private_key_jwt` only) and cached
-for an hour; a URL on a special-use address or name (loopback, private ranges, link-local,
-`localhost`, `.local`, `.internal`, `.onion`, `.test`, `.example`, `.invalid`, ...) is refused. The host
-name is not resolved: a public name pointing at a private address is the host network's concern.
+for an hour; a URL on a special-use address or name (loopback, private ranges, link-local, numeric
+hosts, `localhost`, `.local`, `.internal`, `.onion`, `.test`, `.example`, `.invalid`, ...), on another
+port than 443, or with credentials is refused; the same rule applies to a client's `jwks_uri`. The host
+name is not resolved: a public name pointing at a private address is the host network's concern. A
+metadata client acts for a user only (no `client_credentials`, no token exchange).
 
 ## Discovery
 

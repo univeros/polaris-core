@@ -44,8 +44,11 @@ curl https://app.example.com/auth/audit/me -H 'x-api-key: pk_live_...'
 
 What a key cannot do: a route gated by step-up (removing a factor, deleting an organization,
 regenerating recovery codes, registering a passkey) answers `403 api-keys/not_allowed`, because a key
-cannot re-authenticate and a stolen key must not add credentials. A key has no session either: nothing
-to refresh, log out or switch.
+cannot re-authenticate and a stolen key must not add credentials; and a write route that needs no
+permission (the owner's own self-service: enrolling a factor, creating an organization, logging out
+everywhere, minting or rotating a key) answers core's `403 forbidden`, because a key reads and uses its
+permissions and decides nothing for the person. A superadmin's key carries no override. A key has no
+session either: nothing to refresh, log out or switch.
 
 A key is refused (`401 unauthorized`, core's envelope) when it is unknown, revoked, expired, past its
 rotation grace, or when its subject is disabled or gone. A revoked or expired key is not an error the
@@ -63,7 +66,7 @@ an organization's keys: it must be the caller's active organization, and they ne
 | `GET /api-keys/{id}` | One key. |
 | `PATCH /api-keys/{id}` | Name, permissions (still bounded), rate limit, expiry, metadata; `null` clears the limit or the expiry. |
 | `DELETE /api-keys/{id}` | Revokes it: it stops at once. |
-| `POST /api-keys/{id}/rotate` | A successor with a new secret and the same settings; the old key answers until `rotationGrace` ends, then stops. |
+| `POST /api-keys/{id}/rotate` | A successor with a new secret and the same settings; the old key answers until `rotationGrace` ends, then stops. Another admin rotates a creator's organization key only within the permissions they hold themselves. A member who leaves takes the organization's keys they act for with them. |
 | `POST /api-keys/verify` | For an application that proxies and checks keys itself: `{valid, id, owner_type, owner_id, organization_id, subject, permissions, rate_limit, metadata, status, expires_at}`, or `{valid: false}`. |
 
 Problem types: `api-keys/not_found`, `api-keys/forbidden`, `api-keys/permission_not_held`,
