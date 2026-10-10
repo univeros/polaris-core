@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # The walkthrough every demo runs, executable: register -> verify -> login -> enrol TOTP -> confirm ->
 # login again (MFA) -> verify the code -> create an organization -> list it -> switch to it -> list its
-# members; on the Slim demo, a social sign-in through its fake provider too. Run from a demo directory (each examples/<host>/bin/walkthrough.sh does). Starts its own
+# members; on the Slim demo, a social sign-in through its fake provider, an MCP client call and the agent
+# steps (a host, an agent enrolled through polaris/agent, a grant, two executions, the receipt chain) too.
+# Run from a demo directory (each examples/<host>/bin/walkthrough.sh does). Starts its own
 # PHP server on POLARIS_DOCROOT (default public) unless POLARIS_URL points at a running one; reads the
 # demo's mailbox from POLARIS_MAIL_LOG (default var/mail.log). Exits non-zero on the first failure.
 set -euo pipefail
@@ -27,6 +29,13 @@ call() { # call METHOD PATH [TOKEN] [JSON]
     local args=(-s -w '\n%{http_code}' -X "$method" "$URL$path" -H 'Content-Type: application/json')
     [ -n "$token" ] && args+=(-H "Authorization: Bearer $token")
     [ -n "$body" ] && args+=(-d "$body")
+    local out; out=$(curl "${args[@]}")
+    STATUS=${out##*$'\n'}; BODY=${out%$'\n'*}
+}
+post() { # post PATH CONTENT-TYPE DATA [HEADER...]: a raw POST (an RFC 6749 form for /oauth2/token, JSON-RPC for /mcp)
+    local path=$1 type=$2 data=$3; shift 3
+    local args=(-s -w '\n%{http_code}' -X POST "$URL$path" -H "Content-Type: $type" -d "$data")
+    for header in "$@"; do args+=(-H "$header"); done
     local out; out=$(curl "${args[@]}")
     STATUS=${out##*$'\n'}; BODY=${out%$'\n'*}
 }
@@ -65,7 +74,28 @@ if curl -sf "$URL/fake-oauth/me" > /dev/null; then
     call POST /social/exchange '' "{\"code\":\"$CODE\"}"; step "15. POST /social/exchange"; expect 200
     SOCIAL=$(printf '%s' "$BODY" | json data.access_token)
     call GET /social/accounts "$SOCIAL"; step "16. GET /social/accounts"; expect 200
-    echo "PASS: registered $EMAIL, verified, logged in with TOTP, created organization $ORG, signed in through the fake provider"
+    SUMMARY="registered $EMAIL, verified, logged in with TOTP, created organization $ORG, signed in through the fake provider"
 else
-    echo "PASS: registered $EMAIL, verified, logged in with TOTP, created organization $ORG"
+    SUMMARY="registered $EMAIL, verified, logged in with TOTP, created organization $ORG"
 fi
+if curl -sf "$URL/.well-known/agent-configuration" > /dev/null; then
+    # The Slim demo's OAuth provider, MCP server and agents: an MCP client lists the tools with a token
+    # exchanged for the MCP resource, then an agent enrols through polaris/agent and leaves a receipt chain.
+    call GET /.well-known/agent-configuration; step "17. GET /.well-known/agent-configuration"; expect 200
+    MCP=$(printf '%s' "$BODY" | json endpoints.mcp)
+    call POST "/orgs/$ORG/oauth/clients" "$ACCESS" '{"name":"Walkthrough MCP client","grant_types":["urn:ietf:params:oauth:grant-type:token-exchange"],"token_endpoint_auth_method":"client_secret_post"}'
+    step "18. POST /orgs/{id}/oauth/clients (a client for the exchange)"; expect 201
+    CLIENT_ID=$(printf '%s' "$BODY" | json data.client_id); CLIENT_SECRET=$(printf '%s' "$BODY" | json data.client_secret)
+    post /oauth2/token application/x-www-form-urlencoded "client_id=$CLIENT_ID&client_secret=$CLIENT_SECRET&grant_type=urn:ietf:params:oauth:grant-type:token-exchange&subject_token=$ACCESS&subject_token_type=urn:ietf:params:oauth:token-type:access_token&resource=$MCP&scope=org.read"
+    step "19. POST /oauth2/token (token exchange for $MCP)"; expect 200
+    MCP_TOKEN=$(printf '%s' "$BODY" | json access_token)
+    post /mcp application/json '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{"_meta":{"io.modelcontextprotocol/protocolVersion":"2026-07-28","io.modelcontextprotocol/clientCapabilities":{}}}}' \
+        "Authorization: Bearer $MCP_TOKEN" 'Accept: application/json' 'MCP-Protocol-Version: 2026-07-28' 'Mcp-Method: tools/list'
+    step "20. POST /mcp tools/list (JSON-RPC, the 2026-07-28 profile)"; expect 200
+    printf '%s' "$BODY" | grep -q '"polaris.auth.me"' || { echo "tools/list did not list polaris.auth.me: $BODY" >&2; exit 1; }
+    call POST /agents/hosts "$ACCESS" '{"name":"Walkthrough laptop"}'; step "21. POST /agents/hosts (the owner; the enrolment token once)"; expect 201
+    ENROLLMENT=$(printf '%s' "$BODY" | json data.enrollment_token)
+    php bin/agent-walkthrough.php "$URL" "$ENROLLMENT" "$ACCESS"
+    SUMMARY="$SUMMARY, listed the MCP tools, enrolled an agent and verified its receipts"
+fi
+echo "PASS: $SUMMARY"

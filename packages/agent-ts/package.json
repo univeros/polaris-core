@@ -1,0 +1,65 @@
+{
+    "name": "@polaris-auth/agent",
+    "version": "0.9.0",
+    "description": "The agent SDK for Polaris for PHP: discover a Polaris server, register or enrol an agent, request grants and wait for approvals, sign request JWTs, execute capabilities and verify receipts. Node and edge, no runtime dependency.",
+    "keywords": [
+        "polaris",
+        "ai-agents",
+        "agent-auth",
+        "agent-sdk",
+        "agentic",
+        "mcp",
+        "model-context-protocol",
+        "oauth2",
+        "token-exchange",
+        "private-key-jwt",
+        "client-credentials",
+        "jwt",
+        "receipts",
+        "capabilities",
+        "typescript",
+        "edge",
+        "webcrypto"
+    ],
+    "homepage": "https://github.com/univeros/polaris-core/tree/main/packages/agent-ts#readme",
+    "bugs": "https://github.com/univeros/polaris-core/issues",
+    "license": "MIT",
+    "author": {
+        "name": "2am.tech",
+        "url": "https://2am.tech"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/univeros/polaris-core.git",
+        "directory": "packages/agent-ts"
+    },
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist",
+        "src"
+    ],
+    "engines": {
+        "node": ">=20"
+    },
+    "scripts": {
+        "generate": "node scripts/generate.mjs",
+        "typecheck": "tsc --noEmit",
+        "build": "tsc -p tsconfig.build.json",
+        "test": "vitest run",
+        "e2e": "vitest run --config vitest.e2e.config.ts"
+    },
+    "devDependencies": {
+        "@types/node": "^22.20.2",
+        "openapi-typescript": "^7.13.0",
+        "typescript": "^5.9.3",
+        "vitest": "^4.1.11"
+    }
+}

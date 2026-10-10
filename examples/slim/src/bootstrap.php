@@ -3,7 +3,11 @@
 declare(strict_types=1);
 
 use Polaris\Admin\AdminPlugin;
+use Polaris\Agents\AgentsPlugin;
+use Polaris\Agents\Capability;
 use Polaris\Audit\AuditPlugin;
+use Polaris\Mcp\McpPlugin;
+use Polaris\OAuth\OAuthPlugin;
 use Polaris\Passkey\PasskeyPlugin;
 use Polaris\Config\EnvironmentConfig;
 use Polaris\Pdo\PdoAdapter;
@@ -25,6 +29,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Factory\AppFactory;
 use Slim\Psr7\Factory\RequestFactory;
 use Slim\Psr7\Factory\ResponseFactory;
+use Slim\Psr7\Factory\ServerRequestFactory;
 use Slim\Psr7\Factory\StreamFactory;
 
 $root = dirname(__DIR__);
@@ -66,6 +71,28 @@ $polaris = Polaris::create(new Config(
             redirectUris: [$baseUrl . '/signed-in'],
         ),
         new PasskeyPlugin(origins: [$baseUrl], rpName: 'Polaris demo'),
+        // The OAuth 2.1 provider: the consent and device pages are the reference HTML in public/; tokens
+        // minted for the MCP resource (<base>/mcp) are accepted on every route.
+        new OAuthPlugin(baseUrl: $baseUrl, consentUrl: $baseUrl . '/consent.html', deviceUrl: $baseUrl . '/device.html', audiences: [$baseUrl . '/mcp']),
+        // Polaris as an MCP server on POST /mcp: a tool per route the token's principal may call.
+        new McpPlugin($baseUrl, new ServerRequestFactory(), new ResponseFactory(), new StreamFactory(), serverName: 'Polaris demo'),
+        // Agents: one low-risk capability, auto-approved for an owner who holds members.read, echoing its arguments;
+        // public/approve.html is where a person decides the approvals the policy does not.
+        new AgentsPlugin(
+            baseUrl: $baseUrl,
+            capabilities: [new Capability(
+                name: 'demo.echo',
+                description: 'Echo the arguments back',
+                input: ['type' => 'object', 'properties' => ['message' => ['type' => 'string']], 'additionalProperties' => false],
+                permission: 'members.read',
+                risk: 'low',
+                handler: static fn(array $arguments): array => ['echo' => $arguments],
+            )],
+            approvalUrl: $baseUrl . '/approve.html',
+            providerName: 'Polaris demo',
+            description: 'The Slim demo of Polaris for PHP',
+            responses: new ResponseFactory(),
+        ),
     ],
 ));
 foreach ($polaris->listeners() as $listener) {

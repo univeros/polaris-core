@@ -11,9 +11,13 @@
                 "symlink": true,
                 "versions": {
                     "polaris/admin": "0.9.x-dev",
+                    "polaris/agent": "0.9.x-dev",
+                    "polaris/agents": "0.9.x-dev",
                     "polaris/audit": "0.9.x-dev",
                     "polaris/cli": "0.9.x-dev",
                     "polaris/core": "0.9.x-dev",
+                    "polaris/mcp": "0.9.x-dev",
+                    "polaris/oauth-provider": "0.9.x-dev",
                     "polaris/passkey": "0.9.x-dev",
                     "polaris/pdo": "0.9.x-dev",
                     "polaris/psr15": "0.9.x-dev",
@@ -27,9 +31,13 @@
         "php": ">=8.3",
         "ext-pdo_sqlite": "*",
         "polaris/admin": "0.9.x-dev",
+        "polaris/agent": "0.9.x-dev",
+        "polaris/agents": "0.9.x-dev",
         "polaris/audit": "0.9.x-dev",
         "polaris/cli": "0.9.x-dev",
         "polaris/core": "0.9.x-dev",
+        "polaris/mcp": "0.9.x-dev",
+        "polaris/oauth-provider": "0.9.x-dev",
         "polaris/passkey": "0.9.x-dev",
         "polaris/pdo": "0.9.x-dev",
         "polaris/psr15": "0.9.x-dev",
@@ -43,6 +51,9 @@
         }
     },
     "config": {
+        "allow-plugins": {
+            "php-http/discovery": false
+        },
         "sort-packages": true
     },
     "minimum-stability": "stable",

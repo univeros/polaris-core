@@ -213,3 +213,47 @@ jobs:
         run: |
           npx playwright install --with-deps chromium
           npm run e2e
+
+  agent-ts:
+    name: Agent SDKs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: openssl, sodium, gd, mbstring, pdo_sqlite, sqlite3
+          coverage: none
+
+      - name: Install and set up the Slim demo (the walkthrough runs against it)
+        working-directory: examples/slim
+        run: |
+          composer install --no-interaction --prefer-dist --no-progress
+          bin/setup
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: packages/agent-ts/package-lock.json
+
+      - name: Generate, drift-check, typecheck and test @polaris-auth/agent
+        working-directory: packages/agent-ts
+        run: |
+          npm ci
+          npm run generate
+          git diff --exit-code -- src
+          npm run typecheck
+          npm test
+
+      - name: Drift-check the PHP SDK's generated route table
+        run: |
+          packages/agent/bin/generate-routes
+          git diff --exit-code -- packages/agent/src/Routes.php
+
+      - name: The enrol-to-receipt walkthrough against the Slim demo
+        working-directory: packages/agent-ts
+        run: npm run e2e
