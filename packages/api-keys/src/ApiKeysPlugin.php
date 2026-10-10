@@ -12,6 +12,7 @@ use Polaris\ApiKeys\Http\Responses;
 use Polaris\Audit\AuditPlugin;
 use Polaris\Audit\Catalog;
 use Polaris\Contract\BearerResolverProvider;
+use Polaris\Event\MemberRemoved;
 use Polaris\Event\OrganizationDeleted;
 use Polaris\Event\UserDeleted;
 use Polaris\Plugin\AbstractPlugin;
@@ -105,13 +106,16 @@ final class ApiKeysPlugin extends AbstractPlugin implements BearerResolverProvid
     {
         self::catalog($graph);
 
-        // An erased user or organization leaves no key behind.
+        // An erased user or organization leaves no key behind; a member who leaves takes the organization's keys they act for.
         return [static function (object $event) use ($graph): void {
             if ($event instanceof UserDeleted) {
                 $graph->get(Keys::class)->deleteForUser($event->userId);
             }
             if ($event instanceof OrganizationDeleted) {
                 $graph->get(Keys::class)->deleteForOrganization($event->organizationId);
+            }
+            if ($event instanceof MemberRemoved) {
+                $graph->get(Keys::class)->deleteForMember($event->organizationId, $event->userId);
             }
         }];
     }

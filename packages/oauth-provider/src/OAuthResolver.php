@@ -74,6 +74,8 @@ final class OAuthResolver implements BearerResolver
         }
         $claims['iat'] = $record->createdAt;
         $claims['exp'] = $record->expiresAt;
+        // The user's re-authentication is theirs, not the client's: a delegate never passes a step-up gate.
+        unset($claims['auth_time']);
 
         return new Token($jwt, [
             ...$claims,

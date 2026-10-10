@@ -373,3 +373,46 @@ entries here when a WP confirms or changes them.
   parameters `request` and `user_code`; and the epoch claims `exp`, `iat`, `nbf`, `auth_time`,
   `updated_at` when integers. The hosts rewrite `Cache-Control` (Laravel answers `no-store, private`), a
   transport header the harnesses already ignore; the tests assert the directive, not the value.
+- 2026-10-10 · WP3 · Security review of the two packages and the seams (before the PR), fixed: (1) core's
+  session parser (`PolarisTokenParser`) refuses a JWT whose header `typ` is not `JWT` and, when no
+  audience is configured, any token naming one: the provider's access tokens (`at+jwt`) and ID tokens
+  (`aud` = the client) are signed with core's key and would otherwise have parsed as sessions, with the
+  user's full authority, everywhere `tokenFactory()` is used (the admin principals, the host guards,
+  multi-session, anonymous, the exchange) — a logged core change that no valid session is affected by;
+  (2) a delegated credential (a token carrying `delegated`: an API key, an OAuth access token) may read
+  and may do what a permission it holds allows, but core's authorization middleware refuses it on a
+  write or destructive route that needs no permission (the self-service ones: enrolling a factor,
+  creating an organization, logging out everywhere, deciding a consent or a device, minting or rotating
+  a key) and on every `step_up` route — so a stolen key or token cannot turn itself into a wider,
+  durable grant, nor add credentials; (3) `Gate::authority()` drops the `superadmin` role from a
+  delegated authority (the escalation and cross-organization exemptions do not follow a key or a
+  token); (4) the provider's resolver drops `auth_time` (a client never passes a step-up gate as the
+  person); (5) CIMD and `jwks_uri` share one validator: https on port 443 only, no credentials in the
+  URL, a trailing dot stripped, numeric hosts in any spelling refused, and the fetch error answered
+  generically (the reason is not an oracle for internal hosts); the metadata document is cached only
+  once it validated; a metadata client may only act for a user (no `client_credentials`, no exchange);
+  (6) a redirect URI's custom scheme must be a reverse-domain name (`com.example.app`), never
+  `javascript`, `data`, `vbscript`, `file`, `blob` or `about`; (7) the backchannel grant (CIBA) is
+  granted by an operator only: it reaches people by their email, so an organization cannot give it to
+  itself; (8) an authorization code presented twice revokes the tokens its first redemption issued (the
+  family is the code, RFC 9700 §4.5); (9) a DPoP-bound subject token cannot be unbound through an
+  exchange (the proof is required and the exchanged token stays bound); (10) introspection is for
+  clients that authenticate (RFC 7662 §2.1); (11) the DPoP replay key is the thumbprint and the `jti`
+  (a client cannot burn another's), the assertion replay entry is capped at ten minutes, the
+  authorization request's parameters are bounded and its id validated before the cache is asked, the
+  fetched body is read up to the limit rather than whole; (12) a member who leaves takes the
+  organization's keys they act for (`MemberRemoved`), and another admin rotates a creator's key only
+  within what they hold themselves. · Kept as residual risks, with the reason: the metadata host name is
+  not resolved (a public name that resolves to a private address is the host network's egress policy;
+  the PSR-18 client is the host's); the one-use reads on the PSR-16 cache are a get then a set (as sso's
+  and the WP2 entry; an atomic `add` where the cache offers one is the upgrade); device user codes are
+  stored in clear and have no attempt counter (2.6e10 of space behind the authenticated budget); refresh
+  and exchange do not recheck the user's status (the resolver does at every use); a consent is keyed by
+  the client id, so a CIMD client inherits its earlier consent after a document change (the host's
+  consent page shows the host name); the CIBA `unknown_user_id` answer is the standard's and now needs
+  an operator's client; API keys survive a password change or a logout everywhere (revocation is the
+  control, as decided); `resource` is accepted verbatim (an `aud` for any URL, as RFC 8707 allows).
+  · Rejected: a `delegable: true` opt-in per route (every self-service write would have to be audited
+  for it; the effect-based rule needs no annotation and the permissioned routes stay delegable);
+  refusing delegated tokens on every permissionless route (`/auth/me`, the reads, are what a key is for);
+  a DPoP server nonce (as before).

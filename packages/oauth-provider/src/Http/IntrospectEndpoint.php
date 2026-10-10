@@ -9,6 +9,7 @@ use Polaris\Http\Input;
 use Polaris\Http\Result;
 use Polaris\OAuth\Clients;
 use Polaris\OAuth\Discovery;
+use Polaris\OAuth\Model\Client;
 use Polaris\OAuth\OAuthException;
 use Polaris\OAuth\Tokens;
 
@@ -26,7 +27,10 @@ final class IntrospectEndpoint extends OAuthEndpoint
     public function __invoke(Input $input): Result
     {
         try {
-            $this->authenticatedClient($this->clients, $this->discovery, $input, '/oauth2/introspect');
+            $client = $this->authenticatedClient($this->clients, $this->discovery, $input, '/oauth2/introspect');
+            if ($client->tokenEndpointAuthMethod === Client::AUTH_NONE) {
+                throw new OAuthException(OAuthException::INVALID_CLIENT, 'Introspection is for clients that authenticate (RFC 7662 §2.1).', 401);
+            }
             $token = self::text($input, 'token');
             if ($token === null) {
                 throw new OAuthException(OAuthException::INVALID_REQUEST, 'token is required.');

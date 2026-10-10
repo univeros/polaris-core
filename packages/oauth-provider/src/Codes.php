@@ -78,6 +78,7 @@ final class Codes
      * Spends the code for the client, redirect URI and verifier it was issued against.
      *
      * @throws OAuthException `invalid_grant`
+     * @throws CodeReused the code was spent before: the caller revokes the family it issued
      */
     public function consume(#[SensitiveParameter] string $code, Client $client, ?string $redirectUri, ?string $verifier): Code
     {
@@ -87,6 +88,10 @@ final class Codes
         }
         $stored = self::hydrate($row);
         $now = $this->clock->now();
+        if ($stored->usedAt !== null) {
+            // RFC 9700 §4.5: a code presented twice is a leak; the tokens it produced go with it.
+            throw new CodeReused($stored->id);
+        }
         if ($stored->clientId !== $client->clientId) {
             throw new OAuthException(OAuthException::INVALID_GRANT, 'The authorization code was issued to another client.');
         }

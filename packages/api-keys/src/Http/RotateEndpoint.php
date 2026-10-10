@@ -15,6 +15,9 @@ use Polaris\Http\Result;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
+use function array_fill_keys;
+use function sprintf;
+
 use const DATE_ATOM;
 
 /**
@@ -40,6 +43,15 @@ final class RotateEndpoint extends ApiKeysEndpoint
         }
         try {
             $key = $this->manageable($this->keys, $input, $token, $this->gate);
+            if ($key->createdBy !== $this->actorId($token)) {
+                // The successor acts as the creator: another admin may rotate it only within what they hold themselves.
+                $held = array_fill_keys($this->held($token, $this->gate, $key->organizationId), true);
+                foreach ($key->permissions as $permission) {
+                    if (!isset($held[$permission])) {
+                        throw new ApiKeyException(ApiKeyException::PERMISSION_NOT_HELD, sprintf('The key holds "%s", which you do not; its creator rotates it.', $permission));
+                    }
+                }
+            }
             $issued = $this->keys->rotate($key);
         } catch (ApiKeyException $exception) {
             return $this->refuse($exception);

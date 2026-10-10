@@ -235,6 +235,14 @@ final class Keys
         $this->database->delete(Schema::KEYS, ['created_by' => $userId]);
     }
 
+    /**
+     * A member who leaves takes the organization's keys they act for with them.
+     */
+    public function deleteForMember(string $organizationId, string $userId): void
+    {
+        $this->database->delete(Schema::KEYS, ['owner_type' => ApiKey::OWNER_ORGANIZATION, 'owner_id' => $organizationId, 'created_by' => $userId]);
+    }
+
     public function deleteForOrganization(string $organizationId): void
     {
         $this->database->delete(Schema::KEYS, ['organization_id' => $organizationId]);

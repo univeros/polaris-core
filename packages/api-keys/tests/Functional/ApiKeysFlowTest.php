@@ -59,8 +59,11 @@ final class ApiKeysFlowTest extends ApiKeysTestCase
         // Permissions are bounded by the owner's: an unknown one and one the owner lacks are refused.
         $this->problem($this->authedPostJson('/api-keys', ['name' => 'x', 'permissions' => ['users.manage']], $session), 403, 'api_keys_permission_not_held');
         $this->problem($this->authedPostJson('/api-keys', ['name' => 'x', 'permissions' => ['nothing.here']], $session), 422, 'api_keys_invalid_input');
-        // A key cannot delegate more than it holds either.
-        $this->problem($this->authedPostJson('/api-keys', ['name' => 'from a key', 'permissions' => ['members.read']], $secret), 403, 'api_keys_permission_not_held');
+        // A key cannot mint keys, nor call any other self-service write route (core's delegation rule).
+        $minted = $this->authedPostJson('/api-keys', ['name' => 'from a key', 'permissions' => ['org.read']], $secret);
+        self::assertSame([403, 'forbidden'], [$minted->getStatusCode(), $this->json($minted)['error']]);
+        self::assertSame(403, $this->authedPostJson('/orgs', ['name' => 'From a key'], $secret)->getStatusCode(), 'no organization from a key');
+        self::assertSame(403, $this->authedPostJson('/auth/mfa/totp/enroll', [], $secret)->getStatusCode(), 'no factor from a key');
 
         // Verify, for an app that proxies.
         $verified = $this->json($this->authedPostJson('/api-keys/verify', ['key' => $secret], $session))['data'];

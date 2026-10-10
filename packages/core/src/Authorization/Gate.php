@@ -54,7 +54,7 @@ final readonly class Gate
      *
      * A token a plugin's bearer resolver built for a delegate (an API key, an OAuth client, an agent)
      * carries {@see self::DELEGATED}, the permissions the owner delegated: the authority's scope is the
-     * intersection, the roles stay the owner's. Core's own access tokens never carry it, and a resolver
+     * intersection, the roles stay the owner's without the `superadmin` override. Core's own access tokens never carry it, and a resolver
      * sets it in-process, so a claim on the wire cannot widen anything.
      */
     public function authority(TokenInterface $token): ResolvedAuthority
@@ -70,7 +70,11 @@ final readonly class Gate
         }
         $allowed = array_fill_keys(array_filter($delegated, is_string(...)), true);
 
-        return new ResolvedAuthority($authority->roles, array_values(array_filter($authority->scope, static fn(string $permission): bool => isset($allowed[$permission]))));
+        // The global override is the owner's, not the delegate's: a superadmin's key or token acts within
+        // its list only, and the cross-organization and escalation exemptions do not follow it.
+        $roles = array_values(array_filter($authority->roles, static fn(string $role): bool => $role !== PermissionCatalog::ROLE_SUPERADMIN));
+
+        return new ResolvedAuthority($roles, array_values(array_filter($authority->scope, static fn(string $permission): bool => isset($allowed[$permission]))));
     }
 
     public function allowsAuthority(ResolvedAuthority $authority, string ...$permissions): bool

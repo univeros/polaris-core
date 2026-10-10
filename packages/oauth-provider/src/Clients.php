@@ -17,6 +17,7 @@ use Throwable;
 
 use function array_filter;
 use function array_key_exists;
+use function array_intersect;
 use function array_is_list;
 use function array_unique;
 use function array_values;
@@ -30,12 +31,16 @@ use function is_int;
 use function is_string;
 use function json_decode;
 use function json_encode;
+use function lcfirst;
 use function max;
+use function min;
 use function mb_strlen;
 use function parse_url;
 use function preg_match;
 use function random_bytes;
+use function rtrim;
 use function sprintf;
+use function str_contains;
 use function str_ends_with;
 use function str_starts_with;
 use function strtolower;
@@ -232,12 +237,12 @@ final class Clients
         self::assertPublicHttpsUrl($url);
         $key = self::METADATA_CACHE . hash('sha256', $url);
         $document = $this->cache->get($key);
-        if (!is_array($document)) {
+        $fetched = !is_array($document);
+        if ($fetched) {
             $document = $this->fetch->json($url, OAuthException::INVALID_CLIENT_METADATA);
             if (($document['client_id'] ?? null) !== $url) {
                 throw new OAuthException(OAuthException::INVALID_CLIENT_METADATA, 'The document\'s client_id must be its own URL.');
             }
-            $this->cache->set($key, $document, self::METADATA_TTL);
         }
         $client = new Client();
         $client->clientId = $url;
@@ -255,6 +260,10 @@ final class Clients
         if (!in_array($client->tokenEndpointAuthMethod, [Client::AUTH_NONE, Client::AUTH_PRIVATE_KEY_JWT], true)) {
             throw new OAuthException(OAuthException::INVALID_CLIENT_METADATA, 'A metadata client authenticates with none or private_key_jwt.');
         }
+        if ($fetched) {
+            // Cached once it validated, so a bad document is not served from the cache.
+            $this->cache->set($key, $document, self::METADATA_TTL);
+        }
 
         return $client;
     }
@@ -262,23 +271,28 @@ final class Clients
     /**
      * @throws OAuthException `invalid_client_metadata`
      */
-    public static function assertPublicHttpsUrl(string $url): void
+    public static function assertPublicHttpsUrl(string $url, string $what = 'A client ID metadata URL'): void
     {
         $host = parse_url($url, PHP_URL_HOST);
-        if (parse_url($url, PHP_URL_SCHEME) !== 'https' || !is_string($host) || $host === '' || !is_string(parse_url($url, PHP_URL_PATH)) || preg_match('/[#]/', $url) === 1) {
-            throw new OAuthException(OAuthException::INVALID_CLIENT_METADATA, 'A client ID metadata URL is https, with a host and a path, without a fragment.');
+        $port = parse_url($url, PHP_URL_PORT);
+        if (parse_url($url, PHP_URL_SCHEME) !== 'https' || !is_string($host) || $host === '' || !is_string(parse_url($url, PHP_URL_PATH)) || preg_match('/[#@]/', $url) === 1 || ($port !== null && $port !== 443)) {
+            throw new OAuthException(OAuthException::INVALID_CLIENT_METADATA, $what . ' is https on port 443, with a host and a path, without credentials or a fragment.');
         }
-        $host = strtolower(trim($host, '[]'));
-        if (filter_var($host, FILTER_VALIDATE_IP) !== false) {
-            if (filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) === false || str_starts_with($host, '::ffff:')) {
-                throw new OAuthException(OAuthException::INVALID_CLIENT_METADATA, 'A special-use address cannot host a client ID metadata document.');
+        $host = strtolower(rtrim(trim($host, '[]'), '.'));
+        // A numeric host in any spelling (`2130706433`, `0x7f.1`, `0177.0.0.1`) is an address a resolver would
+        // read differently from this check; only dotted-quad and IPv6 literals are judged, the rest refused.
+        $numeric = preg_match('/^(0x[0-9a-f]+|[0-9]+)(\.(0x[0-9a-f]+|[0-9]+))*$/i', $host) === 1;
+        if ($numeric || filter_var($host, FILTER_VALIDATE_IP) !== false) {
+            $public = filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false;
+            if (!$public || str_starts_with($host, '::ffff:') || ($numeric && preg_match('/^(\d{1,3}\.){3}\d{1,3}$/', $host) !== 1)) {
+                throw new OAuthException(OAuthException::INVALID_CLIENT_METADATA, 'A special-use or numeric address cannot host ' . lcfirst($what) . '.');
             }
 
             return;
         }
         foreach (self::SPECIAL_HOSTS as $special) {
             if ($host === trim($special, '.') || str_ends_with($host, $special)) {
-                throw new OAuthException(OAuthException::INVALID_CLIENT_METADATA, 'A special-use name cannot host a client ID metadata document.');
+                throw new OAuthException(OAuthException::INVALID_CLIENT_METADATA, 'A special-use name cannot host ' . lcfirst($what) . '.');
             }
         }
     }
@@ -347,7 +361,14 @@ final class Clients
             $client->jwks = $jwks;
         }
         if (array_key_exists('jwks_uri', $fields)) {
-            $client->jwksUri = $fields['jwks_uri'] === null ? null : self::uris([$fields['jwks_uri']], 'jwks_uri', false, $invalid)[0];
+            $jwksUri = $fields['jwks_uri'];
+            if ($jwksUri !== null) {
+                if (!is_string($jwksUri)) {
+                    throw $invalid('jwks_uri is a URL.');
+                }
+                self::assertPublicHttpsUrl($jwksUri, 'jwks_uri');
+            }
+            $client->jwksUri = $jwksUri;
         }
         foreach (['logo_uri' => 'logoUri', 'client_uri' => 'clientUri', 'policy_uri' => 'policyUri', 'tos_uri' => 'tosUri'] as $field => $property) {
             if (array_key_exists($field, $fields)) {
@@ -388,6 +409,12 @@ final class Clients
         if ($client->dpopBound && $this->settings->dpop === Settings::DPOP_OFF) {
             throw $invalid('DPoP is off on this server.');
         }
+        if (!$mayTrust && in_array(self::GRANT_CIBA, $client->grantTypes, true)) {
+            throw $invalid('The backchannel grant (CIBA) reaches people by name; an operator grants it.');
+        }
+        if ($client->isMetadataClient() && array_intersect($client->grantTypes, [self::GRANT_CLIENT, self::GRANT_EXCHANGE]) !== []) {
+            throw $invalid('A client described by a metadata document may only act for a user (authorization_code, refresh_token, device_code).');
+        }
     }
 
     /**
@@ -411,6 +438,11 @@ final class Clients
             }
             if (!$redirect && $scheme !== 'https') {
                 throw $invalid($field . ' must be https.');
+            }
+            // A redirect URI is https, http on loopback, or an application's own reverse-domain scheme
+            // (`com.example.app:/cb`); a scheme a browser would run or open (`javascript`, `data`, ...) is not.
+            if ($redirect && !in_array($scheme, ['https', 'http'], true) && (!str_contains($scheme, '.') || in_array($scheme, ['javascript', 'data', 'vbscript', 'file', 'blob', 'about'], true))) {
+                throw $invalid($field . ': a custom scheme must be a reverse-domain name such as com.example.app.');
             }
             $out[] = $uri;
         }
@@ -458,7 +490,7 @@ final class Clients
         if ($jti === '' || $this->cache->get($replayKey) !== null) {
             throw new OAuthException(OAuthException::INVALID_CLIENT, 'The client assertion needs a jti, and one not used before.', 401);
         }
-        $this->cache->set($replayKey, 1, max(60, $claims['exp'] - $this->clock->now()->getTimestamp() + 60));
+        $this->cache->set($replayKey, 1, min(600, max(60, $claims['exp'] - $this->clock->now()->getTimestamp() + 60)));
 
         return $client;
     }
@@ -477,6 +509,7 @@ final class Clients
             return $jwks;
         }
         $uri = (string) $client->jwksUri;
+        self::assertPublicHttpsUrl($uri, 'jwks_uri');
         $key = self::JWKS_CACHE . hash('sha256', $uri);
         $cached = $this->cache->get($key);
         if (is_array($cached) && is_array($cached['keys'] ?? null)) {

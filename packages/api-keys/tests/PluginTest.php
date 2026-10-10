@@ -28,6 +28,7 @@ use Polaris\Audit\Catalog;
 use Polaris\Authorization\Gate;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\Secrets;
+use Polaris\Event\MemberRemoved;
 use Polaris\Event\UserDeleted;
 use Polaris\Exception\AuthorizationTokenException;
 use Polaris\Model\User;
@@ -192,6 +193,10 @@ final class PluginTest extends TestCase
         $keys->create(ApiKey::OWNER_ORGANIZATION, 'org-1', 'org-1', $user->id, 'org key', [], []);
         self::assertCount(2, $keys->forOwner(ApiKey::OWNER_USER, $user->id));
 
+        $this->events->dispatch(new MemberRemoved('org-1', $user->id, 'admin-1'));
+        self::assertSame([], $keys->forOwner(ApiKey::OWNER_ORGANIZATION, 'org-1'), 'a member who leaves takes the organization keys they act for');
+        self::assertCount(2, $keys->forOwner(ApiKey::OWNER_USER, $user->id), 'their own keys stay');
+        $keys->create(ApiKey::OWNER_ORGANIZATION, 'org-1', 'org-1', $user->id, 'org key again', [], []);
         $this->events->dispatch(new UserDeleted($user->id, 'admin-1'));
         self::assertSame([], $keys->forOwner(ApiKey::OWNER_USER, $user->id));
         self::assertSame([], $keys->forOwner(ApiKey::OWNER_ORGANIZATION, 'org-1'), 'the organization key the user acted for goes too');

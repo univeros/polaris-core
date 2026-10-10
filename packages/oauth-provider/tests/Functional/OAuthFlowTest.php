@@ -78,7 +78,6 @@ final class OAuthFlowTest extends OAuthTestCase
         self::assertSame([$userId, $client['client_id'], 'openid email org.read', self::BASE, $orgId], [$claims['sub'], $claims['client_id'], $claims['scope'], $claims['aud'], $claims['org']]);
         $idToken = self::claims($tokens['id_token']);
         self::assertSame([$userId, $client['client_id'], 'n-1', 'ada@example.com', true], [$idToken['sub'], $idToken['aud'], $idToken['nonce'], $idToken['email'], $idToken['email_verified']]);
-        $this->problem($this->form('/oauth2/token', ['grant_type' => 'authorization_code', 'code' => $code, 'redirect_uri' => self::REDIRECT, 'code_verifier' => $verifier], ['Authorization' => self::basic($client['client_id'], $secret)]), 400, 'invalid_grant', 'a code is spent once');
 
         // Scopes are permissions: org.read was granted, members.read was not; the owner's own session is untouched.
         $access = (string) $tokens['access_token'];
@@ -86,6 +85,15 @@ final class OAuthFlowTest extends OAuthTestCase
         self::assertSame(403, $this->authedGet('/orgs/' . $orgId . '/members', $access)->getStatusCode());
         self::assertSame(200, $this->authedGet('/orgs/' . $orgId . '/members', $session)->getStatusCode());
         self::assertSame($userId, $this->json($this->authedGet('/auth/me', $access))['data']['id']);
+        // A delegate reads and uses its permissions; it decides nothing for the person and adds no credential.
+        self::assertSame(403, $this->authedPostJson('/orgs', ['name' => 'From a token'], $access)->getStatusCode(), 'a self-service write needs the session');
+        self::assertSame(403, $this->authedPostJson('/auth/mfa/totp/enroll', [], $access)->getStatusCode());
+        self::assertSame(403, $this->authedPostJson('/auth/logout-all', [], $access)->getStatusCode(), 'nor end the person\'s sessions');
+        self::assertSame(403, $this->authedPostJson('/auth/mfa/recovery-codes/regenerate', [], $access)->getStatusCode(), 'a step-up route');
+        [, $probe] = Keys::pkce();
+        $parked = $this->json($this->authorize([...$query, 'code_challenge' => $probe]))['data'];
+        self::assertSame(403, $this->authedPostJson('/oauth2/authorize/decision', ['request' => $parked['request'], 'approve' => true], $access)->getStatusCode(), 'a token cannot consent for the user');
+        self::assertSame(401, $this->authedGet('/auth/me', (string) $tokens['id_token'])->getStatusCode(), 'an ID token is not a session');
         $userinfo = $this->json($this->authedGet('/oauth2/userinfo', $access));
         self::assertSame([$userId, 'ada@example.com'], [$userinfo['sub'], $userinfo['email']]);
         self::assertArrayNotHasKey('name', $userinfo, 'no profile scope');
@@ -124,11 +132,29 @@ final class OAuthFlowTest extends OAuthTestCase
         self::assertSame([AuditNames::CLIENT_CREATED => 1, AuditNames::CONSENT_GRANTED => 2, AuditNames::CONSENT_REVOKED => 1, AuditNames::REFRESH_REUSED => 2, AuditNames::TOKEN_ISSUED => 3, AuditNames::TOKEN_REVOKED => 1], $names);
     }
 
+    public function testACodePresentedTwiceRevokesTheTokensItIssued(): void
+    {
+        [, $session] = $this->login('ada@example.com');
+        [$orgId, $session] = $this->organization($session, 'Acme');
+        $client = $this->client($session, $orgId, ['token_endpoint_auth_method' => 'client_secret_post']);
+        $auth = ['client_id' => $client['client_id'], 'client_secret' => $client['client_secret']];
+        [$verifier, $challenge] = Keys::pkce();
+        $started = $this->json($this->authorize(['response_type' => 'code', 'client_id' => $client['client_id'], 'redirect_uri' => self::REDIRECT, 'scope' => 'org.read', 'code_challenge' => $challenge, 'code_challenge_method' => 'S256']))['data'];
+        $code = self::param($this->json($this->authedPostJson('/oauth2/authorize/decision', ['request' => $started['request'], 'approve' => true], $session))['data']['redirect_to'], 'code');
+        $tokens = $this->json($this->form('/oauth2/token', [...$auth, 'grant_type' => 'authorization_code', 'code' => $code, 'redirect_uri' => self::REDIRECT, 'code_verifier' => $verifier]));
+        self::assertSame(200, $this->authedGet('/orgs/' . $orgId, (string) $tokens['access_token'])->getStatusCode());
+        $this->problem($this->form('/oauth2/token', [...$auth, 'grant_type' => 'authorization_code', 'code' => $code, 'redirect_uri' => self::REDIRECT, 'code_verifier' => $verifier]), 400, 'invalid_grant', 'the second redemption');
+        self::assertSame(401, $this->authedGet('/orgs/' . $orgId, (string) $tokens['access_token'])->getStatusCode(), 'the access token the first redemption issued');
+        $this->problem($this->form('/oauth2/token', [...$auth, 'grant_type' => 'refresh_token', 'refresh_token' => $tokens['refresh_token']]), 400, 'invalid_grant', 'and its refresh token');
+    }
+
     public function testClientCredentialsDeviceFlowBackchannelAndTokenExchange(): void
     {
         [$userId, $session] = $this->login('ada@example.com');
         [$orgId, $session] = $this->organization($session, 'Acme');
-        $client = $this->client($session, $orgId, ['grant_types' => [Clients::GRANT_CLIENT, Clients::GRANT_DEVICE, Clients::GRANT_CIBA, Clients::GRANT_EXCHANGE, Clients::GRANT_REFRESH], 'token_endpoint_auth_method' => 'client_secret_post']);
+        $this->problem($this->authedPostJson('/orgs/' . $orgId . '/oauth/clients', ['name' => 'Bot', 'grant_types' => [Clients::GRANT_CIBA]], $session), 400, 'invalid_client_metadata', 'an organization cannot grant itself CIBA');
+        $this->graph->get(Grants::class)->grant($userId, Role::Owner);
+        $client = $this->json($this->authedPostJson('/admin/oauth/clients', ['name' => 'Acme bot', 'organization_id' => $orgId, 'grant_types' => [Clients::GRANT_CLIENT, Clients::GRANT_DEVICE, Clients::GRANT_CIBA, Clients::GRANT_EXCHANGE, Clients::GRANT_REFRESH], 'token_endpoint_auth_method' => 'client_secret_post'], $session))['data'];
         $auth = ['client_id' => $client['client_id'], 'client_secret' => $client['client_secret']];
 
         // Client credentials: a token for the client itself, for a resource.
@@ -218,6 +244,12 @@ final class OAuthFlowTest extends OAuthTestCase
         $refreshed = $this->json($this->form('/oauth2/token', [...$auth, 'grant_type' => 'refresh_token', 'refresh_token' => $issued['refresh_token']], ['DPoP' => $this->keys->dpopProof('POST', $tokenUrl)]));
         self::assertSame(['jkt' => $this->keys->dpopThumbprint()], self::claims($refreshed['access_token'])['cnf']);
         self::assertSame($userId, self::claims($refreshed['access_token'])['sub']);
+        // An exchange of the bound token without its proof is refused; with it, the exchanged token stays bound.
+        $exchangeClient = $this->client($session, $orgId, ['grant_types' => [Clients::GRANT_EXCHANGE], 'token_endpoint_auth_method' => 'client_secret_post']);
+        $exchangeAuth = ['client_id' => $exchangeClient['client_id'], 'client_secret' => $exchangeClient['client_secret'], 'grant_type' => Clients::GRANT_EXCHANGE, 'subject_token' => $refreshed['access_token'], 'subject_token_type' => 'urn:ietf:params:oauth:token-type:access_token'];
+        $this->problem($this->form('/oauth2/token', $exchangeAuth), 400, 'invalid_dpop_proof', 'unbinding through an exchange');
+        $exchanged = $this->json($this->form('/oauth2/token', $exchangeAuth, ['DPoP' => $this->keys->dpopProof('POST', $tokenUrl)]));
+        self::assertSame(['jkt' => $this->keys->dpopThumbprint()], self::claims($exchanged['access_token'])['cnf']);
     }
 
     public function testDiscoveryTrustedClientsMetadataDocumentsAndAdministration(): void
@@ -254,6 +286,7 @@ final class OAuthFlowTest extends OAuthTestCase
         $tokens = $this->json($this->form('/oauth2/token', ['grant_type' => 'authorization_code', 'client_id' => $trusted['client_id'], 'code' => self::param($redirect, 'code'), 'redirect_uri' => self::REDIRECT, 'code_verifier' => $verifier]));
         self::assertSame($userId, self::claims($tokens['access_token'])['sub']);
         self::assertSame([], $this->json($this->authedGet('/oauth2/consents', $session))['data'], 'nothing recorded for a trusted client');
+        $this->problem($this->form('/oauth2/introspect', ['token' => $tokens['access_token'], 'client_id' => $trusted['client_id']]), 401, 'invalid_client', 'a public client cannot introspect');
         self::assertSame('Ada', self::claims($tokens['id_token'])['name'] ?? 'Ada', 'profile scope');
 
         // A client ID metadata document: fetched, validated, cached; special-use hosts refused.

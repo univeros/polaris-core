@@ -37,6 +37,11 @@ core seams.
 - The Slim demo: `consent.html` and `device.html`, the reference consent and device pages.
 
 ### Changed
+- `polaris/core`: the session parser refuses a JWT whose header `typ` is not `JWT`, and a token naming an
+  audience when none is configured (the provider's access and ID tokens are signed with core's key); a
+  delegated credential (an API key, an OAuth access token) is refused by the authorization middleware on a
+  write or destructive route that needs no permission and on every step-up route, and a delegated
+  authority drops the `superadmin` role.
 - Core's test normaliser masks the two packages' per-run values (`hint`, `client_id`, `client_secret`,
   `user_code`, `device_code`, `request`, `id_token`, `auth_req_id`; the `request` and `user_code` query
   parameters; integer `exp`, `iat`, `nbf`, `auth_time`, `updated_at`).

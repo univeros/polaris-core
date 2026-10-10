@@ -91,13 +91,14 @@ final class Dpop
         if ($accessToken !== null && ($claims['ath'] ?? null) !== Jwt::base64UrlEncode(hash('sha256', $accessToken, true))) {
             throw $this->invalid('The proof is not bound to the access token presented.');
         }
-        $replayKey = self::REPLAY_PREFIX . hash('sha256', $jti);
+        $thumbprint = Jwt::thumbprint($jwk);
+        $replayKey = self::REPLAY_PREFIX . hash('sha256', $thumbprint . '|' . $jti);
         if ($this->cache->get($replayKey) !== null) {
             throw $this->invalid('The proof was already used.');
         }
         $this->cache->set($replayKey, 1, self::MAX_AGE * 2);
 
-        return Jwt::thumbprint($jwk);
+        return $thumbprint;
     }
 
     /**

@@ -16,12 +16,14 @@ use Polaris\Audit\AuditPlugin;
 use Polaris\Audit\Catalog;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\Secrets;
+use Polaris\Exception\InvalidTokenException;
 use Polaris\Model\User;
 use Polaris\OAuth\AuditNames;
 use Polaris\OAuth\Authorization;
 use Polaris\OAuth\Ciba;
 use Polaris\OAuth\ClientCredentials;
 use Polaris\OAuth\Clients;
+use Polaris\OAuth\CodeReused;
 use Polaris\OAuth\Codes;
 use Polaris\OAuth\Consents;
 use Polaris\OAuth\Devices;
@@ -156,6 +158,18 @@ final class PluginTest extends TestCase
         $verified = $jwt->verify($minted, 'at+jwt');
         self::assertSame(['u1', [self::BASE, 'https://api.test'], 'org.read', 'test'], [$verified['claims']['sub'], $verified['claims']['aud'], $verified['claims']['scope'], $verified['headers']['kid']]);
         $this->refused(static fn() => $jwt->verify($minted, 'JWT'), OAuthException::INVALID_TOKEN, 'wrong typ');
+        // Core's session parser refuses what the provider signs with the same key: an access token (its typ) and an ID token (its audience).
+        $idToken = $jwt->mint(['sub' => 'u1', 'jti' => 'j2', 'aud' => 'client-1'], $this->clock->now()->modify('+1 hour'));
+        foreach ([$minted, $idToken] as $foreign) {
+            try {
+                $graph->tokenParser()->parse($foreign);
+                self::fail('not a session');
+            } catch (InvalidTokenException) {
+                self::addToAssertionCount(1);
+            }
+        }
+        $session = $graph->tokenGenerator()->generate(['sub' => 'u1', 'jti' => 'j3']);
+        self::assertSame('u1', $graph->tokenParser()->parse($session)->getMetadata('sub'), 'a session still parses');
         $this->clock->advance('+2 hours');
         $this->refused(static fn() => $jwt->verify($minted), OAuthException::INVALID_TOKEN, 'expired');
     }
@@ -177,10 +191,10 @@ final class PluginTest extends TestCase
 
     public function testMetadataUrlsMustBePublicHttpsWithAPath(): void
     {
-        foreach (['https://client.example.com/app', 'https://client.example.com:8443/app/client.json', 'https://[2001:4860::8888]/a'] as $ok) {
+        foreach (['https://client.example.com/app', 'https://client.example.com:443/app/client.json', 'https://[2001:4860::8888]/a'] as $ok) {
             Clients::assertPublicHttpsUrl($ok);
         }
-        foreach (['http://client.example/app', 'https://client.example', 'https://localhost/app', 'https://app.localhost/x', 'https://10.1.2.3/app', 'https://127.0.0.1/app', 'https://[::1]/app', 'https://[fd00::1]/app', 'https://169.254.1.1/app', 'https://192.168.0.5/app', 'https://box.local/app', 'https://svc.internal/app', 'https://foo.home.arpa/app', 'https://x.onion/app', 'https://a.test/app', 'https://client.example.com/app#frag', 'https://client.example/app'] as $bad) {
+        foreach (['http://client.example/app', 'https://client.example', 'https://localhost/app', 'https://app.localhost/x', 'https://10.1.2.3/app', 'https://127.0.0.1/app', 'https://[::1]/app', 'https://[fd00::1]/app', 'https://169.254.1.1/app', 'https://192.168.0.5/app', 'https://box.local/app', 'https://svc.internal/app', 'https://foo.home.arpa/app', 'https://x.onion/app', 'https://a.test/app', 'https://client.example.com/app#frag', 'https://client.example/app', 'https://client.example.com:8443/app', 'https://localhost./app', 'https://2130706433/app', 'https://0x7f.1/app', 'https://user@client.example.com/app'] as $bad) {
             $this->refused(static fn() => Clients::assertPublicHttpsUrl($bad), OAuthException::INVALID_CLIENT_METADATA, $bad);
         }
         self::addToAssertionCount(3);
@@ -216,7 +230,12 @@ final class PluginTest extends TestCase
         $this->refused(static fn() => $codes->consume($code, $client, 'https://cli.test/cb', 'short'), OAuthException::INVALID_GRANT, 'bad verifier');
         $stored = $codes->consume($code, $client, 'https://cli.test/cb', $verifier);
         self::assertSame(['org.read'], $stored->scopes);
-        $this->refused(static fn() => $codes->consume($code, $client, 'https://cli.test/cb', $verifier), OAuthException::INVALID_GRANT, 'spent');
+        try {
+            $codes->consume($code, $client, 'https://cli.test/cb', $verifier);
+            self::fail('spent');
+        } catch (CodeReused $reused) {
+            self::assertSame($stored->id, $reused->codeId, 'the replay names the code, so its family can be revoked');
+        }
         $late = $codes->issue($client, $user->id, null, [], 'https://cli.test/cb', $challenge, null, null, null, null);
         $this->clock->advance('+11 minutes');
         $this->refused(static fn() => $codes->consume($late, $client, 'https://cli.test/cb', $verifier), OAuthException::INVALID_GRANT, 'expired');

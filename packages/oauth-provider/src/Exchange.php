@@ -52,6 +52,9 @@ final class Exchange
             throw new OAuthException(OAuthException::INVALID_TARGET, 'resource must be an absolute URI.');
         }
         $subject = $this->subject($subjectToken);
+        if ($subject['jkt'] !== null && $subject['jkt'] !== $dpopJkt) {
+            throw new OAuthException(OAuthException::INVALID_DPOP_PROOF, 'The subject token is bound to a DPoP key; prove it, and the exchanged token stays bound to it.');
+        }
         $scopes = $requested === null ? $subject['scopes'] : ($subject['scopes'] === null ? $this->scopes->parse(Scopes::join($requested), $client) : Scopes::within($requested, $subject['scopes']));
         $actor = ['client_id' => $client->clientId];
         if ($actorToken !== null) {
@@ -75,7 +78,7 @@ final class Exchange
      * What a subject or actor token says: a session's access token (core's parser) or one of this
      * provider's (live in the token table).
      *
-     * @return array{sub: string, user: string|null, org: string|null, client_id: string|null, scopes: list<string>|null, act: array<string, mixed>|null, auth_time: int|null}
+     * @return array{sub: string, user: string|null, org: string|null, client_id: string|null, scopes: list<string>|null, act: array<string, mixed>|null, auth_time: int|null, jkt: string|null}
      * @throws OAuthException `invalid_grant`
      */
     private function subject(string $token): array
@@ -88,7 +91,7 @@ final class Exchange
                 throw new OAuthException(OAuthException::INVALID_GRANT, 'The subject token is revoked or unknown.');
             }
 
-            return ['sub' => (string) ($claims['sub'] ?? ''), 'user' => $record->userId, 'org' => $record->organizationId, 'client_id' => $record->clientId, 'scopes' => $record->scopes, 'act' => $record->actor, 'auth_time' => $record->authTime];
+            return ['sub' => (string) ($claims['sub'] ?? ''), 'user' => $record->userId, 'org' => $record->organizationId, 'client_id' => $record->clientId, 'scopes' => $record->scopes, 'act' => $record->actor, 'auth_time' => $record->authTime, 'jkt' => $record->dpopJkt];
         }
         try {
             $session = $this->sessions->parse($token);
@@ -102,6 +105,6 @@ final class Exchange
             throw new OAuthException(OAuthException::INVALID_GRANT, 'The subject token has no subject.');
         }
 
-        return ['sub' => $sub, 'user' => $sub, 'org' => is_string($org) ? $org : null, 'client_id' => null, 'scopes' => null, 'act' => null, 'auth_time' => is_int($authTime) ? $authTime : null];
+        return ['sub' => $sub, 'user' => $sub, 'org' => is_string($org) ? $org : null, 'client_id' => null, 'scopes' => null, 'act' => null, 'auth_time' => is_int($authTime) ? $authTime : null, 'jkt' => null];
     }
 }

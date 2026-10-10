@@ -40,12 +40,21 @@ final class Fetch
         }
         try {
             $response = $this->client->sendRequest($this->requests->createRequest('GET', $url)->withHeader('Accept', 'application/json'));
-        } catch (ClientExceptionInterface $exception) {
-            throw new OAuthException($error, 'Fetching ' . $url . ' failed: ' . $exception->getMessage(), 400);
+        } catch (ClientExceptionInterface) {
+            // The reason stays on the server: an error message would tell an attacker about the hosts this server can reach.
+            throw new OAuthException($error, 'The document at ' . $url . ' could not be fetched.', 400);
         }
-        $body = (string) $response->getBody();
+        $stream = $response->getBody();
+        $body = '';
+        while (!$stream->eof() && strlen($body) <= self::MAX_BYTES) {
+            $chunk = $stream->read(8192);
+            if ($chunk === '') {
+                break;
+            }
+            $body .= $chunk;
+        }
         if ($response->getStatusCode() !== 200 || strlen($body) > self::MAX_BYTES) {
-            throw new OAuthException($error, 'Fetching ' . $url . ' answered ' . $response->getStatusCode() . ' or a document too large.', 400);
+            throw new OAuthException($error, 'The document at ' . $url . ' could not be fetched, or is too large.', 400);
         }
         $decoded = json_decode($body, true);
         if (!is_array($decoded)) {

@@ -10,6 +10,7 @@ use Polaris\Http\Result;
 use Polaris\OAuth\AuditNames;
 use Polaris\OAuth\Ciba;
 use Polaris\OAuth\Clients;
+use Polaris\OAuth\CodeReused;
 use Polaris\OAuth\Codes;
 use Polaris\OAuth\Devices;
 use Polaris\OAuth\Discovery;
@@ -88,11 +89,17 @@ final class TokenEndpoint extends OAuthEndpoint
         if ($code === null) {
             throw new OAuthException(OAuthException::INVALID_REQUEST, 'code is required.');
         }
-        $stored = $this->codes->consume($code, $client, self::text($input, 'redirect_uri'), self::text($input, 'code_verifier'));
+        try {
+            $stored = $this->codes->consume($code, $client, self::text($input, 'redirect_uri'), self::text($input, 'code_verifier'));
+        } catch (CodeReused $reused) {
+            $this->tokens->revokeFamily($reused->codeId);
+            throw new OAuthException(OAuthException::INVALID_GRANT, 'The authorization code was already used; the tokens it issued are revoked.');
+        }
         if ($stored->dpopJkt !== null && $stored->dpopJkt !== $jkt) {
             throw new OAuthException(OAuthException::INVALID_DPOP_PROOF, 'The code was bound to another DPoP key (dpop_jkt).');
         }
-        $response = $this->tokens->issue($client, $stored->userId, $stored->organizationId, $stored->scopes, $stored->resource, $jkt, null, $stored->authTime, $stored->nonce);
+        // The tokens' family is the code, so a replay of the code can end them.
+        $response = $this->tokens->issue($client, $stored->userId, $stored->organizationId, $stored->scopes, $stored->resource, $jkt, null, $stored->authTime, $stored->nonce, $stored->id);
 
         return [...$response, '_user' => $stored->userId, '_org' => $stored->organizationId];
     }

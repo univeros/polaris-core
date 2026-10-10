@@ -16,6 +16,7 @@ use function is_string;
 use function preg_match;
 use function random_bytes;
 use function str_contains;
+use function strlen;
 
 /**
  * The authorization endpoint's half: a request is validated against the client (redirect URI exact,
@@ -79,6 +80,11 @@ final class Authorization
         if ($dpopJkt !== null && preg_match('/^[A-Za-z0-9_-]{43}$/', $dpopJkt) !== 1) {
             throw new OAuthException(OAuthException::INVALID_REQUEST, 'dpop_jkt is a base64url SHA-256 thumbprint.');
         }
+        foreach (['state' => 512, 'nonce' => 512, 'resource' => 2048, 'redirect_uri' => 2048] as $field => $max) {
+            if (strlen((string) ($query[$field] ?? '')) > $max) {
+                throw new OAuthException(OAuthException::INVALID_REQUEST, $field . ' is too long.');
+            }
+        }
         $prompt = self::text($query['prompt'] ?? null);
         if ($prompt !== null && !in_array($prompt, ['none', 'login', 'consent'], true)) {
             throw new OAuthException(OAuthException::INVALID_REQUEST, 'prompt is none, login or consent.');
@@ -107,7 +113,7 @@ final class Authorization
      */
     public function pending(?string $id): array
     {
-        $data = $id === null || $id === '' || str_contains($id, '/') ? null : $this->cache->get(self::CACHE_PREFIX . $id);
+        $data = $id === null || preg_match('/^[A-Za-z0-9_-]{32}$/', $id) !== 1 ? null : $this->cache->get(self::CACHE_PREFIX . $id);
         if (!is_array($data)) {
             throw new OAuthException(OAuthException::INVALID_REQUEST, 'The authorization request is unknown or expired; start again.');
         }
