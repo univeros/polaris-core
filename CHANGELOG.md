@@ -4,6 +4,43 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+Program 4 ("Better Auth for PHP", `docs/better/spec.md`), WP4: `polaris/mcp`, `polaris/agents` and the agent
+SDKs `polaris/agent` and `@polaris-auth/agent`. No core change; core's 52 routes are unchanged.
+
+### Added
+- `polaris/mcp`: `McpProtectedResource`, a PSR-15 middleware for any PHP MCP server that verifies
+  Polaris-issued access tokens locally (signature by `kid`, issuer, audience, expiry, DPoP binding)
+  against core's keys or a remote issuer's JWKS, answers `401` with `WWW-Authenticate: Bearer
+  resource_metadata=` and `403 insufficient_scope` with the missing scopes, and serves RFC 9728
+  metadata. Polaris as an MCP server (on `mcp/sdk`): one tool per route the caller may call (named by
+  its spec, `polaris.orgs.members.list`; schemas from the manifest), dispatched through the pipeline
+  so a tool answers what the route answers; the read-only CLI commands as tools over stdio;
+  `polaris://manifest`, `polaris://schema`, `polaris://problems/<plugin>/<name>`; `POST /mcp`
+  (2026-07-28 profile, `legacy: allow` for the 2025 handshake),
+  `GET /.well-known/oauth-protected-resource/mcp`, `bin/polaris mcp` (stdio).
+- `polaris/agents`: AI agents as principals. `POST /agents/register` and host enrolment
+  (`POST /agents/hosts`, `POST /agents/enroll`); each agent is an OAuth client of
+  `polaris/oauth-provider` (client credentials or `private_key_jwt` for autonomous agents, token exchange
+  with `act` for delegated ones) and may sign request JWTs (`agent+jwt`, `aud` = the URL, `jti` once);
+  its tokens carry the permissions of its live grants, so core's authorization and the delegation rule
+  apply. Capabilities from configuration; grants with constraints and budgets
+  (`POST /agents/grants/request`), approvals by device code, CIBA or in-app with a strength per risk tier
+  and auto-approval (`GET /agents/approvals`, `POST /agents/approvals/{id}/decide`); execution
+  (`POST /agents/execute`, or `AgentRequestMiddleware` in front of a host route for a capability with a
+  `location`) with a signed receipt per execution in a hash chain per agent
+  (`GET /agents/receipts/{id}/verify`); suspend, resume and revoke (the kill switch seals the chain);
+  `GET /agents/session`, `GET /agents/capabilities`, `GET /.well-known/agent-configuration`
+  (`docs/better/agent-auth-compat.md`), operator routes under `/admin/agents`; every capability is an
+  MCP tool. Five tables `polaris_agent*`; the `agent.*` audit names, recorded with `actor_type = agent`.
+- `@polaris-auth/client`: `client.mcp` and `client.agents`.
+
+### Changed
+- `polaris/oauth-provider`: the token exchange's `act` names the requesting client by `sub` as well as
+  `client_id` (RFC 8693 §4.1); `OAuthPlugin(audiences: [...])` accepts further audiences naming this
+  server (`<baseUrl>/mcp`); `Tokens::revokeForClient()`.
+
 ## [0.9.0] - 2026-10-10
 
 Program 4 ("Better Auth for PHP", `docs/better/spec.md`), WP3: `polaris/api-keys` and `polaris/oauth-provider`,
