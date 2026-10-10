@@ -22,12 +22,15 @@
                 "symlink": true,
                 "versions": {
                     "polaris/admin": "0.9.x-dev",
-                    "polaris/api-keys": "0.9.x-dev",
+                    "polaris/agent": "0.9.x-dev",
+                    "polaris/agents": "0.9.x-dev",
                     "polaris/anonymous": "0.9.x-dev",
+                    "polaris/api-keys": "0.9.x-dev",
                     "polaris/audit": "0.9.x-dev",
                     "polaris/cli": "0.9.x-dev",
                     "polaris/core": "0.9.x-dev",
                     "polaris/laravel": "0.9.x-dev",
+                    "polaris/mcp": "0.9.x-dev",
                     "polaris/messaging": "0.9.x-dev",
                     "polaris/multi-session": "0.9.x-dev",
                     "polaris/oauth-provider": "0.9.x-dev",
@@ -50,12 +53,15 @@
     "require": {
         "php": ">=8.3",
         "polaris/admin": "0.9.x-dev",
-        "polaris/api-keys": "0.9.x-dev",
+        "polaris/agent": "0.9.x-dev",
+        "polaris/agents": "0.9.x-dev",
         "polaris/anonymous": "0.9.x-dev",
+        "polaris/api-keys": "0.9.x-dev",
         "polaris/audit": "0.9.x-dev",
         "polaris/cli": "0.9.x-dev",
         "polaris/core": "0.9.x-dev",
         "polaris/laravel": "0.9.x-dev",
+        "polaris/mcp": "0.9.x-dev",
         "polaris/messaging": "0.9.x-dev",
         "polaris/multi-session": "0.9.x-dev",
         "polaris/oauth-provider": "0.9.x-dev",
@@ -93,10 +99,13 @@
     "autoload-dev": {
         "psr-4": {
             "Polaris\\Admin\\Tests\\": "packages/admin/tests/",
+            "Polaris\\Agent\\Tests\\": "packages/agent/tests/",
+            "Polaris\\Agents\\Tests\\": "packages/agents/tests/",
             "Polaris\\Anonymous\\Tests\\": "packages/anonymous/tests/",
             "Polaris\\ApiKeys\\Tests\\": "packages/api-keys/tests/",
             "Polaris\\Audit\\Tests\\": "packages/audit/tests/",
             "Polaris\\Laravel\\Tests\\": "packages/laravel/tests/",
+            "Polaris\\Mcp\\Tests\\": "packages/mcp/tests/",
             "Polaris\\Messaging\\Tests\\": "packages/messaging/tests/",
             "Polaris\\MultiSession\\Tests\\": "packages/multi-session/tests/",
             "Polaris\\OAuth\\Tests\\": "packages/oauth-provider/tests/",
@@ -144,6 +153,9 @@
         "sort-packages": true,
         "platform": {
             "php": "8.3.0"
+        },
+        "allow-plugins": {
+            "php-http/discovery": false
         }
     },
     "minimum-stability": "stable",

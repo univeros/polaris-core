@@ -1,0 +1,37 @@
+{
+    "name": "polaris/agent",
+    "description": "The PHP agent SDK for Polaris for PHP: discover a Polaris server, register or enrol an agent, request grants and poll approvals, sign request JWTs, call capabilities and verify receipts",
+    "type": "library",
+    "keywords": ["polaris", "ai-agents", "agent-sdk", "agent-auth", "agentic", "oauth2", "token-exchange", "private-key-jwt", "receipts", "php"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "ext-openssl": "*",
+        "ext-sodium": "*",
+        "firebase/php-jwt": "^7.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.1 || ^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\Agent\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.9.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

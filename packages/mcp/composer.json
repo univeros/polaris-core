@@ -1,0 +1,47 @@
+{
+    "name": "polaris/mcp",
+    "description": "Polaris for PHP and the Model Context Protocol: protect any PHP MCP server with Polaris-issued tokens (RFC 9728, DPoP), and serve every Polaris endpoint and CLI command as an MCP tool under the caller's own permissions",
+    "type": "library",
+    "keywords": ["polaris", "mcp", "model-context-protocol", "mcp-server", "mcp-auth", "oauth2", "protected-resource", "rfc9728", "dpop", "ai-agents", "llm-tools", "php"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "2am.tech",
+            "homepage": "https://2am.tech"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "ext-openssl": "*",
+        "firebase/php-jwt": "^7.0",
+        "mcp/sdk": "^0.8.1",
+        "polaris/cli": "^0.9",
+        "polaris/core": "^0.9",
+        "polaris/psr15": "^0.9",
+        "psr/clock": "^1.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.1 || ^2.0",
+        "psr/http-server-middleware": "^1.0",
+        "psr/simple-cache": "^3.0",
+        "symfony/console": "^7.0 || ^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Polaris\\Mcp\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.9.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": false
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
