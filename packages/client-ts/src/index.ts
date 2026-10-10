@@ -11,6 +11,8 @@ import { scim, type ScimApi } from "./scim.js";
 import { social, type SocialApi } from "./social.js";
 import { apiKeys, type ApiKeysApi } from "./api-keys.js";
 import { oauth, type OauthApi } from "./oauth.js";
+import { mcp, type McpApi } from "./mcp.js";
+import { agents, type AgentsApi } from "./agents.js";
 import { sso, type SsoApi } from "./sso.js";
 import { username, type UsernameApi } from "./username.js";
 import type { components, paths } from "./schema.js";
@@ -28,6 +30,8 @@ export { scim, type ScimApi } from "./scim.js";
 export { social, type SocialApi } from "./social.js";
 export { apiKeys, type ApiKeysApi } from "./api-keys.js";
 export { oauth, type OauthApi } from "./oauth.js";
+export { mcp, type McpApi } from "./mcp.js";
+export { agents, type AgentsApi } from "./agents.js";
 export { sso, type SsoApi } from "./sso.js";
 export { username, type UsernameApi } from "./username.js";
 export { registerPasskey, signInWithPasskey, passkeyAssertion, passkeyAutofillAvailable, type SignInWithPasskeyOptions } from "./webauthn.js";
@@ -36,7 +40,7 @@ export { registerPasskey, signInWithPasskey, passkeyAssertion, passkeyAutofillAv
 export type ErrorBody = components["schemas"]["Error"];
 /** The `{ errors: [...] }` envelope of a core route's 422. */
 export type ValidationErrorBody = components["schemas"]["ValidationError"];
-/** The RFC 9457 problem document every non-2xx response of a plugin route (`audit`, `admin`, `sentinel`, `sso`, `scim`, `passwordless`, `username`, `anonymous`, `multi-session`, `social`, `passkey`, `api-keys`, `oauth`) carries. */
+/** The RFC 9457 problem document every non-2xx response of a plugin route (`audit`, `admin`, `sentinel`, `sso`, `scim`, `passwordless`, `username`, `anonymous`, `multi-session`, `social`, `passkey`, `api-keys`, `oauth`, `mcp`, `agents`) carries. */
 export type ProblemBody = components["schemas"]["Problem"];
 
 export interface PolarisClientOptions extends ClientOptions {
@@ -84,6 +88,10 @@ export interface PolarisClient extends Client<paths> {
     readonly apiKeys: ApiKeysApi;
     /** The `polaris/oauth-provider` routes: `client.oauth.authorize()`, `decision()`, `token()`, `userinfo()`, `revoke()`, `introspect()`, `register()`, the device, CIBA, consent, client-management and discovery methods. */
     readonly oauth: OauthApi;
+    /** The `polaris/mcp` routes: `client.mcp.mcp()` (one JSON-RPC message to `POST /mcp`) and `protectedResource()` (the RFC 9728 metadata). */
+    readonly mcp: McpApi;
+    /** The `polaris/agents` routes: the owner's (`register()`, `listAgents()`, `listApprovals()`, `decideApproval()`, `revoke()`, ...), the agent's (`requestGrants()`, `execute()`, `session()`; `@polaris-auth/agent` signs them) and `configuration()`. */
+    readonly agents: AgentsApi;
     /** A new client on the same options bound to another token (null for anonymous); this one is unchanged. */
     withToken(token: string | null): PolarisClient;
 }
@@ -92,7 +100,7 @@ export interface PolarisClient extends Client<paths> {
  * An `openapi-fetch` client typed by `paths` (generated from `polaris manifest --format=openapi`), so
  * `client.POST("/auth/login", { body })` checks the body and types `data` and `error`; the plugins' routes
  * are also methods of `client.audit`, `client.admin`, `client.sentinel`, `client.sso`, `client.scim`, `client.passwordless`,
- * `client.username`, `client.anonymous`, `client.multiSession`, `client.social`, `client.passkey`, `client.apiKeys` and `client.oauth`; `challenge.captcha`
+ * `client.username`, `client.anonymous`, `client.multiSession`, `client.social`, `client.passkey`, `client.apiKeys`, `client.oauth`, `client.mcp` and `client.agents`; `challenge.captcha`
  * answers a sentinel captcha challenge with one retry. No refresh loop and no storage: when to refresh
  * and where to keep tokens is the application's policy.
  */
@@ -127,6 +135,8 @@ export function createClient(options: PolarisClientOptions): PolarisClient {
         passkey: passkey(client),
         apiKeys: apiKeys(client),
         oauth: oauth(client),
+        mcp: mcp(client),
+        agents: agents(client),
         withToken: (next: string | null) => createClient({ ...options, token: next }),
     };
 }

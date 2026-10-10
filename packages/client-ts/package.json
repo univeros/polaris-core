@@ -35,7 +35,11 @@
         "dpop",
         "device-flow",
         "ciba",
-        "token-exchange"
+        "token-exchange",
+        "mcp",
+        "model-context-protocol",
+        "ai-agents",
+        "agent-auth"
     ],
     "homepage": "https://github.com/univeros/polaris-core/tree/main/packages/client-ts#readme",
     "bugs": "https://github.com/univeros/polaris-core/issues",

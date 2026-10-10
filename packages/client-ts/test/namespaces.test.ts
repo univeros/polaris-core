@@ -150,6 +150,34 @@ describe("the plugin namespaces", () => {
         ]);
     });
 
+    it("maps the agents and mcp methods onto their routes", async () => {
+        const { requests, fetch } = recording(200, { data: {} });
+        const client = createClient({ baseUrl: "https://polaris.example", fetch });
+
+        await client.agents.configuration();
+        await client.agents.capabilities();
+        await client.withToken("access").agents.register({ body: { name: "Deploy bot", mode: "autonomous", auth: "client_secret" } });
+        await client.withToken("access").agents.listApprovals();
+        await client.withToken("access").agents.readApproval({ params: { query: { user_code: "ABCD-EFGH" } } });
+        await client.withToken("access").agents.decideApproval({ params: { path: { id: "a1" } }, body: { decision: "approve" } });
+        await client.withToken("agent-jwt").agents.execute({ body: { capability: "reports.run", arguments: {} } });
+        await client.withToken("access").agents.revoke({ params: { path: { id: "a1" } } });
+        await client.mcp.protectedResource();
+
+        expect(requests.map((request) => `${request.method} ${new URL(request.url).pathname}${new URL(request.url).search}`)).toEqual([
+            "GET /.well-known/agent-configuration",
+            "GET /agents/capabilities",
+            "POST /agents/register",
+            "GET /agents/approvals",
+            "GET /agents/approvals/code?user_code=ABCD-EFGH",
+            "POST /agents/approvals/a1/decide",
+            "POST /agents/execute",
+            "POST /agents/a1/revoke",
+            "GET /.well-known/oauth-protected-resource/mcp",
+        ]);
+        expect(requests[6]?.headers.get("Authorization")).toBe("Bearer agent-jwt");
+    });
+
     it("maps the api-keys methods onto their routes", async () => {
         const { requests, fetch } = recording(200, { data: { valid: false } });
         const client = createClient({ baseUrl: "https://polaris.example", fetch });

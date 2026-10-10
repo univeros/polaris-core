@@ -12,7 +12,6 @@ endpoint:
 input:
   source: body
   fields:
-    id: { type: string, rules: [required] }
     decision: { type: string, rules: [required, "in:approve,deny"] }
     constraints: { type: "?object", rules: [optional] }
 
