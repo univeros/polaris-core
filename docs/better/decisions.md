@@ -634,3 +634,11 @@ entries here when a WP confirms or changes them.
   endpoint still mints an exchanged token naming another user's agent (dead on every route; refusing it
   there needs an oauth seam for one caller); an operator may delete an agent's client through
   `/admin/oauth/clients` (operators are trusted; routing it through the kill switch is a follow-up).
+- 2026-10-12 · WP4 · The Slim demo runs under PHP's built-in server with `public/index.php` as its router
+  (`php -S 127.0.0.1:8080 -t public public/index.php`; the front controller hands real files back to the
+  server): PHP 8.3's built-in server answers its own 404 for any path under a dot directory
+  (`/.well-known/agent-configuration`, and core's `/auth/.well-known/jwks.json`) instead of running
+  `index.php`, which 8.5 does, so CI (8.3) skipped the agent steps while local runs (8.5) passed. The shared
+  walkthrough starts the server with `POLARIS_ROUTER` when a demo sets it, and the Slim demo sets
+  `POLARIS_AGENTS=required` so the agent and MCP steps fail rather than skip when the plugin does not
+  answer; the other demos are unchanged.
