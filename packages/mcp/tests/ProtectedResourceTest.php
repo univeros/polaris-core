@@ -12,6 +12,7 @@ use Laminas\Diactoros\StreamFactory;
 use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Polaris\Admin\Tests\Support\MutableClock;
 use Polaris\Mcp\Jose;
 use Polaris\Mcp\McpException;
 use Polaris\Mcp\Protect\DpopProof;
@@ -22,7 +23,6 @@ use Polaris\Mcp\Tests\Support\Issuer;
 use Polaris\OAuth\Tests\Support\FakeHttp;
 use Polaris\OAuth\Tests\Support\Keys;
 use Polaris\Support\InMemoryCache;
-use Polaris\Tests\Support\FrozenClock;
 use Psr\Clock\ClockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -50,13 +50,13 @@ final class ProtectedResourceTest extends TestCase
 
     private Issuer $issuer;
     private InMemoryCache $cache;
-    private ClockInterface $clock;
+    private MutableClock $clock;
 
     protected function setUp(): void
     {
         $this->issuer = new Issuer();
         $this->cache = new InMemoryCache();
-        $this->clock = new FrozenClock(new DateTimeImmutable('@' . time()));
+        $this->clock = new MutableClock(new DateTimeImmutable('@' . time()));
     }
 
     public function testAValidTokenReachesTheHandlerWithItsClaims(): void
@@ -145,8 +145,15 @@ final class ProtectedResourceTest extends TestCase
         // An unknown kid fetches the set once more (a rotation); still unknown, the token is refused.
         self::assertSame(401, $this->through($middleware, $this->request($this->issuer->token(kid: 'rotated')))->getStatusCode());
         self::assertCount(2, $http->fetched);
+        // Another unknown kid within a minute fetches nothing: an unauthenticated JWT is no refetch amplifier.
         $http->publish(Issuer::JWKS, $this->issuer->jwks('rotated'));
-        self::assertSame(200, $this->through($middleware, $this->request($this->issuer->token(kid: 'rotated')))->getStatusCode(), 'the rotated key, once published');
+        foreach (['rotated', 'other', 'rotated'] as $kid) {
+            self::assertSame(401, $this->through($middleware, $this->request($this->issuer->token(kid: $kid)))->getStatusCode(), 'unknown kid ' . $kid . ' within the interval');
+        }
+        self::assertCount(2, $http->fetched, 'no refetch within ' . Jwks::MIN_REFETCH_INTERVAL . ' seconds');
+        $this->clock->advance('+' . Jwks::MIN_REFETCH_INTERVAL . ' seconds');
+        self::assertSame(200, $this->through($middleware, $this->request($this->issuer->token(kid: 'rotated')))->getStatusCode(), 'the rotated key, once published and the interval over');
+        self::assertCount(3, $http->fetched);
 
         // An issuer that cannot be reached, or answers junk, refuses the token with a generic reason.
         $down = $this->remote(new FakeHttp(), cache: new InMemoryCache());
@@ -224,7 +231,7 @@ final class ProtectedResourceTest extends TestCase
 
     private function remote(FakeHttp $http, ?InMemoryCache $cache = null): McpProtectedResource
     {
-        $jwks = new Jwks(Issuer::JWKS, $http, new RequestFactory(), $cache ?? $this->cache);
+        $jwks = new Jwks(Issuer::JWKS, $http, new RequestFactory(), $cache ?? $this->cache, clock: $this->clock);
 
         return new McpProtectedResource(self::RESOURCE, TokenVerifier::withJwks(Issuer::URL, [self::RESOURCE], $jwks, $this->clock), new ResponseFactory(), $this->cache, $this->clock);
     }

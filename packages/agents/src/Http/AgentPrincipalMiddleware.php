@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Polaris\Agents\Http;
 
 use Override;
+use Polaris\Agents\AgentAuthenticator;
 use Polaris\Agents\AgentException;
-use Polaris\Agents\Agents;
 use Polaris\Agents\Grants;
 use Polaris\Agents\Model\Agent;
 use Polaris\Authorization\Gate;
@@ -24,11 +24,11 @@ use function array_intersect;
 use function array_values;
 use function in_array;
 use function is_array;
-use function is_string;
 
 /**
  * The agent principal on every Polaris route (after core's token authentication, before step-up and
- * authorization): a token whose `client_id` is an agent's is refused unless the agent is active, and
+ * authorization): a token whose `client_id` is an agent's is refused unless the agent is active and the
+ * token's subject is the agent or the user it acts for ({@see AgentAuthenticator::fromToken()}), and
  * replaced in-process by one whose `delegated` permissions are the token's intersected with the
  * agent's live grants (so a revoked grant takes effect at the next request), with `actor_type: agent`,
  * `agent_id` and `act`; an autonomous agent's token (its own `sub`) acts as the agent's owner, in the
@@ -43,7 +43,7 @@ final class AgentPrincipalMiddleware implements MiddlewareInterface
     public const string AGENT_ID = 'agent_id';
 
     public function __construct(
-        private readonly Agents $agents,
+        private readonly AgentAuthenticator $authenticator,
         private readonly Grants $grants,
         private readonly Problems $problems,
     ) {
@@ -60,16 +60,16 @@ final class AgentPrincipalMiddleware implements MiddlewareInterface
         if (!$token instanceof TokenInterface) {
             return $handler->handle($request);
         }
-        $clientId = $token->getMetadata(OAuthResolver::CLAIM_CLIENT);
-        $agent = is_string($clientId) ? $this->agents->find($clientId) : null;
-        if ($agent === null) {
+        try {
+            $principal = $this->authenticator->fromToken($token);
+        } catch (AgentException $exception) {
+            return $this->problems->respond($exception);
+        }
+        if ($principal === null) {
             return $handler->handle($request);
         }
-        if (!$agent->isActive()) {
-            return $this->problems->respond(new AgentException(AgentException::AGENT_INACTIVE, 'The agent is ' . $agent->status . '.', $agent->status === Agent::STATUS_REVOKED ? 'agent_revoked' : 'agent_suspended'));
-        }
 
-        return $handler->handle($request->withAttribute(Attributes::TOKEN, $this->principal($token, $agent)));
+        return $handler->handle($request->withAttribute(Attributes::TOKEN, $this->principal($token, $principal->agent)));
     }
 
     /**

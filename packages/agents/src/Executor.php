@@ -7,9 +7,11 @@ namespace Polaris\Agents;
 use Opis\JsonSchema\Errors\ErrorFormatter;
 use Opis\JsonSchema\Validator;
 use Polaris\Agents\Event\AgentEvent;
+use Polaris\Agents\Model\Agent;
 use Polaris\Agents\Model\Grant;
 use Polaris\Agents\Model\Receipt;
 use Polaris\Contract\DatabaseAdapter;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use stdClass;
 
@@ -45,6 +47,7 @@ final class Executor
         private readonly Receipts $receipts,
         private readonly DatabaseAdapter $database,
         private readonly EventDispatcherInterface $events,
+        private readonly ClockInterface $clock,
         private readonly Validator $validator = new Validator(),
     ) {
     }
@@ -86,12 +89,13 @@ final class Executor
     }
 
     /**
-     * Spends the budget, runs the handler and appends the receipt in one transaction; the handler's
-     * exception rolls everything back and is rethrown.
+     * Spends the budget, runs the handler and appends the receipt in one transaction, holding the agent's
+     * row from the start (so the kill switch and an execution serialise on it, and an agent revoked or
+     * suspended meanwhile runs nothing); the handler's exception rolls everything back and is rethrown.
      *
      * @param callable(ExecutionContext): mixed $handler
      * @param (callable(mixed): string)|null $outcome the receipt's outcome from the handler's result (`success` by default)
-     * @throws AgentException `budget_exhausted`, `sealed`
+     * @throws AgentException `agent_inactive`, `budget_exhausted`, `sealed`, `conflict`
      */
     public function run(Evaluation $evaluation, callable $handler, ?callable $outcome = null, ?string $ip = null, ?string $userAgent = null): Execution
     {
@@ -99,6 +103,10 @@ final class Executor
         $grant = $evaluation->grant;
         try {
             $execution = $this->database->transaction(function () use ($evaluation, $handler, $outcome, $agent, $grant): Execution {
+                if ($this->database->update(Schema::AGENTS, ['id' => $agent->id, 'status' => Agent::STATUS_ACTIVE], ['updated_at' => $this->clock->now()]) !== 1) {
+                    $status = (string) ($this->database->findOne(Schema::AGENTS, ['id' => $agent->id])['status'] ?? Agent::STATUS_REVOKED);
+                    throw new AgentException(AgentException::AGENT_INACTIVE, 'The agent is ' . $status . '.', $status === Agent::STATUS_SUSPENDED ? 'agent_suspended' : 'agent_revoked');
+                }
                 $before = $grant->budgetRemaining;
                 $after = null;
                 if ($grant->budgetKind !== null) {

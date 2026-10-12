@@ -16,6 +16,7 @@ use Psr\Clock\ClockInterface;
 use Symfony\Component\Uid\Uuid;
 
 use function array_map;
+use function count;
 use function in_array;
 use function is_int;
 use function mb_strlen;
@@ -37,6 +38,8 @@ final class Approvals
     public const string ALPHABET = 'BCDFGHJKMNPQRSTVWXZ';
     public const int CODE_LENGTH = 8;
     public const int POLL_INTERVAL = 5;
+    /** The most approvals an agent may have waiting at once; the rest are refused until one is decided or expires. */
+    public const int MAX_PENDING = 5;
 
     public function __construct(
         private readonly DatabaseAdapter $database,
@@ -49,10 +52,11 @@ final class Approvals
     }
 
     /**
-     * An approval for pending grants, with a user code unique among the pending ones.
+     * An approval for pending grants, with a user code unique among the pending ones; at most
+     * `MAX_PENDING` open per agent.
      *
      * @param list<Grant> $grants
-     * @throws AgentException `invalid_input`
+     * @throws AgentException `invalid_input`, `conflict`
      */
     public function open(Agent $agent, array $grants, ?string $method, string $strength, ?string $bindingMessage): Approval
     {
@@ -62,6 +66,9 @@ final class Approvals
         }
         if ($bindingMessage !== null && mb_strlen($bindingMessage) > 160) {
             throw new AgentException(AgentException::INVALID_INPUT, 'binding_message is at most 160 characters.');
+        }
+        if (count($this->pendingFor([$agent])) >= self::MAX_PENDING) {
+            throw new AgentException(AgentException::CONFLICT, sprintf('The agent has %d approvals waiting; one must be decided or expire first.', self::MAX_PENDING));
         }
         $now = $this->clock->now();
         $approval = new Approval();
@@ -85,12 +92,12 @@ final class Approvals
     }
 
     /**
-     * The decision, recorded once: approved grants become active (with the owner's constraints when
-     * given), denied ones denied.
+     * The decision, recorded once, in one transaction: approved grants become active (with the owner's
+     * constraints when given, validated before anything is written), denied ones denied.
      *
      * @param array<string, mixed>|null $constraints
      * @return list<Grant> the grants decided
-     * @throws AgentException `conflict` when the approval was already decided or expired
+     * @throws AgentException `conflict` when the approval was already decided or expired, `invalid_input`, `unknown_constraint_operator`
      */
     public function decide(Approval $approval, bool $approve, string $decidedBy, ?array $constraints): array
     {
@@ -98,28 +105,34 @@ final class Approvals
         if (!$approval->isPending($now)) {
             throw new AgentException(AgentException::CONFLICT, sprintf('The approval is %s.', $approval->expiresAt <= $now ? 'expired' : $approval->status));
         }
-        $status = $approve ? Approval::STATUS_APPROVED : Approval::STATUS_DENIED;
-        if ($this->database->update(Schema::APPROVALS, ['id' => $approval->id, 'status' => Approval::STATUS_PENDING], ['status' => $status, 'decided_by' => $decidedBy, 'updated_at' => $now]) !== 1) {
-            throw new AgentException(AgentException::CONFLICT, 'The approval was already decided.');
-        }
-        $approval->status = $status;
-        $approval->decidedBy = $decidedBy;
-        $approval->updatedAt = $now;
-        $decided = [];
-        foreach ($approval->grantIds as $grantId) {
-            $grant = $this->grants->find($grantId);
-            if ($grant === null || $grant->status !== Grant::STATUS_PENDING) {
-                continue;
-            }
-            if ($approve) {
-                $this->grants->approve($grant, $decidedBy, $approval->method, $constraints);
-            } else {
-                $this->grants->deny($grant);
-            }
-            $decided[] = $grant;
+        if ($constraints !== null) {
+            Constraints::parse($constraints);
         }
 
-        return $decided;
+        return $this->database->transaction(function () use ($approval, $approve, $decidedBy, $constraints, $now): array {
+            $status = $approve ? Approval::STATUS_APPROVED : Approval::STATUS_DENIED;
+            if ($this->database->update(Schema::APPROVALS, ['id' => $approval->id, 'status' => Approval::STATUS_PENDING], ['status' => $status, 'decided_by' => $decidedBy, 'updated_at' => $now]) !== 1) {
+                throw new AgentException(AgentException::CONFLICT, 'The approval was already decided.');
+            }
+            $approval->status = $status;
+            $approval->decidedBy = $decidedBy;
+            $approval->updatedAt = $now;
+            $decided = [];
+            foreach ($approval->grantIds as $grantId) {
+                $grant = $this->grants->find($grantId);
+                if ($grant === null || $grant->status !== Grant::STATUS_PENDING) {
+                    continue;
+                }
+                if ($approve) {
+                    $this->grants->approve($grant, $decidedBy, $approval->method, $constraints);
+                } else {
+                    $this->grants->deny($grant);
+                }
+                $decided[] = $grant;
+            }
+
+            return $decided;
+        });
     }
 
     /**
@@ -143,7 +156,7 @@ final class Approvals
     {
         $row = $this->database->findOne(Schema::APPROVALS, ['id' => $id]);
 
-        return $row === null ? null : self::hydrate($row);
+        return $row === null ? null : $this->read($row);
     }
 
     /**
@@ -156,7 +169,7 @@ final class Approvals
             return null;
         }
         $row = $this->database->findOne(Schema::APPROVALS, ['user_code' => $code, 'status' => Approval::STATUS_PENDING]);
-        $approval = $row === null ? null : self::hydrate($row);
+        $approval = $row === null ? null : $this->read($row);
 
         return $approval !== null && $approval->isPending($this->clock->now()) ? $approval : null;
     }
@@ -173,7 +186,7 @@ final class Approvals
         $pending = [];
         foreach ($agents as $agent) {
             foreach ($this->database->findMany(Schema::APPROVALS, ['agent_id' => $agent->id, 'status' => Approval::STATUS_PENDING], ['id' => 'asc']) as $row) {
-                $approval = self::hydrate($row);
+                $approval = $this->read($row);
                 if ($approval->isPending($now)) {
                     $pending[] = $approval;
                 }
@@ -217,6 +230,22 @@ final class Approvals
             }
         }
         throw new AgentException(AgentException::CONFLICT, 'No user code is free right now; try again.');
+    }
+
+    /**
+     * A row as it reads now: a pending approval past its expiry reads `expired` (nothing is written; the
+     * kill switch's cancellation and the pending lookups still see the stored status).
+     *
+     * @param array<string, mixed> $row
+     */
+    private function read(array $row): Approval
+    {
+        $approval = self::hydrate($row);
+        if ($approval->status === Approval::STATUS_PENDING && $approval->expiresAt <= $this->clock->now()) {
+            $approval->status = Approval::STATUS_EXPIRED;
+        }
+
+        return $approval;
     }
 
     /**

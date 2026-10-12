@@ -36,7 +36,8 @@ abstract class AgentsEndpoint extends Endpoint
     {
         $headers = self::NO_STORE;
         if ($exception->status === 401) {
-            $headers['WWW-Authenticate'] = 'Bearer error="' . $exception->error . '"';
+            // RFC 6750 §3.1: no error without a credential, `invalid_token` otherwise; the problem says which.
+            $headers['WWW-Authenticate'] = $exception->type === AgentException::UNAUTHORIZED ? 'Bearer' : 'Bearer error="invalid_token"';
         }
 
         return new Result($exception->status, $exception->toProblem(), $headers, problem: true);

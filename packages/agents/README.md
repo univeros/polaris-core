@@ -83,7 +83,10 @@ and the MCP tool) or a `location` (a host URL guarded by `AgentRequestMiddleware
    (`subject_token`) for one whose `sub` is the user and `act` is `{sub: <agent>, client_id: <agent>}`,
    within the user's permissions *and* the agent's grants; core's RBAC, the delegation rule (no
    permissionless write, no step-up route), the audit log and the admin plugin all see the user and the
-   agent. A grant revoked takes effect at the next request, not at the token's expiry.
+   agent. A grant revoked takes effect at the next request, not at the token's expiry. Only the user the
+   agent acts for can be the subject: the token endpoint exchanges any session, so a token naming an
+   agent's client whose `sub` is anyone else (a `delegated_token` agent's client is public) is refused
+   on every route, `401 agents/invalid_jwt`.
 3. **Signed request JWTs** on the agent-facing routes (`POST /agents/execute`, `/agents/grants/request`,
    `GET /agents/session`, `GET /agents/capabilities`) and at capability locations, sent as `Authorization:
    Bearer <jwt>`: header `typ: agent+jwt`, `alg` `ES256` or `EdDSA`, verified with the agent's registered
@@ -108,7 +111,9 @@ lifetime); an unknown operator is `400 agents/unknown_constraint_operator`. The 
 
 What the policy auto-approves is active at once: `autoApprove` (default `['low' => ['count' => 100]]`)
 maps a risk tier to the budget it gets (or `true` for none) and applies when the owner holds the
-capability's permission. The rest waits in one **approval** (`polaris_agent_approval`), whose `method`
+capability's permission and the asked budget, if any, stays within the policy's (the same kind and
+field, no larger, and no longer a window when the policy sets one): the policy's budget is a ceiling
+the asker cannot raise. The rest waits in one **approval** (`polaris_agent_approval`), whose `method`
 only changes how the owner finds it: `device_authorization` (the agent shows the `user_code`; the owner
 types it on the host's `approvalUrl` page, which loads `GET /agents/approvals/code?user_code=`), `ciba`
 (the host pushes the `binding_message` from the `agent.grant.requested` event, through
@@ -117,7 +122,10 @@ All decide at `POST /agents/approvals/{id}/decide` with `{decision: approve|deny
 approving needs a session of the **strength** the riskiest capability requires (`strengths`, default
 `low` and `medium` `session`, `high` `step_up`: core's step-up freshness; `passkey`: a recent passkey
 sign-in) and the owner must hold every permission at that moment. `DELETE /agents/grants/{id}` revokes
-a grant; `GET /agents/session` shows the agent its grants and remaining budgets while it waits.
+a grant; `GET /agents/session` shows the agent its grants and remaining budgets while it waits. Asking
+again for a capability that already waits answers the same pending grant and its open approval (a new
+one once that approval expired); an approval past `approvalTtl` reads as `expired`; an agent may have at
+most five approvals waiting (`409 agents/conflict` beyond that, until one is decided or expires).
 
 ## Execution, budgets and receipts
 
@@ -148,22 +156,41 @@ its own check, and the next one's chain check.
 in one transaction: the agent is `revoked`, its OAuth client disabled and every token of it revoked, its
 grants revoked, its pending approvals cancelled, and a final receipt with the outcome `sealed` closes
 the chain; nothing is chained after it and every credential of the agent is refused
-(`401 agents/agent_inactive`, `error: agent_revoked`). `suspend` and `resume` pause an agent without
-sealing anything (`agent_suspended`). A member who leaves an organization takes the agents they
-registered for it (revoked, sealed); an erased user or organization leaves no agent or host behind.
+(`401 agents/agent_inactive`, `error: agent_revoked`). An execution holds the agent's row for its
+transaction, so the switch and an execution in flight serialise: an agent revoked or suspended
+meanwhile runs nothing. `suspend` and `resume` pause an agent without sealing anything
+(`agent_suspended`). A member who leaves an organization takes the agents and the hosts they registered
+for it (the agents revoked and sealed, the hosts revoked); an erased user or organization leaves no
+agent or host behind. The agent's OAuth client belongs to no organization: the plugin manages it (the
+kill switch, its scopes, erasure), so the organization's self-service client routes
+(`/orgs/{id}/oauth/clients`) never list, rewrite or delete it; operators see it under
+`/admin/oauth/clients`.
 
 ## Capabilities with a location
 
-A capability whose `location` is a host URL runs at the host, behind
-`AgentsPlugin::of($graph)->requestMiddleware($graph)`, a PSR-15 middleware the host puts in front of its
-routes: a request whose URL (scheme, host, port, path) is a location must authenticate an agent (a JWT
-whose `aud` is that URL, or an access token) holding a live grant whose constraints the JSON body
-satisfies; the budget, the host's handler and the receipt (outcome `success` for a 2xx, `failed`
-otherwise; the handler's exception rolls back and is rethrown) run in one transaction. The handler reads
-the evaluated grant from the request attribute `polaris.agents.grant` (and the agent from
-`polaris.agents.agent`, the whole context from `polaris.agents.context`); the response carries
-`X-Polaris-Receipt`. Any other URL passes through untouched. `POST /agents/execute` refuses a location
-capability: it cannot be reached without passing the middleware.
+A capability whose `location` is a host URL runs at the host, behind `AgentRequestMiddleware`, a PSR-15
+middleware: the request must authenticate an agent (a JWT whose `aud` is the URL called, or an access
+token) holding a live grant whose constraints the JSON body satisfies; the budget, the host's handler
+and the receipt (outcome `success` for a 2xx, `failed` otherwise; the handler's exception rolls back and
+is rethrown) run in one transaction. The handler reads the evaluated grant from the request attribute
+`polaris.agents.grant` (and the agent from `polaris.agents.agent`, the whole context from
+`polaris.agents.context`); the response carries `X-Polaris-Receipt`. `POST /agents/execute` refuses a
+location capability: it cannot be reached without passing the middleware. Two ways to attach it:
+
+- **Bound to the capability** (preferred): `AgentsPlugin::of($graph)->requestMiddleware($graph,
+  'billing.refund')` on that capability's route. Every request through it is an execution of that
+  capability, whatever URL the application sees; nothing passes through.
+- **Unbound**: `requestMiddleware($graph)` in front of all routes. A request is matched against the
+  locations by host, port and path, normalised (lower-case scheme and host, default port dropped, `//`
+  collapsed, dot segments resolved, percent-encoded unreserved characters decoded, trailing slash
+  dropped; the scheme is ignored), so no spelling of a location passes unguarded; any other URL passes
+  through untouched.
+
+In both forms the JWT's `aud` must be the URL called, compared normalised the same way (query and
+fragment excluded). Behind a TLS-terminating proxy the application must see the external scheme, host
+and port in PSR-7 (`X-Forwarded-*` handled before this middleware): a location requested as `http://`
+is guarded but every agent JWT then fails with `aud_mismatch`, and in the unbound form a URL seen with
+another host or port is not a location at all.
 
 ## MCP tools
 
@@ -215,8 +242,10 @@ Problem types: `agents/unauthorized`, `agents/invalid_jwt`, `agents/aud_mismatch
 `agents/capability_not_granted`, `agents/constraint_violated` (with `violations`),
 `agents/budget_exhausted`, `agents/unknown_constraint_operator`, `agents/invalid_arguments`,
 `agents/invalid_input`, `agents/not_found`, `agents/forbidden`, `agents/conflict`,
-`agents/step_up_required`, `agents/permission_not_held`, `agents/sealed`. Where the Agent Auth Protocol
-defines a code, `error` carries it.
+`agents/step_up_required`, `agents/permission_not_held`, `agents/sealed`. Where the protocol document
+defines a code (the first eight), `error` carries it bare (`capability_not_granted`); the others carry the
+plugin's prefix as every plugin's do (`agents_not_found`). A `401` answers `WWW-Authenticate: Bearer`
+without a credential and `Bearer error="invalid_token"` with one that does not authenticate.
 
 Events (PSR-14 `Polaris\Agents\Event\AgentEvent`, audited as `agent.*` with the agent as the actor where
 it acts and the owner as the subject): `agent.registered`, `agent.enrolled`, `agent.suspended`,

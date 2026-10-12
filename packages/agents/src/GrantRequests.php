@@ -8,6 +8,7 @@ use Polaris\Agents\Event\AgentEvent;
 use Polaris\Agents\Model\Agent;
 use Polaris\Agents\Model\Approval;
 use Polaris\Agents\Model\Grant;
+use Polaris\Contract\DatabaseAdapter;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 use function array_map;
@@ -26,6 +27,7 @@ final class GrantRequests
         private readonly Approvals $approvals,
         private readonly Capabilities $capabilities,
         private readonly Settings $settings,
+        private readonly DatabaseAdapter $database,
         private readonly EventDispatcherInterface $events,
     ) {
     }
@@ -37,11 +39,26 @@ final class GrantRequests
      */
     public function request(Agent $agent, array $asked, ?string $method, ?string $bindingMessage, ?string $reason, bool $byAgent, ?string $ip = null, ?string $userAgent = null): array
     {
-        $result = $this->grants->request($agent, $asked);
-        $approval = null;
-        if ($result['pending'] !== []) {
-            $approval = $this->approvals->open($agent, $result['pending'], $method, $this->strengthFor($result['pending']), $bindingMessage);
-        }
+        // The grants and their approval in one transaction: a refused approval (too many waiting) writes no grant.
+        [$result, $approval] = $this->database->transaction(function () use ($agent, $asked, $method, $bindingMessage): array {
+            $result = $this->grants->request($agent, $asked);
+            $pending = $result['pending'];
+            $approval = null;
+            // A grant already waiting keeps its approval while that one is open; one whose approval expired joins a new one.
+            foreach ($result['reused'] as $grant) {
+                $open = $grant->approvalId === null ? null : $this->approvals->find($grant->approvalId);
+                if ($open !== null && $open->status === Approval::STATUS_PENDING) {
+                    $approval ??= $open;
+                } else {
+                    $pending[] = $grant;
+                }
+            }
+            if ($pending !== []) {
+                $approval = $this->approvals->open($agent, $pending, $method, $this->strengthFor($pending), $bindingMessage);
+            }
+
+            return [$result, $approval];
+        });
         $data = ['capabilities' => array_map(static fn(Grant $grant): string => $grant->capability, $result['grants']), 'reason' => $reason, 'approval_id' => $approval?->id, 'method' => $approval?->method, 'user_code' => $approval?->userCode, 'binding_message' => $bindingMessage];
         $this->events->dispatch($byAgent
             ? AgentEvent::byAgent(AuditNames::GRANT_REQUESTED, $agent->id, $agent->subject(), $agent->organizationId, $data, $ip, $userAgent)

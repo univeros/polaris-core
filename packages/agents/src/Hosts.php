@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Polaris\Agents;
 
 use DateTimeImmutable;
+use Polaris\Agents\Model\Agent;
 use Polaris\Agents\Model\Host;
 use Polaris\Contract\DatabaseAdapter;
 use Polaris\OAuth\Jwt;
@@ -120,6 +121,24 @@ final class Hosts
     {
         $host->revokedAt = $this->clock->now();
         $this->database->update(Schema::HOSTS, ['id' => $host->id], ['revoked_at' => $host->revokedAt]);
+    }
+
+    /**
+     * A member who leaves takes the organization's live hosts they created with them: an enrolment token
+     * they hold enrols no more agents for the organization.
+     *
+     * @return list<Host> the hosts revoked
+     */
+    public function revokeForMember(string $organizationId, string $userId): array
+    {
+        $revoked = [];
+        foreach ($this->database->findMany(Schema::HOSTS, ['owner_type' => Agent::OWNER_ORGANIZATION, 'owner_id' => $organizationId, 'created_by' => $userId, 'revoked_at' => null], ['id' => 'asc']) as $row) {
+            $host = self::hydrate($row);
+            $this->revoke($host);
+            $revoked[] = $host;
+        }
+
+        return $revoked;
     }
 
     public function deleteForUser(string $userId): void

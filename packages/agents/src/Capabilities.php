@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Polaris\Agents;
 
 use LogicException;
-use Polaris\OAuth\Dpop;
 
 use function array_keys;
 use function array_values;
@@ -18,7 +17,7 @@ final class Capabilities
 {
     /** @var array<string, Capability> */
     private array $byName = [];
-    /** @var array<string, Capability> canonical location URL => capability */
+    /** @var array<string, Capability> normalised location (host and path, {@see Url::route()}) => capability */
     private array $byLocation = [];
 
     /**
@@ -33,7 +32,7 @@ final class Capabilities
             }
             $this->byName[$capability->name] = $capability;
             if ($capability->location !== null) {
-                $location = Dpop::canonical($capability->location);
+                $location = Url::route($capability->location);
                 if (isset($this->byLocation[$location])) {
                     throw new LogicException(sprintf('Two capabilities share the location %s.', $location));
                 }
@@ -48,11 +47,12 @@ final class Capabilities
     }
 
     /**
-     * The capability a request URL (scheme, host, port, path) is the location of.
+     * The capability a request URL is the location of: host, port and path compared normalised
+     * ({@see Url}), whatever the scheme, so no spelling of the location passes unguarded.
      */
     public function atLocation(string $url): ?Capability
     {
-        return $this->byLocation[Dpop::canonical($url)] ?? null;
+        return $this->byLocation[Url::route($url)] ?? null;
     }
 
     /**

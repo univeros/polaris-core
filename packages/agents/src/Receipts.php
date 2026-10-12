@@ -17,6 +17,7 @@ use Polaris\OAuth\Jwt;
 use Polaris\OAuth\OAuthException;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\Uid\Uuid;
+use Throwable;
 
 use function array_is_list;
 use function hash;
@@ -27,6 +28,7 @@ use function json_encode;
 use function ksort;
 use function max;
 use function min;
+use function str_starts_with;
 
 use const JSON_THROW_ON_ERROR;
 use const JSON_UNESCAPED_SLASHES;
@@ -54,9 +56,9 @@ final class Receipts
 
     /**
      * The next receipt of the agent's chain; the caller holds the transaction. The chain's unique
-     * `(agent_id, seq)` makes a concurrent append fail rather than fork.
+     * `(agent_id, seq)` makes a concurrent append fail (`conflict`) rather than fork.
      *
-     * @throws AgentException `sealed` when the chain was sealed
+     * @throws AgentException `sealed` when the chain was sealed, `conflict` when another receipt took the seq
      */
     public function append(Agent $agent, ?Grant $grant, ?string $capability, string $inputHash, string $outcome, ?int $budgetBefore, ?int $budgetAfter): Receipt
     {
@@ -78,7 +80,14 @@ final class Receipts
         $receipt->createdAt = $this->clock->now();
         $receipt->hash = self::hashOf($receipt);
         $receipt->signature = $this->sign($receipt);
-        $this->database->insert(Schema::RECEIPTS, $this->row($receipt));
+        try {
+            $this->database->insert(Schema::RECEIPTS, $this->row($receipt));
+        } catch (Throwable $exception) {
+            if (!self::isIntegrityViolation($exception)) {
+                throw $exception;
+            }
+            throw new AgentException(AgentException::CONFLICT, 'Another receipt was appended to the chain meanwhile; retry.');
+        }
 
         return $receipt;
     }
@@ -199,6 +208,21 @@ final class Receipts
         }
 
         return $value;
+    }
+
+    /**
+     * Whether a driver exception is an integrity constraint violation (SQLSTATE class 23, the unique
+     * index on the chain), anywhere in its chain of causes.
+     */
+    private static function isIntegrityViolation(Throwable $exception): bool
+    {
+        for ($cause = $exception; $cause !== null; $cause = $cause->getPrevious()) {
+            if (str_starts_with((string) $cause->getCode(), '23')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function sign(Receipt $receipt): string

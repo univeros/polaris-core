@@ -50,7 +50,9 @@ final class Problems
             ->withHeader('Content-Type', 'application/problem+json')
             ->withHeader('Cache-Control', 'no-store');
         if ($exception->status === 401) {
-            $response = $response->withHeader('WWW-Authenticate', 'Bearer error="' . $exception->error . '"');
+            // RFC 6750 §3.1: no error without a credential, `invalid_token` for one that does not authenticate;
+            // the problem document carries the precise code.
+            $response = $response->withHeader('WWW-Authenticate', $exception->type === AgentException::UNAUTHORIZED ? 'Bearer' : 'Bearer error="invalid_token"');
         }
         $response->getBody()->write(json_encode($exception->toProblem(), JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES));
 

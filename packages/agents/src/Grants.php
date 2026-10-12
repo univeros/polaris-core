@@ -46,11 +46,13 @@ final class Grants
 
     /**
      * The grants an agent asks for: one per capability named (`name` or `{name, constraints}`), active at
-     * once when the policy auto-approves the risk tier and the owner holds the permission, pending
-     * otherwise; a capability the agent already holds live is answered as it is.
+     * once when the policy auto-approves the risk tier within its budget and the owner holds the
+     * permission, pending otherwise; a capability the agent already holds live, or already waits for, is
+     * answered as it is (`reused`: the pending ones, so the caller re-attaches an approval when theirs
+     * expired, and an agent asking again never piles up approvals).
      *
      * @param list<mixed> $asked
-     * @return array{grants: list<Grant>, pending: list<Grant>, approved: list<Grant>}
+     * @return array{grants: list<Grant>, pending: list<Grant>, approved: list<Grant>, reused: list<Grant>}
      * @throws AgentException `capability_not_found`, `unknown_constraint_operator`, `invalid_input`
      */
     public function request(Agent $agent, array $asked): array
@@ -59,7 +61,7 @@ final class Grants
             throw new AgentException(AgentException::INVALID_INPUT, sprintf('capabilities names 1 to %d capabilities.', self::MAX_PER_REQUEST));
         }
         $now = $this->clock->now();
-        $result = ['grants' => [], 'pending' => [], 'approved' => []];
+        $result = ['grants' => [], 'pending' => [], 'approved' => [], 'reused' => []];
         $seen = [];
         foreach ($asked as $item) {
             $name = is_string($item) ? $item : (is_array($item) && is_string($item['name'] ?? null) ? $item['name'] : '');
@@ -71,9 +73,12 @@ final class Grants
                 continue;
             }
             $seen[$name] = true;
-            $existing = $this->activeFor($agent, $name);
+            $existing = $this->activeFor($agent, $name) ?? $this->pendingFor($agent, $name);
             if ($existing !== null) {
                 $result['grants'][] = $existing;
+                if ($existing->status === Grant::STATUS_PENDING) {
+                    $result['reused'][] = $existing;
+                }
                 continue;
             }
             $raw = is_array($item) && is_array($item['constraints'] ?? null) ? $item['constraints'] : [];
@@ -83,11 +88,11 @@ final class Grants
             $grant->agentId = $agent->id;
             $grant->capability = $name;
             $grant->constraints = $parsed['fields'];
-            $this->budget($grant, $parsed['budget']);
             $grant->createdAt = $now;
             $grant->updatedAt = $now;
+            $this->budget($grant, $parsed['budget']);
             $auto = $this->settings->autoApprove[$capability->risk] ?? null;
-            if ($auto !== null && $this->ownerHolds($agent, $capability->permission)) {
+            if ($auto !== null && self::withinPolicy($parsed['budget'], $auto) && $this->ownerHolds($agent, $capability->permission)) {
                 if ($grant->budgetKind === null && is_array($auto)) {
                     $this->budget($grant, Constraints::budget($auto));
                 }
@@ -215,6 +220,20 @@ final class Grants
     }
 
     /**
+     * The grant of the agent for a capability still waiting for a decision, if any.
+     */
+    public function pendingFor(Agent $agent, string $capability): ?Grant
+    {
+        foreach ($this->forAgent($agent, Grant::STATUS_PENDING) as $grant) {
+            if ($grant->capability === $capability) {
+                return $grant;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * @return list<Grant>
      */
     public function forAgent(Agent $agent, ?string $status = null): array
@@ -283,6 +302,27 @@ final class Grants
     public function deleteForAgent(Agent $agent): void
     {
         $this->database->delete(Schema::GRANTS, ['agent_id' => $agent->id]);
+    }
+
+    /**
+     * Whether the policy approves the asked budget: none asked (the policy's applies), or the same kind
+     * and field, no larger, and no longer a window than the policy's when it has one. The policy's budget
+     * is a ceiling the asker cannot raise; anything wider waits for a person.
+     *
+     * @param array{kind: string, total: int, field: string|null, window: int|null}|null $asked
+     * @param array<string, mixed>|true $policy
+     */
+    private static function withinPolicy(?array $asked, array|true $policy): bool
+    {
+        if ($asked === null || $policy === true) {
+            return true;
+        }
+        $ceiling = Constraints::budget($policy);
+        if ($asked['kind'] !== $ceiling['kind'] || $asked['field'] !== $ceiling['field'] || $asked['total'] > $ceiling['total']) {
+            return false;
+        }
+
+        return $ceiling['window'] === null || ($asked['window'] !== null && $asked['window'] <= $ceiling['window']);
     }
 
     /**

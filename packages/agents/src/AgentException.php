@@ -6,6 +6,7 @@ namespace Polaris\Agents;
 
 use RuntimeException;
 
+use function in_array;
 use function str_replace;
 use function ucwords;
 
@@ -33,6 +34,8 @@ final class AgentException extends RuntimeException
     public const string STEP_UP_REQUIRED = 'step_up_required';
     public const string PERMISSION_NOT_HELD = 'permission_not_held';
     public const string SEALED = 'sealed';
+    /** The codes the Agent Auth Protocol defines or Polaris's protocol document adds; the others are Polaris's own. */
+    public const array PROTOCOL_CODES = [self::INVALID_JWT, self::AUD_MISMATCH, self::AGENT_INACTIVE, self::CAPABILITY_NOT_FOUND, self::CAPABILITY_NOT_GRANTED, self::CONSTRAINT_VIOLATED, self::BUDGET_EXHAUSTED, self::UNKNOWN_CONSTRAINT_OPERATOR];
 
     private const array STATUSES = [
         self::UNAUTHORIZED => 401,
@@ -65,7 +68,9 @@ final class AgentException extends RuntimeException
     {
         parent::__construct($type . ': ' . $detail);
         $this->status = self::STATUSES[$type] ?? 400;
-        $this->error = $error ?? $type;
+        // The protocol's own codes travel bare (agent-auth-compat.md); Polaris's own carry the plugin's prefix
+        // as every plugin's `error` does (`api_keys_not_found`), matching the codes the manifest declares.
+        $this->error = $error ?? (in_array($type, self::PROTOCOL_CODES, true) ? $type : 'agents_' . $type);
     }
 
     /**

@@ -31,6 +31,7 @@ use Polaris\Agents\Grants;
 use Polaris\Agents\Hosts;
 use Polaris\Agents\Http\AgentPrincipalMiddleware;
 use Polaris\Agents\Model\Agent;
+use Polaris\Agents\Model\Approval;
 use Polaris\Agents\Model\Grant;
 use Polaris\Agents\Model\Receipt;
 use Polaris\Agents\Receipts;
@@ -38,10 +39,15 @@ use Polaris\Agents\RequestJwt;
 use Polaris\Agents\Schema;
 use Polaris\Agents\Settings;
 use Polaris\Agents\Tests\Support\AgentKey;
+use Polaris\Agents\Url;
 use Polaris\Audit\AuditPlugin;
 use Polaris\Audit\Catalog;
+use Polaris\Authorization\PermissionCatalogSeeder;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\Secrets;
+use Polaris\Contract\DatabaseAdapter;
+use Polaris\Contract\Dialect;
+use Polaris\Event\MemberRemoved;
 use Polaris\OAuth\OAuthPlugin;
 use Polaris\Polaris;
 use Polaris\Testing\InMemoryAdapter;
@@ -50,8 +56,11 @@ use Polaris\Tests\Support\TestKeys;
 use Polaris\Token\Token;
 use Polaris\Wiring\Config;
 use Polaris\Wiring\Graph;
+use Override;
+use PDOException;
 use Symfony\Component\Uid\Uuid;
 
+use function array_map;
 use function dirname;
 use function file_get_contents;
 use function hash;
@@ -78,6 +87,10 @@ use function str_starts_with;
 #[CoversClass(Discovery::class)]
 #[CoversClass(AgentKeys::class)]
 #[CoversClass(Schema::class)]
+#[CoversClass(Url::class)]
+#[CoversClass(Approvals::class)]
+#[CoversClass(Hosts::class)]
+#[CoversClass(Executor::class)]
 #[RunTestsInSeparateProcesses]
 final class PluginTest extends TestCase
 {
@@ -383,7 +396,214 @@ final class PluginTest extends TestCase
         self::assertCount(1, $graph->get(Approvals::class)->pendingFor([$agent]));
     }
 
-    private function polaris(array $autoApprove = Settings::DEFAULT_AUTO_APPROVE): Polaris
+    public function testLocationsAndAudiencesAreComparedNormalised(): void
+    {
+        $location = 'https://host.polaris.test/invite';
+        foreach (['https://host.polaris.test/invite/', 'https://host.polaris.test//invite', 'https://host.polaris.test/./invite', 'https://host.polaris.test/a/../invite', 'https://host.polaris.test:443/invite', 'HTTPS://host.polaris.test/invite', 'https://HOST.polaris.test/invite', 'https://host.polaris.test/%69nvite', 'https://host.polaris.test/invite?x=1#f'] as $variant) {
+            self::assertSame($location, Url::normalize($variant), $variant);
+            self::assertSame('host.polaris.test/invite', Url::route($variant), $variant);
+        }
+        self::assertSame('host.polaris.test/invite', Url::route('http://host.polaris.test/invite'), 'a proxy\'s scheme still lands on the location');
+        self::assertSame('https://host.polaris.test:8443/a%2Fb/%C3%A9', Url::normalize('https://host.polaris.test:8443/a%2fb/%c3%a9'), 'reserved and non-ASCII escapes are kept, upper-cased');
+        self::assertSame('https://host.polaris.test/', Url::normalize('https://host.polaris.test'));
+        self::assertSame('not a url', Url::normalize('not a url'));
+        $capabilities = new Capabilities([new Capability('invite', 'x', [], 'members.invite', location: $location)]);
+        self::assertSame('invite', $capabilities->atLocation('https://Host.polaris.test:443//invite/')?->name);
+        self::assertSame('invite', $capabilities->atLocation('http://host.polaris.test/invite')?->name, 'guarded whatever the scheme; the JWT aud then decides');
+        self::assertNull($capabilities->atLocation('https://host.polaris.test/invites'));
+        $this->expectException(LogicException::class);
+        AgentsPlugin::of($this->polaris()->graph())->requestMiddleware($this->polaris()->graph(), 'deploy');
+    }
+
+    public function testTheAskerCannotWidenTheAutoApprovalBudget(): void
+    {
+        $graph = $this->polaris(autoApprove: ['low' => ['count' => 100, 'window' => 3600]])->graph();
+        $grants = $graph->get(Grants::class);
+        $agent = $this->agent($graph);
+        $holder = $this->agentHolding($graph, 'members.read');
+        $ask = static fn(array $budget): array => [['name' => 'members', 'constraints' => ['budget' => $budget]]];
+        $policy = $grants->request($holder, ['members'])['grants'][0];
+        self::assertSame([Grant::STATUS_ACTIVE, 100, 'auto'], [$policy->status, $policy->budgetTotal, $policy->approvedVia], 'no budget asked: the policy\'s, with its window');
+        self::assertNotNull($policy->expiresAt);
+        $grants->revoke($policy);
+        $narrower = $grants->request($holder, $ask(['count' => 10, 'window' => 60]))['grants'][0];
+        self::assertSame([Grant::STATUS_ACTIVE, 10, 'auto'], [$narrower->status, $narrower->budgetTotal, $narrower->approvedVia], 'within the ceiling');
+        $grants->revoke($narrower);
+        foreach ([['count' => 1000000000, 'window' => 60], ['count' => 100], ['count' => 100, 'window' => 7200], ['amount' => 10, 'field' => 'amount', 'window' => 60]] as $wider) {
+            $grant = $grants->request($holder, $ask($wider))['grants'][0];
+            self::assertSame(Grant::STATUS_PENDING, $grant->status, (string) json_encode($wider));
+            $grants->deny($grant);
+        }
+        self::assertSame(Grant::STATUS_PENDING, $grants->request($agent, ['members'])['grants'][0]->status, 'an owner without the permission always waits');
+    }
+
+    public function testPendingGrantsAreReusedApprovalsAreCappedAndExpire(): void
+    {
+        $names = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'];
+        $graph = $this->polaris(capabilities: array_map(static fn(string $name): Capability => self::capability($name, 'high'), $names))->graph();
+        $agent = $this->agent($graph);
+        $requests = $graph->get(GrantRequests::class);
+        $approvals = $graph->get(Approvals::class);
+        $first = $requests->request($agent, ['c1'], null, null, null, true);
+        $again = $requests->request($agent, ['c1'], null, null, null, true);
+        self::assertSame([$first['grants'][0]->id, $first['approval']?->id], [$again['grants'][0]->id, $again['approval']?->id], 'the same pending grant and approval');
+        self::assertCount(1, $approvals->pendingFor([$agent]));
+        // Expired: it reads so, cannot be decided, and asking again attaches the grant to a new approval.
+        $this->clock->advance('+601 seconds');
+        $expired = $approvals->find((string) $first['approval']?->id);
+        self::assertInstanceOf(Approval::class, $expired);
+        self::assertSame(Approval::STATUS_EXPIRED, $expired->status);
+        self::assertSame([], $approvals->pendingFor([$agent]));
+        try {
+            $approvals->decide($expired, true, 'owner', null);
+            self::fail();
+        } catch (AgentException $exception) {
+            self::assertSame([AgentException::CONFLICT, 'The approval is expired.'], [$exception->type, $exception->detail]);
+        }
+        $renewed = $requests->request($agent, ['c1'], null, null, null, true);
+        self::assertSame($first['grants'][0]->id, $renewed['grants'][0]->id);
+        self::assertNotSame($first['approval']?->id, $renewed['approval']?->id);
+        self::assertSame($renewed['approval']?->id, $graph->get(Grants::class)->find($first['grants'][0]->id)?->approvalId);
+        // At most five waiting per agent.
+        foreach (['c2', 'c3', 'c4', 'c5'] as $name) {
+            $requests->request($agent, [$name], null, null, null, true);
+        }
+        self::assertCount(5, $approvals->pendingFor([$agent]));
+        try {
+            $requests->request($agent, ['c6'], null, null, null, true);
+            self::fail();
+        } catch (AgentException $exception) {
+            self::assertSame([AgentException::CONFLICT, 409], [$exception->type, $exception->status]);
+        }
+        self::assertNull($graph->get(Grants::class)->pendingFor($agent, 'c6'), 'nothing was written');
+    }
+
+    public function testADecisionWithBadConstraintsLeavesTheApprovalPending(): void
+    {
+        $graph = $this->polaris()->graph();
+        $agent = $this->agent($graph);
+        $requested = $graph->get(GrantRequests::class)->request($agent, ['refund'], null, null, null, true);
+        $approval = $requested['approval'];
+        self::assertInstanceOf(Approval::class, $approval);
+        try {
+            $graph->get(Approvals::class)->decide($approval, true, 'owner', ['amount' => ['between' => [1, 2]]]);
+            self::fail();
+        } catch (AgentException $exception) {
+            self::assertSame(AgentException::UNKNOWN_CONSTRAINT_OPERATOR, $exception->type);
+        }
+        self::assertSame([Approval::STATUS_PENDING, Grant::STATUS_PENDING], [$graph->get(Approvals::class)->find($approval->id)?->status, $graph->get(Grants::class)->find($requested['grants'][0]->id)?->status], 'nothing changed');
+        self::assertCount(1, $graph->get(Approvals::class)->decide($approval, true, 'owner', ['amount' => ['max' => 5]]));
+        self::assertSame([Approval::STATUS_APPROVED, Grant::STATUS_ACTIVE], [$graph->get(Approvals::class)->find($approval->id)?->status, $graph->get(Grants::class)->find($requested['grants'][0]->id)?->status]);
+    }
+
+    public function testAMemberWhoLeavesTakesTheHostsTheyCreated(): void
+    {
+        $polaris = $this->polaris();
+        $graph = $polaris->graph();
+        $hosts = $graph->get(Hosts::class);
+        [$orgHost, $orgToken] = $hosts->create(Agent::OWNER_ORGANIZATION, 'org-1', 'org-1', 'user-1', 'CI', []);
+        [, $otherToken] = $hosts->create(Agent::OWNER_ORGANIZATION, 'org-1', 'org-1', 'user-2', 'CI 2', []);
+        [, $ownToken] = $hosts->create(Agent::OWNER_USER, 'user-1', 'org-1', 'user-1', 'Laptop', []);
+        $polaris->listeners();
+        foreach (AgentsPlugin::of($graph)->listeners($graph) as $listener) {
+            $listener(new MemberRemoved('org-1', 'user-1', 'admin-1'));
+        }
+        self::assertNull($hosts->authenticate($orgToken), 'the organization host they created is revoked');
+        self::assertNotNull($hosts->find($orgHost->id)?->revokedAt);
+        self::assertNotNull($hosts->authenticate($otherToken), 'another member\'s host stays');
+        self::assertNotNull($hosts->authenticate($ownToken), 'their own host stays');
+    }
+
+    public function testAnExecutionHoldsTheAgentRowAndMapsAChainCollisionToConflict(): void
+    {
+        $graph = $this->polaris()->graph();
+        $agent = $this->agentHolding($graph, 'members.read');
+        $executor = $graph->get(Executor::class);
+        $principal = AuthenticatedAgent::viaJwt($agent, null);
+        $graph->get(Grants::class)->request($agent, ['members']);
+        $evaluation = $executor->evaluate($principal, 'members', []);
+        self::assertSame(1, $executor->run($evaluation, static fn(): string => 'ok')->receipt->seq);
+        // Suspended (or revoked) between the evaluation and the run: nothing runs, nothing is chained.
+        $graph->get(Agents::class)->suspend($agent);
+        $ran = false;
+        try {
+            $executor->run($evaluation, static function () use (&$ran): string {
+                $ran = true;
+
+                return 'ok';
+            });
+            self::fail();
+        } catch (AgentException $exception) {
+            self::assertSame([AgentException::AGENT_INACTIVE, 'agent_suspended'], [$exception->type, $exception->error]);
+        }
+        self::assertFalse($ran);
+        self::assertSame(1, $graph->get(Receipts::class)->last($agent)?->seq);
+        // The chain's unique (agent_id, seq): a driver's integrity violation on append is a 409 conflict.
+        $colliding = new Receipts(new class ($graph->database()) implements DatabaseAdapter {
+            public function __construct(private readonly DatabaseAdapter $inner)
+            {
+            }
+
+            #[Override]
+            public function findOne(string $table, array $criteria): ?array
+            {
+                return $this->inner->findOne($table, $criteria);
+            }
+
+            #[Override]
+            public function findMany(string $table, array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array
+            {
+                return $this->inner->findMany($table, $criteria, $orderBy, $limit, $offset);
+            }
+
+            #[Override]
+            public function insert(string $table, array $row): void
+            {
+                throw new \RuntimeException('query failed', 0, new PDOException('SQLSTATE[23505]: Unique violation', 23505));
+            }
+
+            #[Override]
+            public function update(string $table, array $criteria, array $data): int
+            {
+                return $this->inner->update($table, $criteria, $data);
+            }
+
+            #[Override]
+            public function delete(string $table, array $criteria): int
+            {
+                return $this->inner->delete($table, $criteria);
+            }
+
+            #[Override]
+            public function count(string $table, array $criteria): int
+            {
+                return $this->inner->count($table, $criteria);
+            }
+
+            #[Override]
+            public function transaction(callable $fn): mixed
+            {
+                return $this->inner->transaction($fn);
+            }
+
+            #[Override]
+            public function dialect(): Dialect
+            {
+                return $this->inner->dialect();
+            }
+        }, $graph->tokenConfiguration(), $graph->config()->secrets, $graph->get(\Polaris\OAuth\Jwt::class), $this->clock);
+        try {
+            $colliding->append($agent, null, 'members', Receipts::inputHash([]), Receipt::OUTCOME_SUCCESS, null, null);
+            self::fail();
+        } catch (AgentException $exception) {
+            self::assertSame([AgentException::CONFLICT, 409], [$exception->type, $exception->status]);
+        }
+    }
+
+    /**
+     * @param list<Capability>|null $capabilities
+     */
+    private function polaris(array $autoApprove = Settings::DEFAULT_AUTO_APPROVE, ?array $capabilities = null): Polaris
     {
         $keys = TestKeys::rsa();
 
@@ -393,8 +613,23 @@ final class PluginTest extends TestCase
             database: new InMemoryAdapter(),
             clock: $this->clock,
             dispatcher: $this->events,
-            plugins: [new AuditPlugin(), new AdminPlugin(), new OAuthPlugin(self::BASE), new AgentsPlugin(self::BASE, [self::capability('deploy', 'low'), self::capability('refund', 'high', 'billing.refund'), ['name' => 'members', 'description' => 'List members', 'permission' => 'members.read', 'risk' => 'low', 'handler' => static fn(): array => []]], $autoApprove)],
+            plugins: [new AuditPlugin(), new AdminPlugin(), new OAuthPlugin(self::BASE), new AgentsPlugin(self::BASE, $capabilities ?? [self::capability('deploy', 'low'), self::capability('refund', 'high', 'billing.refund'), ['name' => 'members', 'description' => 'List members', 'permission' => 'members.read', 'risk' => 'low', 'handler' => static fn(): array => []]], $autoApprove)],
         ));
+    }
+
+    /**
+     * An agent whose owner holds the permission: a user who owns an organization (the seeded catalog's
+     * owner role), with the agent acting in it.
+     */
+    private function agentHolding(Graph $graph, string $permission): Agent
+    {
+        (new PermissionCatalogSeeder($graph->permissionCatalog()))->seed($graph->database(), $this->clock->now());
+        $userId = Uuid::v7()->toRfc4122();
+        $organization = $graph->organizations()->create('Acme ' . $userId, null, $userId);
+        [$agent] = $graph->get(Agents::class)->create(['name' => 'Bot', 'mode' => 'delegated', 'auth' => 'private_key_jwt', 'jwk' => (new AgentKey())->jwk()], Agent::OWNER_USER, $userId, $organization->id, $userId, null);
+        self::assertTrue($graph->get(Grants::class)->ownerHolds($agent, $permission));
+
+        return $agent;
     }
 
     private static function capability(string $name, string $risk, ?string $permission = null): Capability

@@ -29,6 +29,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 use function array_diff_key;
 use function dirname;
+use function sprintf;
 
 /**
  * The agents plugin: `new AgentsPlugin(baseUrl: 'https://app.example.com/auth', capabilities: [...])` in
@@ -128,12 +129,12 @@ final class AgentsPlugin extends AbstractPlugin implements ToolProvider
             Approvals::class => fn(Graph $graph): Approvals => new Approvals($graph->database(), $graph->get(Grants::class), $this->settings, $graph->mfaVerifier(), $graph->config()->auth, $graph->clock()),
             Receipts::class => static fn(Graph $graph): Receipts => new Receipts($graph->database(), $graph->tokenConfiguration(), $graph->config()->secrets, $graph->get(Jwt::class), $graph->clock()),
             Agents::class => static fn(Graph $graph): Agents => new Agents($graph->database(), $graph->get(Clients::class), $graph->get(Tokens::class), $graph->get(Grants::class), $graph->get(Approvals::class), $graph->get(Receipts::class), $graph->clock()),
-            GrantRequests::class => fn(Graph $graph): GrantRequests => new GrantRequests($graph->get(Grants::class), $graph->get(Approvals::class), $this->capabilities, $this->settings, $graph->events()),
+            GrantRequests::class => fn(Graph $graph): GrantRequests => new GrantRequests($graph->get(Grants::class), $graph->get(Approvals::class), $this->capabilities, $this->settings, $graph->database(), $graph->events()),
             Registrations::class => static fn(Graph $graph): Registrations => new Registrations($graph->get(Agents::class), $graph->get(GrantRequests::class), $graph->database(), $graph->events()),
             KillSwitch::class => static fn(Graph $graph): KillSwitch => new KillSwitch($graph->get(Agents::class), $graph->events()),
             RequestJwt::class => fn(Graph $graph): RequestJwt => new RequestJwt($this->settings, $graph->cache(), $graph->clock()),
             AgentAuthenticator::class => fn(Graph $graph): AgentAuthenticator => new AgentAuthenticator($graph->get(Agents::class), $graph->get(RequestJwt::class), $this->capabilities, static fn() => OAuthPlugin::of($graph)->bearerResolvers($graph)[0]),
-            Executor::class => fn(Graph $graph): Executor => new Executor($this->capabilities, $graph->get(Grants::class), $graph->get(Receipts::class), $graph->database(), $graph->events()),
+            Executor::class => fn(Graph $graph): Executor => new Executor($this->capabilities, $graph->get(Grants::class), $graph->get(Receipts::class), $graph->database(), $graph->events(), $graph->clock()),
             Discovery::class => fn(Graph $graph): Discovery => $this->discovery($graph),
             Problems::class => fn(Graph $graph): Problems => new Problems($this->responses ?? $graph->config()->responseFactory ?? Problems::discover()),
         ];
@@ -142,15 +143,28 @@ final class AgentsPlugin extends AbstractPlugin implements ToolProvider
     #[Override]
     public function middleware(Graph $graph): array
     {
-        return [new AgentPrincipalMiddleware($graph->get(Agents::class), $graph->get(Grants::class), $graph->get(Problems::class))];
+        return [new AgentPrincipalMiddleware($graph->get(AgentAuthenticator::class), $graph->get(Grants::class), $graph->get(Problems::class))];
     }
 
     /**
-     * The PSR-15 middleware a host puts in front of the routes that are capabilities' locations.
+     * The PSR-15 middleware a host puts in front of the routes that are capabilities' locations. Bound to
+     * a capability (`requestMiddleware($graph, 'billing.refund')`, attached to that route), every request
+     * through it must authenticate for that capability; unbound, it guards the request URLs that match a
+     * location and passes the rest through.
+     *
+     * @throws LogicException for a name that is not a capability with a location
      */
-    public function requestMiddleware(Graph $graph): AgentRequestMiddleware
+    public function requestMiddleware(Graph $graph, ?string $capability = null): AgentRequestMiddleware
     {
-        return new AgentRequestMiddleware($this->capabilities, $graph->get(AgentAuthenticator::class), $graph->get(Executor::class), $graph->get(Problems::class));
+        $bound = null;
+        if ($capability !== null) {
+            $bound = $this->capabilities->find($capability);
+            if ($bound === null || $bound->location === null) {
+                throw new LogicException(sprintf('"%s" is not a capability with a location.', $capability));
+            }
+        }
+
+        return new AgentRequestMiddleware($this->capabilities, $graph->get(AgentAuthenticator::class), $graph->get(Executor::class), $graph->get(Problems::class), $bound);
     }
 
     #[Override]
@@ -160,7 +174,7 @@ final class AgentsPlugin extends AbstractPlugin implements ToolProvider
         OAuthPlugin::of($graph);
 
         // An erased user or organization leaves no agent or host behind; a member who leaves takes the
-        // organization's agents they registered with them (they are revoked, and their chains sealed).
+        // organization's agents and hosts they registered with them (the agents revoked and sealed).
         return [static function (object $event) use ($graph): void {
             if ($event instanceof UserDeleted) {
                 $graph->get(Agents::class)->deleteForUser($event->userId);
@@ -174,6 +188,7 @@ final class AgentsPlugin extends AbstractPlugin implements ToolProvider
                 foreach ($graph->get(Agents::class)->revokeForMember($event->organizationId, $event->userId) as $agent) {
                     $graph->events()->dispatch(AgentEvent::bySystem(AuditNames::REVOKED, $agent->id, $agent->subject(), $agent->organizationId, ['how' => 'member_removed']));
                 }
+                $graph->get(Hosts::class)->revokeForMember($event->organizationId, $event->userId);
             }
         }];
     }

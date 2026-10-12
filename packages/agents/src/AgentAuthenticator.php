@@ -62,9 +62,12 @@ final class AgentAuthenticator
 
     /**
      * The agent behind a token core's pipeline already authenticated (an MCP call, a route after the
-     * principal middleware), or null when the token is not an agent's.
+     * principal middleware), or null when the token is not an agent's. The token's subject must be the
+     * agent (client credentials) or the agent's subject (an exchange of the owner's own session): the
+     * exchange is open to any session, so anyone else's token naming the agent's client is refused
+     * rather than driving the agent for its owner.
      *
-     * @throws AgentException `agent_inactive`
+     * @throws AgentException `agent_inactive`, `invalid_jwt`
      */
     public function fromToken(TokenInterface $token): ?AuthenticatedAgent
     {
@@ -74,6 +77,10 @@ final class AgentAuthenticator
             return null;
         }
         self::assertActive($agent);
+        $subject = $token->getMetadata('sub');
+        if ($subject !== $agent->id && $subject !== $agent->subject()) {
+            throw new AgentException(AgentException::INVALID_JWT, 'The token\'s subject is neither the agent nor the user the agent acts for.');
+        }
 
         return AuthenticatedAgent::viaToken($agent, $token);
     }

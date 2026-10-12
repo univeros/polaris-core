@@ -82,7 +82,7 @@ final class WalkthroughTest extends OAuthTestCase
             $agent->execute('demo.echo', ['nope' => 1]);
             self::fail('the schema');
         } catch (AgentException $exception) {
-            self::assertSame([422, 'invalid_arguments'], [$exception->status, $exception->error]);
+            self::assertSame([422, 'agents_invalid_arguments'], [$exception->status, $exception->error]);
         }
 
         // A delegated token by exchange, with a private_key_jwt assertion; it serves the agent's routes.

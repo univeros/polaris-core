@@ -597,3 +597,40 @@ entries here when a WP confirms or changes them.
   through `examples/slim/bin/agent-walkthrough.php` on `polaris/agent` (no second Node project). The first
   npm publish of `@polaris-auth/agent` is manual at the release (trusted publishing binds to an existing
   package).
+- 2026-10-12 · WP4 · Security review of `polaris/mcp`, `polaris/agents` and the oauth-provider changes
+  (before the PR), fixed: (1) a confused deputy: the token exchange is open to any session, so anyone
+  could exchange their own session for a token naming another user's delegated agent's client and
+  execute that agent's grants for its owner; a token naming an agent's client must now have the agent
+  (client credentials) or the agent's subject (the owner; for an organization's agent, the member who
+  registered it) as its `sub`, else `401 agents/invalid_jwt` on every route, `/agents/*` and MCP alike;
+  (2) an agent's OAuth client was created in the registering member's organization, so the
+  organization's self-service client routes could rewrite its credentials and grant types (and mint
+  tokens acting as the owner) or delete it past the kill switch: agents' clients now belong to no
+  organization (the agent row carries it; the plugin manages and erases the client); (3)
+  `AgentRequestMiddleware` was fail-open on spellings of a `location` (`/invite/`, `//invite`,
+  `/./invite`, `/%69nvite`, `http` behind a proxy): locations and request URLs are compared normalised
+  (RFC 3986 §6.2.2, scheme ignored for the match so a proxy's `http` is guarded and then fails the `aud`
+  check), and `requestMiddleware($graph, 'capability')` binds the middleware to a route's capability so
+  every request through it is checked; (4) the policy's auto-approval budget is a ceiling: an asked budget
+  of another kind, larger or with a longer window waits for a person; (5) the MCP protected resource
+  refetches a remote JWKS for an unknown `kid` at most once a minute; (6) a pending grant for the same
+  capability is reused, at most five approvals are pending per agent (`409 agents/conflict`), an approval
+  past its lifetime reads `expired`; (7) a decision parses the constraints first and runs in one
+  transaction; (8) a member who leaves takes the organization's hosts they created with them; (9) an
+  execution locks the agent row first (a concurrent suspend or revoke refuses it rather than racing the
+  seal) and a receipt sequence collision answers `409 agents/conflict`. With the fixes, the agents
+  plugin's `error` member follows every plugin's rule (`agents_not_found`) except for the codes the
+  protocol document defines, which stay bare, and its `401`s answer RFC 6750's `WWW-Authenticate`
+  (`Bearer`, or `Bearer error="invalid_token"`). · Kept as residual risks, with the reason: the replay
+  stores (request-JWT `jti`, the MCP DPoP proofs) are a PSR-16 get then set, as WP2's and WP3's (an
+  atomic `add` is the upgrade); approval user codes (19^8) are stored in clear without an attempt counter,
+  looked up by a signed-in owner behind core's authenticated budget; the `step_up` strength passes for a
+  user without a confirmed factor, exactly core's step-up rule; `aud` is compared with the URL the host
+  builds (a wrong proxy configuration makes valid JWTs fail, never pass); `pattern` constraints run under
+  PCRE's limits on the agent's own request; `agents/invalid_jwt` tells an unknown agent from a bad
+  signature (agent ids are UUIDs and no secret); the `/mcp` tool list under-reports for an autonomous
+  agent's token (every call still runs through the pipeline); receipt signatures have no `exp` by design;
+  the middleware reads and rewinds the body (a non-seekable host stream is a robustness limit); the token
+  endpoint still mints an exchanged token naming another user's agent (dead on every route; refusing it
+  there needs an oauth seam for one caller); an operator may delete an agent's client through
+  `/admin/oauth/clients` (operators are trusted; routing it through the kill switch is a follow-up).

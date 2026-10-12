@@ -137,13 +137,14 @@ final class RequestJwt
             throw $this->invalid(sprintf('exp - iat must be at most %d seconds.', $this->settings->requestJwtMaxAge));
         }
         $aud = $claims['aud'] ?? null;
-        if (!is_string($aud) || Dpop::canonical($aud) !== $aud || $aud !== Dpop::canonical($url)) {
+        // The URL called, compared normalised ({@see Url}) so a proxy's trailing slash or port spelling is no mismatch.
+        if (!is_string($aud) || Dpop::canonical($aud) !== $aud || Url::normalize($aud) !== Url::normalize($url)) {
             throw new AgentException(AgentException::AUD_MISMATCH, 'aud must be the exact URL called (scheme, host, port, path; no query).');
         }
         if (isset($claims['htm']) && (!is_string($claims['htm']) || strtoupper($claims['htm']) !== strtoupper($method))) {
             throw $this->invalid('htm does not match the request method.');
         }
-        if (isset($claims['htu']) && (!is_string($claims['htu']) || Dpop::canonical($claims['htu']) !== Dpop::canonical($url))) {
+        if (isset($claims['htu']) && (!is_string($claims['htu']) || Url::normalize($claims['htu']) !== Url::normalize($url))) {
             throw $this->invalid('htu does not match the request URL.');
         }
         if (isset($claims['body_hash']) && (!is_string($claims['body_hash']) || $claims['body_hash'] !== Jwt::base64UrlEncode(hash('sha256', $body, true)))) {

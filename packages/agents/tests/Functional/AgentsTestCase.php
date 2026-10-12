@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Polaris\Agents\Tests\Functional;
 
 use Override;
+use Polaris\Agents\AgentException;
 use Polaris\Agents\AgentsPlugin;
 use Polaris\Agents\Capability;
 use Polaris\Agents\ExecutionContext;
@@ -15,6 +16,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 use function count;
 use function dirname;
+use function in_array;
 use function json_encode;
 
 use const JSON_THROW_ON_ERROR;
@@ -106,7 +108,7 @@ abstract class AgentsTestCase extends OAuthTestCase
         self::assertSame('application/problem+json', $response->getHeaderLine('Content-Type'), $message);
         $body = $this->json($response);
         self::assertSame('https://polaris.univeros.io/problems/agents/' . $type, $body['type'], $message);
-        self::assertSame($error ?? $type, $body['error'], $message);
+        self::assertSame($error ?? (in_array($type, AgentException::PROTOCOL_CODES, true) ? $type : 'agents_' . $type), $body['error'], $message);
 
         return $body;
     }

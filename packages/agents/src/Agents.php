@@ -26,7 +26,9 @@ use function trim;
  * `Clients::create`, and the agent's id is the client's `client_id`, so a client-credentials token's
  * `sub` is the agent and an exchanged token's `act.sub` names it. The client's grant types follow the
  * mode (autonomous: `client_credentials`; delegated: the token exchange) and its scopes follow the
- * agent's active grants ({@see Grants::syncClientScopes()}).
+ * agent's active grants ({@see Grants::syncClientScopes()}). The client belongs to no organization:
+ * the plugin manages it (the kill switch, the scopes, erasure), so the organization's self-service
+ * client routes never list, rewrite or delete it; the agent row carries the organization.
  */
 final class Agents
 {
@@ -91,7 +93,7 @@ final class Agents
         $agent->createdAt = $now;
         $agent->updatedAt = $now;
         try {
-            $issued = $this->clients->create(self::clientFields($agent), $organizationId, $createdBy, false);
+            $issued = $this->clients->create(self::clientFields($agent), null, $createdBy, false);
         } catch (OAuthException $exception) {
             throw new AgentException(AgentException::INVALID_INPUT, 'The agent\'s OAuth client could not be registered: ' . $exception->description);
         }
