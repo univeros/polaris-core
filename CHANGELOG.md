@@ -4,10 +4,11 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.10.0] - 2026-10-12
 
 Program 4 ("Better Auth for PHP", `docs/better/spec.md`), WP4: `polaris/mcp`, `polaris/agents` and the agent
-SDKs `polaris/agent` and `@polaris-auth/agent`. No core change; core's 52 routes are unchanged.
+SDKs `polaris/agent` and `@polaris-auth/agent`. No core change; core's 52 routes are unchanged. The version
+line moves to 0.10 (`^0.10` between siblings).
 
 ### Added
 - `polaris/mcp`: `McpProtectedResource`, a PSR-15 middleware for any PHP MCP server that verifies

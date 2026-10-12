@@ -1,6 +1,6 @@
 {
     "name": "@polaris-auth/agent",
-    "version": "0.9.0",
+    "version": "0.10.0",
     "description": "The agent SDK for Polaris for PHP: discover a Polaris server, register or enrol an agent, request grants and wait for approvals, sign request JWTs, execute capabilities and verify receipts. Node and edge, no runtime dependency.",
     "keywords": [
         "polaris",
