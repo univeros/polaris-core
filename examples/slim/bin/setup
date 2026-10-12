@@ -91,4 +91,4 @@ if (!is_file("$root/var/admin.key")) {
     chmod("$root/var/admin.key", 0600);
     echo "created var/admin.key, an owner API key for the /admin routes\n";
 }
-echo "\nNext: php -S 127.0.0.1:8080 -t public   then   bin/walkthrough.sh\n";
+echo "\nNext: php -S 127.0.0.1:8080 -t public public/index.php   then   bin/walkthrough.sh\n";

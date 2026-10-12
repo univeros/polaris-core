@@ -73,7 +73,7 @@ async function owner(): Promise<string> {
 beforeAll(async () => {
     if (process.env["POLARIS_URL"] === undefined) {
         const log = openSync(serverLog, "w");
-        server = spawn("php", ["-S", "127.0.0.1:8080", "-t", "public"], { cwd: demo, stdio: ["ignore", log, log] });
+        server = spawn("php", ["-S", "127.0.0.1:8080", "-t", "public", "public/index.php"], { cwd: demo, stdio: ["ignore", log, log] });
     }
     await waitForServer();
 }, 20_000);

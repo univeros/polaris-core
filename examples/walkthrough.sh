@@ -4,7 +4,7 @@
 # members; on the Slim demo, a social sign-in through its fake provider, an MCP client call and the agent
 # steps (a host, an agent enrolled through polaris/agent, a grant, two executions, the receipt chain) too.
 # Run from a demo directory (each examples/<host>/bin/walkthrough.sh does). Starts its own
-# PHP server on POLARIS_DOCROOT (default public) unless POLARIS_URL points at a running one; reads the
+# PHP server on POLARIS_DOCROOT (default public), with the router script POLARIS_ROUTER when set, unless POLARIS_URL points at a running one; reads the
 # demo's mailbox from POLARIS_MAIL_LOG (default var/mail.log). Exits non-zero on the first failure.
 set -euo pipefail
 
@@ -13,7 +13,7 @@ MAIL="${POLARIS_MAIL_LOG:-var/mail.log}"
 SERVER_LOG="${POLARIS_SERVER_LOG:-var/server.log}"
 URL="${POLARIS_URL:-}"
 if [ -z "$URL" ]; then
-    php -S 127.0.0.1:8080 -t "$DOCROOT" > "$SERVER_LOG" 2>&1 &
+    php -S 127.0.0.1:8080 -t "$DOCROOT" ${POLARIS_ROUTER:+"$POLARIS_ROUTER"} > "$SERVER_LOG" 2>&1 &
     SERVER=$!
     trap 'kill $SERVER 2>/dev/null || true' EXIT
     URL=http://127.0.0.1:8080
@@ -78,7 +78,8 @@ if curl -sf "$URL/fake-oauth/me" > /dev/null; then
 else
     SUMMARY="registered $EMAIL, verified, logged in with TOTP, created organization $ORG"
 fi
-if curl -sf "$URL/.well-known/agent-configuration" > /dev/null; then
+# POLARIS_AGENTS=required (the Slim demo) fails here instead of skipping when the agents plugin does not answer.
+if [ "${POLARIS_AGENTS:-}" = required ] || curl -sf "$URL/.well-known/agent-configuration" > /dev/null; then
     # The Slim demo's OAuth provider, MCP server and agents: an MCP client lists the tools with a token
     # exchanged for the MCP resource, then an agent enrols through polaris/agent and leaves a receipt chain.
     call GET /.well-known/agent-configuration; step "17. GET /.well-known/agent-configuration"; expect 200

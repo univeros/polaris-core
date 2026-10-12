@@ -19,7 +19,7 @@ export default defineConfig({
     use: { baseURL, trace: "retain-on-failure" },
     projects: [{ name: "chromium", use: { browserName: "chromium" } }],
     webServer: process.env["POLARIS_URL"] ? undefined : {
-        command: `php -S 127.0.0.1:${port} -t "${resolve(demo, "public")}"`,
+        command: `php -S 127.0.0.1:${port} -t "${resolve(demo, "public")}" "${resolve(demo, "public/index.php")}"`,
         cwd: demo,
         // The demo binds its callbacks and passkeys to this origin (its .env does not override the environment).
         env: { POLARIS_BASE_URL: baseURL },

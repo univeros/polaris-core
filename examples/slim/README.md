@@ -8,7 +8,7 @@ TOTP in an organization.
 cd examples/slim
 composer install
 bin/setup                       # .env, RS256 keys, SQLite schema, permission catalog
-php -S 127.0.0.1:8080 -t public # in another terminal
+php -S 127.0.0.1:8080 -t public public/index.php # in another terminal (index.php routes the /.well-known paths)
 bin/walkthrough.sh              # the steps below, executed
 ```
 
