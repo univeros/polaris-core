@@ -124,7 +124,7 @@ describe("@polaris-auth/agent against the Slim demo", () => {
         const [one, two] = chain.data as [Receipt, Receipt];
         expect(await agent.verifyReceipt(one)).toEqual({ valid: true, checks: { hash: true, signature: true, chain: true } });
         expect(await agent.verifyReceipt(two, one)).toEqual({ valid: true, checks: { hash: true, signature: true, chain: true } });
-        expect((await agent.verifyReceipt({ ...two, prev_hash: one.hash.replace(/./, "0") }, one)).checks).toMatchObject({ hash: false, signature: false, chain: false });
+        expect((await agent.verifyReceipt({ ...two, prev_hash: (one.hash[0] === "0" ? "1" : "0") + one.hash.slice(1) }, one)).checks).toMatchObject({ hash: false, signature: false, chain: false });
         const remote = await json<{ data: { valid: boolean } }>(`/agents/receipts/${two.id}/verify`, { token: ownerToken });
         expect(remote.data.valid).toBe(true);
     });

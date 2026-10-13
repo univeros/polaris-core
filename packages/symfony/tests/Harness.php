@@ -35,6 +35,7 @@ use const JSON_THROW_ON_ERROR;
 final class Harness implements HarnessContract
 {
     private const array SERVICES = ['secrets', 'auth', 'database', 'cache', 'mailer', 'sms', 'dispatcher'];
+    private const string RATE_STORE = 'polaris.test.rate_store';
     private static ?TestKernel $previous = null;
 
     private function __construct(private readonly TestKernel $kernel)
@@ -67,13 +68,15 @@ final class Harness implements HarnessContract
             'mailer' => $ids['mailer'],
             'sms' => $ids['sms'],
             'dispatcher' => $ids['dispatcher'],
+            'rate_store' => self::RATE_STORE,
             'plugins' => array_values($pluginIds),
-        ], synthetic: [...array_values($ids), ...array_values($pluginIds)]);
+        ], synthetic: [...array_values($ids), self::RATE_STORE, ...array_values($pluginIds)]);
         $kernel->boot();
         $container = $kernel->getContainer();
         foreach (self::SERVICES as $service) {
             $container->set($ids[$service], $config->{$service} ?? ($service === 'cache' ? new InMemoryCache() : null));
         }
+        $container->set(self::RATE_STORE, $config->rateStore);
         foreach ($pluginIds as $index => $id) {
             $container->set($id, $config->plugins[$index]);
         }

@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace Polaris\Tests\Functional;
 
+use DateTimeImmutable;
 use Laminas\Diactoros\ServerRequestFactory;
 use Polaris\Config\AuthConfig;
 use Polaris\Config\Secrets;
 use Polaris\Contract\Plugin;
 use Polaris\Schema\Schema;
+use Polaris\Support\CacheRateStore;
+use Polaris\Support\InMemoryCache;
 use Polaris\Wiring\Config;
 use Polaris\Wiring\Graph;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Polaris\Tests\Contract\Fixture;
 use Polaris\Tests\Persistence\DatabaseTestCase;
+use Polaris\Tests\Support\FrozenClock;
 use Polaris\Tests\Support\RecordingEventDispatcher;
 use Polaris\Tests\Support\RecordingOtpMailer;
 use Polaris\Tests\Support\RecordingSmsSender;
@@ -97,6 +101,9 @@ abstract class FunctionalTestCase extends DatabaseTestCase
             mailer: $this->mailer,
             sms: $this->sms,
             dispatcher: $this->events,
+            // The limiters are fixed windows: on the wall clock a test's requests could straddle a window
+            // boundary and reset the counter mid-test, so the windows stay where they were at boot.
+            rateStore: new CacheRateStore(new InMemoryCache(), new FrozenClock(new DateTimeImmutable())),
             plugins: static::plugins(),
         ));
         $this->graph = $this->harness->graph();

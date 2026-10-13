@@ -43,6 +43,7 @@ final class Harness implements HarnessContract
             'secrets' => $config->secrets,
             'auth' => $config->auth,
             'rate_limits' => $config->rateLimits,
+            'rate_store' => $config->rateStore,
             'database' => $config->database,
             'mailer' => $config->mailer,
             'sms' => $config->sms,
