@@ -4,6 +4,14 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- `polaris/pdo`: `SchemaInstaller::createMissing()` creates only the tables a database lacks (plugins'
+  included), in foreign-key order, then seeds the permission catalog and the system roles; it answers the
+  tables it created. `SqlSchema::ordered()` is public. For a host that adds a plugin to an installed
+  database (univeros/polaris#111).
+
 ## [0.10.0] - 2026-10-12
 
 Program 4 ("Better Auth for PHP", `docs/better/spec.md`), WP4: `polaris/mcp`, `polaris/agents` and the agent

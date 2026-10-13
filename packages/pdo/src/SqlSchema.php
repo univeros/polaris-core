@@ -142,9 +142,11 @@ final class SqlSchema
     }
 
     /**
+     * Every model of the schema (plugins' included once `Polaris::create()` ran), in creation order.
+     *
      * @return list<Model> referenced tables before the tables that reference them
      */
-    private static function ordered(): array
+    public static function ordered(): array
     {
         $pending = Schema::all();
         $ordered = [];

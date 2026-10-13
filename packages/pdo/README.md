@@ -37,6 +37,18 @@ foreach (SqlSchema::createAll(Dialect::Postgres) as $statement) {
 (new PermissionCatalogSeeder(new PermissionCatalog()))->seed($adapter, new DateTimeImmutable());
 ```
 
+`SchemaInstaller::create($adapter, catalog: $polaris->graph()->permissionCatalog())` does both in one
+call. On a database Polaris is already installed on, after a plugin was added, `createMissing()` creates
+only the tables the database lacks, in foreign-key order, seeds again (the seeder is idempotent) and
+answers the tables it created; a table that exists is left as it is, and `polaris schema:diff` reports what
+it lacks:
+
+```php
+use Polaris\Pdo\SchemaInstaller;
+
+$created = SchemaInstaller::createMissing($adapter, catalog: $polaris->graph()->permissionCatalog());
+```
+
 Dialects: `Dialect::Postgres`, `Dialect::Mysql`, `Dialect::Sqlite` (turn `PRAGMA foreign_keys`
 on). The adapter passes the Polaris conformance suite on all three.
 
