@@ -79,6 +79,11 @@ final class SendCommand extends Command
 
             return Command::FAILURE;
         }
+        if ($receipt->queued) {
+            $output->writeln(sprintf('<info>Queued %s to %s: the outbox took it, a worker delivers it.</info>', $template, $input->getArgument('to')));
+
+            return Command::SUCCESS;
+        }
         $output->writeln(sprintf('<info>Sent %s to %s through %s%s.</info>', $template, $input->getArgument('to'), $receipt->channel, $receipt->providerId === null ? '' : ' (' . $receipt->providerId . ')'));
 
         return Command::SUCCESS;

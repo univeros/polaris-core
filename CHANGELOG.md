@@ -4,6 +4,21 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- `polaris/messaging`: the `Outbox` seam takes data instead of a closure, so a host can back it with a real
+  queue (#54). `Outbox::push(Message $message, array $alternatives): ?Receipt` receives the message and the
+  alternative recipients of its fallback, both serializable; `SyncOutbox` (the default) delivers at once and
+  answers the channel's receipt. The new `Sender::dispatch(Message, array $alternatives = [])` delivers through
+  the channels and the fallback without asking the policy again or using the outbox: `SyncOutbox` and a
+  queue's worker call it. A deferred send answers `Receipt::queued()` (`Receipt::$queued`), so a caller tells
+  it apart from a refused send (null); `messaging:send` prints it as queued.
+  **Upgrading:** an `Outbox` implementation changes its signature from `push(Message, callable $deliver):
+  void` to `push(Message, array $alternatives): ?Receipt`, and its worker calls `Sender::dispatch()` instead
+  of the closure. `SyncOutbox` now takes a `Closure(): Sender` (the plugin builds it; construct it yourself
+  only when you build a `Sender` by hand).
+
 ## [0.10.1] - 2026-10-13
 
 ### Added

@@ -25,9 +25,12 @@ use Polaris\Messaging\Message;
 use Polaris\Messaging\MessagePolicy;
 use Polaris\Messaging\MessageSent;
 use Polaris\Messaging\MessagingPlugin;
+use Polaris\Messaging\Outbox;
+use Polaris\Messaging\Receipt;
 use Polaris\Messaging\Schema;
 use Polaris\Messaging\Sender;
 use Polaris\Messaging\Suppressor;
+use Polaris\Messaging\SyncOutbox;
 use Polaris\Model\User;
 use Polaris\Polaris;
 use Polaris\Schema\Schema as CoreSchema;
@@ -50,6 +53,8 @@ use Symfony\Component\Console\Tester\CommandTester;
 #[CoversClass(Sms::class)]
 #[CoversClass(MessageSent::class)]
 #[CoversClass(SendCommand::class)]
+#[CoversClass(SyncOutbox::class)]
+#[CoversClass(Receipt::class)]
 #[RunTestsInSeparateProcesses]
 final class PluginTest extends TestCase
 {
@@ -140,6 +145,48 @@ final class PluginTest extends TestCase
         $quiet->on = true;
         self::assertNull($sender->send(Message::EMAIL, 'carol@example.com', 'email.new_device', ['ip' => '1', 'user_agent' => 'x']), 'quiet mode drops a non-essential message');
         self::assertNotNull($sender->send(Message::EMAIL, 'carol@example.com', 'email.verify', ['token' => 't'], essential: true), 'an essential one still goes');
+    }
+
+    public function testAQueueOutboxTakesTheSendAsDataAndItsWorkerDeliversItOnce(): void
+    {
+        $mail = new ArrayChannel('mail', [Message::EMAIL]);
+        $sms = new ArrayChannel('sms', [Message::SMS], failing: true);
+        $queue = new class implements Outbox {
+            /** @var list<string> */
+            public array $jobs = [];
+
+            public function push(Message $message, array $alternatives): Receipt
+            {
+                $this->jobs[] = serialize([$message, $alternatives]);
+
+                return Receipt::queued(new DateTimeImmutable('2026-09-11T10:00:00+00:00'));
+            }
+        };
+        $events = new RecordingEventDispatcher();
+        $polaris = self::polaris(new MessagingPlugin(channels: [$sms, $mail], caps: ['sms.otp' => [1, 600]], outbox: $queue), $events);
+        $events->listen(...$polaris->listeners());
+        $graph = $polaris->graph();
+        $sender = $graph->get(Sender::class);
+
+        $receipt = $sender->send(Message::SMS, '+15551234567', 'sms.otp', ['code' => 7], alternatives: [Message::EMAIL => 'ada@example.com']);
+        self::assertTrue($receipt?->queued, 'a deferred send answers a queued receipt, never the null of a refused one');
+        self::assertCount(0, $mail->messages, 'nothing is delivered on the request');
+        self::assertNull($sender->send(Message::SMS, '+15551234567', 'sms.otp', ['code' => 8]), 'the policy counted the queued send');
+
+        [$message, $alternatives] = unserialize($queue->jobs[0], ['allowed_classes' => [Message::class]]);   // the worker
+        $delivered = $sender->dispatch($message, $alternatives);
+
+        self::assertSame('mail', $delivered?->channel, 'the worker delivers, through the fallback, past the cap the request already used');
+        self::assertFalse($delivered->queued);
+        self::assertSame('email.otp', $mail->messages[0]->template);
+        self::assertCount(1, $queue->jobs, 'dispatch never comes back to the outbox');
+        self::assertCount(1, $graph->get(Store::class)->read(new AuditQuery(names: [MessageSent::NAME]))->events, 'one delivery, recorded once');
+
+        $app = new Application($polaris);
+        $app->setAutoExit(false);
+        $command = new CommandTester($app->find('messaging:send'));
+        self::assertSame(0, $command->execute(['to' => 'bob@example.com', 'template' => 'email.otp', '--vars' => '{"code":"1","ttl":60}']));
+        self::assertStringContainsString('Queued email.otp to bob@example.com', $command->getDisplay());
     }
 
     public function testTheSendCommandRunsOnTheApplicationsGraph(): void

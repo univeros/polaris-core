@@ -64,8 +64,41 @@ kind (`sms` → `email`) used when no channel of the first kind delivered and th
 recipient; quiet mode through a `Suppressor` (the one passed to the plugin, or the one another package provides
 through its services, as `polaris/sentinel` does) that drops non-essential messages. Channels are tried in order for the message's kind; a channel throws `DeliveryException` and the
 next is tried; a refused or undelivered message is logged and never breaks the operation that asked for
-it. `Outbox` is the queue seam (`SyncOutbox` by default; a host's queue driver takes sends off the request
-path). `polaris messaging:send <to> <template> --vars='{"code":"123456"}'` checks a channel from the console.
+it. `polaris messaging:send <to> <template> --vars='{"code":"123456"}'` checks a channel from the console.
+
+## Sending from a queue
+
+`Outbox` is where a send goes once the policy allowed it. `SyncOutbox`, the default, delivers on the
+request. To take sends off the request path, pass your own: it receives data (the `Message`, scalars and
+arrays only, and the alternative recipients of its fallback), puts it on your queue and answers
+`Receipt::queued()`; the worker hands the same data to `Sender::dispatch()`, which delivers through the
+channels and the fallback without asking the policy again or coming back to the outbox:
+
+```php
+use Polaris\Messaging\{Message, MessagingPlugin, Outbox, Receipt, Sender};
+
+final class QueueOutbox implements Outbox
+{
+    public function __construct(private Queue $queue) {}
+
+    public function push(Message $message, array $alternatives): ?Receipt
+    {
+        $this->queue->publish(serialize([$message, $alternatives]));
+
+        return Receipt::queued(new DateTimeImmutable());
+    }
+}
+
+new MessagingPlugin(channels: [$mail, $sms], outbox: new QueueOutbox($queue));
+
+// the worker, on the same graph:
+[$message, $alternatives] = unserialize($job, ['allowed_classes' => [Message::class]]);
+$polaris->graph()->get(Sender::class)->dispatch($message, $alternatives);
+```
+
+A queued send has no channel receipt at request time: `Sender::send()` answers the queued receipt
+(`$receipt->queued` is true), null only when the policy refused the send or no channel delivered it. The
+`messaging.sent` audit record is written by the worker, when a channel takes the message.
 
 ## License
 

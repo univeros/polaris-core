@@ -16,7 +16,8 @@ use function strtolower;
  * The one way out: render the template, ask the policy, hand the message to the outbox, deliver through
  * the first channel of its kind (falling back to the message's alternative when the policy has one and
  * the channel failed), record `messaging.sent`. A refused or failed send never breaks the operation
- * that asked for it: it is logged and answered as null.
+ * that asked for it: it is logged and answered as null; a send a queue took is answered as
+ * `Receipt::queued()`.
  */
 final class Sender
 {
@@ -49,6 +50,9 @@ final class Sender
     }
 
     /**
+     * Asks the policy, then hands the message to the outbox: the channel's receipt, `Receipt::queued()` when a
+     * queue took it (no channel has, yet), null when the policy refused it or no channel delivered it.
+     *
      * @param array<string, string> $alternatives
      */
     public function deliver(Message $message, array $alternatives = []): ?Receipt
@@ -58,12 +62,20 @@ final class Sender
 
             return null;
         }
-        $receipt = null;
-        $this->outbox->push($message, function (Message $message) use (&$receipt, $alternatives): void {
-            $receipt = $this->attempt($message, false) ?? $this->fallback($message, $alternatives);
-        });
 
-        return $receipt;
+        return $this->outbox->push($message, $alternatives);
+    }
+
+    /**
+     * Delivers a message the policy already allowed: the first channel of its kind, then the fallback to an
+     * alternative recipient. It asks no policy and uses no outbox: `SyncOutbox` calls it, and so does a
+     * queue's worker with what the queue received.
+     *
+     * @param array<string, string> $alternatives
+     */
+    public function dispatch(Message $message, array $alternatives = []): ?Receipt
+    {
+        return $this->attempt($message, false) ?? $this->fallback($message, $alternatives);
     }
 
     /**
