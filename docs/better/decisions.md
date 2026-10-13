@@ -642,3 +642,7 @@ entries here when a WP confirms or changes them.
   walkthrough starts the server with `POLARIS_ROUTER` when a demo sets it, and the Slim demo sets
   `POLARIS_AGENTS=required` so the agent and MCP steps fail rather than skip when the plugin does not
   answer; the other demos are unchanged.
+- 2026-10-13 · release · 0.11.0 is not WP5: it carries the breaking `polaris/messaging` `Outbox` change (#56,
+  issue #54), a 0.x minor by semver, released after univeros/polaris 2.3.0 (which pins `^0.10` and took
+  0.10.1, `SchemaInstaller::createMissing()`, #55). WP5 (the developer surface) moves to 0.12.0 (§8); WP6
+  stays 1.0.0.

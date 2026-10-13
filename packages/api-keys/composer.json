@@ -12,8 +12,8 @@
     ],
     "require": {
         "php": ">=8.3",
-        "polaris/audit": "^0.10",
-        "polaris/core": "^0.10",
+        "polaris/audit": "^0.11",
+        "polaris/core": "^0.11",
         "psr/clock": "^1.0",
         "psr/event-dispatcher": "^1.0",
         "psr/http-factory": "^1.0",
@@ -28,7 +28,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.10.x-dev"
+            "dev-main": "0.11.x-dev"
         }
     },
     "config": {

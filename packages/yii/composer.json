@@ -11,10 +11,10 @@
     ],
     "require": {
         "php": ">=8.3",
-        "polaris/cli": "^0.10",
-        "polaris/core": "^0.10",
-        "polaris/pdo": "^0.10",
-        "polaris/psr15": "^0.10",
+        "polaris/cli": "^0.11",
+        "polaris/core": "^0.11",
+        "polaris/pdo": "^0.11",
+        "polaris/psr15": "^0.11",
         "psr/container": "^1.1 || ^2.0",
         "psr/http-factory": "^1.0",
         "psr/http-message": "^1.1 || ^2.0",
@@ -35,7 +35,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.10.x-dev"
+            "dev-main": "0.11.x-dev"
         },
         "config-plugin-options": {
             "source-directory": "config"

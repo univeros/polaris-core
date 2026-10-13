@@ -280,7 +280,7 @@ Acceptance:
 5. Token exchange yields `act` claims that `polaris/audit` records as `actor_type = agent` with the user as subject.
 6. `/.well-known/agent-configuration` validates against `agent-auth-compat.md`; `@polaris-auth/agent` and `polaris/agent` complete the enrol-to-receipt walkthrough against the Slim demo.
 
-### WP5 — developer surface (0.11.0)
+### WP5 — developer surface (0.12.0)
 
 Scope: §5 (`@polaris-auth/react`), §6.
 

@@ -15,9 +15,9 @@
         "ext-openssl": "*",
         "firebase/php-jwt": "^7.0",
         "lcobucci/jwt": "^5.6",
-        "polaris/admin": "^0.10",
-        "polaris/audit": "^0.10",
-        "polaris/core": "^0.10",
+        "polaris/admin": "^0.11",
+        "polaris/audit": "^0.11",
+        "polaris/core": "^0.11",
         "psr/clock": "^1.0",
         "psr/event-dispatcher": "^1.0",
         "psr/http-client": "^1.0",
@@ -34,7 +34,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.10.x-dev"
+            "dev-main": "0.11.x-dev"
         }
     },
     "config": {
