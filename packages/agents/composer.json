@@ -16,11 +16,11 @@
         "firebase/php-jwt": "^7.0",
         "lcobucci/jwt": "^5.0",
         "opis/json-schema": "^2.4",
-        "polaris/admin": "^0.11",
-        "polaris/audit": "^0.11",
-        "polaris/core": "^0.11",
-        "polaris/mcp": "^0.11",
-        "polaris/oauth-provider": "^0.11",
+        "polaris/admin": "^0.12",
+        "polaris/audit": "^0.12",
+        "polaris/core": "^0.12",
+        "polaris/mcp": "^0.12",
+        "polaris/oauth-provider": "^0.12",
         "psr/clock": "^1.0",
         "psr/event-dispatcher": "^1.0",
         "psr/http-factory": "^1.0",
@@ -36,7 +36,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.11.x-dev"
+            "dev-main": "0.12.x-dev"
         }
     },
     "config": {

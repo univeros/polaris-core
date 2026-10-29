@@ -4,7 +4,15 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.12.0] - 2026-10-29
+
+Cookie token delivery (`docs/cookie-mode/spec.md`). The version line moves to 0.12 (`^0.12` between
+siblings). Program 4's WP5 moves to 0.13.0.
+
+**Upgrading:** `polaris/core` 0.12 declares `conflict` on `polaris/anonymous`, `multi-session`,
+`passkey`, `passwordless`, `social`, `sso` and `username` below 0.12. An older one would answer its
+refresh token in the body in cookie mode, because its routes lack the `session` key. Upgrade them
+together.
 
 ### Added
 - Cookie token delivery (`docs/cookie-mode/spec.md`): `auth.flows.token_delivery: cookie`, documented since

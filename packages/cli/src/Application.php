@@ -20,7 +20,7 @@ final class Application extends Console
      */
     public function __construct(?Polaris $polaris = null)
     {
-        parent::__construct('polaris', '0.11.0');
+        parent::__construct('polaris', '0.12.0');
         $this->addCommands([
             new SchemaExportCommand(),
             new SchemaCreateCommand(),
