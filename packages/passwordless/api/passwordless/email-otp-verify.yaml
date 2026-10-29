@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /email-otp/verify
+  session: issue
   summary: Sign in with an email code
   tags: [passwordless]
   auth: public

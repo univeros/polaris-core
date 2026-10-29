@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /anonymous/sign-in
+  session: issue
   summary: Sign in as a guest
   tags: [anonymous]
   auth: public

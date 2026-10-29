@@ -3,6 +3,7 @@ import { admin, type AdminApi } from "./admin.js";
 import { anonymous, type AnonymousApi } from "./anonymous.js";
 import { audit, type AuditApi } from "./audit.js";
 import { challengeRetry, type ChallengeOptions } from "./challenge.js";
+import { cookieDelivery, type TokenDelivery } from "./cookie.js";
 import { multiSession, type MultiSessionApi } from "./multi-session.js";
 import { passkey, type PasskeyApi } from "./passkey.js";
 import { passwordless, type PasswordlessApi } from "./passwordless.js";
@@ -22,6 +23,7 @@ export { admin, type AdminApi } from "./admin.js";
 export { anonymous, type AnonymousApi } from "./anonymous.js";
 export { audit, type AuditApi } from "./audit.js";
 export { challengeRetry, type ChallengeOptions } from "./challenge.js";
+export { CSRF_HEADER, cookieDelivery, refreshSession, type RefreshSessionResult, type TokenDelivery } from "./cookie.js";
 export { multiSession, type MultiSessionApi } from "./multi-session.js";
 export { passkey, type PasskeyApi } from "./passkey.js";
 export { passwordless, type PasswordlessApi } from "./passwordless.js";
@@ -54,6 +56,14 @@ export interface PolarisClientOptions extends ClientOptions {
      * in the body. Without it the problem document is returned as any other error.
      */
     challenge?: ChallengeOptions;
+    /**
+     * `"cookie"` for a server with `auth.flows.token_delivery: cookie`: the refresh token never reaches
+     * the client (an `HttpOnly` cookie scoped to the refresh route), every request carries the
+     * `X-Polaris-CSRF: 1` header the server's guard requires, and `refreshSession(client)` rotates the
+     * session. `credentials` stays at the fetch default (`same-origin`); an application on a trusted
+     * origin passes `credentials: "include"` itself. Default `"body"`.
+     */
+    tokenDelivery?: TokenDelivery;
 }
 
 export interface PolarisClient extends Client<paths> {
@@ -101,12 +111,16 @@ export interface PolarisClient extends Client<paths> {
  * `client.POST("/auth/login", { body })` checks the body and types `data` and `error`; the plugins' routes
  * are also methods of `client.audit`, `client.admin`, `client.sentinel`, `client.sso`, `client.scim`, `client.passwordless`,
  * `client.username`, `client.anonymous`, `client.multiSession`, `client.social`, `client.passkey`, `client.apiKeys`, `client.oauth`, `client.mcp` and `client.agents`; `challenge.captcha`
- * answers a sentinel captcha challenge with one retry. No refresh loop and no storage: when to refresh
- * and where to keep tokens is the application's policy.
+ * answers a sentinel captcha challenge with one retry; `tokenDelivery: "cookie"` sends the CSRF header cookie
+ * mode requires. No refresh loop and no storage: when to refresh and where to keep tokens is the
+ * application's policy (`refreshSession()` serialises a cookie-mode refresh, it does not schedule one).
  */
 export function createClient(options: PolarisClientOptions): PolarisClient {
-    const { token = null, challenge, ...clientOptions } = options;
+    const { token = null, challenge, tokenDelivery = "body", ...clientOptions } = options;
     const client = createOpenApiClient<paths>(clientOptions);
+    if (tokenDelivery === "cookie") {
+        client.use(cookieDelivery());
+    }
     if (challenge !== undefined) {
         client.use(challengeRetry(challenge));
     }

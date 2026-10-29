@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /sso/logout
+  session: end
   summary: Single logout from the application
   tags: [sso]
   auth: bearer

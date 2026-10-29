@@ -26,6 +26,7 @@ use PolarisDemo\LoopbackClient;
 use PolarisDemo\FileMailer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Psr7\Factory\RequestFactory;
 use Slim\Psr7\Factory\ResponseFactory;
@@ -46,11 +47,22 @@ $dispatcher = new Dispatcher();
 $baseUrl = rtrim((string) (getenv('POLARIS_BASE_URL') ?: 'http://localhost:8080'), '/');
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
+// Behind a TLS-terminating proxy the request must carry its public https URI: cookie token delivery
+// refuses plaintext and compares the Origin with it (docs/cookie-mode/spec.md §2.6). This is the host's
+// trusted-proxy handling, opt-in here because php -S sees every local request from 127.0.0.1.
+if (getenv('POLARIS_TRUST_FORWARDED_PROTO') === '1') {
+    $app->add(static function (ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
+        $proxied = ($request->getServerParams()['REMOTE_ADDR'] ?? null) === '127.0.0.1' && $request->getHeaderLine('X-Forwarded-Proto') === 'https';
+
+        return $handler->handle($proxied ? $request->withUri($request->getUri()->withScheme('https')) : $request);
+    });
+}
 // The demo's own OAuth 2 server and mailbox, outside Polaris's routes.
 FakeProvider::register($app, $root);
 $polaris = Polaris::create(new Config(
     secrets: EnvironmentConfig::secrets(),
-    auth: EnvironmentConfig::auth(),
+    // POLARIS_TOKEN_DELIVERY=cookie: the refresh token in an HttpOnly cookie (needs https; see above).
+    auth: EnvironmentConfig::auth(overrides: getenv('POLARIS_TOKEN_DELIVERY') === 'cookie' ? ['flows' => ['token_delivery' => 'cookie']] : []),
     database: new PdoAdapter($pdo),
     mailer: new FileMailer($root . '/var/mail.log'),
     // php -S runs every request in a fresh process: the plugins' short-lived state (OAuth states, passkey

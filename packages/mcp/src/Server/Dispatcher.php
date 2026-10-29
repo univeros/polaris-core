@@ -52,7 +52,8 @@ final class Dispatcher
     ) {
         $this->baseUrl = rtrim($baseUrl, '/');
         $path = (string) parse_url($this->baseUrl, PHP_URL_PATH);
-        $this->pipeline = new Pipeline($graph, $responses, $path === '' ? '/' : $path);
+        // Body mode whatever the host's token delivery: a tool call has no cookie jar (docs/cookie-mode/spec.md §2.11).
+        $this->pipeline = new Pipeline($graph, $responses, $path === '' ? '/' : $path, bodyDelivery: true);
     }
 
     /**

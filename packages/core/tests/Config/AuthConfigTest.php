@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Polaris\Tests\Config;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Polaris\Config\AuthConfig;
 use Polaris\Exception\InvalidConfigException;
@@ -94,5 +95,34 @@ final class AuthConfigTest extends TestCase
         $this->expectException(InvalidConfigException::class);
 
         AuthConfig::fromArray(['issuer' => 'x', 'otp' => ['totp' => ['digits' => 9]]]);
+    }
+
+    public function testAcceptsHttpsTrustedOriginsForCookieMode(): void
+    {
+        $config = AuthConfig::fromArray(['issuer' => 'x', 'flows' => ['token_delivery' => 'cookie', 'cookie' => ['trusted_origins' => ['https://app.example.com', 'https://admin.example.com:8443']]]]);
+
+        self::assertSame(['https://app.example.com', 'https://admin.example.com:8443'], $config->cookieTrustedOrigins);
+        self::assertSame([], AuthConfig::fromArray(['issuer' => 'x'])->cookieTrustedOrigins);
+    }
+
+    /**
+     * @return iterable<string, array{mixed}>
+     */
+    public static function invalidOrigins(): iterable
+    {
+        yield 'plaintext' => ['http://app.example.com'];
+        yield 'a path' => ['https://app.example.com/'];
+        yield 'upper case' => ['https://App.example.com'];
+        yield 'not a string' => [42];
+        yield 'a wildcard' => ['https://*.example.com'];
+    }
+
+    #[DataProvider('invalidOrigins')]
+    public function testRejectsATrustedOriginThatIsNotAnHttpsOrigin(mixed $origin): void
+    {
+        $this->expectException(InvalidConfigException::class);
+        $this->expectExceptionMessage('auth.flows.cookie.trusted_origins');
+
+        AuthConfig::fromArray(['issuer' => 'x', 'flows' => ['token_delivery' => 'cookie', 'cookie' => ['trusted_origins' => [$origin]]]]);
     }
 }

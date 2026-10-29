@@ -339,6 +339,7 @@
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": true,
                 "x-polaris-rate-limit": "login",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -414,7 +415,6 @@
                                                         "access_token",
                                                         "token_type",
                                                         "expires_in",
-                                                        "refresh_token",
                                                         "user"
                                                     ]
                                                 }
@@ -561,6 +561,7 @@
                 ],
                 "x-polaris-effect": "destructive",
                 "x-polaris-receipt": true,
+                "x-polaris-session": "end",
                 "security": [
                     {
                         "bearerAuth": []
@@ -620,6 +621,7 @@
                 ],
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": true,
+                "x-polaris-session": "end",
                 "security": [
                     {
                         "bearerAuth": []
@@ -2144,6 +2146,7 @@
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": true,
                 "x-polaris-rate-limit": "mfa_confirm",
+                "x-polaris-session": "issue",
                 "security": [
                     {
                         "mfaToken": []
@@ -2203,8 +2206,7 @@
                                             "required": [
                                                 "access_token",
                                                 "token_type",
-                                                "expires_in",
-                                                "refresh_token"
+                                                "expires_in"
                                             ]
                                         }
                                     },
@@ -2916,6 +2918,7 @@
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": true,
                 "x-polaris-rate-limit": "token_refresh",
+                "x-polaris-session": "refresh",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2928,10 +2931,7 @@
                                         "format": "password",
                                         "x-polaris-sensitive": true
                                     }
-                                },
-                                "required": [
-                                    "refresh_token"
-                                ]
+                                }
                             }
                         }
                     }
@@ -2963,8 +2963,7 @@
                                             "required": [
                                                 "access_token",
                                                 "token_type",
-                                                "expires_in",
-                                                "refresh_token"
+                                                "expires_in"
                                             ]
                                         }
                                     },
@@ -11258,6 +11257,7 @@
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": false,
                 "x-polaris-plugin": "sso",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -11323,7 +11323,6 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
-                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -11371,6 +11370,7 @@
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "sso",
+                "x-polaris-session": "end",
                 "security": [
                     {
                         "bearerAuth": []
@@ -15188,6 +15188,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "passwordless",
                 "x-polaris-rate-limit": "token_consume",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -15261,7 +15262,6 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
-                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -15320,6 +15320,7 @@
                 "x-polaris-receipt": false,
                 "x-polaris-plugin": "passwordless",
                 "x-polaris-rate-limit": "token_consume",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -15387,7 +15388,6 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
-                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -15649,6 +15649,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "passwordless",
                 "x-polaris-rate-limit": "token_consume",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -15716,7 +15717,6 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
-                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -16043,6 +16043,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "passwordless",
                 "x-polaris-rate-limit": "token_consume",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -16115,7 +16116,6 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
-                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -16174,6 +16174,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "username",
                 "x-polaris-rate-limit": "login",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -16246,7 +16247,6 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
-                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -16533,6 +16533,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "anonymous",
                 "x-polaris-rate-limit": "register",
+                "x-polaris-session": "issue",
                 "responses": {
                     "201": {
                         "description": "Success",
@@ -16580,7 +16581,6 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
-                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -16873,6 +16873,7 @@
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "multi-session",
+                "x-polaris-session": "issue",
                 "security": [
                     {
                         "bearerAuth": []
@@ -16943,7 +16944,6 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
-                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -17356,6 +17356,7 @@
                 "x-polaris-receipt": false,
                 "x-polaris-plugin": "social",
                 "x-polaris-rate-limit": "token_consume",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -17423,7 +17424,6 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
-                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -17587,6 +17587,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "social",
                 "x-polaris-rate-limit": "login",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -17654,7 +17655,6 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
-                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -18096,6 +18096,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "passkey",
                 "x-polaris-rate-limit": "login",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -18162,7 +18163,6 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
-                                                "refresh_token",
                                                 "user"
                                             ]
                                         }

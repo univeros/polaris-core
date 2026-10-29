@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /multi-session/switch
+  session: issue
   summary: Switch to another account signed in on this device
   tags: [multi-session]
   auth: bearer

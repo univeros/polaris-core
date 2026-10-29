@@ -21,3 +21,28 @@ Append one entry per decision. Format: date, work package, decision, reason, alt
   the real one, and a different cookie name on localhost).
 - 2026-10-29 · release · Cookie mode ships as 0.12.0, before program 4's WP5, which moves to 0.13.0
   (`docs/better/spec.md` §8, logged there). · Reason: one smaller work package the owner needs now.
+- 2026-10-29 · WP1 · A refusal on a plugin route is a problem document of type
+  `https://polaris.univeros.io/problems/cookie/<code>` with `error` equal to the code (`csrf_failed`,
+  `insecure_transport`), the same code a core route answers in `{"error", "message"}`. · Reason: a client
+  checks one `error` value whatever route it called. · Rejected: the refused plugin's own prefix
+  (`social/csrf_failed`), whose `error` would be `social_csrf_failed` and differ per plugin.
+- 2026-10-29 · WP1 · The `conflict` entries of §2.2 land with the 0.12.0 version bump, not before: the
+  monorepo resolves every package from path repositories at `0.11.x-dev`, so `<0.12` would make its own
+  `composer update` fail until the version line moves. Tracked on #69's release list.
+- 2026-10-29 · WP1 · The harnesses needed no `HTTPS=on` work: `symfony/psr-http-message-bridge`'s
+  `HttpFoundationFactory` sets it from an `https://` URI and copies the cookie params. What remained:
+  `FunctionalTestCase::authConfig()` (merged over the environment's), requests with full URIs and cookie
+  params (`CookieRequests`), parsed `Set-Cookie` assertions; Laravel re-serialises `Max-Age` from its
+  computed expiry, so the attribute is compared within five seconds.
+- 2026-10-29 · WP1 · §5 test 1 on every plugin `issue` route is met in two layers: a unit test runs the
+  middleware against every route the manifests mark (core's and every plugin's) for the guard, the
+  plaintext refusal, the envelope and the move to the cookie; functional tests through the four kernels
+  drive core's routes end to end and `polaris/multi-session`'s (sign-in recorded on the device, the switch,
+  the device cookie beside the refresh cookie). The middleware is route-agnostic, so driving each plugin's
+  sign-in ceremony (passkey, social, SSO, passwordless) in cookie mode would retest the same code path.
+- 2026-10-29 · WP1 · The Slim demo gains two opt-in environment switches, `POLARIS_TOKEN_DELIVERY=cookie`
+  and `POLARIS_TRUST_FORWARDED_PROTO=1` (an `https` URI for a request from 127.0.0.1 carrying
+  `X-Forwarded-Proto: https`), which the client's cookie-mode e2e uses behind `e2e/tls-proxy.mjs`, a Node
+  HTTPS front with a throwaway `openssl` certificate. The second is the trusted-proxy handling §2.6 leaves
+  to a Slim host, as a reference. The e2e drives the browser with same-origin `fetch` the way the client
+  does; the client's own code is covered by its unit tests.

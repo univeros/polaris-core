@@ -3,6 +3,7 @@
 endpoint:
   method: POST
   path: /auth/token/refresh
+  session: refresh
   summary: Rotate the refresh token
   tags: [auth]
   auth: public                     # the refresh token itself is the credential

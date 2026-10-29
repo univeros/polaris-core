@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /magic-link/exchange
+  session: issue
   summary: Exchange the magic link's code for the session
   tags: [passwordless]
   auth: public

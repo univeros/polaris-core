@@ -3397,7 +3397,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                             user: {
                                 id: string;
                                 email: string;
@@ -4477,7 +4477,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                         };
                     };
                 };
@@ -4940,7 +4940,7 @@ export interface operations {
             content: {
                 "application/json": {
                     /** Format: password */
-                    refresh_token: string;
+                    refresh_token?: string;
                 };
             };
         };
@@ -4966,7 +4966,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                         };
                     };
                 };
@@ -9913,7 +9913,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                             user: {
                                 id: string;
                                 email: string;
@@ -12274,7 +12274,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                             user: {
                                 id: string;
                                 email: string;
@@ -12346,7 +12346,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                             user: {
                                 id: string;
                                 email: string;
@@ -12550,7 +12550,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                             user: {
                                 id: string;
                                 email: string;
@@ -12783,7 +12783,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                             user: {
                                 id: string;
                                 email: string;
@@ -12856,7 +12856,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                             user: {
                                 id: string;
                                 email: string;
@@ -13066,7 +13066,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                             user: {
                                 id: string;
                                 email: string;
@@ -13279,7 +13279,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                             user: {
                                 id: string;
                                 email: string;
@@ -13571,7 +13571,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                             user: {
                                 id: string;
                                 email: string;
@@ -13703,7 +13703,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                             user: {
                                 id: string;
                                 email: string;
@@ -14020,7 +14020,7 @@ export interface operations {
                             access_token: string;
                             token_type: string;
                             expires_in: number;
-                            refresh_token: string;
+                            refresh_token?: string;
                             user: {
                                 id: string;
                                 email: string;

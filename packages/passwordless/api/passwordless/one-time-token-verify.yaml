@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /one-time-token/verify
+  session: issue
   summary: Sign in with a one-time token
   tags: [passwordless]
   auth: public

@@ -15,6 +15,7 @@
                 "tags": { "type": "array", "items": { "type": "string" } },
                 "auth": { "enum": ["public", "bearer", "mfa_token"] },
                 "step_up": { "type": "boolean" },
+                "session": { "enum": ["issue", "refresh", "end"], "description": "What the route does to the caller's session; in cookie token delivery the refresh cookie follows it (docs/cookie-mode/spec.md §2.2)." },
                 "requires_permissions": { "type": "array", "items": { "type": "string" } },
                 "rate_limit": { "type": "string" },
                 "effect": { "enum": ["read", "write", "destructive"] },

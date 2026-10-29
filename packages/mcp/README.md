@@ -52,7 +52,9 @@ parameters, query parameters, body properties, with `required`); the output sche
 the body typed from the spec's example; `readOnlyHint` and `destructiveHint` follow the route's `effect`.
 A call is dispatched in-process through the whole Polaris pipeline (rate limits, step-up, denylist,
 authorization, every plugin's middleware) as a request to the route, so it answers exactly what the route
-answers: `structuredContent: {status, body}`, the body as text content, `isError` for a 4xx or 5xx.
+answers: `structuredContent: {status, body}`, the body as text content, `isError` for a 4xx or 5xx. A tool
+call has no cookie jar, so the dispatcher's pipeline stays in body mode whatever
+`auth.flows.token_delivery` says: the sign-in and refresh tools answer `refresh_token` in their body.
 
 The list is the caller's: public routes (never an `mfa_token` one), bearer routes whose permissions the
 caller's authority holds and core's delegation rule allows (a token with scopes may read and use its

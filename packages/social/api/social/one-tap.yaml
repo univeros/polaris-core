@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /social/google/one-tap
+  session: issue
   summary: Sign in with Google One Tap
   tags: [social]
   auth: public

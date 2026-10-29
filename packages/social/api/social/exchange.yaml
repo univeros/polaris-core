@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /social/exchange
+  session: issue
   summary: Exchange the sign-in code for the session
   tags: [social]
   auth: public

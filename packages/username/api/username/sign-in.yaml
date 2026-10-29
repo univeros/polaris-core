@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /username/sign-in
+  session: issue
   summary: Sign in with a username and a password
   tags: [username]
   auth: public

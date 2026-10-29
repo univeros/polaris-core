@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /auth/mfa/verify
+  session: issue
   summary: Verify the MFA code and mint the real session
   tags: [auth, mfa]
   auth: mfa_token        # the short-lived login_mfa ticket returned by POST /auth/login

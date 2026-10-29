@@ -4,6 +4,30 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- Cookie token delivery (`docs/cookie-mode/spec.md`): `auth.flows.token_delivery: cookie`, documented since
+  1.0 and validated but read nowhere, now moves the refresh token of every route that opens or rotates a
+  session into a `__Secure-polaris_refresh` cookie (`HttpOnly; Secure; SameSite=Strict`, path the refresh
+  route), reads it on `POST /auth/token/refresh`, and clears it on logout. `polaris/psr15`'s
+  `RefreshCookieMiddleware`, registered only in cookie mode, guards those routes against CSRF (the
+  `X-Polaris-CSRF: 1` header plus an `Origin` check; `403 csrf_failed`) and refuses plaintext
+  (`403 insecure_transport`), in the refused route's own envelope. Body mode is unchanged byte for byte.
+- `auth.flows.cookie.trusted_origins`: other https origins allowed to sign in and refresh in cookie mode.
+- The endpoint spec key `session: issue | refresh | end` (`EndpointSpec::$session`, `x-polaris-session` in
+  OpenAPI, `session` in `polaris manifest`), on the 17 routes that open, rotate or end a session, core's
+  and the plugins'.
+- `Pipeline`'s `bodyDelivery` argument; `polaris/mcp`'s dispatcher uses it, so tools answer tokens in the
+  body in either mode.
+- `@polaris-auth/client`: `createClient({ tokenDelivery: "cookie" })` sends the CSRF header;
+  `refreshSession(client)` refreshes under a Web Lock.
+
+### Changed
+- `@polaris-auth/client` types: `data.refresh_token` is optional on the routes marked `session: issue |
+  refresh`, and `refresh_token` is optional in the refresh request body (a type-level change for body-mode
+  TypeScript users; the server still requires it in body mode).
+
 ## [0.11.0] - 2026-10-13
 
 The `polaris/messaging` `Outbox` change below is breaking for an `Outbox` implementation, so the version
