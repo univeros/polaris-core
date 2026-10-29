@@ -35,11 +35,20 @@
         "symfony/uid": "^7.0 || ^8.0",
         "symfony/yaml": "^7.0 || ^8.0"
     },
+    "conflict": {
+        "polaris/anonymous": "<0.12",
+        "polaris/multi-session": "<0.12",
+        "polaris/passkey": "<0.12",
+        "polaris/passwordless": "<0.12",
+        "polaris/social": "<0.12",
+        "polaris/sso": "<0.12",
+        "polaris/username": "<0.12"
+    },
     "require-dev": {
-        "polaris/cli": "^0.11",
-        "polaris/pdo": "^0.11",
-        "polaris/psr15": "^0.11",
-        "polaris/testing": "^0.11"
+        "polaris/cli": "^0.12",
+        "polaris/pdo": "^0.12",
+        "polaris/psr15": "^0.12",
+        "polaris/testing": "^0.12"
     },
     "autoload": {
         "psr-4": {
@@ -53,7 +62,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.11.x-dev"
+            "dev-main": "0.12.x-dev"
         }
     },
     "config": {
