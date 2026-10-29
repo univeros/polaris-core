@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /passkey/authenticate/verify
+  session: issue
   summary: Sign in with a passkey
   tags: [passkey]
   auth: public

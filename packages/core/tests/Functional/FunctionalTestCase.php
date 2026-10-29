@@ -24,6 +24,7 @@ use Polaris\Tests\Support\RecordingOtpMailer;
 use Polaris\Tests\Support\RecordingSmsSender;
 use Polaris\Tests\Support\TestKeys;
 
+use function array_replace_recursive;
 use function getenv;
 use function in_array;
 use function is_array;
@@ -77,6 +78,17 @@ abstract class FunctionalTestCase extends DatabaseTestCase
      * @return list<Plugin>
      */
     protected static function plugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * Overrides of the `auth` configuration a test class runs with, merged over the environment's
+     * (cookie token delivery: `['flows' => ['token_delivery' => 'cookie']]`).
+     *
+     * @return array<string, mixed>
+     */
+    protected static function authConfig(): array
     {
         return [];
     }
@@ -242,12 +254,12 @@ abstract class FunctionalTestCase extends DatabaseTestCase
         $audience = getenv('AUTH_AUDIENCE');
         $flag = static fn(string $key): bool => in_array(getenv($key), ['1', 'true', 'on'], true);
 
-        return [
+        return array_replace_recursive([
             'issuer' => $issuer !== false && $issuer !== '' ? $issuer : 'univeros/polaris',
             'audience' => $audience !== false && $audience !== '' ? $audience : null,
             'access_token' => ['denylist' => $flag('AUTH_ACCESS_TOKEN_DENYLIST')],
             'password' => ['breach_check' => $flag('AUTH_PASSWORD_BREACH_CHECK')],
-        ];
+        ], static::authConfig());
     }
 
     /**

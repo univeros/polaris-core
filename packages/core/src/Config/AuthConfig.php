@@ -6,8 +6,14 @@ namespace Polaris\Config;
 
 use Polaris\Exception\InvalidConfigException;
 
+use function array_map;
+use function array_values;
+use function implode;
 use function in_array;
 use function is_array;
+use function is_string;
+use function preg_match;
+use function sprintf;
 
 /**
  * The typed, validated root of Polaris configuration.
@@ -40,6 +46,8 @@ final readonly class AuthConfig
         public int $stepUpMaxAge,
         public bool $requireVerifiedEmail,
         public string $tokenDelivery,
+        /** @var list<string> origins besides the request's own allowed to sign in and refresh in cookie mode (`https://app.example.com`) */
+        public array $cookieTrustedOrigins = [],
     ) {
         if ($issuer === '') {
             throw new InvalidConfigException('auth.issuer must be a non-empty string.');
@@ -72,6 +80,16 @@ final readonly class AuthConfig
                 'auth.flows.token_delivery must be one of: ' . implode(', ', self::TOKEN_DELIVERY) . '.',
             );
         }
+
+        foreach ($cookieTrustedOrigins as $origin) {
+            // An origin is a scheme, a host and an optional port; cookie mode only ever trusts https.
+            if (preg_match('~^https://[a-z0-9.-]+(:[0-9]{1,5})?$~', $origin) !== 1) {
+                throw new InvalidConfigException(sprintf(
+                    'auth.flows.cookie.trusted_origins entries must be https origins (https://host[:port], lower case, no path), got "%s".',
+                    $origin,
+                ));
+            }
+        }
     }
 
     /**
@@ -103,6 +121,7 @@ final readonly class AuthConfig
             stepUpMaxAge: (int) ($stepUp['max_age'] ?? 300),
             requireVerifiedEmail: (bool) ($flows['require_verified_email'] ?? true),
             tokenDelivery: (string) ($flows['token_delivery'] ?? 'body'),
+            cookieTrustedOrigins: array_values(array_map(static fn(mixed $origin): string => is_string($origin) ? $origin : '', (array) (self::section($flows, 'cookie')['trusted_origins'] ?? []))),
         );
     }
 

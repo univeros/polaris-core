@@ -15,10 +15,12 @@ use function array_map;
 use function array_values;
 use function implode;
 use function dirname;
+use function get_debug_type;
 use function in_array;
 use function is_array;
 use function is_bool;
 use function is_int;
+use function is_scalar;
 use function is_string;
 use function sort;
 use function sprintf;
@@ -111,6 +113,10 @@ final class Loader
         if (!in_array($source, EndpointSpec::SOURCES, true)) {
             throw new InvalidArgumentException(sprintf('%s: unknown input source "%s".', $name, $source));
         }
+        $session = $endpoint['session'] ?? null;
+        if ($session !== null && !in_array($session, EndpointSpec::SESSIONS, true)) {
+            throw new InvalidArgumentException(sprintf('%s: unknown session "%s".', $name, is_scalar($session) ? (string) $session : get_debug_type($session)));
+        }
         $class = $this->string($domain, 'class', $name);
         if (!class_exists($class)) {
             throw new InvalidArgumentException(sprintf('%s: endpoint class %s does not exist.', $name, $class));
@@ -138,6 +144,7 @@ final class Loader
             errors: $this->errors($document['errors'] ?? [], $name),
             events: $this->strings($document['events'] ?? []),
             plugin: $directory === $this->directories[0] ? null : explode('/', $name)[0],
+            session: $session,
         );
     }
 

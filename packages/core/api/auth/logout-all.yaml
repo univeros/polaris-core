@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /auth/logout-all
+  session: end
   summary: Log out everywhere
   tags: [auth]
   auth: bearer

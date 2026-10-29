@@ -129,6 +129,30 @@ and never a loop; every other error, and the challenge when no `captcha` callbac
 as today. `withToken` keeps the callback. `challengeRetry(options)` is exported for a plain `openapi-fetch`
 client (`client.use(challengeRetry({ captcha }))`).
 
+## Cookie token delivery
+
+For a server with `auth.flows.token_delivery: cookie`, the refresh token never reaches JavaScript: it lives
+in an `HttpOnly` cookie scoped to the refresh route.
+
+```ts
+import { createClient, refreshSession } from "@polaris-auth/client";
+
+const polaris = createClient({ baseUrl: location.origin, tokenDelivery: "cookie" });   // sends X-Polaris-CSRF: 1
+const login = await polaris.POST("/auth/login", { body: { email, password } });       // data has no refresh_token
+let access = login.data?.data.access_token;                                            // keep it in memory
+
+const refreshed = await refreshSession(polaris);   // POST /auth/token/refresh with {}, the browser sends the cookie
+access = refreshed.data?.data.access_token;
+await polaris.withToken(access ?? null).POST("/auth/logout");   // clears the cookie
+```
+
+`refreshSession()` serialises refreshes across tabs with the Web Locks API (`polaris:refresh`), so two tabs
+never present the same rotated cookie; it does not schedule refreshes, that stays the application's
+policy. `credentials` stays at the fetch default (`same-origin`); an application on another origin of the
+same site passes `credentials: "include"` and must be in `flows.cookie.trusted_origins`, behind a CORS layer
+the host provides. `data.refresh_token` is optional in the types of the routes that open or rotate a
+session, since cookie mode omits it.
+
 ## Development
 
 ```sh

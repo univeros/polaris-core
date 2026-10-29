@@ -32,6 +32,8 @@ endpoint:
   rate_limit: login        # per-IP budget group; omitted when only the global per-user budget applies
   effect: write            # read | write | destructive (see docs/extraction/effects.md)
   receipt: true            # defaults to true for write/destructive, false for read
+  session: issue           # issue | refresh | end: what the route does to the caller's session; in cookie token
+                           # delivery the refresh token follows it (docs/cookie-mode/spec.md §2.2). Omitted otherwise.
 
 input:
   source: body             # body | path | query | none

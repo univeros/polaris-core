@@ -3,6 +3,7 @@
 endpoint:
   method: POST
   path: /auth/login
+  session: issue
   summary: Authenticate with email and password
   tags: [auth]
   auth: public

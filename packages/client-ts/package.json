@@ -71,7 +71,7 @@
         "node": ">=20"
     },
     "scripts": {
-        "generate": "php ../../bin/polaris manifest --format=openapi --bootstrap=polaris.php > openapi.json && openapi-typescript openapi.json -o src/schema.d.ts && node scripts/generate-namespaces.mjs",
+        "generate": "php ../../bin/polaris manifest --format=openapi --bootstrap=polaris.php > openapi.json && node scripts/session-types.mjs openapi.json .openapi.types.json && openapi-typescript .openapi.types.json -o src/schema.d.ts && rm .openapi.types.json && node scripts/generate-namespaces.mjs",
         "typecheck": "tsc --noEmit",
         "build": "tsc -p tsconfig.build.json",
         "test": "vitest run",

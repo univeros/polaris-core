@@ -339,6 +339,7 @@
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": true,
                 "x-polaris-rate-limit": "login",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -561,6 +562,7 @@
                 ],
                 "x-polaris-effect": "destructive",
                 "x-polaris-receipt": true,
+                "x-polaris-session": "end",
                 "security": [
                     {
                         "bearerAuth": []
@@ -620,6 +622,7 @@
                 ],
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": true,
+                "x-polaris-session": "end",
                 "security": [
                     {
                         "bearerAuth": []
@@ -2144,6 +2147,7 @@
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": true,
                 "x-polaris-rate-limit": "mfa_confirm",
+                "x-polaris-session": "issue",
                 "security": [
                     {
                         "mfaToken": []
@@ -2916,6 +2920,7 @@
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": true,
                 "x-polaris-rate-limit": "token_refresh",
+                "x-polaris-session": "refresh",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -11258,6 +11263,7 @@
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": false,
                 "x-polaris-plugin": "sso",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -11371,6 +11377,7 @@
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "sso",
+                "x-polaris-session": "end",
                 "security": [
                     {
                         "bearerAuth": []
@@ -15188,6 +15195,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "passwordless",
                 "x-polaris-rate-limit": "token_consume",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -15320,6 +15328,7 @@
                 "x-polaris-receipt": false,
                 "x-polaris-plugin": "passwordless",
                 "x-polaris-rate-limit": "token_consume",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -15649,6 +15658,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "passwordless",
                 "x-polaris-rate-limit": "token_consume",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -16043,6 +16053,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "passwordless",
                 "x-polaris-rate-limit": "token_consume",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -16174,6 +16185,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "username",
                 "x-polaris-rate-limit": "login",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -16533,6 +16545,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "anonymous",
                 "x-polaris-rate-limit": "register",
+                "x-polaris-session": "issue",
                 "responses": {
                     "201": {
                         "description": "Success",
@@ -16873,6 +16886,7 @@
                 "x-polaris-effect": "write",
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "multi-session",
+                "x-polaris-session": "issue",
                 "security": [
                     {
                         "bearerAuth": []
@@ -17356,6 +17370,7 @@
                 "x-polaris-receipt": false,
                 "x-polaris-plugin": "social",
                 "x-polaris-rate-limit": "token_consume",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -17587,6 +17602,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "social",
                 "x-polaris-rate-limit": "login",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -18096,6 +18112,7 @@
                 "x-polaris-receipt": true,
                 "x-polaris-plugin": "passkey",
                 "x-polaris-rate-limit": "login",
+                "x-polaris-session": "issue",
                 "requestBody": {
                     "required": true,
                     "content": {

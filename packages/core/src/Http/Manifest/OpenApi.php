@@ -98,6 +98,9 @@ final class OpenApi
         if ($spec->stepUp) {
             $operation['x-polaris-step-up'] = true;
         }
+        if ($spec->session !== null) {
+            $operation['x-polaris-session'] = $spec->session;
+        }
         if ($spec->requiresPermissions !== []) {
             $operation['x-polaris-requires-permissions'] = $spec->requiresPermissions;
         }

@@ -76,6 +76,7 @@ final class ManifestCommand extends Command
             'effect' => $spec->effect,
             'receipt' => $spec->receipt,
             'step_up' => $spec->stepUp,
+            'session' => $spec->session,
             'requires_permissions' => $spec->requiresPermissions,
             'input' => ['source' => $spec->inputSource, 'fields' => array_map(static fn(FieldSpec $f): array => ['name' => $f->name, 'type' => $f->type, 'rules' => array_map(static fn(Rule $r): string => $r->argument === null ? $r->name : $r->name . ':' . $r->argument, $f->rules), 'sensitive' => $f->sensitive], $spec->fields)],
             'class' => $spec->class,

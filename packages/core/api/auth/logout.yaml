@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /auth/logout
+  session: end
   summary: Log out the current session
   tags: [auth]
   auth: bearer

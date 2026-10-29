@@ -2,6 +2,7 @@
 endpoint:
   method: POST
   path: /phone/verify
+  session: issue
   summary: Sign in with a phone code
   tags: [passwordless]
   auth: public
