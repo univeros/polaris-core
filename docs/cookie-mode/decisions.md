@@ -46,3 +46,9 @@ Append one entry per decision. Format: date, work package, decision, reason, alt
   HTTPS front with a throwaway `openssl` certificate. The second is the trusted-proxy handling §2.6 leaves
   to a Slim host, as a reference. The e2e drives the browser with same-origin `fetch` the way the client
   does; the client's own code is covered by its unit tests.
+- 2026-10-29 · WP1 · `refresh_token` becomes optional in the client's generated types only
+  (`packages/client-ts/scripts/session-types.mjs`, between `polaris manifest --format=openapi` and
+  openapi-typescript), as §2.9 says. The OpenAPI document gains `x-polaris-session` and nothing else:
+  `polaris/mcp` builds its tool schemas from the same operations, and its tools always answer in body mode
+  (§2.11), where `refresh_token` is always present; the first attempt made it optional in the document and
+  changed the recorded `tools/list` fixture.

@@ -415,6 +415,7 @@
                                                         "access_token",
                                                         "token_type",
                                                         "expires_in",
+                                                        "refresh_token",
                                                         "user"
                                                     ]
                                                 }
@@ -2206,7 +2207,8 @@
                                             "required": [
                                                 "access_token",
                                                 "token_type",
-                                                "expires_in"
+                                                "expires_in",
+                                                "refresh_token"
                                             ]
                                         }
                                     },
@@ -2931,7 +2933,10 @@
                                         "format": "password",
                                         "x-polaris-sensitive": true
                                     }
-                                }
+                                },
+                                "required": [
+                                    "refresh_token"
+                                ]
                             }
                         }
                     }
@@ -2963,7 +2968,8 @@
                                             "required": [
                                                 "access_token",
                                                 "token_type",
-                                                "expires_in"
+                                                "expires_in",
+                                                "refresh_token"
                                             ]
                                         }
                                     },
@@ -11323,6 +11329,7 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
+                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -15262,6 +15269,7 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
+                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -15388,6 +15396,7 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
+                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -15717,6 +15726,7 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
+                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -16116,6 +16126,7 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
+                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -16247,6 +16258,7 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
+                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -16581,6 +16593,7 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
+                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -16944,6 +16957,7 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
+                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -17424,6 +17438,7 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
+                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -17655,6 +17670,7 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
+                                                "refresh_token",
                                                 "user"
                                             ]
                                         }
@@ -18163,6 +18179,7 @@
                                                 "access_token",
                                                 "token_type",
                                                 "expires_in",
+                                                "refresh_token",
                                                 "user"
                                             ]
                                         }

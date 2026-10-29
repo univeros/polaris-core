@@ -6,14 +6,12 @@ namespace Polaris\Http\Manifest;
 
 use Polaris\Http\Validation\Rule;
 
-use function array_filter;
 use function array_map;
 use function array_values;
 use function count;
 use function explode;
 use function preg_match_all;
 use function in_array;
-use function is_array;
 use function ltrim;
 use function sprintf;
 use function str_starts_with;
@@ -130,9 +128,7 @@ final class OpenApi
             $required = [];
             foreach ($spec->fields as $field) {
                 $properties[$field->name] = self::schema($field);
-                // In cookie token delivery the refresh token comes from the cookie, so the body may omit it
-                // (the middleware fills the field before the endpoint validates it).
-                if (self::required($field) && !($spec->session === 'refresh' && $field->name === 'refresh_token')) {
+                if (self::required($field)) {
                     $required[] = $field->name;
                 }
             }
@@ -147,8 +143,7 @@ final class OpenApi
         $status = (string) ($spec->outputStatus ?? 200);
         $responses[$status] = ['description' => 'Success'];
         if ($spec->outputExamples !== []) {
-            $schema = ExampleSchema::fromExamples($spec->outputExamples);
-            $content = ['schema' => $spec->session === 'issue' || $spec->session === 'refresh' ? self::optionalRefreshToken($schema) : $schema];
+            $content = ['schema' => ExampleSchema::fromExamples($spec->outputExamples)];
             if (count($spec->outputExamples) === 1) {
                 $content['example'] = $spec->outputExamples['example'] ?? array_values($spec->outputExamples)[0];
             } else {
@@ -170,29 +165,6 @@ final class OpenApi
         $operation['responses'] = $responses;
 
         return $operation;
-    }
-
-    /**
-     * `data.refresh_token` is absent in cookie token delivery (docs/cookie-mode/spec.md §2.9), so it is
-     * optional in the response of a route that opens or rotates a session, in every variant.
-     *
-     * @param array<string, mixed> $schema
-     * @return array<string, mixed>
-     */
-    private static function optionalRefreshToken(array $schema): array
-    {
-        if (isset($schema['oneOf']) && is_array($schema['oneOf'])) {
-            $schema['oneOf'] = array_map(static fn(mixed $variant): mixed => is_array($variant) ? self::optionalRefreshToken($variant) : $variant, $schema['oneOf']);
-
-            return $schema;
-        }
-        $data = $schema['properties']['data'] ?? null;
-        if (is_array($data) && is_array($data['required'] ?? null)) {
-            $data['required'] = array_values(array_filter($data['required'], static fn(mixed $key): bool => $key !== 'refresh_token'));
-            $schema['properties']['data'] = $data;
-        }
-
-        return $schema;
     }
 
     private static function required(FieldSpec $field): bool
