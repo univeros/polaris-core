@@ -1,7 +1,7 @@
 # Cookie token delivery — working specification v0.2
 
 **Repository:** `github.com/univeros/polaris-core`, `docs/cookie-mode/`.
-**Status:** Draft 2 — 2026-10-28, for the owner's review (§8).
+**Status:** Approved 2026-10-29: every §8 default accepted; the cookie-mode e2e runs the Slim demo behind local TLS (`decisions.md`). Released as 0.12.0.
 **Baseline:** `main` at 0.11.0.
 **Outcome:** `auth.flows.token_delivery: cookie`, documented since 1.0 (`docs/auth/flows.md`, `security.md` §3) and validated by `AuthConfig`, does what the documents say: every route that opens or rotates a Polaris session puts the refresh token in an `HttpOnly; Secure; SameSite=Strict` cookie instead of the JSON body, and every request that can set or use that cookie is guarded against CSRF. Body mode, the default, does not change by a byte.
 
@@ -203,7 +203,7 @@ Client: unit tests for the header, the optional types and `refreshSession()` (lo
 
 ## 6. Release
 
-One minor release after 0.11 (the next free number when this merges), with the `conflict` entries of §2.2. `univeros/polaris` raises its `polaris/*` constraints in its own repository; nothing else there changes.
+0.12.0 (decided 2026-10-29: cookie mode ships before program 4's WP5, which moves to 0.13.0), with the `conflict` entries of §2.2. `univeros/polaris` raises its `polaris/*` constraints in its own repository; nothing else there changes.
 
 ---
 
