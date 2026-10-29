@@ -43,7 +43,8 @@
                 const password = "Sup3r-Secret-Passw0rd";
                 await api("POST", "/auth/register", { email, password });
                 const mail = await (await fetch("/mailbox?" + Date.now())).text().catch(() => "");
-                const token = [...mail.matchAll(/"token":"([^"]+)"/g)].at(-1)?.[1];
+                // This address's verification mail: other clients of the demo (another browser, the e2e suite) share the mailbox.
+                const token = mail.split("\n").filter((line) => line.includes(`"${email}"`) && line.includes('"verify_email"')).at(-1)?.match(/"token":"([^"]+)"/)?.[1];
                 if (!token) throw new Error("no verification token in var/mail.log (served as /mailbox)");
                 await api("POST", "/auth/email/verify", { token });
                 const login = await api("POST", "/auth/login", { email, password });
