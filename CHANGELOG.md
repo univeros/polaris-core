@@ -4,6 +4,15 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- `polaris/mcp` requires `mcp/sdk` `^0.10` (0.8.x is blocked by Packagist for
+  [GHSA-f4rf-6ghj-mhr6](https://github.com/modelcontextprotocol/php-sdk/security/advisories/GHSA-f4rf-6ghj-mhr6)).
+  The SDK now validates every tool result against the tool's `outputSchema`, so the output schemas
+  `tools/list` publishes let every inferred scalar also be `null` (a route answering `display_name: null`
+  was a tool error).
+
 ## [0.12.1] - 2026-11-20
 
 Security release. Upgrade every `polaris/*` package to 0.12.1; `polaris/scim` 0.12.1 requires
