@@ -23,7 +23,7 @@
                     "9"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
@@ -62,7 +62,7 @@
                     "8"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
@@ -95,7 +95,7 @@
                     "9"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
@@ -125,6 +125,9 @@
                 "Content-Type": [
                     "application/json"
                 ],
+                "Set-Cookie": [
+                    "__Host-polaris_social_ba721842aa52de68=b473ffe52ecd625c2228ef1c65147320; Path=/; Max-Age=600; HttpOnly; Secure; SameSite=None"
+                ],
                 "X-RateLimit-Limit": [
                     "10"
                 ],
@@ -132,13 +135,13 @@
                     "7"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
                 "data": {
-                    "url": "https://accounts.google.com/o/oauth2/v2/auth?client_id=google-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgoogle%2Fcallback&response_type=code&scope=openid%20email%20profile&state=6dc2afac78d708fe49c195de09b5b1ef&access_type=offline&prompt=select_account&code_challenge=bgzqKLd3BDMOb3o4JnzezdDwhW8kinc5HlQJBr7hK-4&code_challenge_method=S256&nonce=98e753166244c2f6a38cb13e9685f0eb",
-                    "state": "6dc2afac78d708fe49c195de09b5b1ef"
+                    "url": "https://accounts.google.com/o/oauth2/v2/auth?client_id=google-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgoogle%2Fcallback&response_type=code&scope=openid%20email%20profile&state=556c4b714e3974fca9845d867c90fc40&access_type=offline&prompt=select_account&code_challenge=8y_8La3GeHOK-V_QKIcKbzZDYyCN7TllK8fozScOdf4&code_challenge_method=S256&nonce=2688c8dcf533f4c267ec35879a6bf56d",
+                    "state": "556c4b714e3974fca9845d867c90fc40"
                 }
             }
         }
@@ -146,7 +149,7 @@
     {
         "request": {
             "method": "GET",
-            "uri": "/social/google/callback?code=good&state=6dc2afac78d708fe49c195de09b5b1ef",
+            "uri": "/social/google/callback?code=good&state=556c4b714e3974fca9845d867c90fc40",
             "headers": [],
             "body": ""
         },
@@ -157,7 +160,7 @@
                     "application/json"
                 ],
                 "Location": [
-                    "https://app.polaris.test/signed-in?code=fHBNelJCmunyd4On42Cbdull-rfIMFEzeyszv4uoV-M&state=6dc2afac78d708fe49c195de09b5b1ef"
+                    "https://app.polaris.test/signed-in?code=tq3dz2XGT9ID4kzoZIa4sYWKpqk9RCATY_c4Re4vqVM&state=556c4b714e3974fca9845d867c90fc40"
                 ],
                 "X-RateLimit-Limit": [
                     "10"
@@ -166,7 +169,7 @@
                     "8"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": ""
@@ -175,7 +178,7 @@
     {
         "request": {
             "method": "GET",
-            "uri": "/social/google/callback?code=good&state=6dc2afac78d708fe49c195de09b5b1ef",
+            "uri": "/social/google/callback?code=good&state=556c4b714e3974fca9845d867c90fc40",
             "headers": [],
             "body": ""
         },
@@ -192,7 +195,7 @@
                     "7"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
@@ -229,7 +232,7 @@
                     "6"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
@@ -271,7 +274,7 @@
                     "5"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
@@ -294,7 +297,7 @@
                 ]
             },
             "body": {
-                "code": "fHBNelJCmunyd4On42Cbdull-rfIMFEzeyszv4uoV-M"
+                "code": "tq3dz2XGT9ID4kzoZIa4sYWKpqk9RCATY_c4Re4vqVM"
             }
         },
         "response": {
@@ -310,17 +313,17 @@
                     "4"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
                 "data": {
-                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI2MzM0OCwibmJmIjoxNzkxNTc4NTQ4LjI2MzM0OCwiZXhwIjoxNzkxNTc5NDQ4LjI2MzM0OCwic3ViIjoiMDFhMTIyNjctMjgyNi03ZDFkLTg3OGUtYWU0ZGI5OGRiYzg0IiwianRpIjoiMDFhMTIyNjctMjgyNy03NTRkLTk2ZGEtMTM2Nzg2MDRlMzdmIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODI3LTc0NjEtOTZkYS0xMzY3ODU3OWY5ZWUiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.Nuxw-86CSuGS-ZgX0wCWEsMXUQyso4dLbdH_LzIsYGhoqKTEHSE_u_IHB09jcIPbjrGVTa3mF-lY_FjH1DBHZ-TRNBu69JZ4D53p6gv2HhqIvBfycmAQvfPBxwW7oOcw3BNAzqc8-Axxtpl2mPlbvp5XvSobMsck3iPrOYAHL4D1_y6Oggh6QmvEgGlgoQItTZD1cRuBrhxNeONlkFhsncurk3YI2O0JmbETLEysrwOStA2p-F27kbH1uVsZQVWgihbl4zs3LxF-_ZFFC7B-GBlEpJkCGX5wUJWnsMOTi8Akz3x-riqXnTqixLj8y6oWoIl5TUiBZnpNIWOSHcQvug",
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjODYyMmE4NTgxNWFlOWUyN2I2OTI1MDc4YzM2ZDRhZjU0MjFlNzk5ZDkxNzQyYjI1MjhkYzk3N2ZiZDMwNzMifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzk1MTk5NTc5LjM1MjMzNiwibmJmIjoxNzk1MTk5NTc5LjM1MjMzNiwiZXhwIjoxNzk1MjAwNDc5LjM1MjMzNiwic3ViIjoiMDFhMWZhM2ItYjRkMi03NmE5LThmODktMjljM2IyMjA3NDJkIiwianRpIjoiMDFhMWZhM2ItYjRkNi03MWViLThlNGQtMjMwYmU2Y2RjMzU3Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExZmEzYi1iNGQ1LTc3ZmItOTg1ZS02ODM0ZmJkNTBjOTEiLCJhdXRoX3RpbWUiOjE3OTUxOTk1Nzl9.KBXo34YEXXoZ_czIVNGTGilEvyLSsb6jw8xnf4He5Fox6wAybWhMqr4Q4KmMYEZRDFY2xfm4e8CEDupHS-ucMVnjibiAusFJanruI2fmjbfCcWuGrrd7RT_vv4UJR6chmf8VDlI-fpKTTJVSkIw91b4eYUXds_PtzEwQDq7x-TLtQByLGpAwZH2BOaBkjF251V5QsGxXJ98HIj2BXdlBhAYypD4o7hjv3SmSFyR5d0E8t_suT-sD7Dr6tmytOVHR6UJzgBXz847eopa1-O3D-YgVAL6rLBt7LVRDIYZoUm_Ugxm7ZZ-NLwrcPpB2KxqJnV31MN4ISzGwfIenXgF5Rw",
                     "token_type": "Bearer",
                     "expires_in": 900,
-                    "refresh_token": "VlEoxUN8h7BaHzEfaqVc7CKr1sqDWB9yOrbuDb91Gmg",
+                    "refresh_token": "LHnvENOBkVad46zptSfpasysAa9IOLEvPXYFHC16BGM",
                     "user": {
-                        "id": "01a12267-2826-7d1d-878e-ae4db98dbc84",
+                        "id": "01a1fa3b-b4d2-76a9-8f89-29c3b220742d",
                         "email": "ada@example.com",
                         "email_verified": true
                     }
@@ -338,7 +341,7 @@
                 ]
             },
             "body": {
-                "code": "fHBNelJCmunyd4On42Cbdull-rfIMFEzeyszv4uoV-M"
+                "code": "tq3dz2XGT9ID4kzoZIa4sYWKpqk9RCATY_c4Re4vqVM"
             }
         },
         "response": {
@@ -354,7 +357,7 @@
                     "3"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
@@ -373,7 +376,7 @@
             "uri": "/auth/me",
             "headers": {
                 "Authorization": [
-                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI2MzM0OCwibmJmIjoxNzkxNTc4NTQ4LjI2MzM0OCwiZXhwIjoxNzkxNTc5NDQ4LjI2MzM0OCwic3ViIjoiMDFhMTIyNjctMjgyNi03ZDFkLTg3OGUtYWU0ZGI5OGRiYzg0IiwianRpIjoiMDFhMTIyNjctMjgyNy03NTRkLTk2ZGEtMTM2Nzg2MDRlMzdmIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODI3LTc0NjEtOTZkYS0xMzY3ODU3OWY5ZWUiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.Nuxw-86CSuGS-ZgX0wCWEsMXUQyso4dLbdH_LzIsYGhoqKTEHSE_u_IHB09jcIPbjrGVTa3mF-lY_FjH1DBHZ-TRNBu69JZ4D53p6gv2HhqIvBfycmAQvfPBxwW7oOcw3BNAzqc8-Axxtpl2mPlbvp5XvSobMsck3iPrOYAHL4D1_y6Oggh6QmvEgGlgoQItTZD1cRuBrhxNeONlkFhsncurk3YI2O0JmbETLEysrwOStA2p-F27kbH1uVsZQVWgihbl4zs3LxF-_ZFFC7B-GBlEpJkCGX5wUJWnsMOTi8Akz3x-riqXnTqixLj8y6oWoIl5TUiBZnpNIWOSHcQvug"
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjODYyMmE4NTgxNWFlOWUyN2I2OTI1MDc4YzM2ZDRhZjU0MjFlNzk5ZDkxNzQyYjI1MjhkYzk3N2ZiZDMwNzMifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzk1MTk5NTc5LjM1MjMzNiwibmJmIjoxNzk1MTk5NTc5LjM1MjMzNiwiZXhwIjoxNzk1MjAwNDc5LjM1MjMzNiwic3ViIjoiMDFhMWZhM2ItYjRkMi03NmE5LThmODktMjljM2IyMjA3NDJkIiwianRpIjoiMDFhMWZhM2ItYjRkNi03MWViLThlNGQtMjMwYmU2Y2RjMzU3Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExZmEzYi1iNGQ1LTc3ZmItOTg1ZS02ODM0ZmJkNTBjOTEiLCJhdXRoX3RpbWUiOjE3OTUxOTk1Nzl9.KBXo34YEXXoZ_czIVNGTGilEvyLSsb6jw8xnf4He5Fox6wAybWhMqr4Q4KmMYEZRDFY2xfm4e8CEDupHS-ucMVnjibiAusFJanruI2fmjbfCcWuGrrd7RT_vv4UJR6chmf8VDlI-fpKTTJVSkIw91b4eYUXds_PtzEwQDq7x-TLtQByLGpAwZH2BOaBkjF251V5QsGxXJ98HIj2BXdlBhAYypD4o7hjv3SmSFyR5d0E8t_suT-sD7Dr6tmytOVHR6UJzgBXz847eopa1-O3D-YgVAL6rLBt7LVRDIYZoUm_Ugxm7ZZ-NLwrcPpB2KxqJnV31MN4ISzGwfIenXgF5Rw"
                 ]
             },
             "body": ""
@@ -391,12 +394,12 @@
                     "599"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578580"
+                    "1795199580"
                 ]
             },
             "body": {
                 "data": {
-                    "id": "01a12267-2826-7d1d-878e-ae4db98dbc84",
+                    "id": "01a1fa3b-b4d2-76a9-8f89-29c3b220742d",
                     "email": "ada@example.com",
                     "email_verified": true,
                     "display_name": "Ada Lovelace",
@@ -425,6 +428,9 @@
                 "Content-Type": [
                     "application/json"
                 ],
+                "Set-Cookie": [
+                    "__Host-polaris_social_68684a5b052dddcb=405374b0d2ab8588579aa212c9bfea6c; Path=/; Max-Age=600; HttpOnly; Secure; SameSite=None"
+                ],
                 "X-RateLimit-Limit": [
                     "10"
                 ],
@@ -432,13 +438,13 @@
                     "6"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
                 "data": {
-                    "url": "https://accounts.google.com/o/oauth2/v2/auth?client_id=google-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgoogle%2Fcallback&response_type=code&scope=openid%20email%20profile&state=9965f27f59bbafdffa0b83d8540e15b6&access_type=offline&prompt=select_account&code_challenge=aWrd0fLw3BjDG-GsXYUXrqCSpdwOKXrU9H4Cw7TCakU&code_challenge_method=S256&nonce=aad8d48ef147ee6205e01a18049143f2",
-                    "state": "9965f27f59bbafdffa0b83d8540e15b6"
+                    "url": "https://accounts.google.com/o/oauth2/v2/auth?client_id=google-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgoogle%2Fcallback&response_type=code&scope=openid%20email%20profile&state=03948d48fb39d6c85a0774261542360f&access_type=offline&prompt=select_account&code_challenge=Aoq2Ivn6wS7DDuQEMz5yr_UQ8D36ISPJuaLKoRqpXGw&code_challenge_method=S256&nonce=2ebb16aad7b1839bee1f234daf926a3a",
+                    "state": "03948d48fb39d6c85a0774261542360f"
                 }
             }
         }
@@ -446,7 +452,7 @@
     {
         "request": {
             "method": "GET",
-            "uri": "/social/google/callback?code=good&state=9965f27f59bbafdffa0b83d8540e15b6",
+            "uri": "/social/google/callback?code=good&state=03948d48fb39d6c85a0774261542360f",
             "headers": [],
             "body": ""
         },
@@ -457,7 +463,7 @@
                     "application/json"
                 ],
                 "Location": [
-                    "https://app.polaris.test/signed-in?code=fp7Dcu1etTafJwPQeG6ony6aCh1RtEpAySuqgH825k0&state=9965f27f59bbafdffa0b83d8540e15b6"
+                    "https://app.polaris.test/signed-in?code=TXI7-mNRImZfYHYBLNkitu5QQDE6DtymJyHjjt0DNc0&state=03948d48fb39d6c85a0774261542360f"
                 ],
                 "X-RateLimit-Limit": [
                     "10"
@@ -466,7 +472,7 @@
                     "2"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": ""
@@ -482,7 +488,7 @@
                 ]
             },
             "body": {
-                "code": "fp7Dcu1etTafJwPQeG6ony6aCh1RtEpAySuqgH825k0"
+                "code": "TXI7-mNRImZfYHYBLNkitu5QQDE6DtymJyHjjt0DNc0"
             }
         },
         "response": {
@@ -498,17 +504,17 @@
                     "1"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
                 "data": {
-                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI2NjgzNSwibmJmIjoxNzkxNTc4NTQ4LjI2NjgzNSwiZXhwIjoxNzkxNTc5NDQ4LjI2NjgzNSwic3ViIjoiMDFhMTIyNjctMjgyNi03ZDFkLTg3OGUtYWU0ZGI5OGRiYzg0IiwianRpIjoiMDFhMTIyNjctMjgyYS03Y2YwLThmMTAtZGEwMGI0YjkxZmRiIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODJhLTdjMDgtOGYxMC1kYTAwYjQxMTc0Y2YiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.XpQWm-bajiwZgXf3GVwj5dIR4gjYk09118DwLdCao-PwH3SAsm57Ox1s7NyFa--IJfC7_TaVkkqOPhHZjexnChDgX8SRgGCDtkYpZfKfzpOv7pdl4U-fVNeMKAhNHVI60YuClTsliV0nQ1nMlNX-00pFomN2qfoYG4B4uwSzQtKYdf9Rtlvuu7nNgfg-RzD00EFsUFtoa_x_H-hFZFWzH2ehIoU30wSZBtMEfCRQ2FWQSpaRuxE7sQTC5gaYsZFdHsMJ-1YVyProonc678L-DQWwWoTXQctmkZQxwEtBJN2FpMudHxr6YsM6txEjNReFjL7rFUew0WNtFlaXoqC0iA",
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjODYyMmE4NTgxNWFlOWUyN2I2OTI1MDc4YzM2ZDRhZjU0MjFlNzk5ZDkxNzQyYjI1MjhkYzk3N2ZiZDMwNzMifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzk1MTk5NTc5LjM1OTg0NiwibmJmIjoxNzk1MTk5NTc5LjM1OTg0NiwiZXhwIjoxNzk1MjAwNDc5LjM1OTg0Niwic3ViIjoiMDFhMWZhM2ItYjRkMi03NmE5LThmODktMjljM2IyMjA3NDJkIiwianRpIjoiMDFhMWZhM2ItYjRkZi03ZDFkLWFhOTQtNGQ2NGExZWZkYWJjIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExZmEzYi1iNGRmLTdjMTktYWE5NC00ZDY0YTEwMDM5NTMiLCJhdXRoX3RpbWUiOjE3OTUxOTk1Nzl9.gABVKl1__I1pSSwpz7VypLow7fwl9QLVnzjT1hvsmKtpE-D92xjfVu87n3OAYL40LMMta5a9by2jO6iuWahLMS3QZVemBAx063efKSyakgNKZbu6FBfUp9hpwe1ziNFlRG8Jv2mMlvwnjdiHKDsoQsQsp_z5z2cOYQ2DGo5GDSJ6Fjjd9UyY4ACPOVwLABkPtlpoDzb4ANyovE3_F2p2guEYdIdJelNZvx3HvI5bm1qFGF_QPe1QONSUwyQVAPjv4XPMmIfwnpQZ6MGO4o5U_fFhXj-FQzBQeVDj9VKyBGf3GI2ubGVajpPZoMl9BDPADNchBctryikpxW61ifocBg",
                     "token_type": "Bearer",
                     "expires_in": 900,
-                    "refresh_token": "xicF7hzOUq6mdJY0Eu_EH7ET9KvfpcuD7Yx9plqClvs",
+                    "refresh_token": "am-ouMeefxooKuc69XW8Tr-rdNZKhkZ7VrkzLYakShw",
                     "user": {
-                        "id": "01a12267-2826-7d1d-878e-ae4db98dbc84",
+                        "id": "01a1fa3b-b4d2-76a9-8f89-29c3b220742d",
                         "email": "ada@example.com",
                         "email_verified": true
                     }

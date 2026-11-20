@@ -25,6 +25,7 @@ use Polaris\Model\User;
 use Polaris\Polaris;
 use Polaris\Social\Accounts;
 use Polaris\Social\AuditNames;
+use Polaris\Social\Binding;
 use Polaris\Social\Event\SocialEvent;
 use Polaris\Social\Model\Account;
 use Polaris\Social\Provider\AppleProvider;
@@ -74,6 +75,7 @@ use const PHP_URL_QUERY;
 #[CoversClass(SocialPlugin::class)]
 #[CoversClass(Settings::class)]
 #[CoversClass(SocialService::class)]
+#[CoversClass(Binding::class)]
 #[CoversClass(Sessions::class)]
 #[CoversClass(Accounts::class)]
 #[CoversClass(Providers::class)]
@@ -98,6 +100,8 @@ final class PluginTest extends TestCase
     private MutableClock $clock;
     private RecordingEventDispatcher $events;
     private ClientContext $client;
+    /** @var array<string, string> the browser's cookies: the binding of every flow it started */
+    private array $browser = [];
 
     protected function setUp(): void
     {
@@ -168,16 +172,16 @@ final class PluginTest extends TestCase
         $graph = $this->polaris()->graph();
         $service = $graph->get(SocialService::class);
 
-        $this->refused(fn() => $service->start('google', 'https://evil.example/', [], null), SocialException::REDIRECT_NOT_ALLOWED);
-        $started = $service->start('google', null, [], null);
+        $this->refused(fn() => $this->browse($service, $service->start('google', 'https://evil.example/', [], null)), SocialException::REDIRECT_NOT_ALLOWED);
+        $started = $this->browse($service, $service->start('google', null, [], null));
         self::assertStringStartsWith('https://accounts.google.com/o/oauth2/v2/auth?client_id=google-client&redirect_uri=https%3A%2F%2Fapp.example%2Fauth%2Fsocial%2Fgoogle%2Fcallback', $started['url']);
         self::assertStringContainsString('code_challenge_method=S256', $started['url']);
-        $this->refused(fn() => $service->callback('google', ['code' => 'good', 'state' => 'unknown'], $this->client), SocialException::STATE_INVALID);
-        $this->refused(fn() => $service->callback('github', ['code' => 'good', 'state' => $started['state']], $this->client), SocialException::STATE_INVALID, 'another provider\'s state');
+        $this->refused(fn() => $service->callback('google', ['code' => 'good', 'state' => 'unknown'], $this->browser, $this->client), SocialException::STATE_INVALID);
+        $this->refused(fn() => $service->callback('github', ['code' => 'good', 'state' => $started['state']], $this->browser, $this->client), SocialException::STATE_INVALID, 'another provider\'s state');
         $started = $this->restart($service, 'google');
-        $this->refused(fn() => $service->callback('google', ['error' => 'access_denied', 'state' => $started['state']], $this->client), SocialException::PROVIDER_ERROR);
+        $this->refused(fn() => $service->callback('google', ['error' => 'access_denied', 'state' => $started['state']], $this->browser, $this->client), SocialException::PROVIDER_ERROR);
         $started = $this->restart($service, 'google');
-        $redirect = $service->callback('google', ['code' => 'good', 'state' => $started['state']], $this->client);
+        $redirect = $service->callback('google', ['code' => 'good', 'state' => $started['state']], $this->browser, $this->client);
         self::assertStringStartsWith(self::DONE . '?code=', $redirect);
         self::assertStringEndsWith('&state=' . $started['state'], $redirect, 'the application checks it started this flow');
         $form = RecordedProviders::form($this->providers->http->requests[0]);
@@ -198,7 +202,7 @@ final class PluginTest extends TestCase
         self::assertSame([AuditNames::SIGNED_UP], $this->auditNames($graph, [AuditNames::SIGNED_UP, AuditNames::SIGNED_IN]));
         self::assertSame(['social:google'], $this->events->ofType(UserLoggedIn::class)[0]->amr);
 
-        $again = $service->exchange($this->code($service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->client)));
+        $again = $service->exchange($this->code($service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->browser, $this->client)));
         self::assertSame($ada->id, $again['user']['id'], 'signed in by the linked account');
         self::assertCount(1, $graph->users()->findBy(['email' => 'ada@example.com']));
         self::assertSame([AuditNames::SIGNED_IN], $this->auditNames($graph, [AuditNames::SIGNED_IN]));
@@ -206,21 +210,21 @@ final class PluginTest extends TestCase
         $grace = $this->user($graph, 'grace@example.com');
         $this->providers->on('https://openidconnect.googleapis.com/v1/userinfo', ['sub' => 'g-grace', 'email' => 'grace@example.com', 'email_verified' => true, 'name' => 'Grace']);
         RecordedProviders::$claims['google'] = ['sub' => 'g-grace', 'email' => 'grace@example.com'];
-        $linked = $service->exchange($this->code($service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->client)));
+        $linked = $service->exchange($this->code($service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->browser, $this->client)));
         self::assertSame($grace->id, $linked['user']['id'], 'a trusted provider with a verified email links to the existing user');
         self::assertSame('google', $service->accounts($grace->id)[0]->provider);
 
         $bob = $this->user($graph, 'bob@example.com');
         $this->providers->on('https://openidconnect.googleapis.com/v1/userinfo', ['sub' => 'g-bob', 'email' => 'bob@example.com', 'email_verified' => false, 'name' => 'Bob']);
         RecordedProviders::$claims['google'] = ['sub' => 'g-bob', 'email' => 'bob@example.com', 'email_verified' => false];
-        $this->refused(fn() => $service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->client), SocialException::ACCOUNT_EXISTS, 'not verified: no link');
+        $this->refused(fn() => $service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->browser, $this->client), SocialException::ACCOUNT_EXISTS, 'not verified: no link');
         self::assertSame([], $service->accounts($bob->id));
 
         $mallory = $this->user($graph, 'carol@example.com', verified: false);
         $stolen = $graph->tokens()->issue(new \Polaris\Token\SessionPrincipal($mallory->id), $this->client);
         $this->providers->on('https://openidconnect.googleapis.com/v1/userinfo', ['sub' => 'g-carol', 'email' => 'carol@example.com', 'email_verified' => true, 'name' => 'Carol']);
         RecordedProviders::$claims['google'] = ['sub' => 'g-carol', 'email' => 'carol@example.com', 'email_verified' => true];
-        $claimed = $service->exchange($this->code($service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->client)));
+        $claimed = $service->exchange($this->code($service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->browser, $this->client)));
         self::assertSame($mallory->id, $claimed['user']['id'], 'the mailbox is proven now: the account is carol\'s');
         $graph->identities()->clear();
         $carol = $graph->users()->find($mallory->id);
@@ -233,7 +237,7 @@ final class PluginTest extends TestCase
         $graph->unitOfWork()->flush();
         RecordedProviders::$claims['google'] = ['sub' => 'g-bob', 'email' => 'bob@example.com', 'email_verified' => true];
         $this->providers->on('https://openidconnect.googleapis.com/v1/userinfo', ['sub' => 'g-bob', 'email' => 'bob@example.com', 'email_verified' => true, 'name' => 'Bob']);
-        $this->refused(fn() => $service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->client), SocialException::ACCOUNT_DISABLED);
+        $this->refused(fn() => $service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->browser, $this->client), SocialException::ACCOUNT_DISABLED);
     }
 
     public function testGitHubIsNotTrustedAndLinksFromASession(): void
@@ -242,29 +246,29 @@ final class PluginTest extends TestCase
         $service = $graph->get(SocialService::class);
         $grace = $this->user($graph, 'grace@example.com');
 
-        $this->refused(fn() => $service->callback('github', ['code' => 'good', 'state' => $this->restart($service, 'github')['state']], $this->client), SocialException::ACCOUNT_EXISTS, 'the email exists; GitHub is not trusted to link it');
+        $this->refused(fn() => $service->callback('github', ['code' => 'good', 'state' => $this->restart($service, 'github')['state']], $this->browser, $this->client), SocialException::ACCOUNT_EXISTS, 'the email exists; GitHub is not trusted to link it');
         self::assertSame([AuditNames::REJECTED], $this->auditNames($graph, [AuditNames::REJECTED]));
 
-        $started = $service->start('github', null, [], $grace->id);
+        $started = $this->browse($service, $service->start('github', null, [], $grace->id));
         self::assertStringNotContainsString('code_challenge', $started['url'], 'GitHub does no PKCE');
-        $outcome = $service->exchange($this->code($service->callback('github', ['code' => 'good', 'state' => $started['state']], $this->client)));
+        $outcome = $service->exchange($this->code($service->callback('github', ['code' => 'good', 'state' => $started['state']], $this->browser, $this->client)));
         self::assertSame(['linked', 'github', '583231', 'grace@example.com', true], [$outcome['status'], $outcome['account']['provider'], $outcome['account']['provider_account_id'], $outcome['account']['email'], $outcome['account']['email_verified']], 'the verified primary email from /user/emails');
         self::assertSame('Grace Hopper', $outcome['account']['profile']['name']);
         $token = $service->token($grace->id, 'github');
         self::assertSame(['gho_recordedGitHubAccessToken0123456789', null, ['read:user', 'user:email']], [$token['access_token'], $token['expires_at'], $token['scopes']]);
 
-        $signedIn = $service->exchange($this->code($service->callback('github', ['code' => 'good', 'state' => $this->restart($service, 'github')['state']], $this->client)));
+        $signedIn = $service->exchange($this->code($service->callback('github', ['code' => 'good', 'state' => $this->restart($service, 'github')['state']], $this->browser, $this->client)));
         self::assertSame($grace->id, $signedIn['user']['id'], 'linked: it signs in now');
 
         $bob = $this->user($graph, 'bob@example.com');
-        $this->refused(fn() => $service->callback('github', ['code' => 'good', 'state' => $service->start('github', null, [], $bob->id)['state']], $this->client), SocialException::ACCOUNT_LINKED, 'grace\'s GitHub account');
+        $this->refused(fn() => $service->callback('github', ['code' => 'good', 'state' => $this->browse($service, $service->start('github', null, [], $bob->id))['state']], $this->browser, $this->client), SocialException::ACCOUNT_LINKED, 'grace\'s GitHub account');
         $this->providers->on('https://api.github.com/user', ['id' => 999, 'login' => 'bobby', 'email' => null]);
         $this->providers->on('https://api.github.com/user/emails', [['email' => 'bobby@elsewhere.example', 'primary' => true, 'verified' => true]]);
-        $this->refused(fn() => $service->callback('github', ['code' => 'good', 'state' => $service->start('github', null, [], $bob->id)['state']], $this->client), SocialException::EMAIL_MISMATCH);
+        $this->refused(fn() => $service->callback('github', ['code' => 'good', 'state' => $this->browse($service, $service->start('github', null, [], $bob->id))['state']], $this->browser, $this->client), SocialException::EMAIL_MISMATCH);
         $graph = $this->polaris(allowDifferentEmails: ['github'])->graph();
         $service = $graph->get(SocialService::class);
         $bob = $this->user($graph, 'bob@example.com');
-        self::assertSame('linked', $service->exchange($this->code($service->callback('github', ['code' => 'good', 'state' => $service->start('github', null, [], $bob->id)['state']], $this->client)))['status'], 'allowed for GitHub');
+        self::assertSame('linked', $service->exchange($this->code($service->callback('github', ['code' => 'good', 'state' => $this->browse($service, $service->start('github', null, [], $bob->id))['state']], $this->browser, $this->client)))['status'], 'allowed for GitHub');
 
         $this->refused(fn() => $service->unlink($bob->id, 'google'), SocialException::NOT_LINKED);
         $service->unlink($bob->id, 'github');
@@ -276,11 +280,11 @@ final class PluginTest extends TestCase
     {
         $graph = $this->polaris()->graph();
         $service = $graph->get(SocialService::class);
-        $data = $service->exchange($this->code($service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->client)));
+        $data = $service->exchange($this->code($service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->browser, $this->client)));
         $adaId = (string) $data['user']['id'];
 
         $this->refused(fn() => $service->unlink($adaId, 'google'), SocialException::LAST_CREDENTIAL, 'no password, one provider');
-        self::assertSame('linked', $service->exchange($this->code($service->callback('github', ['code' => 'good', 'state' => $service->start('github', null, [], $adaId)['state']], $this->client)))['status'], 'GitHub reports grace@, allowed here as ada links from her session with allowDifferentEmails');
+        self::assertSame('linked', $service->exchange($this->code($service->callback('github', ['code' => 'good', 'state' => $this->browse($service, $service->start('github', null, [], $adaId))['state']], $this->browser, $this->client)))['status'], 'GitHub reports grace@, allowed here as ada links from her session with allowDifferentEmails');
         $service->unlink($adaId, 'google');
         self::assertSame(['github'], array_map(static fn(Account $account): string => $account->provider, $service->accounts($adaId)));
     }
@@ -292,7 +296,7 @@ final class PluginTest extends TestCase
 
         $started = $this->restart($service, 'apple');
         self::assertStringContainsString('response_mode=form_post', $started['url']);
-        $data = $service->exchange($this->code($service->callback('apple', ['code' => 'good', 'state' => $started['state'], 'user' => '{"name":{"firstName":"Alan","lastName":"Turing"},"email":"alan@example.com"}'], $this->client)));
+        $data = $service->exchange($this->code($service->callback('apple', ['code' => 'good', 'state' => $started['state'], 'user' => '{"name":{"firstName":"Alan","lastName":"Turing"},"email":"alan@example.com"}'], $this->browser, $this->client)));
         $alan = $graph->users()->find($data['user']['id']);
         self::assertInstanceOf(User::class, $alan);
         self::assertSame(['alan@example.com', 'Alan Turing', true], [$alan->email, $alan->displayName, $alan->emailVerifiedAt !== null], 'the name from the first callback, the email from the id_token');
@@ -303,13 +307,13 @@ final class PluginTest extends TestCase
         JWT::$timestamp = null;
         self::assertSame(['TEAM123', 'com.example.app', 'https://appleid.apple.com'], [$secret['iss'], $secret['sub'], $secret['aud']], 'the client secret is a JWT under the team key');
 
-        $data = $service->exchange($this->code($service->callback('microsoft', ['code' => 'good', 'state' => $this->restart($service, 'microsoft')['state']], $this->client)));
+        $data = $service->exchange($this->code($service->callback('microsoft', ['code' => 'good', 'state' => $this->restart($service, 'microsoft')['state']], $this->browser, $this->client)));
         self::assertSame('linus@example.com', $data['user']['email'], 'a tenant issuer under the common endpoint');
 
         RecordedProviders::$claims['microsoft'] = ['nonce' => 'stale'];
-        $this->refused(fn() => $service->callback('microsoft', ['code' => 'good', 'state' => $this->restart($service, 'microsoft')['state']], $this->client), SocialException::PROVIDER_ERROR, 'a wrong nonce');
+        $this->refused(fn() => $service->callback('microsoft', ['code' => 'good', 'state' => $this->restart($service, 'microsoft')['state']], $this->browser, $this->client), SocialException::PROVIDER_ERROR, 'a wrong nonce');
         RecordedProviders::$claims['microsoft'] = ['iss' => 'https://evil.example'];
-        $this->refused(fn() => $service->callback('microsoft', ['code' => 'good', 'state' => $this->restart($service, 'microsoft')['state']], $this->client), SocialException::PROVIDER_ERROR, 'a wrong issuer');
+        $this->refused(fn() => $service->callback('microsoft', ['code' => 'good', 'state' => $this->restart($service, 'microsoft')['state']], $this->browser, $this->client), SocialException::PROVIDER_ERROR, 'a wrong issuer');
         self::assertCount(2, $graph->get(Store::class)->read(new AuditQuery(names: [AuditNames::REJECTED]))->events);
     }
 
@@ -328,7 +332,7 @@ final class PluginTest extends TestCase
         self::assertSame([], $this->providers->http->requests, 'the keys are cached');
         $adaId = (string) $data['user']['id'];
         $this->refused(fn() => $service->token($adaId, 'google'), SocialException::NO_REFRESH, 'One Tap stores no provider token');
-        $service->exchange($this->code($service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->client)));
+        $service->exchange($this->code($service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->browser, $this->client)));
         $service->idTokenSignIn('google', RecordedProviders::mint('https://accounts.google.com', 'google-client', RecordedProviders::GOOGLE_SUB, 'ada@example.com', true, null), $this->client);
         self::assertSame('ya29.a0AfB_byC-recorded-google-access-token', $service->token($adaId, 'google')['access_token'], 'and does not clobber the one a callback stored');
 
@@ -342,7 +346,7 @@ final class PluginTest extends TestCase
     {
         $graph = $this->polaris()->graph();
         $service = $graph->get(SocialService::class);
-        $data = $service->exchange($this->code($service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->client)));
+        $data = $service->exchange($this->code($service->callback('google', ['code' => 'good', 'state' => $this->restart($service, 'google')['state']], $this->browser, $this->client)));
         $adaId = (string) $data['user']['id'];
         $requests = count($this->providers->http->requests);
 
@@ -358,17 +362,54 @@ final class PluginTest extends TestCase
         $this->refused(fn() => $service->token($adaId, 'github'), SocialException::NOT_LINKED);
 
         $this->providers->on('https://acme.example/oauth/me', ['id' => 'acme-43', 'email' => 'zoe@example.com', 'verified' => false, 'name' => 'Zoe']);
-        $this->refused(fn() => $service->callback('acme', ['code' => 'good', 'state' => $this->restart($service, 'acme')['state']], $this->client), SocialException::EMAIL_UNVERIFIED, 'signed up unverified: core requires a verified email to sign in');
+        $this->refused(fn() => $service->callback('acme', ['code' => 'good', 'state' => $this->restart($service, 'acme')['state']], $this->browser, $this->client), SocialException::EMAIL_UNVERIFIED, 'signed up unverified: core requires a verified email to sign in');
         self::assertInstanceOf(User::class, $graph->users()->findOneBy(['email' => 'zoe@example.com']), 'the account exists, to verify');
         $this->providers->on('https://acme.example/oauth/me', ['id' => 'acme-42', 'email' => 'eve@example.com', 'verified' => true, 'name' => 'Eve']);
-        $eve = $service->exchange($this->code($service->callback('acme', ['code' => 'good', 'state' => $this->restart($service, 'acme')['state']], $this->client)));
+        $eve = $service->exchange($this->code($service->callback('acme', ['code' => 'good', 'state' => $this->restart($service, 'acme')['state']], $this->browser, $this->client)));
         self::assertSame(['eve@example.com', ['social:acme']], [$eve['user']['email'], $graph->tokenFactory()->fromTokenString((string) $eve['access_token'])->getMetadata('amr')], 'GenericOAuth from a definition');
         $this->events->dispatch(new \Polaris\Event\UserDeleted((string) $eve['user']['id'], 'admin'));
         self::assertSame([], $service->accounts((string) $eve['user']['id']), 'an erased user leaves no provider account');
         $started = $this->restart($service, 'okta');
         self::assertStringStartsWith('https://acme.okta.example/oauth2/v1/authorize?', $started['url'], 'discovered');
-        $frank = $service->exchange($this->code($service->callback('okta', ['code' => 'good', 'state' => $started['state']], $this->client)));
+        $frank = $service->exchange($this->code($service->callback('okta', ['code' => 'good', 'state' => $started['state']], $this->browser, $this->client)));
         self::assertSame('frank@example.com', $frank['user']['email']);
+    }
+
+    /**
+     * A flow is bound to the browser that started it: one started elsewhere (a sign-in, or a link to
+     * another account) cannot be completed in a browser that does not hold its binding cookie.
+     */
+    public function testAFlowStartedInAnotherBrowserCannotBeCompletedInThisOne(): void
+    {
+        $graph = $this->polaris()->graph();
+        $service = $graph->get(SocialService::class);
+        $mallory = $this->user($graph, 'mallory@example.com');
+        foreach (['sign-in' => null, 'link' => $mallory->id] as $flow => $linkUserId) {
+            $started = $service->start('github', null, [], $linkUserId);
+            RecordedProviders::$nonce = RecordedProviders::param($started['url'], 'nonce');
+            $this->refused(fn() => $service->callback('github', ['code' => 'good', 'state' => $started['state']], [], $this->client), SocialException::STATE_INVALID, $flow . ': a browser without the binding cookie');
+        }
+        self::assertSame([], $service->accounts($mallory->id), 'no provider account was linked to the other browser\'s user');
+
+        $started = $service->start('github', null, [], null);
+        $plain = (new Binding(new Settings('http://app.example/auth', [self::DONE])))->cookieName($started['state']);
+        $this->refused(fn() => $service->callback('github', ['code' => 'good', 'state' => $started['state']], [$plain => $started['binding']], $this->client), SocialException::STATE_INVALID, 'over https only the __Host- cookie counts');
+        $started = $service->start('github', null, [], null);
+        $this->refused(fn() => $service->callback('github', ['code' => 'good', 'state' => $started['state']], [$service->binding->cookieName($started['state']) => str_repeat('0', 32)], $this->client), SocialException::STATE_INVALID, 'another nonce');
+        $started = $this->restart($service, 'github');
+        self::assertStringStartsWith(self::DONE . '?code=', $service->callback('github', ['code' => 'good', 'state' => $started['state']], $this->browser, $this->client), 'the starting browser completes its flow');
+    }
+
+    public function testTheBindingCookieIsHostOnlyOverHttpsAndLaxOverHttp(): void
+    {
+        $https = new Binding(new Settings(self::BASE, [self::DONE]));
+        self::assertMatchesRegularExpression('/^__Host-polaris_social_[0-9a-f]{16}=n1; Path=\/; Max-Age=600; HttpOnly; Secure; SameSite=None$/', $https->setCookie('state-1', 'n1'), 'SameSite=None: Apple\'s form_post is a cross-site POST');
+        self::assertNotSame($https->cookieName('state-1'), $https->cookieName('state-2'), 'one cookie per flow');
+        $http = new Binding(new Settings('http://localhost:8080/auth', [self::DONE]));
+        self::assertMatchesRegularExpression('/^polaris_social_[0-9a-f]{16}=n1; Path=\/; Max-Age=600; HttpOnly; SameSite=Lax$/', $http->setCookie('state-1', 'n1'));
+        self::assertFalse($https->bound('state-1', 'n1', []));
+        self::assertFalse($https->bound('state-1', null, [$https->cookieName('state-1') => '']), 'a state without a binding is never bound');
+        self::assertTrue($https->bound('state-1', 'n1', [$https->cookieName('state-1') => 'n1']));
     }
 
     public function testTheProxyForwardsASignedStateAndRefusesAnUnsignedOne(): void
@@ -378,40 +419,53 @@ final class PluginTest extends TestCase
         $previewService = $preview->get(SocialService::class);
         $stableService = $stable->get(SocialService::class);
 
-        $started = $previewService->start('google', null, [], null);
+        $started = $this->browse($previewService, $previewService->start('google', null, [], null));
         self::assertStringContainsString('redirect_uri=https%3A%2F%2Fauth.example%2Fsocial%2Fgoogle%2Fcallback', $started['url'], 'the provider sends the browser to the stable origin');
         self::assertSame(2, substr_count($started['state'], '.'), 'the state carries the signed return_to');
-        $forward = $stableService->callback('google', ['code' => 'good', 'state' => $started['state']], $this->client);
+        $forward = $stableService->callback('google', ['code' => 'good', 'state' => $started['state']], $this->browser, $this->client);
         self::assertSame('https://pr-42.preview.example/auth/social/google/callback?code=good&state=' . rawurlencode($started['state']), $forward, 'forwarded with everything the provider sent');
 
         [$random, $payload, $signature] = explode('.', $started['state']);
         $forged = rtrim(strtr(base64_encode('{"return_to":"https://evil.example/social/google/callback"}'), '+/', '-_'), '=');
-        $this->refused(fn() => $stableService->callback('google', ['code' => 'good', 'state' => $random . '.' . $forged . '.' . $signature], $this->client), SocialException::STATE_INVALID, 'a tampered return_to');
-        $this->refused(fn() => $stableService->callback('google', ['code' => 'good', 'state' => $random . '.' . $payload . '.unsigned'], $this->client), SocialException::STATE_INVALID, 'unsigned');
-        $this->refused(fn() => $stableService->callback('google', ['code' => 'good', 'state' => $random], $this->client), SocialException::STATE_INVALID, 'a plain state the stable origin never issued');
-        $this->refused(fn() => $stableService->callback('github', ['code' => 'good', 'state' => $started['state']], $this->client), SocialException::STATE_INVALID, 'signed for another provider');
+        $this->refused(fn() => $stableService->callback('google', ['code' => 'good', 'state' => $random . '.' . $forged . '.' . $signature], $this->browser, $this->client), SocialException::STATE_INVALID, 'a tampered return_to');
+        $this->refused(fn() => $stableService->callback('google', ['code' => 'good', 'state' => $random . '.' . $payload . '.unsigned'], $this->browser, $this->client), SocialException::STATE_INVALID, 'unsigned');
+        $this->refused(fn() => $stableService->callback('google', ['code' => 'good', 'state' => $random], $this->browser, $this->client), SocialException::STATE_INVALID, 'a plain state the stable origin never issued');
+        $this->refused(fn() => $stableService->callback('github', ['code' => 'good', 'state' => $started['state']], $this->browser, $this->client), SocialException::STATE_INVALID, 'signed for another provider');
         $this->clock->advance('+11 minutes');
-        $this->refused(fn() => $stableService->callback('google', ['code' => 'good', 'state' => $started['state']], $this->client), SocialException::STATE_INVALID, 'expired with the state');
+        $this->refused(fn() => $stableService->callback('google', ['code' => 'good', 'state' => $started['state']], $this->browser, $this->client), SocialException::STATE_INVALID, 'expired with the state');
         $this->clock->advance('-11 minutes');
 
         RecordedProviders::$nonce = RecordedProviders::param($started['url'], 'nonce');
-        $redirect = $previewService->callback('google', ['code' => 'good', 'state' => $started['state']], $this->client);
+        $redirect = $previewService->callback('google', ['code' => 'good', 'state' => $started['state']], $this->browser, $this->client);
         self::assertStringStartsWith(self::DONE . '?code=', $redirect, 'the preview completes its own flow');
         $exchanges = array_values(array_filter($this->providers->http->requests, static fn($request): bool => str_contains((string) $request->getBody(), 'grant_type=authorization_code')));
         self::assertSame('https://auth.example/social/google/callback', RecordedProviders::form($exchanges[0])['redirect_uri'], 'the exchange names the redirect_uri the provider saw');
         self::assertSame('ada@example.com', $previewService->exchange($this->code($redirect))['user']['email']);
 
-        $own = $stableService->start('google', null, [], null);
+        $own = $this->browse($stableService, $stableService->start('google', null, [], null));
         self::assertStringNotContainsString('.', $own['state'], 'the stable origin signs nothing for itself');
     }
 
     /**
-     * @return array{url: string, state: string}
+     * @return array{url: string, state: string, binding: string}
      */
     private function restart(SocialService $service, string $provider): array
     {
-        $started = $service->start($provider, null, [], null);
+        $started = $this->browse($service, $service->start($provider, null, [], null));
         RecordedProviders::$nonce = RecordedProviders::param($started['url'], 'nonce');
+
+        return $started;
+    }
+
+    /**
+     * Keeps the started flow's binding cookie in the browser.
+     *
+     * @param array{url: string, state: string, binding: string} $started
+     * @return array{url: string, state: string, binding: string}
+     */
+    private function browse(SocialService $service, array $started): array
+    {
+        $this->browser[$service->binding->cookieName($started['state'])] = $started['binding'];
 
         return $started;
     }

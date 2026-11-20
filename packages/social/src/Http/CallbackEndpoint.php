@@ -10,9 +10,15 @@ use Polaris\Http\Result;
 use Polaris\Social\SocialException;
 use Polaris\Social\SocialService;
 
+use function array_filter;
+use function array_key_exists;
+
+use const ARRAY_FILTER_USE_BOTH;
+
 /**
  * `GET /social/{provider}/callback` (and `POST`, for a `form_post` provider such as Apple): the
- * provider's answer; the browser is sent on to the application with the hand-off code.
+ * provider's answer; the browser that started the flow is sent on to the application with the hand-off
+ * code.
  */
 class CallbackEndpoint extends SocialEndpoint
 {
@@ -23,10 +29,11 @@ class CallbackEndpoint extends SocialEndpoint
     #[Override]
     public function __invoke(Input $input): Result
     {
-        $params = $input->all();
-        unset($params['provider']);
+        $cookies = self::cookies($input);
+        // What the provider sent: the input without the route's provider and the cookies merged into it.
+        $params = array_filter($input->all(), static fn(mixed $value, string|int $key): bool => $key !== 'provider' && (!array_key_exists($key, $cookies) || $cookies[$key] !== $value), ARRAY_FILTER_USE_BOTH);
         try {
-            $url = $this->social->callback(self::provider($input), $params, $this->client($input));
+            $url = $this->social->callback(self::provider($input), $params, $cookies, $this->client($input));
         } catch (SocialException $exception) {
             return $this->refuse($exception);
         }

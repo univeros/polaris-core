@@ -13,9 +13,11 @@ use Polaris\Social\SocialPlugin;
 use Polaris\Social\Tests\Support\RecordedProviders;
 use Polaris\Tests\Functional\FunctionalTestCase;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 use function array_key_last;
 use function dirname;
+use function explode;
 use function parse_str;
 use function parse_url;
 use function preg_replace;
@@ -34,6 +36,9 @@ abstract class SocialTestCase extends FunctionalTestCase
     protected const string DONE = 'https://app.polaris.test/signed-in';
 
     protected static RecordedProviders $providers;
+
+    /** @var array<string, string> the browser's cookies: what the routes set, sent with every request */
+    protected array $cookies = [];
 
     #[Override]
     protected static function plugins(): array
@@ -67,6 +72,21 @@ abstract class SocialTestCase extends FunctionalTestCase
         RecordedProviders::$nonce = null;
         RecordedProviders::$claims = [];
         parent::setUp();
+    }
+
+    /**
+     * Every request goes from one browser, which keeps the cookies the responses set.
+     */
+    #[Override]
+    protected function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        $response = parent::handle($this->cookies === [] ? $request : $request->withCookieParams([...$request->getCookieParams(), ...$this->cookies]));
+        foreach ($response->getHeader('Set-Cookie') as $cookie) {
+            [$name, $value] = explode('=', explode(';', $cookie, 2)[0], 2) + [1 => ''];
+            $this->cookies[$name] = $value;
+        }
+
+        return $response;
     }
 
     /**

@@ -1,0 +1,438 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/register",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "mallory@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 202,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1795201200"
+                ]
+            },
+            "body": {
+                "message": "If the address can be registered, a verification message has been sent."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/email/verify",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "token": "3r3Yp6RonICLuz9PoTqpA-ygwtqe5zQq8Wul6aModLM"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1795199700"
+                ]
+            },
+            "body": {
+                "message": "Email verified."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/auth/login",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": {
+                "email": "mallory@example.com",
+                "password": "correct horse battery staple"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "9"
+                ],
+                "X-RateLimit-Reset": [
+                    "1795199700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjODYyMmE4NTgxNWFlOWUyN2I2OTI1MDc4YzM2ZDRhZjU0MjFlNzk5ZDkxNzQyYjI1MjhkYzk3N2ZiZDMwNzMifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzk1MTk5NTgwLjA3MjYwMiwibmJmIjoxNzk1MTk5NTgwLjA3MjYwMiwiZXhwIjoxNzk1MjAwNDgwLjA3MjYwMiwic3ViIjoiMDFhMWZhM2ItYjY1ZS03MmYwLWE0OTYtZDA1ZDk4YTg1MWM5IiwianRpIjoiMDFhMWZhM2ItYjdhOC03OTQxLWJiMjEtYTliOGM0NWY5Y2RkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTFmYTNiLWI3YTgtNzc4ZC1iYjIxLWE5YjhjM2Q4NjQ2MSIsImF1dGhfdGltZSI6MTc5NTE5OTU3OX0.LyH2xftTXt_YmdMyfXnjNe079kjpbxQnPJ1VBrLLlIClf1d0dOzh0CKRKiCrgmK_Zpp4jbRSWtmMEMVMO4g9FdamQg-umCulqc9geP_tIqjle5Tz6hTdWw-ePtoTcVyLC_hZEISIUgq_kFwcTl1TCqWaLTwtruEUXcddP36ZRomWEkeuT5PqS-2zSy_D704ItqomUu4d63HWfevpm9AJTRYZ7s02m5q1GRHSEMFmuDQ7ZtK-D1ZNN-I1M21wAkzbPeItP9eYhHZOmPD2dvVog3TgjpkKjjCiWG7eITiqTFbrz0r8KFFIZZU69wb3j-Wt6PHCcagTfXyC2hmtXca7_w",
+                    "token_type": "Bearer",
+                    "expires_in": 900,
+                    "refresh_token": "Dd9F9JzCpqwMILdsSEoKq0WAPGC5j7brrvYJmwpLnBM",
+                    "user": {
+                        "id": "01a1fa3b-b65e-72f0-a496-d05d98a851c9",
+                        "email": "mallory@example.com",
+                        "email_verified": true
+                    }
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/github/start",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Set-Cookie": [
+                    "__Host-polaris_social_389c300d808fb721=5b4eb332c1349d32951e64273d3a5ba0; Path=/; Max-Age=600; HttpOnly; Secure; SameSite=None"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1795199700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://github.com/login/oauth/authorize?client_id=github-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgithub%2Fcallback&response_type=code&scope=read%3Auser%20user%3Aemail&state=3cfd7bbc284d4ce7f1b7d68a121d04f0",
+                    "state": "3cfd7bbc284d4ce7f1b7d68a121d04f0"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/github/callback?code=good&state=3cfd7bbc284d4ce7f1b7d68a121d04f0",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "8"
+                ],
+                "X-RateLimit-Reset": [
+                    "1795199700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/state_invalid",
+                "title": "Invalid state",
+                "status": 422,
+                "detail": "The state is unknown, used, expired or not signed for this application.",
+                "error": "social_state_invalid",
+                "message": "The state is unknown, used, expired or not signed for this application."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/github/start",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Set-Cookie": [
+                    "__Host-polaris_social_6c2e56c0e8e57afe=a7c993fc19a827abcf3fcb53737d0211; Path=/; Max-Age=600; HttpOnly; Secure; SameSite=None"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "7"
+                ],
+                "X-RateLimit-Reset": [
+                    "1795199700"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://github.com/login/oauth/authorize?client_id=github-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgithub%2Fcallback&response_type=code&scope=read%3Auser%20user%3Aemail&state=2e940b2ec67d0d6d7e49a72bc280f9da",
+                    "state": "2e940b2ec67d0d6d7e49a72bc280f9da"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/github/callback?code=good&state=2e940b2ec67d0d6d7e49a72bc280f9da&__Host-polaris_social_6c2e56c0e8e57afe=a7c993fc19a827abcf3fcb53737d0211",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "7"
+                ],
+                "X-RateLimit-Reset": [
+                    "1795199700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/state_invalid",
+                "title": "Invalid state",
+                "status": 422,
+                "detail": "The state is unknown, used, expired or not signed for this application.",
+                "error": "social_state_invalid",
+                "message": "The state is unknown, used, expired or not signed for this application."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/github/link",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjODYyMmE4NTgxNWFlOWUyN2I2OTI1MDc4YzM2ZDRhZjU0MjFlNzk5ZDkxNzQyYjI1MjhkYzk3N2ZiZDMwNzMifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzk1MTk5NTgwLjA3MjYwMiwibmJmIjoxNzk1MTk5NTgwLjA3MjYwMiwiZXhwIjoxNzk1MjAwNDgwLjA3MjYwMiwic3ViIjoiMDFhMWZhM2ItYjY1ZS03MmYwLWE0OTYtZDA1ZDk4YTg1MWM5IiwianRpIjoiMDFhMWZhM2ItYjdhOC03OTQxLWJiMjEtYTliOGM0NWY5Y2RkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTFmYTNiLWI3YTgtNzc4ZC1iYjIxLWE5YjhjM2Q4NjQ2MSIsImF1dGhfdGltZSI6MTc5NTE5OTU3OX0.LyH2xftTXt_YmdMyfXnjNe079kjpbxQnPJ1VBrLLlIClf1d0dOzh0CKRKiCrgmK_Zpp4jbRSWtmMEMVMO4g9FdamQg-umCulqc9geP_tIqjle5Tz6hTdWw-ePtoTcVyLC_hZEISIUgq_kFwcTl1TCqWaLTwtruEUXcddP36ZRomWEkeuT5PqS-2zSy_D704ItqomUu4d63HWfevpm9AJTRYZ7s02m5q1GRHSEMFmuDQ7ZtK-D1ZNN-I1M21wAkzbPeItP9eYhHZOmPD2dvVog3TgjpkKjjCiWG7eITiqTFbrz0r8KFFIZZU69wb3j-Wt6PHCcagTfXyC2hmtXca7_w"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Set-Cookie": [
+                    "__Host-polaris_social_dd3d9f4ed7facf75=9dc6c30dacea8e6fc255b5ec56b86da9; Path=/; Max-Age=600; HttpOnly; Secure; SameSite=None"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "4"
+                ],
+                "X-RateLimit-Reset": [
+                    "1795201200"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://github.com/login/oauth/authorize?client_id=github-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgithub%2Fcallback&response_type=code&scope=read%3Auser%20user%3Aemail&state=d81908d664d637a9363577ca3a6d3840",
+                    "state": "d81908d664d637a9363577ca3a6d3840"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/github/callback?code=good&state=d81908d664d637a9363577ca3a6d3840",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "6"
+                ],
+                "X-RateLimit-Reset": [
+                    "1795199700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/state_invalid",
+                "title": "Invalid state",
+                "status": 422,
+                "detail": "The state is unknown, used, expired or not signed for this application.",
+                "error": "social_state_invalid",
+                "message": "The state is unknown, used, expired or not signed for this application."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "uri": "/social/github/link",
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjODYyMmE4NTgxNWFlOWUyN2I2OTI1MDc4YzM2ZDRhZjU0MjFlNzk5ZDkxNzQyYjI1MjhkYzk3N2ZiZDMwNzMifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzk1MTk5NTgwLjA3MjYwMiwibmJmIjoxNzk1MTk5NTgwLjA3MjYwMiwiZXhwIjoxNzk1MjAwNDgwLjA3MjYwMiwic3ViIjoiMDFhMWZhM2ItYjY1ZS03MmYwLWE0OTYtZDA1ZDk4YTg1MWM5IiwianRpIjoiMDFhMWZhM2ItYjdhOC03OTQxLWJiMjEtYTliOGM0NWY5Y2RkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTFmYTNiLWI3YTgtNzc4ZC1iYjIxLWE5YjhjM2Q4NjQ2MSIsImF1dGhfdGltZSI6MTc5NTE5OTU3OX0.LyH2xftTXt_YmdMyfXnjNe079kjpbxQnPJ1VBrLLlIClf1d0dOzh0CKRKiCrgmK_Zpp4jbRSWtmMEMVMO4g9FdamQg-umCulqc9geP_tIqjle5Tz6hTdWw-ePtoTcVyLC_hZEISIUgq_kFwcTl1TCqWaLTwtruEUXcddP36ZRomWEkeuT5PqS-2zSy_D704ItqomUu4d63HWfevpm9AJTRYZ7s02m5q1GRHSEMFmuDQ7ZtK-D1ZNN-I1M21wAkzbPeItP9eYhHZOmPD2dvVog3TgjpkKjjCiWG7eITiqTFbrz0r8KFFIZZU69wb3j-Wt6PHCcagTfXyC2hmtXca7_w"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "Set-Cookie": [
+                    "__Host-polaris_social_1d9d855eeff00408=d2bbd0263a14cf7a62a6bf2109d350ad; Path=/; Max-Age=600; HttpOnly; Secure; SameSite=None"
+                ],
+                "X-RateLimit-Limit": [
+                    "5"
+                ],
+                "X-RateLimit-Remaining": [
+                    "3"
+                ],
+                "X-RateLimit-Reset": [
+                    "1795201200"
+                ]
+            },
+            "body": {
+                "data": {
+                    "url": "https://github.com/login/oauth/authorize?client_id=github-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fgithub%2Fcallback&response_type=code&scope=read%3Auser%20user%3Aemail&state=664afd0dfa385f35da9927e62929c55c",
+                    "state": "664afd0dfa385f35da9927e62929c55c"
+                }
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/github/callback?code=good&state=664afd0dfa385f35da9927e62929c55c&__Host-polaris_social_1d9d855eeff00408=d2bbd0263a14cf7a62a6bf2109d350ad",
+            "headers": [],
+            "body": ""
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": [
+                    "application/problem+json"
+                ],
+                "X-RateLimit-Limit": [
+                    "10"
+                ],
+                "X-RateLimit-Remaining": [
+                    "5"
+                ],
+                "X-RateLimit-Reset": [
+                    "1795199700"
+                ]
+            },
+            "body": {
+                "type": "https://polaris.univeros.io/problems/social/state_invalid",
+                "title": "Invalid state",
+                "status": 422,
+                "detail": "The state is unknown, used, expired or not signed for this application.",
+                "error": "social_state_invalid",
+                "message": "The state is unknown, used, expired or not signed for this application."
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "uri": "/social/accounts",
+            "headers": {
+                "Authorization": [
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjODYyMmE4NTgxNWFlOWUyN2I2OTI1MDc4YzM2ZDRhZjU0MjFlNzk5ZDkxNzQyYjI1MjhkYzk3N2ZiZDMwNzMifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzk1MTk5NTgwLjA3MjYwMiwibmJmIjoxNzk1MTk5NTgwLjA3MjYwMiwiZXhwIjoxNzk1MjAwNDgwLjA3MjYwMiwic3ViIjoiMDFhMWZhM2ItYjY1ZS03MmYwLWE0OTYtZDA1ZDk4YTg1MWM5IiwianRpIjoiMDFhMWZhM2ItYjdhOC03OTQxLWJiMjEtYTliOGM0NWY5Y2RkIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsicHdkIl0sInNpZCI6IjAxYTFmYTNiLWI3YTgtNzc4ZC1iYjIxLWE5YjhjM2Q4NjQ2MSIsImF1dGhfdGltZSI6MTc5NTE5OTU3OX0.LyH2xftTXt_YmdMyfXnjNe079kjpbxQnPJ1VBrLLlIClf1d0dOzh0CKRKiCrgmK_Zpp4jbRSWtmMEMVMO4g9FdamQg-umCulqc9geP_tIqjle5Tz6hTdWw-ePtoTcVyLC_hZEISIUgq_kFwcTl1TCqWaLTwtruEUXcddP36ZRomWEkeuT5PqS-2zSy_D704ItqomUu4d63HWfevpm9AJTRYZ7s02m5q1GRHSEMFmuDQ7ZtK-D1ZNN-I1M21wAkzbPeItP9eYhHZOmPD2dvVog3TgjpkKjjCiWG7eITiqTFbrz0r8KFFIZZU69wb3j-Wt6PHCcagTfXyC2hmtXca7_w"
+                ]
+            },
+            "body": ""
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": [
+                    "application/json"
+                ],
+                "X-RateLimit-Limit": [
+                    "600"
+                ],
+                "X-RateLimit-Remaining": [
+                    "597"
+                ],
+                "X-RateLimit-Reset": [
+                    "1795199580"
+                ]
+            },
+            "body": {
+                "data": []
+            }
+        }
+    }
+]

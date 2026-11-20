@@ -8,7 +8,9 @@ use Polaris\Http\Endpoint;
 use Polaris\Http\Input;
 use Polaris\Http\Result;
 use Polaris\Social\SocialException;
+use Polaris\Social\SocialService;
 
+use function is_array;
 use function is_string;
 use function trim;
 
@@ -42,6 +44,29 @@ abstract class SocialEndpoint extends Endpoint
     protected function invalid(string $message): Result
     {
         return $this->problem(422, 'social/invalid_input', 'Invalid input', $message, ['errors' => [$message]]);
+    }
+
+    /**
+     * The flow's start: its URL and state in the body, its binding nonce in the cookie that ties it to
+     * this browser.
+     *
+     * @param array{url: string, state: string, binding: string} $started
+     */
+    protected function started(SocialService $social, array $started): Result
+    {
+        return new Result(200, ['data' => ['url' => $started['url'], 'state' => $started['state']]], ['Set-Cookie' => $social->binding->setCookie($started['state'], $started['binding'])]);
+    }
+
+    /**
+     * The request's own cookies ({@see CookieMiddleware}).
+     *
+     * @return array<string, mixed>
+     */
+    protected static function cookies(Input $input): array
+    {
+        $cookies = $input->attribute(CookieMiddleware::ATTRIBUTE);
+
+        return is_array($cookies) ? $cookies : [];
     }
 
     protected static function text(Input $input, string $field): ?string

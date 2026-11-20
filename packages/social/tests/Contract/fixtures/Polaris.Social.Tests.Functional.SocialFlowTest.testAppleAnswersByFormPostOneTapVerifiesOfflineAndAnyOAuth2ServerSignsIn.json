@@ -16,6 +16,9 @@
                 "Content-Type": [
                     "application/json"
                 ],
+                "Set-Cookie": [
+                    "__Host-polaris_social_137ac1503d179b6e=d4c316d73732388698820b93afa5e725; Path=/; Max-Age=600; HttpOnly; Secure; SameSite=None"
+                ],
                 "X-RateLimit-Limit": [
                     "10"
                 ],
@@ -23,13 +26,13 @@
                     "9"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
                 "data": {
-                    "url": "https://appleid.apple.com/auth/authorize?client_id=com.example.app&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fapple%2Fcallback&response_type=code&scope=name%20email&state=b8965a234501bd18f16e3678852afecc&nonce=526bd46d0a541613f8e7454fffa3bdb5&response_mode=form_post",
-                    "state": "b8965a234501bd18f16e3678852afecc"
+                    "url": "https://appleid.apple.com/auth/authorize?client_id=com.example.app&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fapple%2Fcallback&response_type=code&scope=name%20email&state=0e1a4ce8a64b5b0b4742d81124a71c30&nonce=4b68ca0716007377ad4a0729f768aca5&response_mode=form_post",
+                    "state": "0e1a4ce8a64b5b0b4742d81124a71c30"
                 }
             }
         }
@@ -45,7 +48,7 @@
             },
             "body": {
                 "code": "good",
-                "state": "b8965a234501bd18f16e3678852afecc",
+                "state": "0e1a4ce8a64b5b0b4742d81124a71c30",
                 "user": "{\"name\":{\"firstName\":\"Alan\",\"lastName\":\"Turing\"},\"email\":\"alan@example.com\"}"
             }
         },
@@ -56,7 +59,7 @@
                     "application/json"
                 ],
                 "Location": [
-                    "https://app.polaris.test/signed-in?code=EhzFfLkXcvQMb7YgLvAgYR-dgKrFKl_Fyjp9STOMwfk&state=b8965a234501bd18f16e3678852afecc"
+                    "https://app.polaris.test/signed-in?code=320sF-7NR48hL0Qtvmiu8J-tOuk-YgS74Dlc4aa1vZw&state=0e1a4ce8a64b5b0b4742d81124a71c30"
                 ],
                 "X-RateLimit-Limit": [
                     "10"
@@ -65,7 +68,7 @@
                     "9"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": ""
@@ -81,7 +84,7 @@
                 ]
             },
             "body": {
-                "code": "EhzFfLkXcvQMb7YgLvAgYR-dgKrFKl_Fyjp9STOMwfk"
+                "code": "320sF-7NR48hL0Qtvmiu8J-tOuk-YgS74Dlc4aa1vZw"
             }
         },
         "response": {
@@ -97,17 +100,17 @@
                     "8"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
                 "data": {
-                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI4Mzk2NSwibmJmIjoxNzkxNTc4NTQ4LjI4Mzk2NSwiZXhwIjoxNzkxNTc5NDQ4LjI4Mzk2NSwic3ViIjoiMDFhMTIyNjctMjgzYi03YjIxLWI3N2ItOTMzOTU0NGI5M2UyIiwianRpIjoiMDFhMTIyNjctMjgzYi03ZWY5LWI3N2ItOTMzOTU2NmNjY2Q4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmFwcGxlIl0sInNpZCI6IjAxYTEyMjY3LTI4M2ItN2RmOS1iNzdiLTkzMzk1NWEzOTk5MSIsImF1dGhfdGltZSI6MTc5MTU3ODU0OH0.jJXRRt5LJRgrSikdQHFQ44LML2dFPvu4NldiDaQXfJDmAYKOAssmQSyPMt0ezMB4zxd6LvObA7wNVucp6GBES5oHE3ypwmzrRlDrBG8GKgnDniXBQhNo0eLKi_jfGxLa6atX-RDGnVY-rYr4IYoLzn8QRoOUa4HCUS-FtNX6CoysNrbCm1h8KHivTOfjO6eG2YhWPWyiw813-ajSJfVTLmMC3dEeWvlwjuV6RsN0_A7nznt_p57uDBa-ZfYl5ldG0mRTsOMl5mG_5cb_qOjLiLfflmgcWgG3SJARDKSVLSUEVHynLfGgvkELzljtVvT53nZX4vx8C2ezwf8KtVJ9DQ",
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjODYyMmE4NTgxNWFlOWUyN2I2OTI1MDc4YzM2ZDRhZjU0MjFlNzk5ZDkxNzQyYjI1MjhkYzk3N2ZiZDMwNzMifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzk1MTk5NTc5LjM3ODQ4MSwibmJmIjoxNzk1MTk5NTc5LjM3ODQ4MSwiZXhwIjoxNzk1MjAwNDc5LjM3ODQ4MSwic3ViIjoiMDFhMWZhM2ItYjRmMi03MzhiLWE5YjktNTAyNzJjNjNjMDA3IiwianRpIjoiMDFhMWZhM2ItYjRmMi03NzZmLWE5YjktNTAyNzJmYTQwNTFhIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmFwcGxlIl0sInNpZCI6IjAxYTFmYTNiLWI0ZjItNzY3My1hOWI5LTUwMjcyZTg2YmE2OSIsImF1dGhfdGltZSI6MTc5NTE5OTU3OX0.Icy4kziho4kf4H4EXaKqzW8Eo6vLB1KD6jaP2WYQWEJfikF7T5S9qA9S4Sk35cMzuc8kiLY6XSTO_sJMFeksbGMGBv6HVCPFD98FsRi4Q6O5Pl6cTBjGZtQqFu1PuzJUP25F3DorTvkqD6YtrzwrU6Hlk7C-E_G98GuQpiIyXTizkEYDlk7kdi4eDakeerxOxEhg1AEMlqPFxzB7KSDmBLsABNTwYEMbvSQWJzH0eNxlxQLjKxAfUPjik4fub2wlfqnLx2JzujngrNZbkchmHR_Fo23GG5--8HJSkEPhlwmAn2X0187fIfGIEdu1Cgx74s-wJNw867ueEehZDX5zjQ",
                     "token_type": "Bearer",
                     "expires_in": 900,
-                    "refresh_token": "UFblCxa_uPLm3SgOcV9bipBT-yoytNwVycr3NsSn-B4",
+                    "refresh_token": "fohzCRD1Pf62na73uyGh1SZNKRoWYgjnsfrGeIrKZLg",
                     "user": {
-                        "id": "01a12267-283b-7b21-b77b-9339544b93e2",
+                        "id": "01a1fa3b-b4f2-738b-a9b9-50272c63c007",
                         "email": "alan@example.com",
                         "email_verified": true
                     }
@@ -121,7 +124,7 @@
             "uri": "/auth/me",
             "headers": {
                 "Authorization": [
-                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI4Mzk2NSwibmJmIjoxNzkxNTc4NTQ4LjI4Mzk2NSwiZXhwIjoxNzkxNTc5NDQ4LjI4Mzk2NSwic3ViIjoiMDFhMTIyNjctMjgzYi03YjIxLWI3N2ItOTMzOTU0NGI5M2UyIiwianRpIjoiMDFhMTIyNjctMjgzYi03ZWY5LWI3N2ItOTMzOTU2NmNjY2Q4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmFwcGxlIl0sInNpZCI6IjAxYTEyMjY3LTI4M2ItN2RmOS1iNzdiLTkzMzk1NWEzOTk5MSIsImF1dGhfdGltZSI6MTc5MTU3ODU0OH0.jJXRRt5LJRgrSikdQHFQ44LML2dFPvu4NldiDaQXfJDmAYKOAssmQSyPMt0ezMB4zxd6LvObA7wNVucp6GBES5oHE3ypwmzrRlDrBG8GKgnDniXBQhNo0eLKi_jfGxLa6atX-RDGnVY-rYr4IYoLzn8QRoOUa4HCUS-FtNX6CoysNrbCm1h8KHivTOfjO6eG2YhWPWyiw813-ajSJfVTLmMC3dEeWvlwjuV6RsN0_A7nznt_p57uDBa-ZfYl5ldG0mRTsOMl5mG_5cb_qOjLiLfflmgcWgG3SJARDKSVLSUEVHynLfGgvkELzljtVvT53nZX4vx8C2ezwf8KtVJ9DQ"
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjODYyMmE4NTgxNWFlOWUyN2I2OTI1MDc4YzM2ZDRhZjU0MjFlNzk5ZDkxNzQyYjI1MjhkYzk3N2ZiZDMwNzMifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzk1MTk5NTc5LjM3ODQ4MSwibmJmIjoxNzk1MTk5NTc5LjM3ODQ4MSwiZXhwIjoxNzk1MjAwNDc5LjM3ODQ4MSwic3ViIjoiMDFhMWZhM2ItYjRmMi03MzhiLWE5YjktNTAyNzJjNjNjMDA3IiwianRpIjoiMDFhMWZhM2ItYjRmMi03NzZmLWE5YjktNTAyNzJmYTQwNTFhIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmFwcGxlIl0sInNpZCI6IjAxYTFmYTNiLWI0ZjItNzY3My1hOWI5LTUwMjcyZTg2YmE2OSIsImF1dGhfdGltZSI6MTc5NTE5OTU3OX0.Icy4kziho4kf4H4EXaKqzW8Eo6vLB1KD6jaP2WYQWEJfikF7T5S9qA9S4Sk35cMzuc8kiLY6XSTO_sJMFeksbGMGBv6HVCPFD98FsRi4Q6O5Pl6cTBjGZtQqFu1PuzJUP25F3DorTvkqD6YtrzwrU6Hlk7C-E_G98GuQpiIyXTizkEYDlk7kdi4eDakeerxOxEhg1AEMlqPFxzB7KSDmBLsABNTwYEMbvSQWJzH0eNxlxQLjKxAfUPjik4fub2wlfqnLx2JzujngrNZbkchmHR_Fo23GG5--8HJSkEPhlwmAn2X0187fIfGIEdu1Cgx74s-wJNw867ueEehZDX5zjQ"
                 ]
             },
             "body": ""
@@ -139,12 +142,12 @@
                     "599"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578580"
+                    "1795199580"
                 ]
             },
             "body": {
                 "data": {
-                    "id": "01a12267-283b-7b21-b77b-9339544b93e2",
+                    "id": "01a1fa3b-b4f2-738b-a9b9-50272c63c007",
                     "email": "alan@example.com",
                     "email_verified": true,
                     "display_name": "Alan Turing",
@@ -180,7 +183,7 @@
                     "8"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
@@ -222,7 +225,7 @@
                     "7"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
@@ -245,7 +248,7 @@
                 ]
             },
             "body": {
-                "credential": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6InRlc3QtMjAyNiJ9.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhdWQiOiJnb29nbGUtY2xpZW50Iiwic3ViIjoiMTEwMTY5NDg0NDc0Mzg2Mjc2MzM0IiwiaWF0IjoxNzkxNTc4NTQ4LCJleHAiOjE3OTE1ODIxNDgsIm5vbmNlIjoiNTI2YmQ0NmQwYTU0MTYxM2Y4ZTc0NTRmZmZhM2JkYjUiLCJlbWFpbCI6ImFkYUBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRhIExvdmVsYWNlIn0.VgRhR3fLoY16KqrRQWGHgwgQybve28u_C3ZXnQM5DlEmyrQ10dCpt_mJ9xYnQyouZCd2c2XNaAWS_A4XgdGLwjy5oaf98FxwQzLOByda6Q2MC2hZwgc-VSFGIQ5xgFV7WCVuBhcimSeQYX9p7M1jSQoZPk46ASG0EBh4w_YvuzLdgIPJXVn0uph5jyRLgGbNkLdj0pH9ejsWElXKAdB0ULhrFRqTvC667-_tV7iCTUKyQrC_1K_N-aiG7LqOuez1pZ9ObzYVKZ3HTUhrMoO2EeKHO_b4S6rEGgx9Va5EcqxLQ7VejNK2AjOWphxkMq3a1XDbVQdCdiHYiAgeRvY0mA"
+                "credential": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6InRlc3QtMjAyNiJ9.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhdWQiOiJnb29nbGUtY2xpZW50Iiwic3ViIjoiMTEwMTY5NDg0NDc0Mzg2Mjc2MzM0IiwiaWF0IjoxNzk1MTk5NTc5LCJleHAiOjE3OTUyMDMxNzksIm5vbmNlIjoiNGI2OGNhMDcxNjAwNzM3N2FkNGEwNzI5Zjc2OGFjYTUiLCJlbWFpbCI6ImFkYUBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRhIExvdmVsYWNlIn0.msT3s2HpSXyBgMYGnAGFmOOw4f3UWruebkzfToE5yanI3wxq--qJE_VPwFmYFc8SJLRQvss42s7rIYn8__YkddYT0KRQHn9kGUyo7klJ1YtjXz17aT0eanyxLB8RfVSQ2oHkXw09l9osLAHeda0Nuvp5DB3qh7bjXF0kQRfmf-IRIj0v8flLH3Tjiq8GfgSlVIaL9L3LlWBTTIv91qlGawE6hf1F69A3BcJo-qaRrygdzD8G_8h4wNtNPM22hnt8Xd-OPWPebrjcVZYDgcpdt_imYExo6JH4zMxIiswL1iIr3RwnpFaqeXV1ZyqR7wGPKf_ZzyNsFORM0HhbMQ7Pig"
             }
         },
         "response": {
@@ -261,17 +264,17 @@
                     "6"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
                 "data": {
-                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI4Njk5NSwibmJmIjoxNzkxNTc4NTQ4LjI4Njk5NSwiZXhwIjoxNzkxNTc5NDQ4LjI4Njk5NSwic3ViIjoiMDFhMTIyNjctMjgzZS03Y2MwLTk2NzItZjAyNzhmMmE2YTEzIiwianRpIjoiMDFhMTIyNjctMjgzZS03ZjcwLTk2NzItZjAyNzkxYTk0ODVmIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExMjI2Ny0yODNlLTdlYjAtOTY3Mi1mMDI3OTEwNGY5YmIiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.FKaRSkpQr9uuIY0eLY16AVnbcmgbPstbJfKjKOFibdufs4DcvDOI3fsrC12_bcuf8_kACL3Pkl5ns9uKJoqAistXT5t-TbZ8lhU09vqi_hBmWJzfQZvx310HTnYouy9YmD2LLfaZlkmd6OcEmVJz8UktATkErUOZe7e13obAeyDPloWMifKtV0qmbi8-g9Ev7jBxD5wpZ5nwu89GzhM04zKcunCf6RUGIhSi5yHzIQ91aqfJtLuww9BXvlXMzM94icPyXJiGut5LF3mcIaOY128IKqzNeFz69_Ghr1eTeqftxz7lcnZUeucqUCD5cct1PP5hRVF8ae24ZZnzFrQDxA",
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjODYyMmE4NTgxNWFlOWUyN2I2OTI1MDc4YzM2ZDRhZjU0MjFlNzk5ZDkxNzQyYjI1MjhkYzk3N2ZiZDMwNzMifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzk1MTk5NTc5LjM4MTY3NSwibmJmIjoxNzk1MTk5NTc5LjM4MTY3NSwiZXhwIjoxNzk1MjAwNDc5LjM4MTY3NSwic3ViIjoiMDFhMWZhM2ItYjRmNS03NjBlLTkwOGYtY2FhYzc4MmUxNmE1IiwianRpIjoiMDFhMWZhM2ItYjRmNS03YTY2LTkwOGYtY2FhYzdhN2FlNGQyIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmdvb2dsZSJdLCJzaWQiOiIwMWExZmEzYi1iNGY1LTc4NDYtOTA4Zi1jYWFjNzk1ZDFjYzQiLCJhdXRoX3RpbWUiOjE3OTUxOTk1Nzl9.GxYT-as9CqlFNQyp9i-z6C65O_ajG5gfgX4oDvD0nSzop519iuN237UHMf8AzOefwiYjy05OzXc_nPkh-LeB_ys_TQgtXP1BAqQkQE6hHFYDQyPj9JyRkPkfk9a2igVoS7qD51fKAEKxvnBr3lwaYl3QH4B4MT2lfx2sCpnHTD5tEbuJ9BtTW65FWCnaChWJaGKsIC8lF9TkyRD1qGwDHXE2lFQ7mErvFtUeXj6a7808sZXScAzU9Xhg1upZ24bX5edFoChmhH3t3-VbrosFxQYW4zaVdp5dxbO6r7tIjLLEyAkl9Rqg8A_oheGhKB2LyfrYw8r44eXzUIHZ0W4W1Q",
                     "token_type": "Bearer",
                     "expires_in": 900,
-                    "refresh_token": "mlGAznTzZgMw9PF1qFkvNxW0vgcsI1m4anTbiMCLMz4",
+                    "refresh_token": "2g6UmgHLjBjL3TyC4WZqGFsdWg2AaLV4xVG8tERD8n4",
                     "user": {
-                        "id": "01a12267-283e-7cc0-9672-f0278f2a6a13",
+                        "id": "01a1fa3b-b4f5-760e-908f-caac782e16a5",
                         "email": "ada@example.com",
                         "email_verified": true
                     }
@@ -296,6 +299,9 @@
                 "Content-Type": [
                     "application/json"
                 ],
+                "Set-Cookie": [
+                    "__Host-polaris_social_a6bab23fe6eb12d6=fc718665ffa1e11884bddff4f4e09644; Path=/; Max-Age=600; HttpOnly; Secure; SameSite=None"
+                ],
                 "X-RateLimit-Limit": [
                     "10"
                 ],
@@ -303,13 +309,13 @@
                     "5"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
                 "data": {
-                    "url": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=ms-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fmicrosoft%2Fcallback&response_type=code&scope=openid%20email%20profile%20offline_access&state=01f7300e2c17ffa7c4e99499585ca767&code_challenge=uywdiHg3N3F4zjQKRGlZ6KlZSgDEq7mrWkNv0xelaBQ&code_challenge_method=S256&nonce=f86674b8f687eb212c45f1460cf9399e",
-                    "state": "01f7300e2c17ffa7c4e99499585ca767"
+                    "url": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=ms-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Fmicrosoft%2Fcallback&response_type=code&scope=openid%20email%20profile%20offline_access&state=36b63a0e6c659d4a9ee549638b87b01c&code_challenge=B3_1FyFz_WWCrfGWapnLyFLkjKZqQLSiND754FMBMTg&code_challenge_method=S256&nonce=23f2f4dd2e1053731bf6393c820e50c9",
+                    "state": "36b63a0e6c659d4a9ee549638b87b01c"
                 }
             }
         }
@@ -317,7 +323,7 @@
     {
         "request": {
             "method": "GET",
-            "uri": "/social/microsoft/callback?code=good&state=01f7300e2c17ffa7c4e99499585ca767",
+            "uri": "/social/microsoft/callback?code=good&state=36b63a0e6c659d4a9ee549638b87b01c",
             "headers": [],
             "body": ""
         },
@@ -328,7 +334,7 @@
                     "application/json"
                 ],
                 "Location": [
-                    "https://app.polaris.test/signed-in?code=j4ZNi7Q7KyNAr8Zg1Qn7uBy2lvZEm4NPCK2M3Lot9Jw&state=01f7300e2c17ffa7c4e99499585ca767"
+                    "https://app.polaris.test/signed-in?code=O400Xj9SApUAywnP3gjRSD6qVJdR-YU9haSevToOCQ0&state=36b63a0e6c659d4a9ee549638b87b01c"
                 ],
                 "X-RateLimit-Limit": [
                     "10"
@@ -337,7 +343,7 @@
                     "7"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": ""
@@ -353,7 +359,7 @@
                 ]
             },
             "body": {
-                "code": "j4ZNi7Q7KyNAr8Zg1Qn7uBy2lvZEm4NPCK2M3Lot9Jw"
+                "code": "O400Xj9SApUAywnP3gjRSD6qVJdR-YU9haSevToOCQ0"
             }
         },
         "response": {
@@ -369,17 +375,17 @@
                     "6"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
                 "data": {
-                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI4OTQ2MSwibmJmIjoxNzkxNTc4NTQ4LjI4OTQ2MSwiZXhwIjoxNzkxNTc5NDQ4LjI4OTQ2MSwic3ViIjoiMDFhMTIyNjctMjg0MS03NGI3LTliNjctNGZiMGNkZTY5MTczIiwianRpIjoiMDFhMTIyNjctMjg0MS03NzIzLTliNjctNGZiMGQwNmE0NTE0Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOm1pY3Jvc29mdCJdLCJzaWQiOiIwMWExMjI2Ny0yODQxLTc2NmYtOWI2Ny00ZmIwY2Y0NmVmMjgiLCJhdXRoX3RpbWUiOjE3OTE1Nzg1NDh9.W1P3lgWy04GaQgSLEcl5tcfSNPfyQTRq4oopva9NECs1G4VjFE6q68ZT-FI78QN3WaIWRLfJMlVX4FKyLJC0Lixy-j44K28frMJ2WU1vF59O2IBJ68pIW-Q1sgal0MzaOV8qJHJnSuiRIdbPO3rnzbI_q5e321Zy-1Ra0GsQpaeOEZ92fK1XJPnCC18mAqrkWWf2nYIN2SRopNlG_LOrJeWHpD6bOEPiF1CESr3ZbTJqkUQnjwsIahORdZtKrz9RzvTV8CBYa8fBREkkRyJj4Vry_bxpHEoH07byeJGNtOEWRrDm4UMVMdPXurhQdqC2LHLMxoMim4CAp3m3NRe0IQ",
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjODYyMmE4NTgxNWFlOWUyN2I2OTI1MDc4YzM2ZDRhZjU0MjFlNzk5ZDkxNzQyYjI1MjhkYzk3N2ZiZDMwNzMifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzk1MTk5NTc5LjM4NDI4NywibmJmIjoxNzk1MTk5NTc5LjM4NDI4NywiZXhwIjoxNzk1MjAwNDc5LjM4NDI4Nywic3ViIjoiMDFhMWZhM2ItYjRmOC03MWFhLWFmNjUtZGNkZGM1OGQxNGY3IiwianRpIjoiMDFhMWZhM2ItYjRmOC03NDZlLWFmNjUtZGNkZGM4NWMwN2Q4Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOm1pY3Jvc29mdCJdLCJzaWQiOiIwMWExZmEzYi1iNGY4LTczYWEtYWY2NS1kY2RkYzdhZTlmN2EiLCJhdXRoX3RpbWUiOjE3OTUxOTk1Nzl9.h69i5VmBasR9JiyiMy6qislDKfhV2ZWJsO4LPgsBdikocDxBNio2dNHuYOqlY7vzg8Ga2R0852Dx2FR-UraO09Yyx-7COZluVRsqx4WCJTnt4RnlhU5rcGrXiEGlIfiw2v-au34N5SDTp0w4Wh9VKtm0x2WHO4AyN-TNY5w4FQjxzRia3YwiMh-BkWD-aJgRN7ooK_7JIS0-E3ix1kNoU9VoRZfMKJ-VYre-WINcnD5huLZkifoIKxBwyfuftH-X-cL-013RUKFbjNGNg0D3ES6S89ditJ83UrthOytcE169YH8VLG1my0AUpf3HuMNQHCNEXzRBdT-gQbmfeOQDcw",
                     "token_type": "Bearer",
                     "expires_in": 900,
-                    "refresh_token": "vYtoQ7W_XxlxKRC-nUgN4Of7paic3VMCtpEJijzBCwE",
+                    "refresh_token": "XjCdJa3GY7RahB2dKhmlUy6Vlau1B715eUk3tMqesgU",
                     "user": {
-                        "id": "01a12267-2841-74b7-9b67-4fb0cde69173",
+                        "id": "01a1fa3b-b4f8-71aa-af65-dcddc58d14f7",
                         "email": "linus@example.com",
                         "email_verified": true
                     }
@@ -404,6 +410,9 @@
                 "Content-Type": [
                     "application/json"
                 ],
+                "Set-Cookie": [
+                    "__Host-polaris_social_827e08424cd7a932=c0de0b3f364e3ddb5218ed17207f12c2; Path=/; Max-Age=600; HttpOnly; Secure; SameSite=None"
+                ],
                 "X-RateLimit-Limit": [
                     "10"
                 ],
@@ -411,13 +420,13 @@
                     "4"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
                 "data": {
-                    "url": "https://acme.example/oauth/authorize?client_id=acme-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Facme%2Fcallback&response_type=code&scope=profile&state=fe911628e8fad62eeb16cc4280286728",
-                    "state": "fe911628e8fad62eeb16cc4280286728"
+                    "url": "https://acme.example/oauth/authorize?client_id=acme-client&redirect_uri=https%3A%2F%2Fauth.polaris.test%2Fsocial%2Facme%2Fcallback&response_type=code&scope=profile&state=e11784f9a31764f79cc69727c7e00ea3",
+                    "state": "e11784f9a31764f79cc69727c7e00ea3"
                 }
             }
         }
@@ -425,7 +434,7 @@
     {
         "request": {
             "method": "GET",
-            "uri": "/social/acme/callback?code=good&state=fe911628e8fad62eeb16cc4280286728",
+            "uri": "/social/acme/callback?code=good&state=e11784f9a31764f79cc69727c7e00ea3",
             "headers": [],
             "body": ""
         },
@@ -436,7 +445,7 @@
                     "application/json"
                 ],
                 "Location": [
-                    "https://app.polaris.test/signed-in?code=A-_X0Cm2RdqNlsTBesIs6fnWozn2JPgOkpD4K8qvnd8&state=fe911628e8fad62eeb16cc4280286728"
+                    "https://app.polaris.test/signed-in?code=zh6loIZX_G019Q0nQzSmWktbHao-5S6vJj2YucP5jGo&state=e11784f9a31764f79cc69727c7e00ea3"
                 ],
                 "X-RateLimit-Limit": [
                     "10"
@@ -445,7 +454,7 @@
                     "5"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": ""
@@ -461,7 +470,7 @@
                 ]
             },
             "body": {
-                "code": "A-_X0Cm2RdqNlsTBesIs6fnWozn2JPgOkpD4K8qvnd8"
+                "code": "zh6loIZX_G019Q0nQzSmWktbHao-5S6vJj2YucP5jGo"
             }
         },
         "response": {
@@ -477,17 +486,17 @@
                     "4"
                 ],
                 "X-RateLimit-Reset": [
-                    "1791578700"
+                    "1795199700"
                 ]
             },
             "body": {
                 "data": {
-                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjQyNTYxZTY2NzI3OTA3ZDU3NTk1ZTZhZWJjZTRiZmY3YjZhNTljZDZjM2E3NmY4NTI2NWQyYTVhYzQzZjkwYmUifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzkxNTc4NTQ4LjI5MDgzMywibmJmIjoxNzkxNTc4NTQ4LjI5MDgzMywiZXhwIjoxNzkxNTc5NDQ4LjI5MDgzMywic3ViIjoiMDFhMTIyNjctMjg0Mi03YTg5LWJiZWYtYjQ3NmZiZTQ1MDM3IiwianRpIjoiMDFhMTIyNjctMjg0Mi03Y2YxLWJiZWYtYjQ3NmZmNTc0ZTY3Iiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmFjbWUiXSwic2lkIjoiMDFhMTIyNjctMjg0Mi03YzQxLWJiZWYtYjQ3NmZlNDBkMmU1IiwiYXV0aF90aW1lIjoxNzkxNTc4NTQ4fQ.lAd7BK5SUjpWddmKz3RUWeRuX2v1dqcpsmQb2JOlllGQG4PgxBgLcTWmR9hZh5DknX1OeElXWseMHv7XWwq_Rt1nqRLLYXUbMVOSVBranPh4ZoLfBv2dQRvsOvtHcsmNWMFToYQJ2N7_Vu2Q1ojFeY8qFoEvM60RMHOY8nHLxW6IcUUUtfhLRJ_3ebz1WTcsVvFOyD05lnMM6xE0ropQZu6A5CHvMWmWjIHxa-WxCYhtJE_cW0AunqV32bQuOQGSfsz3koYdGu6BVNxSTus3ZsCA8BVNksyHcObWFvWGgjnA8Btw9yk1dO2BwnqbNmGWmADHMbG8MmHejyARV2s-FA",
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjdjODYyMmE4NTgxNWFlOWUyN2I2OTI1MDc4YzM2ZDRhZjU0MjFlNzk5ZDkxNzQyYjI1MjhkYzk3N2ZiZDMwNzMifQ.eyJpc3MiOiJodHRwczovL2F1dGgucG9sYXJpcy50ZXN0IiwiaWF0IjoxNzk1MTk5NTc5LjM4NTY2MiwibmJmIjoxNzk1MTk5NTc5LjM4NTY2MiwiZXhwIjoxNzk1MjAwNDc5LjM4NTY2Miwic3ViIjoiMDFhMWZhM2ItYjRmOS03N2UwLTg0OGEtNDFiZDhmNzlhZGViIiwianRpIjoiMDFhMWZhM2ItYjRmOS03YTQ4LTg0OGEtNDFiZDkyNGNkMGEwIiwib3JnIjpudWxsLCJyb2xlcyI6W10sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJtZmEiOmZhbHNlLCJhbXIiOlsic29jaWFsOmFjbWUiXSwic2lkIjoiMDFhMWZhM2ItYjRmOS03OTk4LTg0OGEtNDFiZDkxYmE0NWVhIiwiYXV0aF90aW1lIjoxNzk1MTk5NTc5fQ.HrKv41_5wrZLvHqCBPMUV0GZV1ZnaFUGXtHCjteUF6zv_pI7hTfiucrWNCoaoHnkVqTyjcw2t7gazaByH9UnT7XcnojSkgHuix5ELbDfQZifcGnHp-MP-4_TOZYaQ3PIvDsM0gxGKHF2PjQAb8rqbYPTcFLQcC06yzYHOCO4JwTmSUznjb45Riqu2zUFe5OWa4YTNWjiSLHhOqek7V_5i0ExRFpPaDNzr2hNCFfJaHwxGbmjeHZDgFeU4gFjykR7r_DpB6ml8cwOI7ShZahK616DqUb7EboSOrHa8mloHcJhM3siupNujdwhzkEB5OA1GL5nF9yeZfB11-ktq-iNNQ",
                     "token_type": "Bearer",
                     "expires_in": 900,
-                    "refresh_token": "L2ziSaX0gNelquEBmAcadTaPwrTOHE6fT-Gm7ehJh1Q",
+                    "refresh_token": "eqIm1_ZwMQzymoEciv21kB2iAZ50ZucqPQJ3kWOPc50",
                     "user": {
-                        "id": "01a12267-2842-7a89-bbef-b476fbe45037",
+                        "id": "01a1fa3b-b4f9-77e0-848a-41bd8f79adeb",
                         "email": "eve@example.com",
                         "email_verified": true
                     }

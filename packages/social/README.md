@@ -41,9 +41,13 @@ and `schema:diff`, the routes join the route table.
 
 1. The application calls `POST /social/{provider}/start` with, optionally, the `redirect_uri` the sign-in
    should end on (one of the plugin's; the first by default) and `scopes`. It answers
-   `{data: {url, state}}`; the application sends the browser to `url`.
+   `{data: {url, state}}` and a cookie that binds the flow to the calling browser (`HttpOnly`, named
+   after the state; `__Host-`, `Secure`, `SameSite=None` under an https `baseUrl`, `SameSite=Lax` over
+   http), so the start must be called from the browser itself (`credentials: 'include'` from another
+   origin); the application sends the browser to `url`.
 2. The provider authenticates the user and sends the browser back to `GET /social/{provider}/callback`
-   (`POST` for Apple's `form_post`). Polaris exchanges the code (PKCE where the provider takes it),
+   (`POST` for Apple's `form_post`). A browser without the flow's cookie is refused
+   (`social/state_invalid`). Polaris exchanges the code (PKCE where the provider takes it),
    reads the profile (the id_token verified against the provider's keys for an OpenID Connect
    provider), applies the linking policy and answers `302 <redirect_uri>?code=...&state=...`. Tokens
    never travel in a URL; the application compares `state` with the one `start` answered before it

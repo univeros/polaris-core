@@ -54,6 +54,8 @@ use const PHP_QUERY_RFC3986;
  */
 final class SocialService
 {
+    public readonly Binding $binding;
+
     private const int CODE_TTL = 60;
     private const string PROXY_CONTEXT = 'social:proxy';
     private const string PROXY_SEPARATOR = '.';
@@ -68,11 +70,15 @@ final class SocialService
         private readonly EventDispatcherInterface $events,
         private readonly ClockInterface $clock,
     ) {
+        $this->binding = new Binding($settings);
     }
 
     /**
+     * The flow's start: where the browser goes, the state, and the nonce the starting browser keeps in
+     * its binding cookie ({@see Binding}), never sent in the body.
+     *
      * @param list<string> $scopes
-     * @return array{url: string, state: string}
+     * @return array{url: string, state: string, binding: string}
      * @throws SocialException
      */
     public function start(string $providerId, ?string $redirectUri, array $scopes, ?string $linkUserId): array
@@ -88,7 +94,7 @@ final class SocialService
             $state .= self::PROXY_SEPARATOR . $payload . self::PROXY_SEPARATOR . self::base64url($this->pepper->hash(self::PROXY_CONTEXT, $state . self::PROXY_SEPARATOR . $payload));
             $callback = $this->settings->proxy . '/social/' . $providerId . '/callback';
         }
-        $entry = ['provider' => $providerId, 'redirect_uri' => $redirectUri, 'callback' => $callback, 'nonce' => bin2hex(random_bytes(16)), 'link_user_id' => $linkUserId, 'verifier' => null];
+        $entry = ['provider' => $providerId, 'redirect_uri' => $redirectUri, 'callback' => $callback, 'nonce' => bin2hex(random_bytes(16)), 'link_user_id' => $linkUserId, 'verifier' => null, 'binding' => bin2hex(random_bytes(16))];
         $challenge = null;
         if ($provider->definition()->pkce) {
             $entry['verifier'] = self::base64url(random_bytes(48));
@@ -96,17 +102,19 @@ final class SocialService
         }
         $this->cache->set(self::key('state', $state), $entry, $this->settings->stateTtl);
 
-        return ['url' => $provider->authorizationUrl($callback, $state, $scopes, $challenge, $entry['nonce']), 'state' => $state];
+        return ['url' => $provider->authorizationUrl($callback, $state, $scopes, $challenge, $entry['nonce']), 'state' => $state, 'binding' => $entry['binding']];
     }
 
     /**
      * The callback: the application URL to send the browser to, with the hand-off code; or, on the
-     * stable origin of the proxy, the preview's callback with everything the provider sent.
+     * stable origin of the proxy, the preview's callback with everything the provider sent. The flow must
+     * have been started in this browser: `$cookies` (the request's own) hold the state's binding.
      *
      * @param array<string, mixed> $params
+     * @param array<string, mixed> $cookies
      * @throws SocialException
      */
-    public function callback(string $providerId, array $params, ClientContext $client): string
+    public function callback(string $providerId, array $params, array $cookies, ClientContext $client): string
     {
         $state = is_string($params['state'] ?? null) ? $params['state'] : '';
         $forward = $this->forwardTo($state, $providerId);
@@ -114,6 +122,9 @@ final class SocialService
             return $forward . (str_contains($forward, '?') ? '&' : '?') . http_build_query(array_map(static fn(mixed $value): string => is_string($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR), $params), '', '&', PHP_QUERY_RFC3986);
         }
         $entry = $this->takeState($providerId, $state);
+        if (!$this->binding->bound($state, $entry['binding'] ?? null, $cookies)) {
+            throw new SocialException(SocialException::STATE_INVALID, 'The flow was started in another browser.');
+        }
         $provider = $this->providers->get($providerId);
         if (is_string($params['error'] ?? null) && $params['error'] !== '') {
             $this->reject($providerId, 'the provider answered ' . $params['error'], $client);

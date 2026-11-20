@@ -33,6 +33,6 @@ final class StartEndpoint extends SocialEndpoint
             return $this->refuse($exception);
         }
 
-        return $this->respond(200, ['data' => $started]);
+        return $this->started($this->social, $started);
     }
 }

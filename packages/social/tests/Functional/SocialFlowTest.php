@@ -6,6 +6,8 @@ namespace Polaris\Social\Tests\Functional;
 
 use Polaris\Social\Tests\Support\RecordedProviders;
 
+use function http_build_query;
+
 /**
  * The flows end to end through the routes against the recorded providers: Google signs up and signs in,
  * the accounts and a provider token from the session, GitHub linked from a session, unlinking and its
@@ -96,5 +98,20 @@ final class SocialFlowTest extends SocialTestCase
         $signedIn = $this->json($this->postJson('/social/exchange', ['code' => self::param($this->get('/social/github/callback?code=good&state=' . $this->start('github'))->getHeaderLine('Location'), 'code')]))['data'];
         self::assertSame('grace@example.com', $signedIn['user']['email'], 'linked: it signs in now');
         self::assertSame(['status' => 'unlinked'], $this->json($this->authedDelete('/social/github', $grace))['data'], 'a password remains');
+    }
+
+    public function testAFlowCompletesOnlyInTheBrowserThatStartedIt(): void
+    {
+        $mallory = $this->login('mallory@example.com');
+        foreach (['sign-in' => null, 'link' => $mallory] as $flow => $access) {
+            $state = $this->start('github', $access);
+            $this->cookies = [];
+            $this->problem($this->get('/social/github/callback?code=good&state=' . $state), 422, 'social_state_invalid', $flow . ': another browser holds no binding cookie');
+            $state = $this->start('github', $access);
+            $binding = http_build_query($this->cookies);
+            $this->cookies = [];
+            $this->problem($this->get('/social/github/callback?code=good&state=' . $state . '&' . $binding), 422, 'social_state_invalid', $flow . ': a binding named in the query is not the browser\'s cookie');
+        }
+        self::assertSame([], $this->json($this->authedGet('/social/accounts', $mallory))['data'], 'nothing was linked to the account that started the flows');
     }
 }

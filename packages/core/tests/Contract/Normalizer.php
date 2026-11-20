@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Polaris\Tests\Contract;
 
+use function array_filter;
 use function array_map;
 use function array_values;
 use function count;
+use function explode;
+use function implode;
 use function in_array;
 use function is_array;
 use function is_int;
@@ -16,9 +19,12 @@ use function ksort;
 use function preg_match;
 use function preg_replace;
 use function preg_replace_callback;
+use function sort;
 use function str_contains;
 use function str_starts_with;
 use function strlen;
+use function strtolower;
+use function trim;
 use function usort;
 
 /**
@@ -43,11 +49,11 @@ final class Normalizer
                 continue;
             }
             $values = is_array($values) ? array_values($values) : [$values];
-            // A plugin's hand-off code in a Location header (`sso_code=`, `code=`) and multi-session's
-            // device id are minted per run, as a body token is.
+            // A plugin's hand-off code in a Location header (`sso_code=`, `code=`), multi-session's
+            // device id and the social flow's binding cookie are minted per run, as a body token is.
             $headers[$lower] = $lower === 'x-polaris-device'
                 ? ['<device>']
-                : array_map(static fn(mixed $value): mixed => is_string($value) ? self::maskQuery($value) : $value, $values);
+                : array_map(static fn(mixed $value): mixed => is_string($value) ? self::maskQuery(self::maskBinding($value)) : $value, $values);
         }
         ksort($headers);
 
@@ -70,6 +76,21 @@ final class Normalizer
         }
 
         return true;
+    }
+
+    /**
+     * The social binding cookie: its name derives from the flow's state, its value is the flow's nonce;
+     * its attributes compare lower-cased and sorted, without the `expires` a host derives from `Max-Age`.
+     */
+    private static function maskBinding(string $value): string
+    {
+        if (preg_match('/^((?:__Host-)?polaris_social_)[0-9a-f]{16}=[0-9a-f]+;(.*)$/', $value, $match) !== 1) {
+            return $value;
+        }
+        $attributes = array_filter(array_map(static fn(string $attribute): string => strtolower(trim($attribute)), explode(';', $match[2])), static fn(string $attribute): bool => $attribute !== '' && !str_starts_with($attribute, 'expires='));
+        sort($attributes);
+
+        return $match[1] . '<state>=<binding>; ' . implode('; ', $attributes);
     }
 
     /**

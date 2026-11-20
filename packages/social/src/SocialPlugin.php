@@ -11,6 +11,7 @@ use Polaris\Audit\Catalog;
 use Polaris\Event\UserDeleted;
 use Polaris\Plugin\AbstractPlugin;
 use Polaris\Social\Provider\Http;
+use Polaris\Social\Http\CookieMiddleware;
 use Polaris\Wiring\Graph;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -113,6 +114,12 @@ final class SocialPlugin extends AbstractPlugin
                 $graph->clock(),
             ),
         ];
+    }
+
+    #[Override]
+    public function middleware(Graph $graph): array
+    {
+        return [new CookieMiddleware()];
     }
 
     #[Override]
