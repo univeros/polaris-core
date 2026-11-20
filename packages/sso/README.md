@@ -64,9 +64,11 @@ core's `UserLoggedIn`, a provisioned membership core's `MemberJoined`.
 
 A user is found by the asserted email. When none exists and the provider's `jit.enabled` is set, the user
 is created with the email verified (the provider vouched for the mailbox), no password, the display name
-from the mapped attribute; otherwise `403 sso/user_unknown`. A missing membership is created with the
-roles of `jit.roles` (slugs of the organization's roles, `member` by default); a suspended membership
-refuses the sign-in; a disabled account too.
+from the mapped attribute; otherwise `403 sso/user_unknown`. An existing account signs in only when it is
+a member of the provider's organization already or its email's domain is verified for the organization;
+otherwise `403 sso/user_unknown` too. A missing membership is created with the roles of `jit.roles` (slugs
+of the organization's roles, `member` by default); a suspended membership refuses the sign-in; a disabled
+account too.
 
 ## Routes
 
@@ -77,7 +79,7 @@ refuses the sign-in; a disabled account too.
 | `POST /sso/callback/{providerId}` `SAMLResponse, RelayState` | public | the SAML assertion consumer; `302 redirect_uri?sso_code=` |
 | `POST /sso/exchange` `{code}` | public | the login envelope, once |
 | `GET /sso/metadata/{providerId}` | public | the SP metadata XML (`application/samlmetadata+xml`) |
-| `GET\|POST /sso/slo/{providerId}` | public | an IdP's signed LogoutRequest ends the user's sessions and is answered with the LogoutResponse redirect; an IdP's LogoutResponse ends an application-initiated logout |
+| `GET\|POST /sso/slo/{providerId}` | public | an IdP's signed LogoutRequest ends the user's sessions when they are a member of the provider's organization, and is answered with the LogoutResponse redirect; an IdP's LogoutResponse ends an application-initiated logout |
 | `POST /sso/logout` `{provider_id?, organization_id?, post_logout_uri?}` | bearer | the caller's sessions end; `url` is the IdP's single-logout (SAML LogoutRequest or OIDC end-session), null when the provider offers none |
 | `GET\|POST /orgs/{id}/sso/providers`, `GET\|PATCH\|DELETE /orgs/{id}/sso/providers/{providerId}`, `POST .../test` | `org.update` in the active organization | the organization's providers (below) |
 | `GET\|POST /orgs/{id}/sso/domains`, `POST /orgs/{id}/sso/domains/{domainId}/verify`, `DELETE /orgs/{id}/sso/domains/{domainId}` | `org.update` | the organization's domains |

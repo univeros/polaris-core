@@ -25,6 +25,7 @@ use Polaris\Sso\AuditNames;
 use Polaris\Sso\Domains;
 use Polaris\Sso\Http\Organization\ProviderInput;
 use Polaris\Sso\Model\Provider;
+use Polaris\Sso\Oidc\OidcProtocol;
 use Polaris\Sso\Providers;
 use Polaris\Sso\Provisioner;
 use Polaris\Sso\Schema;
@@ -40,6 +41,7 @@ use Polaris\Testing\InMemoryAdapter;
 use Polaris\Tests\Support\RecordingEventDispatcher;
 use Polaris\Tests\Support\TestKeys;
 use Polaris\Token\ClientContext;
+use Polaris\Token\SessionPrincipal;
 use Polaris\Wiring\Config;
 
 use function in_array;
@@ -254,6 +256,47 @@ final class PluginTest extends TestCase
         $this->refused(fn() => $sso->idpLogout($provider->id, ['SAMLRequest' => 'bogus'], true, $client), SsoException::ASSERTION_INVALID);
         self::assertSame('https://idp.example/slo?SAMLRequest=fake-logout', $sso->logout($bob, $organizationId, null, null, $client));
         $this->refused(fn() => $sso->logout($bob, 'other-org', null, null, $client), SsoException::PROVIDER_NOT_FOUND);
+    }
+
+    /**
+     * An organization admin runs the organization's IdP and can assert any email: its assertions reach
+     * only the organization's members, the accounts of its verified domains and the accounts it
+     * provisions; its LogoutRequests end only its members' sessions.
+     */
+    public function testAnOrganizationsIdPCannotClaimOutsideAccounts(): void
+    {
+        $polaris = self::polaris();
+        $graph = $polaris->graph();
+        $organizationId = self::organization($polaris, 'ada@example.com');
+        $victim = new User();
+        $victim->id = 'u-victim';
+        $victim->email = 'ceo@globex.example';
+        $victim->createdAt = $victim->updatedAt = new DateTimeImmutable(self::NOW);
+        $graph->unitOfWork()->persist($victim);
+        $graph->unitOfWork()->flush();
+        $client = new ClientContext('203.0.113.7', 'ua/1');
+        $session = $graph->tokens()->issue(new SessionPrincipal($victim->id, null, [], [], true, false, ['pwd'], (new DateTimeImmutable(self::NOW))->getTimestamp()), $client);
+        $providers = $graph->get(Providers::class);
+        $saml = $providers->create($organizationId, Provider::SAML, 'IdP', 'https://idp.example/metadata', ['sso_url' => 'https://idp.example/sso', 'slo_url' => 'https://idp.example/slo', 'certificate' => 'cert'], [], ['enabled' => true, 'roles' => []], ['https://app.example/done'], true, null);
+        $sso = $graph->get(SsoService::class);
+
+        $this->refused(fn() => $sso->completeSaml($saml->id, 'good:ceo@globex.example', $this->stateOf($sso->start(null, $saml->id, null)), $client), SsoException::USER_UNKNOWN, 'an outside account');
+        self::assertNull($graph->database()->findOne('auth_memberships', ['user_id' => $victim->id, 'organization_id' => $organizationId]), 'no membership was created');
+
+        self::assertNotNull($sso->idpLogout($saml->id, ['SAMLRequest' => 'logout:ceo@globex.example'], true, $client), 'the IdP is answered');
+        $slo = $graph->get(Store::class)->read(new AuditQuery(names: [AuditNames::SLO_COMPLETED]))->events[0];
+        self::assertSame([0, null], [$slo->data['sessions_revoked'], $slo->subjectId]);
+        self::assertNotSame('', $graph->tokens()->refresh($session->refreshToken, $client)->accessToken, 'an outside account\'s sessions stay');
+
+        $domains = $graph->get(Domains::class);
+        $domains->markVerified($domains->add($organizationId, $saml->id, 'globex.example'));
+        $oidc = $providers->create($organizationId, Provider::OIDC, 'Okta', 'https://okta.example', ['client_id' => 'c1'], [], ['enabled' => false, 'roles' => []], ['https://app.example/done'], true, null);
+        $fake = $graph->get(OidcProtocol::class);
+        self::assertInstanceOf(FakeOidc::class, $fake);
+        $fake->email = 'ceo@globex.example';
+        $sso->start(null, $oidc->id, null);
+        self::assertStringStartsWith('https://app.example/done?sso_code=', $sso->completeOidc($oidc->id, 'good', $this->stateOf(['url' => '', 'provider_id' => $oidc->id, 'type' => Provider::OIDC]), null, $client), 'an account of a verified domain signs in');
+        self::assertNotNull($graph->database()->findOne('auth_memberships', ['user_id' => $victim->id, 'organization_id' => $organizationId]), 'and joins');
     }
 
     /**

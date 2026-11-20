@@ -18,11 +18,17 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Uid\Uuid;
 
 use function is_string;
+use function strrchr;
+use function substr;
 
 /**
  * The user behind an identity and their membership in the provider's organization: found by email, or
  * created when the provider provisions just in time (the IdP vouched for the mailbox, so the email is
  * verified); the membership is created with the provider's default roles and `MemberJoined` is emitted.
+ *
+ * An organization admin runs the organization's IdP and could assert anyone's email: an existing account
+ * is reached only when it is a member of the organization already or its email's domain is verified for
+ * the organization.
  */
 final class Provisioner
 {
@@ -34,12 +40,14 @@ final class Provisioner
         private readonly UnitOfWorkInterface $unitOfWork,
         private readonly EventDispatcherInterface $events,
         private readonly ClockInterface $clock,
+        private readonly Domains $domains,
     ) {
     }
 
     /**
      * @return array{User, bool} the user and whether they were just created
-     * @throws SsoException when the user is unknown and the provider does not provision, or is disabled
+     * @throws SsoException when the user is unknown and the provider does not provision, is disabled, or
+     *                      is outside the organization and its domain is not verified for it
      */
     public function resolve(Provider $provider, Identity $identity): array
     {
@@ -48,6 +56,10 @@ final class Provisioner
         if ($user instanceof User) {
             if ($user->status === User::STATUS_DISABLED) {
                 throw new SsoException(SsoException::ACCOUNT_DISABLED, 'the account is disabled');
+            }
+            $at = strrchr($email, '@');
+            if (!$this->isMember($user->id, $provider->organizationId) && ($at === false || !$this->domains->verifiedFor($provider->organizationId, substr($at, 1)))) {
+                throw new SsoException(SsoException::USER_UNKNOWN, 'an account exists for ' . $email . ' outside the organization and its domain is not verified for it');
             }
 
             return [$user, false];
@@ -67,6 +79,14 @@ final class Provisioner
         $this->unitOfWork->flush();
 
         return [$user, true];
+    }
+
+    /**
+     * Whether the user has a membership, in any state, in the organization.
+     */
+    public function isMember(string $userId, string $organizationId): bool
+    {
+        return $this->database->findOne('auth_memberships', ['user_id' => $userId, 'organization_id' => $organizationId]) !== null;
     }
 
     /**

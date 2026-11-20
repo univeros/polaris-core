@@ -89,7 +89,7 @@ final class SsoPlugin extends AbstractPlugin
             Sp::class => fn(): Sp => new Sp($this->baseUrl, $this->spCertificate, $this->spPrivateKey),
             Providers::class => static fn(Graph $graph): Providers => new Providers($graph->database(), $graph->encrypter(), $graph->clock()),
             Domains::class => static fn(Graph $graph): Domains => new Domains($graph->database(), $graph->clock()),
-            Provisioner::class => static fn(Graph $graph): Provisioner => new Provisioner($graph->users(), $graph->database(), $graph->unitOfWork(), $graph->events(), $graph->clock()),
+            Provisioner::class => static fn(Graph $graph): Provisioner => new Provisioner($graph->users(), $graph->database(), $graph->unitOfWork(), $graph->events(), $graph->clock(), $graph->get(Domains::class)),
             SsoAudit::class => static fn(Graph $graph): SsoAudit => new SsoAudit(self::recorder($graph), $graph->clock()),
             OidcProtocol::class => fn(Graph $graph): OidcProtocol => $this->oidc ?? ($this->httpClient !== null && $this->requestFactory !== null && $this->streamFactory !== null
                 ? new HttpOidcProtocol($this->httpClient, $this->requestFactory, $this->streamFactory, $graph->cache())

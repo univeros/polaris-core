@@ -181,7 +181,8 @@ final class SsoService
     }
 
     /**
-     * An IdP's LogoutRequest: every session of the named user ends; the IdP's URL for the LogoutResponse.
+     * An IdP's LogoutRequest: every session of the named user ends when they are a member of the
+     * provider's organization; the IdP's URL for the LogoutResponse.
      *
      * @param array<string, string> $message `SAMLRequest` and, when present, `RelayState`, `SigAlg`, `Signature`
      * @return string|null null when the provider has no logout response URL
@@ -195,7 +196,9 @@ final class SsoService
         } catch (SsoException $exception) {
             $this->reject($provider, $exception->detail, $client);
         }
+        // The organization's IdP ends its own members' sessions only: whoever runs it signs its requests.
         $user = $this->users->findOneBy(['email' => strtolower(trim($request['name_id']))]);
+        $user = $user instanceof User && $this->provisioner->isMember($user->id, $provider->organizationId) ? $user : null;
         $revoked = $user instanceof User ? $this->sessions->revokeAll($user->id, 'sso_logout') : 0;
         $this->audit->record(AuditNames::SLO_COMPLETED, 'system', null, $user?->id, $provider->organizationId, ['provider_id' => $provider->id, 'direction' => 'idp', 'sessions_revoked' => $revoked], $client);
 
