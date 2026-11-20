@@ -4596,14 +4596,14 @@
             "dist": {
                 "type": "path",
                 "url": "packages/scim",
-                "reference": "2a84e1c6ed7f106a58501beb15664f594d472bca"
+                "reference": "18473a295bef777550a4c4bb9602d19ef2505905"
             },
             "require": {
                 "php": ">=8.3",
                 "polaris/admin": "^0.12",
                 "polaris/audit": "^0.12",
-                "polaris/core": "^0.12",
-                "polaris/sso": "^0.12",
+                "polaris/core": "^0.12.1",
+                "polaris/sso": "^0.12.1",
                 "psr/clock": "^1.0",
                 "psr/http-message": "^1.1 || ^2.0",
                 "psr/http-server-handler": "^1.0",
@@ -4698,7 +4698,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/social",
-                "reference": "90d46926e0455db9b38af2962156d2176c0b3da2"
+                "reference": "a4adef411e370c70ac015808d8bee4ef1b51142e"
             },
             "require": {
                 "ext-openssl": "*",
@@ -4711,6 +4711,8 @@
                 "psr/http-client": "^1.0",
                 "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.1 || ^2.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0",
                 "psr/simple-cache": "^3.0",
                 "symfony/uid": "^7.0 || ^8.0"
             },

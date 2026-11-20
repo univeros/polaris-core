@@ -4,6 +4,30 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.12.1] - 2026-11-20
+
+Security release. Upgrade every `polaris/*` package to 0.12.1; `polaris/scim` 0.12.1 requires
+`polaris/core` and `polaris/sso` 0.12.1.
+
+### Security
+- `polaris/scim`: a SCIM connection writes email, name and status only for an account it owns (it created
+  the account, which belongs to no other organization). An existing account is linked only when its email
+  domain is verified for the organization; `active: false` and `DELETE` act on the membership of that
+  organization only for any other account; no write may leave an organization without an active owner.
+  [GHSA-vr39-7fjx-jx56](https://github.com/univeros/polaris-core/security/advisories/GHSA-vr39-7fjx-jx56)
+- `polaris/sso`: an organization's identity provider signs in an existing account only when it is a member
+  of that organization or its email domain is verified for it; IdP-initiated logout ends only members'
+  sessions. [GHSA-m3cr-x84p-2jq6](https://github.com/univeros/polaris-core/security/advisories/GHSA-m3cr-x84p-2jq6)
+- `polaris/social`: sign-in and link flows are bound to the browser that started them by an `HttpOnly`
+  cookie checked at the callback (`social/state_invalid` otherwise). `POST /social/{provider}/start|link`
+  must now be called from the user's browser (`credentials: "include"` across origins).
+  [GHSA-pf6x-vg8c-q5fq](https://github.com/univeros/polaris-core/security/advisories/GHSA-pf6x-vg8c-q5fq)
+
+### Fixed
+- `polaris/core`: the identity map kept the row of an object it replaced under the same key, so a later
+  object allocated under the freed id was taken as persisted and its insert skipped.
+- `polaris/sso`: `Domains::verifiedFor()` answers whether an email's domain is verified for an organization.
+
 ## [0.12.0] - 2026-10-29
 
 Cookie token delivery (`docs/cookie-mode/spec.md`). The version line moves to 0.12 (`^0.12` between
