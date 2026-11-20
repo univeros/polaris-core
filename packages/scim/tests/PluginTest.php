@@ -30,6 +30,7 @@ use Polaris\Scim\Schema;
 use Polaris\Scim\ScimError;
 use Polaris\Scim\ScimPlugin;
 use Polaris\Scim\Users;
+use Polaris\Sso\Domains;
 use Polaris\Sso\SsoPlugin;
 use Polaris\Testing\InMemoryAdapter;
 use Polaris\Tests\Support\RecordingEventDispatcher;
@@ -138,9 +139,12 @@ final class PluginTest extends TestCase
         $grace->createdAt = $grace->updatedAt = new DateTimeImmutable(self::NOW);
         $graph->unitOfWork()->persist($grace);
         $graph->unitOfWork()->flush();
+        $this->refused(fn() => $users->create($connection, ['userName' => 'grace@acme.example']), 409, 'an existing account joins only from a verified domain');
+        $domains = $graph->get(Domains::class);
+        $domains->markVerified($domains->add($organizationId, 'p-1', 'acme.example'));
         $owner = $users->create($connection, ['userName' => 'grace@acme.example', 'name' => ['givenName' => 'Grace', 'familyName' => 'Hopper']]);
         self::assertSame('u-grace', $owner->id, 'an existing account joins rather than duplicating');
-        self::assertSame('Grace Hopper', $owner->displayName);
+        self::assertNull($owner->displayName, 'its profile is its own');
         self::assertTrue($graph->get(Resources::class)->createdMembership($connection, $owner->id), 'the membership is the connection\'s');
         $graph->get(Resources::class)->forgetMembership($connection, $owner->id);
         $this->refused(fn() => $users->create($connection, ['userName' => 'ada@acme.example']), 409);
@@ -154,20 +158,21 @@ final class PluginTest extends TestCase
         self::assertSame([3, 1], [$all['total'], count($all['resources'])], 'startIndex 3 of 3');
 
         $patched = $users->patch($connection, $ada, Patch::operations(['schemas' => [Patch::SCHEMA], 'Operations' => [['op' => 'replace', 'path' => 'active', 'value' => false]]]));
-        self::assertSame(User::STATUS_DISABLED, $patched->status);
+        self::assertSame([User::STATUS_ACTIVE, false, 'suspended'], [$patched->status, $users->active($connection, $patched), $graph->database()->findOne('auth_memberships', ['user_id' => $ada->id, 'organization_id' => $organizationId])['status'] ?? null], 'the membership is suspended, not the account');
         $patched = $users->patch($connection, $patched, Patch::operations(['schemas' => [Patch::SCHEMA], 'Operations' => [['op' => 'replace', 'value' => ['active' => 'True', 'name' => ['givenName' => 'Ada', 'familyName' => 'King'], 'externalId' => 'ext-2']]]]));
         self::assertSame([User::STATUS_ACTIVE, 'Ada King', 'ext-2'], [$patched->status, $patched->displayName, $graph->get(Resources::class)->externalId($connection, 'User', $ada->id)]);
         $patched = $users->patch($connection, $patched, Patch::operations(['schemas' => [Patch::SCHEMA], 'Operations' => [['op' => 'replace', 'path' => 'userName', 'value' => 'ada.king@acme.example'], ['op' => 'remove', 'path' => 'externalId']]]));
         self::assertSame(['ada.king@acme.example', null], [$patched->email, $graph->get(Resources::class)->externalId($connection, 'User', $ada->id)]);
         $this->refused(fn() => $users->patch($connection, $patched, Patch::operations(['schemas' => [Patch::SCHEMA], 'Operations' => [['op' => 'replace', 'path' => 'userName', 'value' => 'grace@acme.example']]])), 409, 'another account\'s email');
         $replaced = $users->replace($connection, $patched, ['userName' => 'ada@acme.example', 'displayName' => 'Ada', 'active' => false, 'externalId' => 'ext-3']);
-        self::assertSame(['ada@acme.example', 'Ada', User::STATUS_DISABLED, 'ext-3'], [$replaced->email, $replaced->displayName, $replaced->status, $graph->get(Resources::class)->externalId($connection, 'User', $ada->id)]);
+        self::assertSame(['ada@acme.example', 'Ada', false, 'ext-3'], [$replaced->email, $replaced->displayName, $users->active($connection, $replaced), $graph->get(Resources::class)->externalId($connection, 'User', $ada->id)]);
 
         self::assertSame('deactivated', $users->delete($connection, $replaced));
         self::assertNull($graph->database()->findOne('auth_memberships', ['user_id' => $ada->id, 'organization_id' => $organizationId]), 'the membership the connection created is gone');
         self::assertSame(User::STATUS_DISABLED, $graph->users()->find($ada->id)?->status);
         self::assertSame('deactivated', $users->delete($connection, $owner));
-        self::assertNotNull($graph->database()->findOne('auth_memberships', ['user_id' => $owner->id, 'organization_id' => $organizationId]), 'a membership the connection did not create stays');
+        self::assertNull($graph->database()->findOne('auth_memberships', ['user_id' => $owner->id, 'organization_id' => $organizationId]), 'an account the connection did not create leaves the organization');
+        self::assertSame(User::STATUS_ACTIVE, $graph->users()->find($owner->id)?->status, 'and keeps its account');
         [$deleting] = $graph->get(Connections::class)->create($organizationId, 'Purge', Connection::DELETE, null, null);
         $bob = $users->create($deleting, ['userName' => 'bob@acme.example']);
         self::assertSame('deleted', $users->delete($deleting, $bob));

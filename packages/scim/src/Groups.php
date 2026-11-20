@@ -43,6 +43,7 @@ final class Groups
         private readonly UnitOfWorkInterface $unitOfWork,
         private readonly Resources $resources,
         private readonly ClockInterface $clock,
+        private readonly Owners $owners,
     ) {
     }
 
@@ -112,15 +113,20 @@ final class Groups
      */
     public function replace(Connection $connection, array $role, array $body): array
     {
-        $this->rename($role, self::name($body));
-        $this->resources->setExternalId($connection, Resource::GROUP, (string) $role['id'], self::externalId($body));
-        $this->setMembers($connection, (string) $role['id'], self::memberIds($body['members'] ?? []));
+        $name = self::name($body);
+        $members = self::memberIds($body['members'] ?? []);
+        $this->owners->keep($connection, function () use ($connection, $role, $name, $body, $members): void {
+            $this->rename($role, $name);
+            $this->resources->setExternalId($connection, Resource::GROUP, (string) $role['id'], self::externalId($body));
+            $this->setMembers($connection, (string) $role['id'], $members);
+        });
 
         return $this->find($connection, (string) $role['id']);
     }
 
     /**
-     * PATCH: `displayName`, `externalId`, and `members` added, removed or replaced.
+     * PATCH: `displayName`, `externalId`, and `members` added, removed or replaced; all or nothing, never
+     * leaving the organization without an active owner.
      *
      * @param array<string, mixed> $role
      * @param list<array{string, string|null, mixed}> $operations
@@ -128,6 +134,18 @@ final class Groups
      * @throws ScimError
      */
     public function patch(Connection $connection, array $role, array $operations): array
+    {
+        $this->owners->keep($connection, fn() => $this->apply($connection, $role, $operations));
+
+        return $this->find($connection, (string) $role['id']);
+    }
+
+    /**
+     * @param array<string, mixed> $role
+     * @param list<array{string, string|null, mixed}> $operations
+     * @throws ScimError
+     */
+    private function apply(Connection $connection, array $role, array $operations): void
     {
         $roleId = (string) $role['id'];
         foreach ($operations as [$op, $path, $value]) {
@@ -154,8 +172,6 @@ final class Groups
                 $this->removeMembers($connection, $roleId, [$match[1]]);
             }
         }
-
-        return $this->find($connection, $roleId);
     }
 
     /**

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Polaris\Scim;
 
+use DateTimeImmutable;
+use DateTimeInterface;
 use Polaris\Contract\DatabaseAdapter;
 use Polaris\Scim\Model\Connection;
 use Psr\Clock\ClockInterface;
@@ -17,6 +19,8 @@ use function is_string;
  */
 final class Resources
 {
+    private const string SECOND = 'Y-m-d H:i:s';
+
     public function __construct(private readonly DatabaseAdapter $database, private readonly ClockInterface $clock)
     {
     }
@@ -64,11 +68,31 @@ final class Resources
         return $this->database->count(Schema::RESOURCES, ['connection_id' => $connection->id, 'kind' => $kind]);
     }
 
-    public function recordMembership(Connection $connection, string $userId): void
+    /**
+     * `$at` is the creation time of the user the connection created with the membership: written as
+     * the provenance's own, it is what {@see createdUser()} recognises.
+     */
+    public function recordMembership(Connection $connection, string $userId, ?DateTimeImmutable $at = null): void
     {
         if ($this->database->findOne(Schema::PROVENANCE, ['organization_id' => $connection->organizationId, 'user_id' => $userId]) === null) {
-            $this->database->insert(Schema::PROVENANCE, ['id' => Uuid::v7()->toRfc4122(), 'organization_id' => $connection->organizationId, 'user_id' => $userId, 'connection_id' => $connection->id, 'created_at' => $this->clock->now()]);
+            $this->database->insert(Schema::PROVENANCE, ['id' => Uuid::v7()->toRfc4122(), 'organization_id' => $connection->organizationId, 'user_id' => $userId, 'connection_id' => $connection->id, 'created_at' => $at ?? $this->clock->now()]);
         }
+    }
+
+    /**
+     * Whether the connection created the user (not only the membership): the provenance and the user
+     * carry the same creation time, to the second.
+     */
+    public function createdUser(Connection $connection, string $userId, DateTimeImmutable $userCreatedAt): bool
+    {
+        $row = $this->database->findOne(Schema::PROVENANCE, ['organization_id' => $connection->organizationId, 'user_id' => $userId, 'connection_id' => $connection->id]);
+        $at = $row['created_at'] ?? null;
+        if ($at === null) {
+            return false;
+        }
+        $at = $at instanceof DateTimeInterface ? $at : new DateTimeImmutable((string) $at);
+
+        return $at->format(self::SECOND) === $userCreatedAt->format(self::SECOND);
     }
 
     public function createdMembership(Connection $connection, string $userId): bool

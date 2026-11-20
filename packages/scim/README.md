@@ -45,8 +45,9 @@ join the route table. A Yii host adds `application/scim+json` to its request bod
    `POST .../rotate` answers a new token (the previous one stops at once); `DELETE` decommissions the
    connection (the token stops, the provisioned users stay).
 
-`deprovision` is `deactivate` (the default: a deleted or `active: false` user is banned, every session
-ends, and the membership the connection created is removed) or `delete` (the account is anonymised).
+`deprovision` is `deactivate` (the default: a deleted user the connection created is banned, every
+session ends, and its membership is removed) or `delete` (that account is anonymised). `active: false`
+suspends the membership in the organization (its sessions there end), never the account.
 
 ## The SCIM server
 
@@ -59,7 +60,7 @@ errors are SCIM error documents (`schemas`, `status`, `detail`, `scimType`) that
 | --- | --- |
 | `GET /ServiceProviderConfig`, `/Schemas`, `/ResourceTypes` | what this server supports: filtering, PATCH, bearer tokens; no bulk, sorting or ETags |
 | `GET /Users?filter=&startIndex=&count=` | the organization's members; `filter` takes `attr eq\|co\|sw "value"` joined by `and` on `userName`, `emails`, `externalId`, `displayName` (else `invalidFilter`); `startIndex` is 1-based, `count` at most 200 |
-| `POST /Users` | a member: created with `userName` as the email, verified, without a password (or found by email when the account exists), joined with the `member` role; `active: false` deactivates |
+| `POST /Users` | a member: created with `userName` as the email, verified, without a password, joined with the `member` role; an existing account joins (its profile untouched) only when its email's domain is verified for the organization through `polaris/sso`, else 409 `uniqueness`; `active: false` suspends the membership |
 | `GET\|PUT\|PATCH\|DELETE /Users/{id}` | read; replace the mapped attributes; PatchOp on `active`, `userName`, `displayName`, `name.*`, `externalId`; deprovision (204) |
 | `GET /Groups?filter=` | the organization's roles: `displayName` the role name, `members` the memberships holding it |
 | `POST /Groups` | a custom role (an empty permission set until an organization admin fills it) with its members |
@@ -67,12 +68,14 @@ errors are SCIM error documents (`schemas`, `status`, `detail`, `scimType`) that
 
 A SCIM User is a Polaris user with a membership in the connection's organization: `userName` and the
 primary email are the email, `displayName`/`name.formatted` the display name, `active` the account
-status, `externalId` the directory's own id, `groups` the roles. `id` is the Polaris user id, so the
-same person keeps one id across connections and organizations.
+status and the membership's, `externalId` the directory's own id, `groups` the roles. `id` is the Polaris
+user id, so the same person keeps one id across connections and organizations.
 
-Provenance: the connection removes only the memberships it created; a member who predates the
-connection is deactivated on deprovisioning but keeps their membership, and a decommissioned connection
-leaves everyone in place.
+Ownership: an account is global, a directory belongs to one organization. The connection changes an
+account's email, name and status only when it created the account and the account belongs to no other
+organization; for any other account a `userName` change is refused (403 `mutability`), name changes are
+ignored, and deprovisioning removes its membership in the organization only. No write leaves the
+organization without an active owner (409). A decommissioned connection leaves everyone in place.
 
 ## Operators
 

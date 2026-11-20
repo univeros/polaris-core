@@ -49,6 +49,15 @@ final class Domains
     }
 
     /**
+     * Whether the organization verified the domain: what lets its IdP and its directory reach an
+     * existing account of that domain.
+     */
+    public function verifiedFor(string $organizationId, string $domain): bool
+    {
+        return $this->verified($domain)?->organizationId === $organizationId;
+    }
+
+    /**
      * @return list<Domain>
      */
     public function forOrganization(string $organizationId): array

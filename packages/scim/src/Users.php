@@ -8,14 +8,18 @@ use DateTimeImmutable;
 use Polaris\Contract\DatabaseAdapter;
 use Polaris\Contract\UnitOfWorkInterface;
 use Polaris\Event\MemberJoined;
+use Polaris\Event\MemberStatusChanged;
 use Polaris\Identity\EmailNormalizer;
+use Polaris\Identity\SessionService;
 use Polaris\Identity\UserAdminService;
 use Polaris\Model\Membership;
 use Polaris\Model\MembershipRole;
+use Polaris\Model\RefreshToken;
 use Polaris\Model\User;
 use Polaris\Repository\UserRepository;
 use Polaris\Scim\Model\Connection;
 use Polaris\Scim\Model\Resource;
+use Polaris\Sso\Domains;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Uid\Uuid;
@@ -27,6 +31,8 @@ use function is_array;
 use function is_bool;
 use function is_string;
 use function strlen;
+use function strrchr;
+use function substr;
 use function trim;
 use function usort;
 
@@ -36,8 +42,14 @@ use const FILTER_VALIDATE_EMAIL;
 /**
  * SCIM Users onto Polaris users who are members of the connection's organization: `userName` and the
  * primary email are the email, `displayName`/`name.formatted` the display name, `active` the account
- * status, `externalId` the directory's own id. A created user is verified and has no password; a
- * deprovisioned one is deactivated (every session ends) or, when the connection says so, anonymised.
+ * status and the membership's, `externalId` the directory's own id. A created user is verified and has
+ * no password.
+ *
+ * An account is global, a directory belongs to one organization: the connection changes an account's
+ * email, name and status only when it owns it (it created the account, which belongs to no other
+ * organization). An existing account joins only when its email's domain is verified for the
+ * organization (polaris/sso), with its profile untouched; `active: false` suspends the membership, and
+ * deprovisioning anonymises (or deactivates) an owned account and removes any other's membership.
  */
 final class Users
 {
@@ -53,6 +65,9 @@ final class Users
         private readonly Resources $resources,
         private readonly EventDispatcherInterface $events,
         private readonly ClockInterface $clock,
+        private readonly SessionService $sessions,
+        private readonly Owners $owners,
+        private readonly ?Domains $domains = null,
     ) {
     }
 
@@ -100,27 +115,31 @@ final class Users
     public function create(Connection $connection, array $body): User
     {
         $email = self::email($body);
-        $existing = $this->users->findOneBy(['email' => $email]);
-        if ($existing instanceof User && $this->membership($connection, $existing->id) !== null) {
-            throw ScimError::conflict('A member with this userName exists.');
-        }
-        $now = $this->clock->now();
-        $user = $existing;
-        if (!$user instanceof User) {
+        $user = $this->users->findOneBy(['email' => $email]);
+        if ($user instanceof User) {
+            if ($this->membership($connection, $user->id) !== null) {
+                throw ScimError::conflict('A member with this userName exists.');
+            }
+            if (!$this->mayLink($connection, $email)) {
+                throw ScimError::conflict('Another account uses this userName.');
+            }
+            $this->join($connection, $user, null);
+        } else {
+            $now = $this->clock->now();
             $user = new User();
             $user->id = Uuid::v7()->toRfc4122();
             $user->email = $email;
             $user->emailVerifiedAt = $now;
+            $user->displayName = self::displayName($body);
             $user->createdAt = $now;
+            $user->updatedAt = $now;
+            $this->unitOfWork->persist($user);
+            $this->unitOfWork->flush();
+            $this->join($connection, $user, $now);
         }
-        $user->displayName = self::displayName($body) ?? $user->displayName;
-        $user->updatedAt = $now;
-        $this->unitOfWork->persist($user);
-        $this->unitOfWork->flush();
-        $this->join($connection, $user);
         $this->resources->setExternalId($connection, Resource::USER, $user->id, self::externalId($body));
         if (($body['active'] ?? true) === false) {
-            $this->admin->disable(self::ACTOR, $user->id);
+            $this->setActive($connection, $user, false);
         }
 
         return $this->reload($user->id);
@@ -134,16 +153,12 @@ final class Users
      */
     public function replace(Connection $connection, User $user, array $body): User
     {
-        $email = self::email($body);
-        $this->rename($user, $email);
-        $user->displayName = self::displayName($body);
-        $user->updatedAt = $this->clock->now();
-        $this->unitOfWork->persist($user);
-        $this->unitOfWork->flush();
-        $this->resources->setExternalId($connection, Resource::USER, $user->id, self::externalId($body));
-        $this->setActive($connection, $user, ($body['active'] ?? true) !== false);
-
-        return $this->reload($user->id);
+        return $this->write($connection, $user, [
+            'email' => self::email($body),
+            'name' => [self::displayName($body)],
+            'externalId' => [self::externalId($body)],
+            'active' => ($body['active'] ?? true) !== false,
+        ]);
     }
 
     /**
@@ -154,65 +169,72 @@ final class Users
      */
     public function patch(Connection $connection, User $user, array $operations): User
     {
+        $change = [];
         foreach ($operations as $operation) {
             $active = Patch::scalar($operation, 'active');
             if ($active !== null) {
-                $this->setActive($connection, $user, filter_var($active, FILTER_VALIDATE_BOOLEAN));
-                $user = $this->reload($user->id);
+                $change['active'] = filter_var($active, FILTER_VALIDATE_BOOLEAN);
             }
             $userName = Patch::scalar($operation, 'userName');
             if (is_string($userName)) {
-                $this->rename($user, self::validEmail($userName));
+                $change['email'] = self::validEmail($userName);
             }
             foreach (['displayName', 'name.formatted'] as $attribute) {
                 $name = Patch::scalar($operation, $attribute);
                 if ($name !== null) {
-                    $user->displayName = is_string($name) && trim($name) !== '' ? trim($name) : null;
+                    $change['name'] = [is_string($name) && trim($name) !== '' ? trim($name) : null];
                 }
             }
             $given = Patch::scalar($operation, 'name.givenName');
             $family = Patch::scalar($operation, 'name.familyName');
             if (is_string($given) || is_string($family)) {
-                $user->displayName = trim((is_string($given) ? $given : '') . ' ' . (is_string($family) ? $family : ''));
+                $change['name'] = [trim((is_string($given) ? $given : '') . ' ' . (is_string($family) ? $family : ''))];
             }
             $externalId = Patch::scalar($operation, 'externalId');
             if ($externalId !== null || ($operation[0] === 'remove' && $operation[1] !== null && Patch::stripUrn($operation[1]) === 'externalId')) {
-                $this->resources->setExternalId($connection, Resource::USER, $user->id, is_string($externalId) ? $externalId : null);
+                $change['externalId'] = [is_string($externalId) ? $externalId : null];
             }
         }
-        $user->updatedAt = $this->clock->now();
-        $this->unitOfWork->persist($user);
-        $this->unitOfWork->flush();
 
-        return $this->reload($user->id);
+        return $this->write($connection, $user, $change);
     }
 
     /**
-     * DELETE: what the connection's `deprovision` says; a membership the connection did not create stays.
+     * DELETE: an account the connection owns is anonymised or deactivated, as its `deprovision` says (its
+     * membership removed); any other account only leaves the organization: its membership is suspended
+     * (the organization's sessions end) and removed. Never the organization's last active owner.
      *
      * @return string `deactivated` or `deleted`
+     * @throws ScimError
      */
     public function delete(Connection $connection, User $user): string
     {
-        if ($connection->deprovision() === Connection::DELETE) {
+        $outcome = $connection->deprovision() === Connection::DELETE ? 'deleted' : 'deactivated';
+        if (!$this->owns($connection, $user)) {
+            $this->setActive($connection, $user, false);
+            $this->leave($connection, $user->id);
+
+            return $outcome;
+        }
+        if ($outcome === 'deleted') {
             $this->admin->anonymize(self::ACTOR, $user->id);
             $this->resources->forget($connection, Resource::USER, $user->id);
             $this->resources->forgetMembership($connection, $user->id);
 
-            return 'deleted';
+            return $outcome;
         }
+        $this->leave($connection, $user->id);
         $this->admin->disable(self::ACTOR, $user->id);
-        if ($this->resources->createdMembership($connection, $user->id)) {
-            $membership = $this->membership($connection, $user->id);
-            if ($membership !== null) {
-                $this->database->delete('auth_membership_roles', ['membership_id' => $membership['id']]);
-                $this->database->delete('auth_memberships', ['id' => $membership['id']]);
-            }
-            $this->resources->forgetMembership($connection, $user->id);
-        }
-        $this->resources->forget($connection, Resource::USER, $user->id);
 
-        return 'deactivated';
+        return $outcome;
+    }
+
+    /**
+     * What the directory sees as `active`: an enabled account whose membership is active.
+     */
+    public function active(Connection $connection, User $user): bool
+    {
+        return $user->status !== User::STATUS_DISABLED && ($this->membership($connection, $user->id)['status'] ?? null) === Membership::STATUS_ACTIVE;
     }
 
     /**
@@ -236,7 +258,7 @@ final class Users
             'displayName' => $user->displayName,
             'name' => ['formatted' => $user->displayName],
             'emails' => [['value' => $user->email, 'primary' => true]],
-            'active' => $user->status !== User::STATUS_DISABLED,
+            'active' => $this->active($connection, $user),
             'groups' => $roles,
             'meta' => ['resourceType' => Resource::USER, 'created' => $user->createdAt->format(DATE_ATOM), 'lastModified' => $user->updatedAt->format(DATE_ATOM), 'location' => $location . '/Users/' . $user->id],
         ];
@@ -272,7 +294,10 @@ final class Users
         return $this->database->findOne('auth_memberships', ['user_id' => $userId, 'organization_id' => $connection->organizationId]);
     }
 
-    private function join(Connection $connection, User $user): void
+    /**
+     * `$created` is the user's creation time when the connection created the user too.
+     */
+    private function join(Connection $connection, User $user, ?DateTimeImmutable $created): void
     {
         if ($this->membership($connection, $user->id) !== null) {
             return;
@@ -295,32 +320,111 @@ final class Users
             $this->unitOfWork->persist($link);
         }
         $this->unitOfWork->flush();
-        $this->resources->recordMembership($connection, $user->id);
+        $this->resources->recordMembership($connection, $user->id, $created);
         $this->events->dispatch(new MemberJoined($connection->organizationId, $user->id, $user->email));
     }
 
+    /**
+     * PUT and PATCH: `email`, `name` ([?string]), `externalId` ([?string]) and `active` when present. The
+     * email and the name of an account the connection does not own are the user's own.
+     *
+     * @param array{email?: string, name?: array{?string}, externalId?: array{?string}, active?: bool} $change
+     * @throws ScimError
+     */
+    private function write(Connection $connection, User $user, array $change): User
+    {
+        $owned = $this->owns($connection, $user);
+        $email = $change['email'] ?? $user->email;
+        if (!$owned && $email !== $user->email) {
+            throw new ScimError(403, 'userName is managed by the account\'s owner, not by this directory.', ScimError::MUTABILITY);
+        }
+        if ($owned) {
+            $taken = $email === $user->email ? null : $this->users->findOneBy(['email' => $email]);
+            if ($taken instanceof User && $taken->id !== $user->id) {
+                throw ScimError::conflict('Another account uses this userName.');
+            }
+            $user->email = $email;
+            $user->displayName = isset($change['name']) ? $change['name'][0] : $user->displayName;
+            $user->updatedAt = $this->clock->now();
+            $this->unitOfWork->persist($user);
+            $this->unitOfWork->flush();
+        }
+        if (isset($change['externalId'])) {
+            $this->resources->setExternalId($connection, Resource::USER, $user->id, $change['externalId'][0]);
+        }
+        if (isset($change['active'])) {
+            $this->setActive($connection, $user, $change['active']);
+        }
+
+        return $this->reload($user->id);
+    }
+
+    /**
+     * Whether the connection owns the account: it created it, and the account is a member of no other
+     * organization.
+     */
+    private function owns(Connection $connection, User $user): bool
+    {
+        if (!$this->resources->createdUser($connection, $user->id, $user->createdAt)) {
+            return false;
+        }
+        foreach ($this->database->findMany('auth_memberships', ['user_id' => $user->id]) as $membership) {
+            if ($membership['organization_id'] !== $connection->organizationId) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Whether an existing account with this email may join: its domain is verified for the organization.
+     */
+    private function mayLink(Connection $connection, string $email): bool
+    {
+        $at = strrchr($email, '@');
+
+        return $this->domains !== null && $at !== false && $this->domains->verifiedFor($connection->organizationId, substr($at, 1));
+    }
+
+    /**
+     * Suspends or reactivates the membership (suspension ends the organization's sessions, never of its
+     * last active owner); an owned account that is disabled is enabled again.
+     *
+     * @throws ScimError
+     */
     private function setActive(Connection $connection, User $user, bool $active): void
     {
-        if ($active && $user->status === User::STATUS_DISABLED) {
+        $membership = $this->membership($connection, $user->id);
+        $status = $active ? Membership::STATUS_ACTIVE : Membership::STATUS_SUSPENDED;
+        if ($membership !== null && $membership['status'] !== $status) {
+            $this->owners->keep($connection, fn(): int => $this->database->update('auth_memberships', ['id' => $membership['id']], ['status' => $status, 'updated_at' => $this->clock->now()]));
+            $this->events->dispatch(new MemberStatusChanged($connection->organizationId, $user->id, $status, self::ACTOR));
+        }
+        if (!$active) {
+            $this->sessions->revokeAllForOrganization($user->id, $connection->organizationId, RefreshToken::REASON_ADMIN);
+        } elseif ($user->status === User::STATUS_DISABLED && $this->owns($connection, $user)) {
             $this->admin->enable(self::ACTOR, $user->id);
-        } elseif (!$active && $user->status !== User::STATUS_DISABLED) {
-            $this->admin->disable(self::ACTOR, $user->id);
         }
     }
 
     /**
+     * Removes the membership (with its roles) and what the connection remembers of the user, never the
+     * organization's last active owner.
+     *
      * @throws ScimError
      */
-    private function rename(User $user, string $email): void
+    private function leave(Connection $connection, string $userId): void
     {
-        if ($email === $user->email) {
-            return;
-        }
-        $taken = $this->users->findOneBy(['email' => $email]);
-        if ($taken instanceof User && $taken->id !== $user->id) {
-            throw ScimError::conflict('Another account uses this userName.');
-        }
-        $user->email = $email;
+        $this->owners->keep($connection, function () use ($connection, $userId): void {
+            $membership = $this->membership($connection, $userId);
+            if ($membership !== null) {
+                $this->database->delete('auth_membership_roles', ['membership_id' => $membership['id']]);
+                $this->database->delete('auth_memberships', ['id' => $membership['id']]);
+            }
+            $this->resources->forgetMembership($connection, $userId);
+            $this->resources->forget($connection, Resource::USER, $userId);
+        });
     }
 
     private function reload(string $id): User

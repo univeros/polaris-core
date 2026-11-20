@@ -13,7 +13,7 @@ use Polaris\Scim\ScimError;
 
 /**
  * `DELETE /scim/v2/{connectionId}/Users/{id}`: deprovisioned as the connection says (deactivated, or
- * anonymised); 204.
+ * anonymised) when the connection owns the account, else removed from the organization; 204.
  */
 final class DeleteUserEndpoint extends UserEndpoint
 {
@@ -29,7 +29,11 @@ final class DeleteUserEndpoint extends UserEndpoint
         } catch (ScimError $error) {
             return $this->error($error);
         }
-        $outcome = $this->users->delete($connection, $user);
+        try {
+            $outcome = $this->users->delete($connection, $user);
+        } catch (ScimError $error) {
+            return $this->error($error, $connection, $input);
+        }
         $this->audit->record($outcome === 'deleted' ? AuditNames::USER_DELETED : AuditNames::USER_DEACTIVATED, $connection, $user->id, ['deprovision' => $outcome], $this->client($input));
 
         return new Result(204);
