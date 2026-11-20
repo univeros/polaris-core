@@ -15,10 +15,14 @@ URL="${POLARIS_URL:-}"
 if [ -z "$URL" ]; then
     php -S 127.0.0.1:8080 -t "$DOCROOT" ${POLARIS_ROUTER:+"$POLARIS_ROUTER"} > "$SERVER_LOG" 2>&1 &
     SERVER=$!
-    trap 'kill $SERVER 2>/dev/null || true' EXIT
-    URL=http://127.0.0.1:8080
+    URL=http://localhost:8080 # the demos' base URL: the social callback lands there, with this host's cookies
     for _ in $(seq 1 50); do curl -s -o /dev/null "$URL/auth/.well-known/jwks.json" && break; sleep 0.1; done
 fi
+
+# One browser: the cookies a route sets go with the next requests (polaris/social binds a sign-in to
+# the browser that started it).
+JAR=$(mktemp)
+trap 'rm -f "$JAR"; [ -n "${SERVER:-}" ] && kill "$SERVER" 2>/dev/null || true' EXIT
 
 EMAIL="ada+$(date +%s)@example.com"
 PASSWORD='Sup3r-Secret-Passw0rd'
@@ -26,7 +30,7 @@ PASSWORD='Sup3r-Secret-Passw0rd'
 json() { php -r '$d = json_decode(stream_get_contents(STDIN), true); foreach (explode(".", $argv[1]) as $k) { $d = $d[$k] ?? null; } echo is_scalar($d) ? $d : json_encode($d);' -- "$1"; }
 call() { # call METHOD PATH [TOKEN] [JSON]
     local method=$1 path=$2 token=${3:-} body=${4:-}
-    local args=(-s -w '\n%{http_code}' -X "$method" "$URL$path" -H 'Content-Type: application/json')
+    local args=(-s -b "$JAR" -c "$JAR" -w '\n%{http_code}' -X "$method" "$URL$path" -H 'Content-Type: application/json')
     [ -n "$token" ] && args+=(-H "Authorization: Bearer $token")
     [ -n "$body" ] && args+=(-d "$body")
     local out; out=$(curl "${args[@]}")
@@ -68,7 +72,7 @@ if curl -sf "$URL/fake-oauth/me" > /dev/null; then
     call POST /social/fake/start '' '{}'; step "13. POST /social/fake/start (the demo's fake provider)"; expect 200
     AUTHORIZE=$(printf '%s' "$BODY" | json data.url)
     CALLBACK=$(curl -s -o /dev/null -w '%{redirect_url}' "$AUTHORIZE")
-    LOCATION=$(curl -s -o /dev/null -w '%{redirect_url}' "$CALLBACK"); STATUS=302; step "14. GET /social/fake/callback (302 to the application)"
+    LOCATION=$(curl -s -b "$JAR" -o /dev/null -w '%{redirect_url}' "$CALLBACK"); STATUS=302; step "14. GET /social/fake/callback (302 to the application)"
     [ -n "$LOCATION" ] || { echo "the callback did not redirect" >&2; exit 1; }
     CODE=${LOCATION##*code=}; CODE=${CODE%%&*}
     call POST /social/exchange '' "{\"code\":\"$CODE\"}"; step "15. POST /social/exchange"; expect 200
