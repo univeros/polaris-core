@@ -38,6 +38,12 @@ final class IdentityMap
      */
     public function remember(object $object, string $key, array $row): void
     {
+        // An object this one replaces under the key is released: its row goes too, or an object
+        // allocated later under the same spl_object_id would pass for it (an update, not an insert).
+        $replaced = $this->objects[$object::class][$key] ?? null;
+        if ($replaced !== null && $replaced !== $object) {
+            unset($this->rows[spl_object_id($replaced)]);
+        }
         $this->objects[$object::class][$key] = $object;
         $this->rows[spl_object_id($object)] = $row;
     }
