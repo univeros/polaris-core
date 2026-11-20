@@ -53,3 +53,29 @@ log is `../extraction/decisions.md`, task 2's `../adapters/decisions.md`.
   serialize; one more type to construct and unpack); passing the `Sender` as a third argument of `push()` (a queue
   would receive a service it must ignore); answering null for a deferred send (indistinguishable from a refusal,
   the bug).
+- 2026-11-20 · scim · A connection writes an account's email, display name and status only when it owns
+  the account: it created it and the account is a member of no other organization. "Created" needs no
+  schema change: the provenance row is written with the new user's own creation time, and the connection
+  created the user when both carry the same time to the second (`Resources::createdUser()`). An existing
+  account joins (membership only, its profile untouched) only when its email's domain is verified for the
+  organization through `polaris/sso` (`Domains::verifiedFor()`; without the sso plugin, never), else 409
+  `uniqueness`; a `userName` change on an account the connection does not own answers 403 `mutability` and
+  name changes are ignored. `active: false` suspends the membership (the organization's sessions end,
+  `MemberStatusChanged` with actor `scim`), never the account; a User's `active` is the account's status and
+  the membership's, and the audit transition follows it. DELETE anonymises or deactivates an owned account
+  as before and removes any other account's membership after suspending it. Membership and group writes
+  run under `Owners::keep()`, one transaction refused with 409 when the organization would lose its last
+  active owner, because core's `MembershipService` needs an acting user and a directory has none.
+  Behaviour change for directories that joined or renamed existing accounts; an account disabled through
+  SCIM before this change is re-enabled by an operator. The Go port made the same change (its decisions
+  #38 and #42). · Rejected: a `created_user` column on the provenance table (a migration for what the
+  timestamps already say); `MembershipService` with a synthetic actor.
+- 2026-11-20 · sso · An organization's provider signs in an existing account only when it is a member of
+  that organization (any state) or its email's domain is verified for it (`Provisioner::isMember()`,
+  `Domains::verifiedFor()`), else `user_unknown`; just-in-time provisioning of new accounts is unchanged.
+  An IdP's LogoutRequest ends the sessions of the organization's members only; for anyone else it is still
+  answered, and audited with no subject and no session revoked. As the Go port (its decision #43).
+- 2026-11-20 · core · `IdentityMap::remember()` drops the row of an object it replaces under the same key.
+  Rows are kept per `spl_object_id`; once the replaced object was released, a later object allocated under
+  its id was taken for it and its insert skipped as an unchanged update (found as a SCIM group link that
+  was never written). Persistence internals only; no route changes.

@@ -646,3 +646,25 @@ entries here when a WP confirms or changes them.
   issue #54), a 0.x minor by semver, released after univeros/polaris 2.3.0 (which pins `^0.10` and took
   0.10.1, `SchemaInstaller::createMissing()`, #55). WP5 (the developer surface) moves to 0.12.0 (§8); WP6
   stays 1.0.0.
+- 2026-11-20 · social · A flow is bound to the browser that started it. `start` and `link` answer a
+  `Set-Cookie` holding a per-flow nonce the state entry keeps (`polaris_social_` and 16 hex of the state's
+  SHA-256, so parallel flows do not collide; `HttpOnly`; under an https `baseUrl` `__Host-`, `Secure` and
+  `SameSite=None`, so Apple's cross-site `form_post` callback carries it, `SameSite=Lax` over http); the
+  callback compares it in constant time and otherwise answers `social/state_invalid`. The body is
+  unchanged; the start must now be called from the browser (the TypeScript client with `credentials:
+  "include"` from another origin). Endpoint input merges cookies under the query and the body, so the
+  plugin's `CookieMiddleware` hands the request's own cookies to the endpoints as an attribute, and the
+  callback no longer passes cookie values on as provider parameters or through the proxy's forward. HTTPS
+  is read from the configured `baseUrl` (the browser's origin), not the request's scheme, so a
+  TLS-terminating proxy does not change the cookie. The four social contract fixtures were re-recorded on
+  purpose: compared normalised with the previous recordings, the 11 start and link steps gain the
+  `Set-Cookie` and nothing else changes; the contract `Normalizer` masks the cookie's per-run name and
+  value. As the Go port (its decisions #39 and #42). · Rejected: `SameSite=Lax` everywhere (Apple's
+  callback would drop it); KnownChanges entries for the 11 steps (the same diff, harder to review).
+- 2026-11-20 · passkey · Not fixed here: MySQL 8.4 under utf8mb4 refuses the `credential_id VARCHAR(1024)`
+  unique index (3072-byte key limit, error 1071), so `polaris_passkey` cannot be created on MySQL. The fix
+  the Go port made (its decision #41) declares the column `CHARACTER SET ascii COLLATE ascii_bin` on MySQL
+  only (credential ids are base64url; same type, length and rows elsewhere), but `Polaris\Schema\Field`
+  has no per-dialect column option and `SqlSchema` one DDL path for every dialect: adding one touches
+  `Field`, `SqlSchema`, `SchemaInspector`/`SchemaDiff` and the adapters' schema exports, a schema-layer
+  task of its own.
