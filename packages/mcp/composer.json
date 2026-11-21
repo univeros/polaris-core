@@ -14,7 +14,7 @@
         "php": ">=8.3",
         "ext-openssl": "*",
         "firebase/php-jwt": "^7.0",
-        "mcp/sdk": "^0.8.1",
+        "mcp/sdk": "^0.10",
         "polaris/cli": "^0.12",
         "polaris/core": "^0.12",
         "polaris/psr15": "^0.12",

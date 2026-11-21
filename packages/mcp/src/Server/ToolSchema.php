@@ -8,7 +8,11 @@ use Polaris\Http\Manifest\EndpointSpec;
 use Polaris\Http\Manifest\Manifest;
 use Polaris\Http\Manifest\OpenApi;
 
+use function array_map;
+use function array_unique;
+use function array_values;
 use function is_array;
+use function is_string;
 use function preg_replace;
 use function sprintf;
 use function str_replace;
@@ -19,7 +23,8 @@ use function strtolower;
  * `api/`, `/` and `-` read as `.`: `orgs/members-list.yaml` is `polaris.orgs.members.list`), the
  * input schema (the route's OpenAPI operation folded into one object: path parameters, query
  * parameters and body properties), the output schema (`{status, body}`, the body typed from the
- * spec's example as the OpenAPI document types it).
+ * spec's example as the OpenAPI document types it, every scalar also admitting null: see
+ * {@see self::nullable()}).
  */
 final class ToolSchema
 {
@@ -94,10 +99,51 @@ final class ToolSchema
             'type' => 'object',
             'properties' => [
                 'status' => ['type' => 'integer', 'description' => 'The HTTP status the route answered'],
-                'body' => is_array($body) ? $body : ['description' => 'The response body'],
+                'body' => is_array($body) ? self::nullable($body) : ['description' => 'The response body'],
             ],
             'required' => ['status', 'body'],
         ];
+    }
+
+    /**
+     * An example-typed schema as a tool may promise it: the SDK validates every result against the
+     * output schema, and an example cannot show which fields may be null (`display_name` is a string
+     * in the example of `GET /auth/me` and null for a user without one). Every scalar type also
+     * admits null, a field the example shows as null is untyped, objects and arrays recurse.
+     *
+     * @param array<string, mixed> $schema
+     * @return array<string, mixed>
+     */
+    public static function nullable(array $schema): array
+    {
+        $type = $schema['type'] ?? null;
+        if ($type === 'null') {
+            return [];
+        }
+        if ($type === 'object') {
+            foreach (is_array($schema['properties'] ?? null) ? $schema['properties'] : [] as $name => $property) {
+                $schema['properties'][$name] = is_array($property) ? self::nullable($property) : $property;
+            }
+
+            return $schema;
+        }
+        if ($type === 'array') {
+            if (is_array($schema['items'] ?? null)) {
+                $schema['items'] = self::nullable($schema['items']);
+            }
+
+            return $schema;
+        }
+        if (is_array($schema['oneOf'] ?? null)) {
+            $schema['oneOf'] = array_map(static fn(mixed $one): mixed => is_array($one) ? self::nullable($one) : $one, $schema['oneOf']);
+
+            return $schema;
+        }
+        if (is_string($type) || is_array($type)) {
+            $schema['type'] = array_values(array_unique([...(array) $type, 'null']));
+        }
+
+        return $schema;
     }
 
     /**

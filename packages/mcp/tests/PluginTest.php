@@ -195,11 +195,20 @@ final class PluginTest extends TestCase
         self::assertSame(['id'], $schema->input($byName['polaris.orgs.members.list'])['required']);
         self::assertSame(['type' => 'object', 'properties' => []], $schema->input($byName['polaris.auth.me']));
 
-        // The output: {status, body} with the body typed from the example.
+        // The output: {status, body} with the body typed from the example. The SDK validates every
+        // result against it, and an example cannot show which fields may be null, so every scalar
+        // the example types also admits null, and a field the example shows as null is untyped.
         $output = $schema->output($byName['polaris.auth.me']);
         self::assertSame(['status', 'body'], $output['required']);
         self::assertSame('integer', $output['properties']['status']['type']);
-        self::assertSame(['type' => 'string'], $output['properties']['body']['properties']['data']['properties']['email']);
+        $me = $output['properties']['body']['properties']['data'];
+        self::assertSame('object', $me['type']);
+        self::assertSame(['type' => ['string', 'null']], $me['properties']['email']);
+        self::assertSame(['type' => ['string', 'null']], $me['properties']['display_name']);
+        self::assertSame(['type' => ['boolean', 'null']], $me['properties']['email_verified']);
+        self::assertSame('array', $me['properties']['orgs']['type']);
+        self::assertSame([], ToolSchema::nullable(['type' => 'null']), 'an example null types nothing');
+        self::assertSame(['type' => ['integer', 'string', 'null']], ToolSchema::nullable(['type' => ['integer', 'string']]));
 
         // Annotations from the effect.
         $tools = $graph->get(ManifestTools::class)->all();

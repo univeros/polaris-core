@@ -6,8 +6,8 @@ namespace Polaris\Mcp\Server;
 
 use Mcp\Schema\Tool as ToolDefinition;
 use Mcp\Schema\ToolAnnotations;
-use Mcp\Server;
 use Mcp\Server\Builder;
+use Mcp\Server\Server;
 use Polaris\Mcp\Principal;
 use Polaris\Mcp\Tool;
 use Polaris\Wiring\Graph;

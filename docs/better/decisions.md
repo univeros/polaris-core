@@ -668,3 +668,16 @@ entries here when a WP confirms or changes them.
   has no per-dialect column option and `SqlSchema` one DDL path for every dialect: adding one touches
   `Field`, `SqlSchema`, `SchemaInspector`/`SchemaDiff` and the adapters' schema exports, a schema-layer
   task of its own.
+- 2026-11-21 · mcp · `polaris/mcp` requires `mcp/sdk` `^0.10` (was `^0.8.1`): Packagist blocks 0.8.x
+  (PKSA-s52d-n7sx-trsg, GHSA-f4rf-6ghj-mhr6: the SDK's OAuth middleware read request bodies without a
+  limit; Polaris does not use that middleware, but no 0.8 release installs any more, so every demo job
+  failed). `Mcp\Server` moved to `Mcp\Server\Server`. Since 0.9 the SDK validates a tool's
+  `structuredContent` against its `outputSchema` (the MCP specification requires a conforming result),
+  and the output schema is typed from each route's example, which cannot say which fields may be null:
+  `GET /auth/me` answered `display_name: null` against `"type": "string"` and became a tool error. Every
+  scalar the example types now also admits null (`["string", "null"]`), a field the example shows as null
+  is untyped, objects and arrays recurse (`ToolSchema::nullable()`); the OpenAPI document is unchanged.
+  The MCP contract fixture was re-recorded on purpose: compared with the previous recording, `tools/list`
+  gains the `"null"` types and nothing else changes. The Go port follows. · Rejected: an untyped body
+  (agents lose the field types); a response schema per route in every manifest (right, but a manifest-wide
+  task of its own); staying on 0.8 (uninstallable).
