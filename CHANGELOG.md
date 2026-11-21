@@ -4,7 +4,9 @@ All notable changes to Polaris for PHP (the `polaris/*` packages) are documented
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 the project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.12.2] - 2026-11-21
+
+Upgrade `polaris/mcp` (and with it `mcp/sdk` to 0.10); every other package is unchanged.
 
 ### Changed
 - `polaris/mcp` requires `mcp/sdk` `^0.10` (0.8.x is blocked by Packagist for
